@@ -5,37 +5,33 @@ public enum GravatarUrlParameter {
     /**
      * The hash for a Gravatar request.
      */
-    HASH(true),
+    HASH(true, ""),
 
     /**
-     * The size of the image to be returned.
+     * The size of the image to be returned by a Gravatar request.
      */
-    SIZE,
+    SIZE("s"),
 
     /**
-     * The URL to the default image to return in the case of a hash lookup failure.
+     * The URL to the default image to return in the case of a user email hash being invalid.
      */
-    DEFAULT_URL,
+    DEFAULT_IMAGE_URL("d"),
 
     /**
-     * Whether to force the default url regardless of whether the hash can be located.
+     * Whether to force the default URL regardless of whether the user email hash is valid.
      */
-    FORCE_DEFAULT,
-
-    /*
-     * The {@link GravatarDefaultPreset} type. Used to return a random custom avatar if a hash cannot be located.
-     */
-    DEFAULT_PRESET,
+    FORCE_DEFAULT("f"),
 
     /**
-     * The default image URL a Gravatar request.
+     * The {@link GravatarDefaultImageType} type. Used to return a random custom
+     * avatar if a user's email hash cannot be located.
      */
-    DEFAULT_IMAGE_URL,
+    DEFAULT_IMAGE_TYPE("d"),
 
-    /*
+    /**
      * The {@link GravatarRating} for a Gravatar request.
      */
-    RATING;
+    RATING("r");
 
     /**
      * Whether this URL parameter is required for a Gravatar request.
@@ -44,24 +40,27 @@ public enum GravatarUrlParameter {
 
     /**
      * Constructs a new GravatarUrlParameter with the required value set to {@code false}
+     *
+     * @param urlParameter the url parameter prefix for the value associated with this parameter
      */
-    GravatarUrlParameter() {
-        this(false);
+    GravatarUrlParameter(String urlParameter) {
+        this(false, urlParameter);
     }
 
     /**
      * Constructs a new GravatarUrlParameter.
      *
      * @param required whether this url parameter is required for all gravatar requests.
+     * @param urlParameter the url parameter prefix for the value associated with this parameter
      */
-    GravatarUrlParameter(boolean required) {
+    GravatarUrlParameter(boolean required, String urlParameter) {
         this.required = required;
     }
 
     /**
-     * Returns whether this url parameter is required for all gravatar request.
+     * Returns whether this URL parameter is required for all gravatar request.
      *
-     * @return whether this url parameter is required for all gravatar request
+     * @return whether this URL parameter is required for all gravatar request
      */
     public boolean isRequired() {
         return required;
