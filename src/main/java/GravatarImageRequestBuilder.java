@@ -1,5 +1,6 @@
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Range;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import enums.GravatarDefaultImageType;
 import enums.GravatarRating;
 import enums.GravatarUrlParameter;
@@ -17,7 +18,7 @@ import java.util.Collection;
  * A builder for a Gravatar Image.
  * <a href="https://en.gravatar.com/site/implement/images/">API documentation</a>.
  */
-public final class GravatarImageRequestBuilder {
+public final class GravatarImageRequestBuilder implements GravatarImageRequest {
     /**
      * The base url for the image request API.
      */
@@ -102,21 +103,18 @@ public final class GravatarImageRequestBuilder {
      * @throws GravatarJavaClientException if any other exception occurs
      */
     public GravatarImageRequestBuilder(String userEmail) throws GravatarJavaClientException {
-        Preconditions.checkNotNull(userEmail, "User email cannot be null");
-        Preconditions.checkArgument(!userEmail.isEmpty(), "User email cannot be empty");
-        Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(userEmail), "Malformed email address");
+        Preconditions.checkNotNull(userEmail);
+        Preconditions.checkArgument(!userEmail.isEmpty());
+        Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(userEmail));
 
         this.userEmail = userEmail;
         this.hash = GeneralUtils.emailAddressToGravatarHash(userEmail);
     }
 
     /**
-     * Sets whether the JPG suffix should be appended to the {@link #hash} when constructing the image request url.
-     *
-     * @param appendJpgSuffix whether the JPG suffix should be appended to the
-     *                        {@link #hash} when constructing the image request url.
-     * @return this builder
+     * {@inheritDoc}
      */
+    @CanIgnoreReturnValue
     public synchronized GravatarImageRequestBuilder setAppendJpgSuffix(boolean appendJpgSuffix) {
         this.appendJpgSuffix = appendJpgSuffix;
         return this;
@@ -127,11 +125,11 @@ public final class GravatarImageRequestBuilder {
      *
      * @param size the requested size
      * @return this builder
-     * @throws IllegalArgumentException if the requested size is invalid
+     * @throws IllegalArgumentException if the requested size is not in the range {@link #sizeRange}
      */
+    @CanIgnoreReturnValue
     public synchronized GravatarImageRequestBuilder setSize(int size) {
-        Preconditions.checkArgument(sizeRange.contains(size), "Size must be in range ["
-                + sizeRange.lowerEndpoint() + ", " + sizeRange.upperEndpoint() + "]");
+        Preconditions.checkArgument(sizeRange.contains(size));
 
         this.size = size;
         return this;
@@ -144,8 +142,9 @@ public final class GravatarImageRequestBuilder {
      * @return this builder
      * @throws NullPointerException if ratings is null or contains a null element
      */
+    @CanIgnoreReturnValue
     public synchronized GravatarImageRequestBuilder setRatings(Collection<GravatarRating> ratings) {
-        Preconditions.checkNotNull(ratings, "Ratings cannot be null");
+        Preconditions.checkNotNull(ratings);
         ratings.forEach(Preconditions::checkNotNull);
 
         this.ratings.clear();
@@ -161,6 +160,7 @@ public final class GravatarImageRequestBuilder {
      * @return this builder
      * @throws NullPointerException if the provided rating is null
      */
+    @CanIgnoreReturnValue
     public synchronized GravatarImageRequestBuilder setRating(GravatarRating rating) {
         Preconditions.checkNotNull(rating);
         this.ratings.clear();
@@ -175,10 +175,11 @@ public final class GravatarImageRequestBuilder {
      * @param ratings the collection of ratings
      * @return this builder
      * @throws NullPointerException     if ratings is null or contains a null element
-     * @throws IllegalArgumentException if ratings already contains one of the ratings
+     * @throws IllegalArgumentException if ratings already contains one of the provided ratings
      */
+    @CanIgnoreReturnValue
     public synchronized GravatarImageRequestBuilder addRatings(Collection<GravatarRating> ratings) {
-        Preconditions.checkNotNull(ratings, "Ratings cannot be null");
+        Preconditions.checkNotNull(ratings);
         ratings.forEach(Preconditions::checkNotNull);
         ratings.forEach(rating -> Preconditions.checkArgument(!this.ratings.contains(rating)));
 
@@ -195,6 +196,7 @@ public final class GravatarImageRequestBuilder {
      * @throws NullPointerException     if the provided rating is null
      * @throws IllegalArgumentException if ratings already contains this rating
      */
+    @CanIgnoreReturnValue
     public synchronized GravatarImageRequestBuilder addRating(GravatarRating rating) {
         Preconditions.checkNotNull(rating);
         Preconditions.checkArgument(!ratings.contains(rating));
@@ -211,6 +213,7 @@ public final class GravatarImageRequestBuilder {
      * @param forceDefaultImage whether to force the default image to be returned
      * @return this builder
      */
+    @CanIgnoreReturnValue
     public synchronized GravatarImageRequestBuilder setForceDefaultImage(boolean forceDefaultImage) {
         this.forceDefaultImage = forceDefaultImage;
         return this;
@@ -224,6 +227,7 @@ public final class GravatarImageRequestBuilder {
      * @return this builder
      * @throws NullPointerException if the provided image type is null
      */
+    @CanIgnoreReturnValue
     public synchronized GravatarImageRequestBuilder setDefaultImageType(GravatarDefaultImageType defaultImageType) {
         Preconditions.checkNotNull(defaultImageType);
 
@@ -236,12 +240,23 @@ public final class GravatarImageRequestBuilder {
     /**
      * Sets the default image url.
      * Note, this removes the {@link #defaultImageType} if set.
+     * <p>
+     * Conditions which must be met for the Gravatar API endpoint to return a default image:
+     * <ul>
+     *     <li>MUST be publicly available (e.g. cannot be on an intranet, on a local development machine,
+     *     behind HTTP Auth or some other firewall etc). Default images are passed through
+     *     a security scan to avoid malicious content.</li>
+     *     <li>MUST be accessible via HTTP or HTTPS on the standard ports, 80 and 443, respectively.</li>
+     *     <li>MUST have a recognizable image extension (jpg, jpeg, gif, png, heic)</li>
+     *     <li>MUST NOT include a query string (if it does, it will be ignored)</li>
+     * </ul>
      *
      * @param defaultImageUrl the default image url
      * @return this builder
      * @throws NullPointerException     if the provided image url is null
      * @throws IllegalArgumentException if the provided image url is empty or invalid
      */
+    @CanIgnoreReturnValue
     public synchronized GravatarImageRequestBuilder setDefaultImageUrl(String defaultImageUrl) {
         Preconditions.checkNotNull(defaultImageUrl);
         Preconditions.checkArgument(!defaultImageUrl.isEmpty());
@@ -254,10 +269,7 @@ public final class GravatarImageRequestBuilder {
     }
 
     /**
-     * Builds the Gravatar image request url represented by the current state of this builder.
-     *
-     * @return the Gravatar image request url
-     * @throws GravatarJavaClientException if an exception occurs
+     * {@inheritDoc}
      */
     public synchronized String buildUrl() throws GravatarJavaClientException {
         StringBuilder urlBuilder = new StringBuilder(imageRequestBaseUrl);

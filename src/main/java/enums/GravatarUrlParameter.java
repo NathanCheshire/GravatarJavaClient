@@ -5,42 +5,53 @@ import com.google.common.base.Preconditions;
 /**
  * A url parameter for a Gravatar request.
  */
+@SuppressWarnings("SpellCheckingInspection") /* Long parameter names */
 public enum GravatarUrlParameter {
     /**
      * The size of the image to be returned by a Gravatar request.
      */
-    SIZE("s"),
+    SIZE("s", "size"),
 
     /**
      * The URL to the default image to return in the case of a user email hash being invalid.
      */
-    DEFAULT_IMAGE_URL("d"),
+    DEFAULT_IMAGE_URL("d", "default"),
 
     /**
      * Whether to force the default URL regardless of whether the user email hash is valid.
      */
-    FORCE_DEFAULT("f"),
+    FORCE_DEFAULT("f", "forcedefault"),
 
     /**
      * The {@link GravatarDefaultImageType} type. Used to return a random custom
      * avatar if a user's email hash cannot be located.
      */
-    DEFAULT_IMAGE_TYPE("d"),
+    DEFAULT_IMAGE_TYPE("d", "default"),
 
     /**
      * The {@link GravatarRating} for a Gravatar request.
      */
-    RATING("r");
+    RATING("r", "rating");
 
-    private final String urlParameter;
+    /**
+     * The short url parameter for this Gravatar url parameter.
+     */
+    private final String shortUrlParameter;
+
+    /**
+     * The full url parameter for this Gravatar url parameter.
+     */
+    private final String fullUrlParameter; // todo
 
     /**
      * Constructs a new GravatarUrlParameter.
      *
-     * @param urlParameter the url parameter prefix
+     * @param urlParameter the short url parameter prefix
+     * @param fullUrlParameter the full url parameter prefix
      */
-    GravatarUrlParameter(String urlParameter) {
-        this.urlParameter = urlParameter;
+    GravatarUrlParameter(String urlParameter, String fullUrlParameter) {
+        this.shortUrlParameter = urlParameter;
+        this.fullUrlParameter = fullUrlParameter;
     }
 
     /**
@@ -72,6 +83,6 @@ public enum GravatarUrlParameter {
     public <T> String constructUrlParameterWithValue(T value, boolean firstParameter) {
         Preconditions.checkNotNull(value);
 
-        return firstParameter ? "?" : "&" + urlParameter + "=" + value;
+        return firstParameter ? "?" : "&" + shortUrlParameter + "=" + value;
     }
 }
