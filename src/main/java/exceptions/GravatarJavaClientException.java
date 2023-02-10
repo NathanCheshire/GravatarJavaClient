@@ -1,3 +1,5 @@
+package exceptions;
+
 import com.google.common.base.Preconditions;
 
 /**

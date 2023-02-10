@@ -1,14 +1,11 @@
 package enums;
 
+import com.google.common.base.Preconditions;
+
 /**
  * A url parameter for a Gravatar request.
  */
 public enum GravatarUrlParameter {
-    /**
-     * The hash for a Gravatar request.
-     */
-    HASH(true, ""),
-
     /**
      * The size of the image to be returned by a Gravatar request.
      */
@@ -35,36 +32,46 @@ public enum GravatarUrlParameter {
      */
     RATING("r");
 
-    /**
-     * Whether this URL parameter is required for a Gravatar request.
-     */
-    private final boolean required;
-
-    /**
-     * Constructs a new GravatarUrlParameter with the required value set to {@code false}
-     *
-     * @param urlParameter the url parameter prefix for the value associated with this parameter
-     */
-    GravatarUrlParameter(String urlParameter) {
-        this(false, urlParameter);
-    }
+    private final String urlParameter;
 
     /**
      * Constructs a new GravatarUrlParameter.
      *
-     * @param required whether this url parameter is required for all gravatar requests.
-     * @param urlParameter the url parameter prefix for the value associated with this parameter
+     * @param urlParameter the url parameter prefix
      */
-    GravatarUrlParameter(boolean required, String urlParameter) {
-        this.required = required;
+    GravatarUrlParameter(String urlParameter) {
+        this.urlParameter = urlParameter;
     }
 
     /**
-     * Returns whether this URL parameter is required for all gravatar request.
+     * Constructs a string for this url parameter with the provided value.
+     * It is assumed this is not the first url parameter after the query.
      *
-     * @return whether this URL parameter is required for all gravatar request
+     * @param value the value
+     * @param <T>   the type of value
+     * @return the string for this url parameter and value
+     * @throws NullPointerException if the provided value is null
      */
-    public boolean isRequired() {
-        return required;
+    public <T> String constructUrlParameterWithValue(T value) {
+        Preconditions.checkNotNull(value);
+
+        return constructUrlParameterWithValue(value, false);
+    }
+
+    /**
+     * Constructs a string for this url parameter with the provided value.
+     * If this is the first parameter after the query, a "?" character is the leading character.
+     * Otherwise a "&" character is the leading character.
+     *
+     * @param value          the value
+     * @param <T>            the type of value
+     * @param firstParameter whether this url parameter is the first after the query
+     * @return the string for this url parameter and value
+     * @throws NullPointerException if the provided value is null
+     */
+    public <T> String constructUrlParameterWithValue(T value, boolean firstParameter) {
+        Preconditions.checkNotNull(value);
+
+        return firstParameter ? "?" : "&" + urlParameter + "=" + value;
     }
 }

@@ -3,6 +3,7 @@ import com.google.common.collect.Range;
 import enums.GravatarDefaultImageType;
 import enums.GravatarRating;
 import enums.GravatarUrlParameter;
+import exceptions.GravatarJavaClientException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,6 +13,11 @@ import java.util.Collection;
  * <a href="https://en.gravatar.com/site/implement/images/">API documentation</a>.
  */
 public final class GravatarImageRequestBuilder {
+    /**
+     * The base url for the image request API.
+     */
+    private static final String imageRequestBaseUrl = "https://www.gravatar.com/avatar/";
+
     /**
      * The default length for an image request.
      */
@@ -33,9 +39,14 @@ public final class GravatarImageRequestBuilder {
     private static final GravatarRating defaultRating = GravatarRating.G;
 
     /**
+     * The JPG extension appended to the end of the {@link #hash} if {@link #appendJpgSuffix} is true.
+     */
+    private static final String jpgExtension = ".jpg";
+
+    /**
      * The email address for this builder.
      */
-    private final String userEmail;
+    private final String userEmail; // todo going to use for save function
 
     /**
      * The hash computed from {@link #userEmail} for this builder.
@@ -55,7 +66,7 @@ public final class GravatarImageRequestBuilder {
     /**
      * The ratings allowable for this image request.
      */
-    private ArrayList<GravatarRating> ratings = new ArrayList<>();
+    private final ArrayList<GravatarRating> ratings = new ArrayList<>();
 
     /**
      * Whether to force the default image to be returned.
@@ -96,7 +107,7 @@ public final class GravatarImageRequestBuilder {
      *                        {@link #hash} when constructing the image request url.
      * @return this builder
      */
-    public GravatarImageRequestBuilder setAppendJpgSuffix(boolean appendJpgSuffix) {
+    public synchronized GravatarImageRequestBuilder setAppendJpgSuffix(boolean appendJpgSuffix) {
         this.appendJpgSuffix = appendJpgSuffix;
         return this;
     }
@@ -108,7 +119,7 @@ public final class GravatarImageRequestBuilder {
      * @return this builder
      * @throws IllegalArgumentException if the requested size is invalid
      */
-    public GravatarImageRequestBuilder setSize(int size) {
+    public synchronized GravatarImageRequestBuilder setSize(int size) {
         Preconditions.checkArgument(sizeRange.contains(size), "Size must be in range ["
                 + sizeRange.lowerEndpoint() + ", " + sizeRange.upperEndpoint() + "]");
 
@@ -123,7 +134,7 @@ public final class GravatarImageRequestBuilder {
      * @return this builder
      * @throws NullPointerException if ratings is null or contains a null element
      */
-    public GravatarImageRequestBuilder setRatings(Collection<GravatarRating> ratings) {
+    public synchronized GravatarImageRequestBuilder setRatings(Collection<GravatarRating> ratings) {
         Preconditions.checkNotNull(ratings, "Ratings cannot be null");
         ratings.forEach(Preconditions::checkNotNull);
 
@@ -140,7 +151,7 @@ public final class GravatarImageRequestBuilder {
      * @return this builder
      * @throws NullPointerException if the provided rating is null
      */
-    public GravatarImageRequestBuilder setRating(GravatarRating rating) {
+    public synchronized GravatarImageRequestBuilder setRating(GravatarRating rating) {
         Preconditions.checkNotNull(rating);
         this.ratings.clear();
         this.ratings.add(rating);
@@ -154,10 +165,12 @@ public final class GravatarImageRequestBuilder {
      * @param ratings the collection of ratings
      * @return this builder
      * @throws NullPointerException if ratings is null or contains a null element
+     * @throws IllegalArgumentException if ratings already contains one of the ratings
      */
-    public GravatarImageRequestBuilder addRatings(Collection<GravatarRating> ratings) {
+    public synchronized GravatarImageRequestBuilder addRatings(Collection<GravatarRating> ratings) {
         Preconditions.checkNotNull(ratings, "Ratings cannot be null");
         ratings.forEach(Preconditions::checkNotNull);
+        ratings.forEach(rating -> Preconditions.checkArgument(!this.ratings.contains(rating)));
 
         this.ratings.addAll(ratings);
 
@@ -170,9 +183,11 @@ public final class GravatarImageRequestBuilder {
      * @param rating the rating
      * @return this builder
      * @throws NullPointerException if the provided rating is null
+     * @throws IllegalArgumentException if ratings already contains this rating
      */
-    public GravatarImageRequestBuilder addRating(GravatarRating rating) {
+    public synchronized GravatarImageRequestBuilder addRating(GravatarRating rating) {
         Preconditions.checkNotNull(rating);
+        Preconditions.checkArgument(!ratings.contains(rating));
 
         this.ratings.add(rating);
 
@@ -186,7 +201,7 @@ public final class GravatarImageRequestBuilder {
      * @param forceDefaultImage whether to force the default image to be returned
      * @return this builder
      */
-    public GravatarImageRequestBuilder setForceDefaultImage(boolean forceDefaultImage) {
+    public synchronized GravatarImageRequestBuilder setForceDefaultImage(boolean forceDefaultImage) {
         this.forceDefaultImage = forceDefaultImage;
         return this;
     }
@@ -198,7 +213,7 @@ public final class GravatarImageRequestBuilder {
      * @return this builder
      * @throws NullPointerException if the provided image type is null
      */
-    public GravatarImageRequestBuilder setDefaultImageType(GravatarDefaultImageType defaultImageType) {
+    public synchronized GravatarImageRequestBuilder setDefaultImageType(GravatarDefaultImageType defaultImageType) {
         Preconditions.checkNotNull(defaultImageType);
 
         this.defaultImageType = defaultImageType;
@@ -213,7 +228,7 @@ public final class GravatarImageRequestBuilder {
      * @throws NullPointerException if the provided image url is null
      * @throws IllegalArgumentException if the provided image url is empty or invalid
      */
-    public GravatarImageRequestBuilder setDefaultImageUrl(String defaultImageUrl) {
+    public synchronized GravatarImageRequestBuilder setDefaultImageUrl(String defaultImageUrl) {
         Preconditions.checkNotNull(defaultImageUrl);
         Preconditions.checkArgument(!defaultImageUrl.isEmpty());
         Preconditions.checkArgument(ValidationUtils.isValidDefaultUrl(defaultImageUrl));
@@ -221,5 +236,29 @@ public final class GravatarImageRequestBuilder {
         this.defaultImageUrl = defaultImageUrl;
 
         return this;
+    }
+
+    /**
+     * Builds the Gravatar image request url represented by the current state of this builder.
+     *
+     * @return the Gravatar image request url
+     * @throws GravatarJavaClientException if an exception occurs
+     */
+    public synchronized String buildUrl() throws GravatarJavaClientException {
+        StringBuilder urlBuilder = new StringBuilder(imageRequestBaseUrl);
+        urlBuilder.append(hash);
+
+        if (appendJpgSuffix) urlBuilder.append(jpgExtension);
+
+        String sizeString = String.valueOf(size);
+        if (sizeString.isEmpty()) throw new GravatarJavaClientException("Failed to convert size to a valid string");
+        urlBuilder.append(GravatarUrlParameter.SIZE.constructUrlParameterWithValue(sizeString, true));
+
+        StringBuilder ratingsBuilder = new StringBuilder();
+        if (ratings.isEmpty()) ratings.add(GravatarRating.G);
+        ratings.forEach(rating -> ratingsBuilder.append(rating.getUrlParameter()));
+        urlBuilder.append(GravatarUrlParameter.RATING.constructUrlParameterWithValue(ratingsBuilder.toString()));
+
+        return urlBuilder.toString();
     }
 }

@@ -1,4 +1,5 @@
 import com.google.common.base.Preconditions;
+import exceptions.GravatarJavaClientException;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
