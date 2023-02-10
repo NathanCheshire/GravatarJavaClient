@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group 'com.natche'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    guavaVersion = '31.1-jre'
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation 'com.google.guava:guava:' + guavaVersion
+}
+
+test {
+    useJUnitPlatform()
+}
