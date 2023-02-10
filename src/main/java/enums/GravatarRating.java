@@ -1,3 +1,5 @@
+package enums;
+
 /**
  * Ratings of a Gravatar user image.
  * Gravatar allows users to self-rate their images so that they can indicate if an image is appropriate

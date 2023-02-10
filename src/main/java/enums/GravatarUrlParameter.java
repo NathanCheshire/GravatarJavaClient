@@ -1,3 +1,5 @@
+package enums;
+
 /**
  * A url parameter for a Gravatar request.
  */

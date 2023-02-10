@@ -1,3 +1,5 @@
+package enums;
+
 /**
  * The default image types supported by Gravatar for random themed images.
  */

@@ -1,23 +1,14 @@
 import com.google.common.base.Preconditions;
 
-import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.net.URL;
 import java.util.regex.Pattern;
 
 /**
  * Validation utils used by {@link GravatarImageRequestBuilder}s.
  */
 final class ValidationUtils {
-    /**
-     * The hashing algorithm used to transform a user email address into their gravatar UUID.
-     */
-    private static final String hashingAlgorithm = "MD5";
-
     /**
      * A pattern for validating email addresses.
      */
@@ -54,47 +45,22 @@ final class ValidationUtils {
     }
 
     /**
-     * Hashes the provided email address to obtain the MD5 hash
-     * corresponding to the Gravatar icon linked to the provided email address.
+     * Returns whether the provided url is a valid default image url.
      *
-     * Algorithm steps:
-     * <ul>
-     *     <li>Trim leading and trailing whitespace</li>
-     *     <li>Force all characters to be lower-case</li>
-     *     <li>MD5 hash the final string</li>
-     * </ul>
-     *
-     * @param emailAddress the email address to hash
-     * @return the MD5 hash for the provided email address
-     * @throws NullPointerException if the provided email address is null
-     * @throws IllegalArgumentException if the provided email address is empty or invalid
-     * @throws GravatarJavaClientException if any other exception occurs
+     * @param url the url
+     * @return whether the provided url is a valid default image url
+     * @throws NullPointerException if the url is null
+     * @throws IllegalArgumentException if the url is empty
      */
-    static String emailAddressToGravatarHash(String emailAddress) throws GravatarJavaClientException {
-        Preconditions.checkNotNull(emailAddress, "email address cannot be null");
-        Preconditions.checkArgument(!emailAddress.isEmpty(), "email address cannot be empty");
-        Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(emailAddress), "Malformed email address");
+    static boolean isValidDefaultUrl(String url) {
+        Preconditions.checkNotNull(url);
+        Preconditions.checkArgument(!url.isEmpty());
 
-        MessageDigest messageDigest;
         try {
-            messageDigest = MessageDigest.getInstance(hashingAlgorithm);
-        } catch (NoSuchAlgorithmException e) {
-            throw new GravatarJavaClientException(e.getMessage());
+            ImageIO.read(new URL(url));
+            return false;
+        } catch (IOException ignored) {
+            return false;
         }
-
-        CharBuffer charBuffer = CharBuffer.wrap(emailAddress.trim().toLowerCase().toCharArray());
-        ByteBuffer byteBuffer = StandardCharsets.UTF_8.encode(charBuffer);
-        byte[] bytes = Arrays.copyOfRange(byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());
-
-        byte[] digest = messageDigest.digest(bytes);
-
-        BigInteger number = new BigInteger(1, digest);
-        StringBuilder hexString = new StringBuilder(number.toString(16));
-
-        while (hexString.length() < 32) {
-            hexString.insert(0, '0');
-        }
-
-        return hexString.toString();
     }
 }

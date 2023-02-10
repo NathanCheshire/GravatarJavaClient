@@ -3,7 +3,7 @@ import com.google.common.base.Preconditions;
 /**
  * An exception thrown by exposed API features.
  */
-public class GravatarJavaClientException extends Exception {
+public final class GravatarJavaClientException extends Exception {
     /**
      * Creates a new {@link GravatarJavaClientException} with the provided message.
      *
