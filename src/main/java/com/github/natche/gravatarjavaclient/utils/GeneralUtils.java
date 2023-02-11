@@ -1,4 +1,4 @@
-package com.github.natche.gravatarjavaclient;
+package com.github.natche.gravatarjavaclient.utils;
 
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.google.common.base.Preconditions;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 /**
  * General utility methods used throughout the GravatarJavaClient API.
  */
-final class GeneralUtils {
+public final class GeneralUtils {
     /**
      * The hashing algorithm used to transform a user email address into their gravatar UUID.
      */
@@ -46,7 +46,7 @@ final class GeneralUtils {
      * @throws IllegalArgumentException if the provided email address is empty or invalid
      * @throws GravatarJavaClientException if any other exception occurs
      */
-    static String emailAddressToGravatarHash(String emailAddress) throws GravatarJavaClientException {
+    public static String emailAddressToGravatarHash(String emailAddress) {
         Preconditions.checkNotNull(emailAddress, "email address cannot be null");
         Preconditions.checkArgument(!emailAddress.isEmpty(), "email address cannot be empty");
         Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(emailAddress), "Malformed email address");

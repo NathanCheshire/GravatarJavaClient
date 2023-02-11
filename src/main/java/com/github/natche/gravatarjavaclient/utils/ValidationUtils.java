@@ -1,5 +1,6 @@
-package com.github.natche.gravatarjavaclient;
+package com.github.natche.gravatarjavaclient.utils;
 
+import com.github.natche.gravatarjavaclient.image.GravatarImageRequestBuilder;
 import com.google.common.base.Preconditions;
 
 import javax.imageio.ImageIO;
@@ -10,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * Validation utils used by {@link GravatarImageRequestBuilder}s.
  */
-final class ValidationUtils {
+public final class ValidationUtils {
     /**
      * A pattern for validating email addresses.
      */
@@ -39,7 +40,7 @@ final class ValidationUtils {
      * @throws NullPointerException     if the provided email address is null
      * @throws IllegalArgumentException if the provided email address is empty
      */
-    static boolean isValidEmailAddress(String emailAddress) {
+    public static boolean isValidEmailAddress(String emailAddress) {
         Preconditions.checkNotNull(emailAddress, "email address cannot be null");
         Preconditions.checkArgument(!emailAddress.isEmpty(), "email address cannot be empty");
 
@@ -54,7 +55,7 @@ final class ValidationUtils {
      * @throws NullPointerException if the url is null
      * @throws IllegalArgumentException if the url is empty
      */
-    static boolean isValidDefaultUrl(String url) {
+    public static boolean isValidDefaultUrl(String url) {
         Preconditions.checkNotNull(url);
         Preconditions.checkArgument(!url.isEmpty());
 
