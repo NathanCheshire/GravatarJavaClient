@@ -1,11 +1,9 @@
 package com.github.natche.gravatarjavaclient.image;
 
 import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
-import com.github.natche.gravatarjavaclient.enums.GravatarRating;
 import com.github.natche.gravatarjavaclient.enums.GravatarUrlParameter;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -47,11 +45,6 @@ public final class GravatarImageRequestHandler {
     private static final String emailHashTimestampSeparator = "-";
 
     /**
-     * The default rating to use if none is provided.
-     */
-    private static final GravatarRating defaultRating = GravatarRating.G;
-
-    /**
      * The JPG extension appended to the end of an email hash if shouldAppendJpgSuffix is true.
      */
     private static final String jpgExtension = ".jpg";
@@ -70,33 +63,36 @@ public final class GravatarImageRequestHandler {
         throw new AssertionError("Cannot create instances of GravatarImageRequestHandler");
     }
 
+    /**
+     * Builds the provided Gravatar image request into a URL representing the state of the builder.
+     *
+     * @param gravatarImageRequestBuilder the builder to construct the URL from
+     * @return the built URL
+     */
+    public static String buildUrl(GravatarImageRequestBuilder gravatarImageRequestBuilder) {
+        Preconditions.checkNotNull(gravatarImageRequestBuilder);
 
-    public static String buildUrl(GravatarImageRequestBuilder GravatarImageRequestBuilder) {
-        boolean fullParameters = GravatarImageRequestBuilder.shouldUseFullUrlParameterNames();
-        boolean useHttps = GravatarImageRequestBuilder.shouldUseHttps();
+        boolean fullParameters = gravatarImageRequestBuilder.shouldUseFullUrlParameterNames();
+        boolean useHttps = gravatarImageRequestBuilder.shouldUseHttps();
 
         StringBuilder urlBuilder = new StringBuilder(useHttps ? https : http);
         urlBuilder.append(imageRequestBaseUrl);
-        urlBuilder.append(GravatarImageRequestBuilder.getGravatarUserEmailHash());
+        urlBuilder.append(gravatarImageRequestBuilder.getGravatarUserEmailHash());
 
-        if (GravatarImageRequestBuilder.shouldAppendJpgSuffix()) {
+        if (gravatarImageRequestBuilder.shouldAppendJpgSuffix()) {
             urlBuilder.append(jpgExtension);
         }
 
-        String size = String.valueOf(GravatarImageRequestBuilder.getSize());
+        String size = String.valueOf(gravatarImageRequestBuilder.getSize());
         String sizeParameter = GravatarUrlParameter.SIZE.constructUrlParameterWithValue(size, true, fullParameters);
         urlBuilder.append(sizeParameter);
 
-        ImmutableList<GravatarRating> ratings = ImmutableList.copyOf(GravatarImageRequestBuilder.getRatings());
-        if (ratings.isEmpty()) ratings = ImmutableList.of(defaultRating);
-        StringBuilder ratingsBuilder = new StringBuilder();
-        ratings.forEach(rating -> ratingsBuilder.append(rating .getUrlParameter()));
-        String ratingsParameter = GravatarUrlParameter.RATING
-                .constructUrlParameterWithValue(ratingsBuilder.toString(), fullParameters);
+        String ratingsParameter = GravatarUrlParameter.RATING.constructUrlParameterWithValue(
+                gravatarImageRequestBuilder.getRating().getUrlParameter(), fullParameters);
         urlBuilder.append(ratingsParameter);
 
-        GravatarDefaultImageType defaultImageType = GravatarImageRequestBuilder.getDefaultImageType();
-        String defaultImageUrl = GravatarImageRequestBuilder.getDefaultImageUrl();
+        GravatarDefaultImageType defaultImageType = gravatarImageRequestBuilder.getDefaultImageType();
+        String defaultImageUrl = gravatarImageRequestBuilder.getDefaultImageUrl();
 
         if (defaultImageType != null) {
             urlBuilder.append(GravatarUrlParameter.DEFAULT_IMAGE_TYPE
@@ -106,7 +102,7 @@ public final class GravatarImageRequestHandler {
                     .constructUrlParameterWithValue(defaultImageUrl, fullParameters));
         }
 
-        if (GravatarImageRequestBuilder.shouldForceDefaultImage()) {
+        if (gravatarImageRequestBuilder.shouldForceDefaultImage()) {
             urlBuilder.append(GravatarUrlParameter.FORCE_DEFAULT
                     .constructUrlParameterWithValue(forceDefaultUrlTrueString, fullParameters));
         }
@@ -118,13 +114,13 @@ public final class GravatarImageRequestHandler {
      * Returns a buffered image of the Gravatar image represented by the state of the provided request builder.
      *
      * @return the Gravatar url
-     * @throws NullPointerException if the provided Gravatar image request is null
+     * @throws NullPointerException        if the provided Gravatar image request is null
      * @throws GravatarJavaClientException if an exception reading from the built url occurs
      */
-    public static BufferedImage getImage(GravatarImageRequestBuilder GravatarImageRequestBuilder) {
-        Preconditions.checkNotNull(GravatarImageRequestBuilder);
+    public static BufferedImage getImage(GravatarImageRequestBuilder gravatarImageRequestBuilder) {
+        Preconditions.checkNotNull(gravatarImageRequestBuilder);
 
-        String url = buildUrl(GravatarImageRequestBuilder);
+        String url = buildUrl(gravatarImageRequestBuilder);
 
         try {
             return ImageIO.read(new URL(url));
@@ -138,18 +134,18 @@ public final class GravatarImageRequestHandler {
      * Saves the buffered image returned by {@link #getImage(GravatarImageRequestBuilder)} to a file named using
      * the user email and the current timestamp.
      *
-     * @throws NullPointerException if the provided Gravatar image request is null
+     * @throws NullPointerException        if the provided Gravatar image request is null
      * @throws GravatarJavaClientException if the image cannot be read
      * @throws IOException                 if the image cannot be saved to the newly created file
      * @throws IllegalArgumentException    if the file the image will be saved to already exists
      */
-    public static File saveImage(GravatarImageRequestBuilder GravatarImageRequestBuilder) throws IOException {
-        Preconditions.checkNotNull(GravatarImageRequestBuilder);
+    public static File saveImage(GravatarImageRequestBuilder gravatarImageRequestBuilder) throws IOException {
+        Preconditions.checkNotNull(gravatarImageRequestBuilder);
 
-        String filename = GravatarImageRequestBuilder.getGravatarUserEmailHash()
+        String filename = gravatarImageRequestBuilder.getGravatarUserEmailHash()
                 + emailHashTimestampSeparator + saveFileFormatter.format(new Date());
         File saveToFile = new File(filename);
-        saveImage(GravatarImageRequestBuilder, saveToFile);
+        saveImage(gravatarImageRequestBuilder, saveToFile);
         return saveToFile;
     }
 
@@ -162,12 +158,13 @@ public final class GravatarImageRequestHandler {
      * @throws GravatarJavaClientException if the image cannot be read
      * @throws IOException                 if the image cannot be saved to the newly created file
      */
-    public static void saveImage(GravatarImageRequestBuilder GravatarImageRequestBuilder, File saveToFile) throws IOException {
-        Preconditions.checkNotNull(GravatarImageRequestBuilder);
+    public static void saveImage(GravatarImageRequestBuilder gravatarImageRequestBuilder,
+                                 File saveToFile) throws IOException {
+        Preconditions.checkNotNull(gravatarImageRequestBuilder);
         Preconditions.checkNotNull(saveToFile);
         Preconditions.checkArgument(saveToFile.isFile());
         Preconditions.checkArgument(!saveToFile.exists());
 
-        ImageIO.write(getImage(GravatarImageRequestBuilder), "jpg", saveToFile);
+        ImageIO.write(getImage(gravatarImageRequestBuilder), "jpg", saveToFile);
     }
 }

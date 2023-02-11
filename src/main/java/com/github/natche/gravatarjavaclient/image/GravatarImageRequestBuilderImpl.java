@@ -7,12 +7,9 @@ import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientExcepti
 import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
 import com.github.natche.gravatarjavaclient.utils.ValidationUtils;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Range;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Objects;
 
 /**
@@ -36,6 +33,11 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     private static final boolean requireJpgExtensionSuffixByDefault = true;
 
     /**
+     * The default rating to use if none is provided.
+     */
+    private static final GravatarRating defaultRating = GravatarRating.G;
+
+    /**
      * The hash computed from the user email for this builder.
      */
     private final String hash;
@@ -51,9 +53,9 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     private int size = defaultImageLength;
 
     /**
-     * The ratings allowable for this image request.
+     * The rating allowable for this image request.
      */
-    private final ArrayList<GravatarRating> ratings = new ArrayList<>();
+    private GravatarRating rating = defaultRating;
 
     /**
      * Whether to force the default image to be returned.
@@ -142,24 +144,6 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     }
 
     /**
-     * Sets the ratings to the provided collection of ratings.
-     *
-     * @param ratings the collection of ratings
-     * @return this builder
-     * @throws NullPointerException if ratings is null or contains a null element
-     */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilderImpl setRatings(Collection<GravatarRating> ratings) {
-        Preconditions.checkNotNull(ratings);
-        ratings.forEach(Preconditions::checkNotNull);
-
-        this.ratings.clear();
-        this.ratings.addAll(ratings);
-
-        return this;
-    }
-
-    /**
      * Sets the ratings to the provided singular rating.
      *
      * @param rating the rating
@@ -169,45 +153,8 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     @CanIgnoreReturnValue
     public synchronized GravatarImageRequestBuilderImpl setRating(GravatarRating rating) {
         Preconditions.checkNotNull(rating);
-        this.ratings.clear();
-        this.ratings.add(rating);
 
-        return this;
-    }
-
-    /**
-     * Adds the ratings to the provided collection of ratings.
-     *
-     * @param ratings the collection of ratings
-     * @return this builder
-     * @throws NullPointerException     if ratings is null or contains a null element
-     * @throws IllegalArgumentException if ratings already contains one of the provided ratings
-     */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilderImpl addRatings(Collection<GravatarRating> ratings) {
-        Preconditions.checkNotNull(ratings);
-        ratings.forEach(Preconditions::checkNotNull);
-        ratings.forEach(rating -> Preconditions.checkArgument(!this.ratings.contains(rating)));
-
-        this.ratings.addAll(ratings);
-
-        return this;
-    }
-
-    /**
-     * Adds the rating to the list of ratings.
-     *
-     * @param rating the rating
-     * @return this builder
-     * @throws NullPointerException     if the provided rating is null
-     * @throws IllegalArgumentException if ratings already contains this rating
-     */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilderImpl addRating(GravatarRating rating) {
-        Preconditions.checkNotNull(rating);
-        Preconditions.checkArgument(!ratings.contains(rating));
-
-        this.ratings.add(rating);
+        this.rating = rating;
 
         return this;
     }
@@ -215,8 +162,8 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * {@inheritDoc}
      */
-    public synchronized ImmutableList<GravatarRating> getRatings() {
-        return ImmutableList.copyOf(ratings);
+    public synchronized GravatarRating getRating() {
+        return rating;
     }
 
     /**
@@ -345,7 +292,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
         return hash.equals(other.hash)
                 && shouldAppendJpgSuffix == other.shouldAppendJpgSuffix
                 && size == other.size
-                && ratings.equals(other.ratings)
+                && rating.equals(other.rating)
                 && forceDefaultImage == other.forceDefaultImage
                 && defaultImageType == other.defaultImageType
                 && Objects.equals(defaultImageUrl, other.defaultImageUrl)
@@ -361,7 +308,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
         int ret = hash.hashCode();
         ret = 31 * ret + Boolean.hashCode(shouldAppendJpgSuffix);
         ret = 31 * ret + Integer.hashCode(size);
-        ret = 31 * ret + ratings.hashCode();
+        ret = 31 * ret + rating.hashCode();
         ret = 31 * ret + Boolean.hashCode(forceDefaultImage);
         ret = 31 * ret + Objects.hashCode(defaultImageType);
         ret = 31 * ret + Objects.hashCode(defaultImageUrl);
@@ -379,7 +326,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
                 + "hash=\"" + hash + "\""
                 + ", shouldAppendJpgSuffix=" + shouldAppendJpgSuffix
                 + ", size=" + size
-                + ", ratings=" + ratings
+                + ", rating=" + rating
                 + ", forceDefaultImage=" + forceDefaultImage
                 + ", defaultImageType=" + defaultImageType
                 + ", defaultImageUrl=\"" + defaultImageUrl + "\""

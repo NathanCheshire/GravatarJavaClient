@@ -2,10 +2,7 @@ package com.github.natche.gravatarjavaclient.image;
 
 import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
 import com.github.natche.gravatarjavaclient.enums.GravatarRating;
-import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,21 +56,14 @@ public class GravatarImageRequestBuilderImplTest {
         assertEquals(2048, impl.getSize());
 
         assertThrows(NullPointerException.class, () -> impl.setRating(null));
-        assertThrows(NullPointerException.class, () -> impl.setRatings(null));
-        ArrayList<GravatarRating> ratings = new ArrayList<>();
-        ratings.add(null);
-        assertThrows(NullPointerException.class, () -> impl.setRatings(ratings));
-        assertThrows(NullPointerException.class, () -> impl.addRating(null));
-        assertDoesNotThrow(() -> impl.addRating(GravatarRating.G));
-        assertThrows(IllegalArgumentException.class, () -> impl.addRating(GravatarRating.G));
-        assertEquals(ImmutableList.of(GravatarRating.G), impl.getRatings());
-        assertDoesNotThrow(() -> impl.addRating(GravatarRating.PG));
-        assertEquals(ImmutableList.of(GravatarRating.G, GravatarRating.PG), impl.getRatings());
-        assertDoesNotThrow(() -> impl.addRating(GravatarRating.R));
-        assertEquals(ImmutableList.of(GravatarRating.G, GravatarRating.PG, GravatarRating.R), impl.getRatings());
-        assertDoesNotThrow(() -> impl.addRating(GravatarRating.X));
-        assertEquals(ImmutableList.of(GravatarRating.G, GravatarRating.PG,
-                GravatarRating.R, GravatarRating.X), impl.getRatings());
+        assertDoesNotThrow(() -> impl.setRating(GravatarRating.G));
+        assertEquals(GravatarRating.G, impl.getRating());
+        assertDoesNotThrow(() -> impl.setRating(GravatarRating.PG));
+        assertEquals(GravatarRating.PG, impl.getRating());
+        assertDoesNotThrow(() -> impl.setRating(GravatarRating.R));
+        assertEquals(GravatarRating.R, impl.getRating());
+        assertDoesNotThrow(() -> impl.setRating(GravatarRating.X));
+        assertEquals(GravatarRating.X, impl.getRating());
 
         assertDoesNotThrow(() -> impl.setForceDefaultImage(true));
         assertTrue(impl.shouldForceDefaultImage());
@@ -150,10 +140,7 @@ public class GravatarImageRequestBuilderImplTest {
         GravatarImageRequestBuilderImpl impl2 = new GravatarImageRequestBuilderImpl("nathan@email.com")
                 .setUseHttps(false)
                 .setDefaultImageType(GravatarDefaultImageType.RETRO)
-                .addRating(GravatarRating.G)
-                .addRating(GravatarRating.PG)
-                .addRating(GravatarRating.R)
-                .addRating(GravatarRating.X)
+                .setRating(GravatarRating.G)
                 .setForceDefaultImage(true)
                 .setUseFullUrlParameterNames(true)
                 .setShouldAppendJpgSuffix(false);
@@ -176,10 +163,7 @@ public class GravatarImageRequestBuilderImplTest {
         GravatarImageRequestBuilderImpl allSetters = new GravatarImageRequestBuilderImpl("nathan@email.com")
                 .setUseHttps(false)
                 .setDefaultImageType(GravatarDefaultImageType.RETRO)
-                .addRating(GravatarRating.G)
-                .addRating(GravatarRating.PG)
-                .addRating(GravatarRating.R)
-                .addRating(GravatarRating.X)
+                .setRating(GravatarRating.X)
                 .setForceDefaultImage(true)
                 .setUseFullUrlParameterNames(true)
                 .setShouldAppendJpgSuffix(false);

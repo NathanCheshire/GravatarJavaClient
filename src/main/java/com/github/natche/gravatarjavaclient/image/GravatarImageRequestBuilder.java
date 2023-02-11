@@ -3,8 +3,6 @@ package com.github.natche.gravatarjavaclient.image;
 import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
 import com.github.natche.gravatarjavaclient.enums.GravatarRating;
 
-import java.util.Collection;
-
 /**
  * An interface for classes to implement which provide an API for building Gravatar image requests.
  */
@@ -20,7 +18,7 @@ public interface GravatarImageRequestBuilder {
      * Sets whether the JPG suffix should be appended to the user email hash when constructing the image request url.
      *
      * @param shouldAppendJpgSuffix whether the JPG suffix should be appended to the
-     *                        user email hash when constructing the image request url.
+     *                              user email hash when constructing the image request url.
      * @return this builder
      */
     GravatarImageRequestBuilder setShouldAppendJpgSuffix(boolean shouldAppendJpgSuffix);
@@ -48,14 +46,6 @@ public interface GravatarImageRequestBuilder {
     int getSize();
 
     /**
-     * Sets the ratings to the provided collection of ratings.
-     *
-     * @param ratings the collection of ratings
-     * @return this builder
-     */
-    GravatarImageRequestBuilder setRatings(Collection<GravatarRating> ratings);
-
-    /**
      * Sets the ratings to the provided singular rating.
      *
      * @param rating the rating
@@ -64,27 +54,11 @@ public interface GravatarImageRequestBuilder {
     GravatarImageRequestBuilder setRating(GravatarRating rating);
 
     /**
-     * Adds the ratings to the provided collection of ratings.
+     * Returns the rating for this image request.
      *
-     * @param ratings the collection of ratings to add
-     * @return this builder
+     * @return the rating for this image request
      */
-    GravatarImageRequestBuilder addRatings(Collection<GravatarRating> ratings);
-
-    /**
-     * Adds the rating to the list of ratings.
-     *
-     * @param rating the rating to add
-     * @return this builder
-     */
-    GravatarImageRequestBuilder addRating(GravatarRating rating);
-
-    /**
-     * Returns the list of ratings acceptable for this image request.
-     *
-     * @return the list of ratings acceptable for this image request
-     */
-    Collection<GravatarRating> getRatings();
+    GravatarRating getRating();
 
     /**
      * Sets whether to force the default image to be returned from this image request,

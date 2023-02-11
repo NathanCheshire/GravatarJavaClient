@@ -3,7 +3,6 @@ package com.github.natche.gravatarjavaclient.enums;
 /**
  * The default image types supported by Gravatar for random themed images.
  */
-@SuppressWarnings("SpellCheckingInspection") /* Wavatar, Ident */
 public enum GravatarDefaultImageType {
     /**
      * The 404 image type.
@@ -14,7 +13,7 @@ public enum GravatarDefaultImageType {
 
     /**
      * The mystery person image type.
-     * AS simple, cartoon-style silhouetted outline of a person (does not vary by email hash).
+     * A simple, cartoon-style silhouetted outline of a person (does not vary by email hash).
      */
     MYSTERY_PERSON("mp"),
 
