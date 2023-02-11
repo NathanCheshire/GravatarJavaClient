@@ -1,5 +1,7 @@
+package com.github.natche.gravatarjavaclient;
+
+import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.google.common.base.Preconditions;
-import exceptions.GravatarJavaClientException;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;

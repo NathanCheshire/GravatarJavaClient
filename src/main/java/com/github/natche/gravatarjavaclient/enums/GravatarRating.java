@@ -1,4 +1,4 @@
-package enums;
+package com.github.natche.gravatarjavaclient.enums;
 
 /**
  * Ratings of a Gravatar user image.

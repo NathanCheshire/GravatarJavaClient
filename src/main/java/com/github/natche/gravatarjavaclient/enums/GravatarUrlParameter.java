@@ -1,4 +1,4 @@
-package enums;
+package com.github.natche.gravatarjavaclient.enums;
 
 import com.google.common.base.Preconditions;
 

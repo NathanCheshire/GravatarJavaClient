@@ -1,3 +1,5 @@
+package com.github.natche.gravatarjavaclient;
+
 import com.google.common.base.Preconditions;
 
 import javax.imageio.ImageIO;

@@ -1,4 +1,4 @@
-package exceptions;
+package com.github.natche.gravatarjavaclient.exceptions;
 
 import com.google.common.base.Preconditions;
 

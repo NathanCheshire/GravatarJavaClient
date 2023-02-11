@@ -1,10 +1,12 @@
+package com.github.natche.gravatarjavaclient;
+
+import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
+import com.github.natche.gravatarjavaclient.enums.GravatarRating;
+import com.github.natche.gravatarjavaclient.enums.GravatarUrlParameter;
+import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Range;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import enums.GravatarDefaultImageType;
-import enums.GravatarRating;
-import enums.GravatarUrlParameter;
-import exceptions.GravatarJavaClientException;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

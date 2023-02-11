@@ -1,6 +1,8 @@
-import enums.GravatarDefaultImageType;
-import enums.GravatarRating;
-import exceptions.GravatarJavaClientException;
+package com.github.natche.gravatarjavaclient;
+
+import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
+import com.github.natche.gravatarjavaclient.enums.GravatarRating;
+import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 
 import java.util.Collection;
 

@@ -1,4 +1,4 @@
-package enums;
+package com.github.natche.gravatarjavaclient.enums;
 
 /**
  * The default image types supported by Gravatar for random themed images.
