@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * The request handler for sending out {@link GravatarImageRequest}s and parsing the returned response.
+ * The request handler for sending out {@link GravatarImageRequestBuilder}s and parsing the returned response.
  */
 public final class GravatarImageRequestHandler {
     /**
@@ -71,23 +71,23 @@ public final class GravatarImageRequestHandler {
     }
 
 
-    public static String buildUrl(GravatarImageRequest gravatarImageRequest) {
-        boolean fullParameters = gravatarImageRequest.shouldUseFullUrlParameterNames();
-        boolean useHttps = gravatarImageRequest.shouldUseHttps();
+    public static String buildUrl(GravatarImageRequestBuilder GravatarImageRequestBuilder) {
+        boolean fullParameters = GravatarImageRequestBuilder.shouldUseFullUrlParameterNames();
+        boolean useHttps = GravatarImageRequestBuilder.shouldUseHttps();
 
         StringBuilder urlBuilder = new StringBuilder(useHttps ? https : http);
         urlBuilder.append(imageRequestBaseUrl);
-        urlBuilder.append(gravatarImageRequest.getGravatarUserEmailHash());
+        urlBuilder.append(GravatarImageRequestBuilder.getGravatarUserEmailHash());
 
-        if (gravatarImageRequest.shouldAppendJpgSuffix()) {
+        if (GravatarImageRequestBuilder.shouldAppendJpgSuffix()) {
             urlBuilder.append(jpgExtension);
         }
 
-        String size = String.valueOf(gravatarImageRequest.getSize());
+        String size = String.valueOf(GravatarImageRequestBuilder.getSize());
         String sizeParameter = GravatarUrlParameter.SIZE.constructUrlParameterWithValue(size, true, fullParameters);
         urlBuilder.append(sizeParameter);
 
-        ImmutableList<GravatarRating> ratings = ImmutableList.copyOf(gravatarImageRequest.getRatings());
+        ImmutableList<GravatarRating> ratings = ImmutableList.copyOf(GravatarImageRequestBuilder.getRatings());
         if (ratings.isEmpty()) ratings = ImmutableList.of(defaultRating);
         StringBuilder ratingsBuilder = new StringBuilder();
         ratings.forEach(rating -> ratingsBuilder.append(rating .getUrlParameter()));
@@ -95,8 +95,8 @@ public final class GravatarImageRequestHandler {
                 .constructUrlParameterWithValue(ratingsBuilder.toString(), fullParameters);
         urlBuilder.append(ratingsParameter);
 
-        GravatarDefaultImageType defaultImageType = gravatarImageRequest.getDefaultImageType();
-        String defaultImageUrl = gravatarImageRequest.getDefaultImageUrl();
+        GravatarDefaultImageType defaultImageType = GravatarImageRequestBuilder.getDefaultImageType();
+        String defaultImageUrl = GravatarImageRequestBuilder.getDefaultImageUrl();
 
         if (defaultImageType != null) {
             urlBuilder.append(GravatarUrlParameter.DEFAULT_IMAGE_TYPE
@@ -106,7 +106,7 @@ public final class GravatarImageRequestHandler {
                     .constructUrlParameterWithValue(defaultImageUrl, fullParameters));
         }
 
-        if (gravatarImageRequest.shouldForceDefaultImage()) {
+        if (GravatarImageRequestBuilder.shouldForceDefaultImage()) {
             urlBuilder.append(GravatarUrlParameter.FORCE_DEFAULT
                     .constructUrlParameterWithValue(forceDefaultUrlTrueString, fullParameters));
         }
@@ -121,10 +121,10 @@ public final class GravatarImageRequestHandler {
      * @throws NullPointerException if the provided Gravatar image request is null
      * @throws GravatarJavaClientException if an exception reading from the built url occurs
      */
-    public static BufferedImage getImage(GravatarImageRequest gravatarImageRequest) {
-        Preconditions.checkNotNull(gravatarImageRequest);
+    public static BufferedImage getImage(GravatarImageRequestBuilder GravatarImageRequestBuilder) {
+        Preconditions.checkNotNull(GravatarImageRequestBuilder);
 
-        String url = buildUrl(gravatarImageRequest);
+        String url = buildUrl(GravatarImageRequestBuilder);
 
         try {
             return ImageIO.read(new URL(url));
@@ -135,7 +135,7 @@ public final class GravatarImageRequestHandler {
     }
 
     /**
-     * Saves the buffered image returned by {@link #getImage(GravatarImageRequest)} to a file named using
+     * Saves the buffered image returned by {@link #getImage(GravatarImageRequestBuilder)} to a file named using
      * the user email and the current timestamp.
      *
      * @throws NullPointerException if the provided Gravatar image request is null
@@ -143,18 +143,18 @@ public final class GravatarImageRequestHandler {
      * @throws IOException                 if the image cannot be saved to the newly created file
      * @throws IllegalArgumentException    if the file the image will be saved to already exists
      */
-    public static File saveImage(GravatarImageRequest gravatarImageRequest) throws IOException {
-        Preconditions.checkNotNull(gravatarImageRequest);
+    public static File saveImage(GravatarImageRequestBuilder GravatarImageRequestBuilder) throws IOException {
+        Preconditions.checkNotNull(GravatarImageRequestBuilder);
 
-        String filename = gravatarImageRequest.getGravatarUserEmailHash()
+        String filename = GravatarImageRequestBuilder.getGravatarUserEmailHash()
                 + emailHashTimestampSeparator + saveFileFormatter.format(new Date());
         File saveToFile = new File(filename);
-        saveImage(gravatarImageRequest, saveToFile);
+        saveImage(GravatarImageRequestBuilder, saveToFile);
         return saveToFile;
     }
 
     /**
-     * Saves the buffered image returned by {@link #getImage(GravatarImageRequest)} to the provided file.
+     * Saves the buffered image returned by {@link #getImage(GravatarImageRequestBuilder)} to the provided file.
      *
      * @param saveToFile the file to save the image to
      * @throws NullPointerException        if the provided image request or file is null
@@ -162,12 +162,12 @@ public final class GravatarImageRequestHandler {
      * @throws GravatarJavaClientException if the image cannot be read
      * @throws IOException                 if the image cannot be saved to the newly created file
      */
-    public static void saveImage(GravatarImageRequest gravatarImageRequest, File saveToFile) throws IOException {
-        Preconditions.checkNotNull(gravatarImageRequest);
+    public static void saveImage(GravatarImageRequestBuilder GravatarImageRequestBuilder, File saveToFile) throws IOException {
+        Preconditions.checkNotNull(GravatarImageRequestBuilder);
         Preconditions.checkNotNull(saveToFile);
         Preconditions.checkArgument(saveToFile.isFile());
         Preconditions.checkArgument(!saveToFile.exists());
 
-        ImageIO.write(getImage(gravatarImageRequest), "jpg", saveToFile);
+        ImageIO.write(getImage(GravatarImageRequestBuilder), "jpg", saveToFile);
     }
 }

@@ -2,388 +2,167 @@ package com.github.natche.gravatarjavaclient.image;
 
 import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
 import com.github.natche.gravatarjavaclient.enums.GravatarRating;
-import com.github.natche.gravatarjavaclient.enums.GravatarUrlParameter;
-import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
-import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
-import com.github.natche.gravatarjavaclient.utils.ValidationUtils;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Range;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * A builder for a Gravatar image request.
- * <a href="https://en.gravatar.com/site/implement/images/">Image Request API Documentation</a>.
+ * An interface for classes to implement which provide an API for building Gravatar image requests.
  */
-public final class GravatarImageRequestBuilder implements GravatarImageRequest {
+public interface GravatarImageRequestBuilder {
     /**
-     * The default length for an image request.
-     */
-    private static final int defaultImageLength = 80;
-
-    /**
-     * The range a {@link GravatarUrlParameter#SIZE} parameter must fall within.
-     */
-    private static final Range<Integer> sizeRange = Range.closed(1, 2048);
-
-    /**
-     * Whether the JPG suffix should be appended to the user email hash in the request url.
-     */
-    private static final boolean requireJpgExtensionSuffixByDefault = true;
-
-    /**
-     * The hash computed from the user email for this builder.
-     */
-    private final String hash;
-
-    /**
-     * Whether the JPG suffix should be appended to the {@link #hash} when constructing the image request url.
-     */
-    private boolean shouldAppendJpgSuffix = requireJpgExtensionSuffixByDefault;
-
-    /**
-     * The size for the image returned by this builder.
-     */
-    private int size = defaultImageLength;
-
-    /**
-     * The ratings allowable for this image request.
-     */
-    private final ArrayList<GravatarRating> ratings = new ArrayList<>();
-
-    /**
-     * Whether to force the default image to be returned.
-     */
-    private boolean forceDefaultImage = false;
-
-    /**
-     * The default image type.
-     */
-    private GravatarDefaultImageType defaultImageType = null;
-
-    /**
-     * The default image url.
-     */
-    private String defaultImageUrl = null;
-
-    /**
-     * Whether to use https as the protocol for Gravatar image requests.
-     */
-    private boolean useHttps = true;
-
-    /**
-     * Whether the full URL parameter names should be used in the request as opposed to the shorthand versions.
-     */
-    private boolean useFullUrlParameterNames = false;
-
-    /**
-     * Constructs a new GravatarImageRequestBuilder.
+     * Returns the Gravatar user email hash.
      *
-     * @param userEmail the user email for this Gravatar image request.
-     * @throws NullPointerException        if the user email is null
-     * @throws IllegalArgumentException    if the provided user email is empty or invalid
-     * @throws GravatarJavaClientException if any other exception occurs
+     * @return the Gravatar user email hash
      */
-    public GravatarImageRequestBuilder(String userEmail) {
-        Preconditions.checkNotNull(userEmail);
-        Preconditions.checkArgument(!userEmail.isEmpty());
-        Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(userEmail));
-
-        this.hash = GeneralUtils.emailAddressToGravatarHash(userEmail);
-    }
+    String getGravatarUserEmailHash();
 
     /**
-     * {@inheritDoc}
+     * Sets whether the JPG suffix should be appended to the user email hash when constructing the image request url.
+     *
+     * @param shouldAppendJpgSuffix whether the JPG suffix should be appended to the
+     *                        user email hash when constructing the image request url.
+     * @return this builder
      */
-    public synchronized String getGravatarUserEmailHash() {
-        return hash;
-    }
+    GravatarImageRequestBuilder setShouldAppendJpgSuffix(boolean shouldAppendJpgSuffix);
 
     /**
-     * {@inheritDoc}
+     * Returns whether the JPG suffix should be appended to the user email hash when constructing the image request url.
+     *
+     * @return whether the JPG suffix should be appended to the user email hash when constructing the image request url
      */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilder setShouldAppendJpgSuffix(boolean shouldAppendJpgSuffix) {
-        this.shouldAppendJpgSuffix = shouldAppendJpgSuffix;
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public synchronized boolean shouldAppendJpgSuffix() {
-        return shouldAppendJpgSuffix;
-    }
+    boolean shouldAppendJpgSuffix();
 
     /**
      * Sets the size for the image to be returned by this image request.
      *
      * @param size the requested size
      * @return this builder
-     * @throws IllegalArgumentException if the requested size is not in the range {@link #sizeRange}
      */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilder setSize(int size) {
-        Preconditions.checkArgument(sizeRange.contains(size));
-
-        this.size = size;
-        return this;
-    }
+    GravatarImageRequestBuilder setSize(int size);
 
     /**
-     * {@inheritDoc}
+     * Returns the size for the image to be returned by this image request.
+     *
+     * @return the size for the image to be returned by this image request
      */
-    public synchronized int getSize() {
-        return size;
-    }
+    int getSize();
 
     /**
      * Sets the ratings to the provided collection of ratings.
      *
      * @param ratings the collection of ratings
      * @return this builder
-     * @throws NullPointerException if ratings is null or contains a null element
      */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilder setRatings(Collection<GravatarRating> ratings) {
-        Preconditions.checkNotNull(ratings);
-        ratings.forEach(Preconditions::checkNotNull);
-
-        this.ratings.clear();
-        this.ratings.addAll(ratings);
-
-        return this;
-    }
+    GravatarImageRequestBuilder setRatings(Collection<GravatarRating> ratings);
 
     /**
      * Sets the ratings to the provided singular rating.
      *
      * @param rating the rating
      * @return this builder
-     * @throws NullPointerException if the provided rating is null
      */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilder setRating(GravatarRating rating) {
-        Preconditions.checkNotNull(rating);
-        this.ratings.clear();
-        this.ratings.add(rating);
-
-        return this;
-    }
+    GravatarImageRequestBuilder setRating(GravatarRating rating);
 
     /**
      * Adds the ratings to the provided collection of ratings.
      *
-     * @param ratings the collection of ratings
+     * @param ratings the collection of ratings to add
      * @return this builder
-     * @throws NullPointerException     if ratings is null or contains a null element
-     * @throws IllegalArgumentException if ratings already contains one of the provided ratings
      */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilder addRatings(Collection<GravatarRating> ratings) {
-        Preconditions.checkNotNull(ratings);
-        ratings.forEach(Preconditions::checkNotNull);
-        ratings.forEach(rating -> Preconditions.checkArgument(!this.ratings.contains(rating)));
-
-        this.ratings.addAll(ratings);
-
-        return this;
-    }
+    GravatarImageRequestBuilder addRatings(Collection<GravatarRating> ratings);
 
     /**
      * Adds the rating to the list of ratings.
      *
-     * @param rating the rating
+     * @param rating the rating to add
      * @return this builder
-     * @throws NullPointerException     if the provided rating is null
-     * @throws IllegalArgumentException if ratings already contains this rating
      */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilder addRating(GravatarRating rating) {
-        Preconditions.checkNotNull(rating);
-        Preconditions.checkArgument(!ratings.contains(rating));
-
-        this.ratings.add(rating);
-
-        return this;
-    }
+    GravatarImageRequestBuilder addRating(GravatarRating rating);
 
     /**
-     * {@inheritDoc}
+     * Returns the list of ratings acceptable for this image request.
+     *
+     * @return the list of ratings acceptable for this image request
      */
-    public synchronized ImmutableList<GravatarRating> getRatings() {
-        return ImmutableList.copyOf(ratings);
-    }
+    Collection<GravatarRating> getRatings();
 
     /**
-     * {@inheritDoc}
+     * Sets whether to force the default image to be returned from this image request,
+     * regardless of whether the a Gravatar for the user email is valid.
+     *
+     * @param forceDefaultImage whether to force the default image to be returned
+     * @return this builder
      */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilder setForceDefaultImage(boolean forceDefaultImage) {
-        this.forceDefaultImage = forceDefaultImage;
-        return this;
-    }
+    GravatarImageRequestBuilder setForceDefaultImage(boolean forceDefaultImage);
 
     /**
-     * {@inheritDoc}
+     * Returns whether to force the default image to be returned from this image request.
+     *
+     * @return whether to force the default image to be returned from this image request
      */
-    public synchronized boolean shouldForceDefaultImage() {
-        return forceDefaultImage;
-    }
+    boolean shouldForceDefaultImage();
 
     /**
      * Sets the default image type to the provided type.
-     * Note, this removes the {@link #defaultImageUrl} if set.
+     * Note, this removes the value set by {@link #setDefaultImageUrl(String)}} if set.
      *
      * @param defaultImageType the default image type
      * @return this builder
-     * @throws NullPointerException if the provided image type is null
      */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilder setDefaultImageType(GravatarDefaultImageType defaultImageType) {
-        Preconditions.checkNotNull(defaultImageType);
-
-        this.defaultImageType = defaultImageType;
-        this.defaultImageUrl = null;
-
-        return this;
-    }
+    GravatarImageRequestBuilder setDefaultImageType(GravatarDefaultImageType defaultImageType);
 
     /**
-     * {@inheritDoc}
+     * Returns the default image type.
+     *
+     * @return the default image type
      */
-    public synchronized GravatarDefaultImageType getDefaultImageType() {
-        return defaultImageType;
-    }
+    GravatarDefaultImageType getDefaultImageType();
 
     /**
      * Sets the default image url.
-     * Note, this removes the {@link #defaultImageType} if set.
-     * <p>
-     * Conditions which must be met for the Gravatar API endpoint to return a default image:
-     * <ul>
-     *     <li>MUST be publicly available (e.g. cannot be on an intranet, on a local development machine,
-     *     behind HTTP Auth or some other firewall etc). Default images are passed through
-     *     a security scan to avoid malicious content.</li>
-     *     <li>MUST be accessible via HTTP or HTTPS on the standard ports, 80 and 443, respectively.</li>
-     *     <li>MUST have a recognizable image extension (jpg, jpeg, gif, png, heic)</li>
-     *     <li>MUST NOT include a query string (if it does, it will be ignored)</li>
-     * </ul>
+     * Note, this removes the value set by {@link #setDefaultImageType(GravatarDefaultImageType)} if set.
      *
      * @param defaultImageUrl the default image url
      * @return this builder
-     * @throws NullPointerException     if the provided image url is null
-     * @throws IllegalArgumentException if the provided image url is empty or invalid
      */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilder setDefaultImageUrl(String defaultImageUrl) {
-        Preconditions.checkNotNull(defaultImageUrl);
-        Preconditions.checkArgument(!defaultImageUrl.isEmpty());
-        Preconditions.checkArgument(ValidationUtils.isValidDefaultUrl(defaultImageUrl));
-
-        this.defaultImageUrl = defaultImageUrl;
-        this.defaultImageType = null;
-
-        return this;
-    }
+    GravatarImageRequestBuilder setDefaultImageUrl(String defaultImageUrl);
 
     /**
-     * {@inheritDoc}
+     * Returns the default image url.
+     *
+     * @return the default image url
      */
-    public synchronized String getDefaultImageUrl() {
-        return defaultImageUrl;
-    }
+    String getDefaultImageUrl();
 
     /**
-     * {@inheritDoc}
+     * Sets whether to use https as the protocol for Gravatar image requests.
+     * Http will be used if false is provided.
+     *
+     * @param useHttps whether to use https as the protocol
+     * @return this builder
      */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilder setUseHttps(boolean useHttps) {
-        this.useHttps = useHttps;
-        return this;
-    }
+    GravatarImageRequestBuilder setUseHttps(boolean useHttps);
 
     /**
-     * {@inheritDoc}
+     * Returns whether to use https as the protocol.
+     *
+     * @return whether to use https as the protocol
      */
-    public synchronized boolean shouldUseHttps() {
-        return useHttps;
-    }
+    boolean shouldUseHttps();
 
     /**
-     * {@inheritDoc}
+     * Sets whether the full URL parameter names should be used in the request as opposed to the shorthand versions.
+     * For example, instead of appending "&d=default-url-here", "&default=default-url-here" would be used.
+     *
+     * @param useFullUrlParameterNames whether the full URL parameter names should be used
+     * @return this builder
      */
-    @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilder setUseFullUrlParameterNames(boolean useFullUrlParameterNames) {
-        this.useFullUrlParameterNames = useFullUrlParameterNames;
-        return this;
-    }
+    GravatarImageRequestBuilderImpl setUseFullUrlParameterNames(boolean useFullUrlParameterNames);
 
     /**
-     * {@inheritDoc}
+     * Returns whether the full URL parameter names should be used in the request.
+     *
+     * @return whether the full URL parameter names should be used in the request
      */
-    public synchronized boolean shouldUseFullUrlParameterNames() {
-        return useFullUrlParameterNames;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (!(o instanceof GravatarImageRequestBuilder)) {
-            return false;
-        }
-
-        GravatarImageRequestBuilder other = (GravatarImageRequestBuilder) o;
-        return hash.equals(other.hash)
-                && shouldAppendJpgSuffix == other.shouldAppendJpgSuffix
-                && size == other.size
-                && ratings.equals(other.ratings)
-                && forceDefaultImage == other.forceDefaultImage
-                && defaultImageType == other.defaultImageType
-                && defaultImageUrl.equals(other.defaultImageUrl)
-                && useHttps == other.useHttps
-                && useFullUrlParameterNames == other.useFullUrlParameterNames;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int ret = hash.hashCode();
-        ret = 31 * ret + Boolean.hashCode(shouldAppendJpgSuffix);
-        ret = 31 * ret + Integer.hashCode(size);
-        ret = 31 * ret + ratings.hashCode();
-        ret = 31 * ret + Boolean.hashCode(forceDefaultImage);
-        ret = 31 * ret + defaultImageType.hashCode();
-        ret = 31 * ret + defaultImageUrl.hashCode();
-        ret = 31 * ret + Boolean.hashCode(useHttps);
-        ret = 31 * ret + Boolean.hashCode(useFullUrlParameterNames);
-        return ret;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "GravatarImageRequestBuilder{"
-                + "hash=\"" + hash + "\""
-                + ", shouldAppendJpgSuffix=" + shouldAppendJpgSuffix
-                + ", size=" + size
-                + ", ratings=" + ratings
-                + ", forceDefaultImage=" + forceDefaultImage
-                + ", defaultImageType=" + defaultImageType
-                + ", defaultImageUrl=\"" + defaultImageUrl + "\""
-                + ", useHttps=" + useHttps
-                + ", useFullUrlParameterNames=" + useFullUrlParameterNames
-                + "}";
-    }
+    boolean shouldUseFullUrlParameterNames();
 }
