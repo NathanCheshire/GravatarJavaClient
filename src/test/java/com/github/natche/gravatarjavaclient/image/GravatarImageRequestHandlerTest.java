@@ -2,12 +2,15 @@ package com.github.natche.gravatarjavaclient.image;
 
 import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
 import com.github.natche.gravatarjavaclient.enums.GravatarRating;
+import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
 import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,6 +23,25 @@ public class GravatarImageRequestHandlerTest {
      * Creates a new instance of this class for testing purposes.
      */
     public GravatarImageRequestHandlerTest() {}
+
+    /**
+     * Tests to ensure reflection is guarded against.
+     * Also helps reach 100% code coverage for testing.
+     */
+    @Test
+    void testCreation() {
+        try {
+            Constructor<GravatarImageRequestHandler> constructor =
+                    GravatarImageRequestHandler.class.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            constructor.newInstance();
+        } catch (Exception e) {
+            assertTrue(e instanceof InvocationTargetException);
+            Throwable target = ((InvocationTargetException) e).getTargetException();
+            assertTrue(target instanceof AssertionError);
+            assertEquals("Cannot create instances of GravatarImageRequestHandler", target.getMessage());
+        }
+    }
 
     /**
      * Tests for the build url method.
@@ -160,6 +182,23 @@ public class GravatarImageRequestHandlerTest {
         assertEquals("https://www.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7.jpg"
                         + "?s=80&r=g&d=https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png&f=y",
                 GravatarImageRequestHandler.buildUrl(forceDefaultImage));
+
+        GravatarImageRequestBuilderImpl forceDefaultImageWithNoUrl =
+                new GravatarImageRequestBuilderImpl("nathan.vincent.2.718@gmail.com")
+                        .setForceDefaultImage(true);
+        assertThrows(GravatarJavaClientException.class,
+                () -> GravatarImageRequestHandler.buildUrl(forceDefaultImageWithNoUrl));
+
+        GravatarImageRequestBuilderImpl fullUrlParameters =
+                new GravatarImageRequestBuilderImpl("nathan.vincent.2.718@gmail.com")
+                        .setSize(690)
+                        .setUseFullUrlParameterNames(true)
+                        .setRating(GravatarRating.X)
+                        .setUseHttps(false)
+                        .setShouldAppendJpgSuffix(true)
+                        .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH);
+        assertEquals("http://www.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7"
+                + ".jpg?size=690&rating=x&default=robohash", GravatarImageRequestHandler.buildUrl(fullUrlParameters));
     }
 
     /**
