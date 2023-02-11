@@ -4,6 +4,7 @@ import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
 import com.github.natche.gravatarjavaclient.enums.GravatarUrlParameter;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.google.common.base.Preconditions;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -143,6 +144,7 @@ public final class GravatarImageRequestHandler {
      * @throws IOException                 if the image cannot be saved to the newly created file
      * @throws IllegalArgumentException    if the file the image will be saved to already exists
      */
+    @CanIgnoreReturnValue
     public static File saveImage(GravatarImageRequestBuilder gravatarImageRequestBuilder) throws IOException {
         Preconditions.checkNotNull(gravatarImageRequestBuilder);
 
@@ -158,7 +160,7 @@ public final class GravatarImageRequestHandler {
      *
      * @param saveToFile the file to save the image to
      * @throws NullPointerException        if the provided image request or file is null
-     * @throws IllegalArgumentException    if the file the image will be saved to already exists or is not a file
+     * @throws IllegalArgumentException    if the file the image will be saved to already exists
      * @throws GravatarJavaClientException if the image cannot be read
      * @throws IOException                 if the image cannot be saved to the newly created file
      */
@@ -166,7 +168,6 @@ public final class GravatarImageRequestHandler {
                                  File saveToFile) throws IOException {
         Preconditions.checkNotNull(gravatarImageRequestBuilder);
         Preconditions.checkNotNull(saveToFile);
-        Preconditions.checkArgument(saveToFile.isFile());
         Preconditions.checkArgument(!saveToFile.exists());
 
         ImageIO.write(getImage(gravatarImageRequestBuilder), "jpg", saveToFile);

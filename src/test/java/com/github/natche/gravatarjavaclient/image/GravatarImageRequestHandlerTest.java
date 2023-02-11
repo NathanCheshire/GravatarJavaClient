@@ -4,8 +4,12 @@ import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
 import com.github.natche.gravatarjavaclient.enums.GravatarRating;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the {@link GravatarImageRequestHandler}.
@@ -162,7 +166,17 @@ public class GravatarImageRequestHandlerTest {
      */
     @Test
     void testGetImage() {
-        // TODO
+        assertThrows(NullPointerException.class,
+                () -> GravatarImageRequestHandler.getImage(null));
+
+        GravatarImageRequestBuilderImpl forceDefaultImage =
+                new GravatarImageRequestBuilderImpl("email@domain.com")
+                        .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")
+                        .setForceDefaultImage(true);
+        AtomicReference<BufferedImage> bi = new AtomicReference<>();
+        assertDoesNotThrow(() -> bi.set(GravatarImageRequestHandler.getImage(forceDefaultImage)));
+        assertEquals(255, bi.get().getWidth());
+        assertEquals(383, bi.get().getHeight());
     }
 
     /**
@@ -170,6 +184,33 @@ public class GravatarImageRequestHandlerTest {
      */
     @Test
     void testSaveImage() {
-        // TODO
+        assertThrows(NullPointerException.class,
+                () -> GravatarImageRequestHandler.saveImage(null));
+        assertThrows(NullPointerException.class,
+                () -> GravatarImageRequestHandler.saveImage(null, null));
+        GravatarImageRequestBuilderImpl minecraftBuilder = new GravatarImageRequestBuilderImpl("email@domain.com")
+                .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")
+                .setForceDefaultImage(true);
+        assertThrows(NullPointerException.class,
+                () -> GravatarImageRequestHandler.saveImage(minecraftBuilder, null));
+        assertThrows(IllegalArgumentException.class,
+                () -> GravatarImageRequestHandler.saveImage(minecraftBuilder, new File(".")));
+        File tmpFile = new File("tmp_file.png");
+        try {
+            assertTrue(tmpFile.createNewFile());
+        } catch (IOException ignored) {
+            // Don't care for unit test
+        }
+        assertTrue(tmpFile.exists());
+        assertThrows(IllegalArgumentException.class,
+                () -> GravatarImageRequestHandler.saveImage(minecraftBuilder, tmpFile));
+        assertTrue(tmpFile.delete());
+        assertFalse(tmpFile.exists());
+
+        File minecraftImageFile = new File("Minecraft.png");
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.saveImage(minecraftBuilder, minecraftImageFile));
+        assertTrue(minecraftImageFile.exists());
+        assertTrue(minecraftImageFile.delete());
+        assertFalse(minecraftImageFile.exists());
     }
 }
