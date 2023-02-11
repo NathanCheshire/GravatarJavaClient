@@ -103,6 +103,10 @@ public final class GravatarImageRequestHandler {
         }
 
         if (gravatarImageRequestBuilder.shouldForceDefaultImage()) {
+            if (defaultImageUrl == null) {
+                throw new GravatarJavaClientException("Must provide default url if force default is enabled");
+            }
+
             urlBuilder.append(GravatarUrlParameter.FORCE_DEFAULT
                     .constructUrlParameterWithValue(forceDefaultUrlTrueString, fullParameters));
         }

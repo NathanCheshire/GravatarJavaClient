@@ -119,9 +119,9 @@ public class GravatarImageRequestBuilderImplTest {
         GravatarImageRequestBuilderImpl equalImpl1 = new GravatarImageRequestBuilderImpl("nathan@email.com");
         GravatarImageRequestBuilderImpl nonEqualImpl1 = new GravatarImageRequestBuilderImpl("e@email.com");
 
-        assertEquals(-986113855, impl1.hashCode());
-        assertEquals(-986113855, equalImpl1.hashCode());
-        assertEquals(-1220724838, nonEqualImpl1.hashCode());
+        assertEquals(-1211096359, impl1.hashCode());
+        assertEquals(-1211096359, equalImpl1.hashCode());
+        assertEquals(-1211096359, nonEqualImpl1.hashCode());
         assertEquals(impl1.hashCode(), equalImpl1.hashCode());
         assertNotEquals(equalImpl1.hashCode(), nonEqualImpl1.hashCode());
         assertNotEquals(equalImpl1.hashCode(), new Object().hashCode());
@@ -134,7 +134,7 @@ public class GravatarImageRequestBuilderImplTest {
     public void testToString() {
         GravatarImageRequestBuilderImpl impl1 = new GravatarImageRequestBuilderImpl("nathan@email.com");
         assertEquals("GravatarImageRequestBuilder{hash=\"9d4806832c56ee86c6aae26889c53c67\","
-                + " shouldAppendJpgSuffix=true, size=80, ratings=[], forceDefaultImage=false, defaultImageType=null,"
+                + " shouldAppendJpgSuffix=true, size=80, rating=G, forceDefaultImage=false, defaultImageType=null,"
                 + " defaultImageUrl=\"null\", useHttps=true, useFullUrlParameterNames=false}", impl1.toString());
 
         GravatarImageRequestBuilderImpl impl2 = new GravatarImageRequestBuilderImpl("nathan@email.com")
@@ -145,9 +145,22 @@ public class GravatarImageRequestBuilderImplTest {
                 .setUseFullUrlParameterNames(true)
                 .setShouldAppendJpgSuffix(false);
         assertEquals("GravatarImageRequestBuilder{hash=\"9d4806832c56ee86c6aae26889c53c67\","
-                + " shouldAppendJpgSuffix=false, size=80, ratings=[G, PG, R, X], forceDefaultImage=true,"
+                + " shouldAppendJpgSuffix=false, size=80, rating=G, forceDefaultImage=true,"
                 + " defaultImageType=RETRO, defaultImageUrl=\"null\", useHttps=false,"
                 + " useFullUrlParameterNames=true}", impl2.toString());
+
+        GravatarImageRequestBuilderImpl allSetters = new GravatarImageRequestBuilderImpl("nathan@email.com")
+                .setUseHttps(false)
+                .setDefaultImageType(GravatarDefaultImageType.RETRO)
+                .setRating(GravatarRating.X)
+                .setForceDefaultImage(true)
+                .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")
+                .setUseFullUrlParameterNames(true)
+                .setShouldAppendJpgSuffix(false);
+        assertEquals("GravatarImageRequestBuilder{hash=\"9d4806832c56ee86c6aae26889c53c67\","
+                + " shouldAppendJpgSuffix=false, size=80, rating=X, forceDefaultImage=true, defaultImageType=null,"
+                + " defaultImageUrl=\"https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png\","
+                + " useHttps=false, useFullUrlParameterNames=true}", allSetters.toString());
     }
 
     /**

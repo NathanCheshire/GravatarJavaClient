@@ -60,8 +60,8 @@ public final class GeneralUtils {
 
         CharBuffer charBuffer = CharBuffer.wrap(emailAddress.trim().toLowerCase().toCharArray());
         ByteBuffer byteBuffer = StandardCharsets.UTF_8.encode(charBuffer);
-        byte[] bytes = Arrays.copyOfRange(byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());
 
+        byte[] bytes = Arrays.copyOfRange(byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());
         byte[] digest = messageDigest.digest(bytes);
 
         BigInteger number = new BigInteger(1, digest);

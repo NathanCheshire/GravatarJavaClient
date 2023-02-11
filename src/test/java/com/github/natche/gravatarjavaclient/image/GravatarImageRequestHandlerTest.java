@@ -145,9 +145,31 @@ public class GravatarImageRequestHandlerTest {
         defaultImageTypeOverridden.setDefaultImageUrl(
                 "https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png");
         assertEquals("https://www.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7"
-                + ".jpg?s=80&r=g&d=https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png",
+                        + ".jpg?s=80&r=g&d=https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png",
                 GravatarImageRequestHandler.buildUrl(defaultImageTypeOverridden));
 
-        // todo force default
+        GravatarImageRequestBuilderImpl forceDefaultImage =
+                new GravatarImageRequestBuilderImpl("nathan.vincent.2.718@gmail.com")
+                        .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")
+                        .setForceDefaultImage(true);
+        assertEquals("https://www.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7.jpg"
+                        + "?s=80&r=g&d=https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png&f=y",
+                GravatarImageRequestHandler.buildUrl(forceDefaultImage));
+    }
+
+    /**
+     * Tests for the get image method.
+     */
+    @Test
+    void testGetImage() {
+        // TODO
+    }
+
+    /**
+     * Tests for the save image method.
+     */
+    @Test
+    void testSaveImage() {
+        // TODO
     }
 }
