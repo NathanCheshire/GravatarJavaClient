@@ -3,6 +3,7 @@ package com.github.natche.gravatarjavaclient.image;
 import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
 import com.github.natche.gravatarjavaclient.enums.GravatarUrlParameter;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
+import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
 import com.google.common.base.Preconditions;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 
@@ -10,7 +11,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -132,14 +132,7 @@ public final class GravatarImageRequestHandler {
     public static BufferedImage getImage(GravatarImageRequestBuilder gravatarImageRequestBuilder) {
         Preconditions.checkNotNull(gravatarImageRequestBuilder);
 
-        String url = buildUrl(gravatarImageRequestBuilder);
-
-        try {
-            return ImageIO.read(new URL(url));
-        } catch (IOException e) {
-            throw new GravatarJavaClientException("Failed to get image from url: "
-                    + url + ", error: " + e.getMessage());
-        }
+        return GeneralUtils.readBufferedImage(buildUrl(gravatarImageRequestBuilder));
     }
 
     /**
