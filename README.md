@@ -15,7 +15,20 @@ This client also follows [Effective Java](https://www.amazon.com/Effective-Java-
 
 ## Getting Started
 
-todo
+Using the client is extremely straight forward. `GravatarImageRequestHandlerImpl` uses a builder pattern allowing you to set parameters as follows:
+
+```java
+GravatarImageRequestBuilderImpl builder = new GravatarImageRequestBuilderImpl("EmailAddress@email.domain.com")
+  .setRating(GravatarRating.R)
+  .setSize(500)
+  .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+  .setShouldAppendJpgSuffix(true);
+```
+
+You may then pass this builder to the `GravatarImageRequestHandler` to perform certain actions:
+- Getting the URL representing the state of your builder
+- Getting a buffered image read from the generated URL
+- Saving the buffered image to a file (if no file is provided, a file is generated with the naming scheme of "emailHash-timestamp")
 
 ## Contributing
 
