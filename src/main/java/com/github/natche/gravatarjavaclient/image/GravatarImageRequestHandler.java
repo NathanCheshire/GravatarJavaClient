@@ -12,11 +12,19 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * The request handler for sending out {@link GravatarImageRequest}s and parsing the returned response.
  */
 public final class GravatarImageRequestHandler {
+    /**
+     * The date formatter for image save files.
+     */
+    @SuppressWarnings("SpellCheckingInspection")
+    private static final SimpleDateFormat saveFileFormatter = new SimpleDateFormat("yyMMdd_HHmmss");
+
     /**
      * The hyper text transfer protocol string.
      */
@@ -36,7 +44,7 @@ public final class GravatarImageRequestHandler {
      * The character to separate the email hash from the timestamp
      * when saving an image when a save file was not provided.
      */
-    private static final String emailHashTimestampSeparator = "_";
+    private static final String emailHashTimestampSeparator = "-";
 
     /**
      * The default rating to use if none is provided.
@@ -76,15 +84,16 @@ public final class GravatarImageRequestHandler {
         }
 
         String size = String.valueOf(gravatarImageRequest.getSize());
-        urlBuilder.append(GravatarUrlParameter.SIZE
-                .constructUrlParameterWithValue(size, true, fullParameters));
+        String sizeParameter = GravatarUrlParameter.SIZE.constructUrlParameterWithValue(size, true, fullParameters);
+        urlBuilder.append(sizeParameter);
 
         ImmutableList<GravatarRating> ratings = ImmutableList.copyOf(gravatarImageRequest.getRatings());
         if (ratings.isEmpty()) ratings = ImmutableList.of(defaultRating);
         StringBuilder ratingsBuilder = new StringBuilder();
-        ratings.forEach(rating -> ratingsBuilder.append(rating.getUrlParameter()));
-        urlBuilder.append(GravatarUrlParameter.RATING
-                .constructUrlParameterWithValue(ratingsBuilder.toString(), fullParameters));
+        ratings.forEach(rating -> ratingsBuilder.append(rating .getUrlParameter()));
+        String ratingsParameter = GravatarUrlParameter.RATING
+                .constructUrlParameterWithValue(ratingsBuilder.toString(), fullParameters);
+        urlBuilder.append(ratingsParameter);
 
         GravatarDefaultImageType defaultImageType = gravatarImageRequest.getDefaultImageType();
         String defaultImageUrl = gravatarImageRequest.getDefaultImageUrl();
@@ -138,7 +147,7 @@ public final class GravatarImageRequestHandler {
         Preconditions.checkNotNull(gravatarImageRequest);
 
         String filename = gravatarImageRequest.getGravatarUserEmailHash()
-                + emailHashTimestampSeparator + "user email hash_timestamp";
+                + emailHashTimestampSeparator + saveFileFormatter.format(new Date());
         File saveToFile = new File(filename);
         saveImage(gravatarImageRequest, saveToFile);
         return saveToFile;

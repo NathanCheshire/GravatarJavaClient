@@ -329,5 +329,61 @@ public final class GravatarImageRequestBuilder implements GravatarImageRequest {
         return useFullUrlParameterNames;
     }
 
-    // todo toString, hashcode, equals
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof GravatarImageRequestBuilder)) {
+            return false;
+        }
+
+        GravatarImageRequestBuilder other = (GravatarImageRequestBuilder) o;
+        return hash.equals(other.hash)
+                && shouldAppendJpgSuffix == other.shouldAppendJpgSuffix
+                && size == other.size
+                && ratings.equals(other.ratings)
+                && forceDefaultImage == other.forceDefaultImage
+                && defaultImageType == other.defaultImageType
+                && defaultImageUrl.equals(other.defaultImageUrl)
+                && useHttps == other.useHttps
+                && useFullUrlParameterNames == other.useFullUrlParameterNames;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        int ret = hash.hashCode();
+        ret = 31 * ret + Boolean.hashCode(shouldAppendJpgSuffix);
+        ret = 31 * ret + Integer.hashCode(size);
+        ret = 31 * ret + ratings.hashCode();
+        ret = 31 * ret + Boolean.hashCode(forceDefaultImage);
+        ret = 31 * ret + defaultImageType.hashCode();
+        ret = 31 * ret + defaultImageUrl.hashCode();
+        ret = 31 * ret + Boolean.hashCode(useHttps);
+        ret = 31 * ret + Boolean.hashCode(useFullUrlParameterNames);
+        return ret;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "GravatarImageRequestBuilder{"
+                + "hash=\"" + hash + "\""
+                + ", shouldAppendJpgSuffix=" + shouldAppendJpgSuffix
+                + ", size=" + size
+                + ", ratings=" + ratings
+                + ", forceDefaultImage=" + forceDefaultImage
+                + ", defaultImageType=" + defaultImageType
+                + ", defaultImageUrl=\"" + defaultImageUrl + "\""
+                + ", useHttps=" + useHttps
+                + ", useFullUrlParameterNames=" + useFullUrlParameterNames
+                + "}";
+    }
 }
