@@ -308,7 +308,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
         int ret = hash.hashCode();
         ret = 31 * ret + Boolean.hashCode(shouldAppendJpgSuffix);
         ret = 31 * ret + Integer.hashCode(size);
-        ret = 31 * ret + rating.hashCode();
+        ret = 31 * ret + Integer.hashCode(rating.ordinal());
         ret = 31 * ret + Boolean.hashCode(forceDefaultImage);
         ret = 31 * ret + Objects.hashCode(defaultImageType);
         ret = 31 * ret + Objects.hashCode(defaultImageUrl);
