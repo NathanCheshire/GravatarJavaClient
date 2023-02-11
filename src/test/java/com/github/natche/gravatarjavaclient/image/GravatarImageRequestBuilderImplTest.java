@@ -119,9 +119,9 @@ public class GravatarImageRequestBuilderImplTest {
         GravatarImageRequestBuilderImpl equalImpl1 = new GravatarImageRequestBuilderImpl("nathan@email.com");
         GravatarImageRequestBuilderImpl nonEqualImpl1 = new GravatarImageRequestBuilderImpl("e@email.com");
 
-        assertEquals(-1211096359, impl1.hashCode());
-        assertEquals(-1211096359, equalImpl1.hashCode());
-        assertEquals(-1211096359, nonEqualImpl1.hashCode());
+        assertEquals(730000927, impl1.hashCode());
+        assertEquals(730000927, equalImpl1.hashCode());
+        assertEquals(495389944, nonEqualImpl1.hashCode());
         assertEquals(impl1.hashCode(), equalImpl1.hashCode());
         assertNotEquals(equalImpl1.hashCode(), nonEqualImpl1.hashCode());
         assertNotEquals(equalImpl1.hashCode(), new Object().hashCode());

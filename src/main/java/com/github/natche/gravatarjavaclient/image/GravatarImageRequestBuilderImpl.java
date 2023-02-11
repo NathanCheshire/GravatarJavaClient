@@ -101,7 +101,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * {@inheritDoc}
      */
-    public synchronized String getGravatarUserEmailHash() {
+    public String getGravatarUserEmailHash() {
         return hash;
     }
 
@@ -109,7 +109,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
      * {@inheritDoc}
      */
     @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilderImpl setShouldAppendJpgSuffix(boolean shouldAppendJpgSuffix) {
+    public GravatarImageRequestBuilderImpl setShouldAppendJpgSuffix(boolean shouldAppendJpgSuffix) {
         this.shouldAppendJpgSuffix = shouldAppendJpgSuffix;
         return this;
     }
@@ -117,7 +117,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * {@inheritDoc}
      */
-    public synchronized boolean shouldAppendJpgSuffix() {
+    public boolean shouldAppendJpgSuffix() {
         return shouldAppendJpgSuffix;
     }
 
@@ -129,7 +129,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
      * @throws IllegalArgumentException if the requested size is not in the range {@link #sizeRange}
      */
     @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilderImpl setSize(int size) {
+    public GravatarImageRequestBuilderImpl setSize(int size) {
         Preconditions.checkArgument(sizeRange.contains(size));
 
         this.size = size;
@@ -139,7 +139,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * {@inheritDoc}
      */
-    public synchronized int getSize() {
+    public int getSize() {
         return size;
     }
 
@@ -151,7 +151,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
      * @throws NullPointerException if the provided rating is null
      */
     @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilderImpl setRating(GravatarRating rating) {
+    public GravatarImageRequestBuilderImpl setRating(GravatarRating rating) {
         Preconditions.checkNotNull(rating);
 
         this.rating = rating;
@@ -162,7 +162,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * {@inheritDoc}
      */
-    public synchronized GravatarRating getRating() {
+    public GravatarRating getRating() {
         return rating;
     }
 
@@ -170,7 +170,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
      * {@inheritDoc}
      */
     @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilderImpl setForceDefaultImage(boolean forceDefaultImage) {
+    public GravatarImageRequestBuilderImpl setForceDefaultImage(boolean forceDefaultImage) {
         this.forceDefaultImage = forceDefaultImage;
         return this;
     }
@@ -178,7 +178,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * {@inheritDoc}
      */
-    public synchronized boolean shouldForceDefaultImage() {
+    public boolean shouldForceDefaultImage() {
         return forceDefaultImage;
     }
 
@@ -191,7 +191,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
      * @throws NullPointerException if the provided image type is null
      */
     @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilderImpl setDefaultImageType(GravatarDefaultImageType defaultImageType) {
+    public GravatarImageRequestBuilderImpl setDefaultImageType(GravatarDefaultImageType defaultImageType) {
         Preconditions.checkNotNull(defaultImageType);
 
         this.defaultImageType = defaultImageType;
@@ -203,7 +203,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * {@inheritDoc}
      */
-    public synchronized GravatarDefaultImageType getDefaultImageType() {
+    public GravatarDefaultImageType getDefaultImageType() {
         return defaultImageType;
     }
 
@@ -227,7 +227,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
      * @throws IllegalArgumentException if the provided image url is empty or invalid
      */
     @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilderImpl setDefaultImageUrl(String defaultImageUrl) {
+    public GravatarImageRequestBuilderImpl setDefaultImageUrl(String defaultImageUrl) {
         Preconditions.checkNotNull(defaultImageUrl);
         Preconditions.checkArgument(!defaultImageUrl.isEmpty());
         Preconditions.checkArgument(ValidationUtils.isValidDefaultUrl(defaultImageUrl));
@@ -241,7 +241,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * {@inheritDoc}
      */
-    public synchronized String getDefaultImageUrl() {
+    public String getDefaultImageUrl() {
         return defaultImageUrl;
     }
 
@@ -249,7 +249,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
      * {@inheritDoc}
      */
     @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilderImpl setUseHttps(boolean useHttps) {
+    public GravatarImageRequestBuilderImpl setUseHttps(boolean useHttps) {
         this.useHttps = useHttps;
         return this;
     }
@@ -257,7 +257,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * {@inheritDoc}
      */
-    public synchronized boolean shouldUseHttps() {
+    public boolean shouldUseHttps() {
         return useHttps;
     }
 
@@ -265,7 +265,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
      * {@inheritDoc}
      */
     @CanIgnoreReturnValue
-    public synchronized GravatarImageRequestBuilderImpl setUseFullUrlParameterNames(boolean useFullUrlParameterNames) {
+    public GravatarImageRequestBuilderImpl setUseFullUrlParameterNames(boolean useFullUrlParameterNames) {
         this.useFullUrlParameterNames = useFullUrlParameterNames;
         return this;
     }
@@ -273,7 +273,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * {@inheritDoc}
      */
-    public synchronized boolean shouldUseFullUrlParameterNames() {
+    public boolean shouldUseFullUrlParameterNames() {
         return useFullUrlParameterNames;
     }
 
