@@ -47,9 +47,9 @@ public final class GeneralUtils {
      * @throws GravatarJavaClientException if any other exception occurs
      */
     public static String emailAddressToGravatarHash(String emailAddress) {
-        Preconditions.checkNotNull(emailAddress, "email address cannot be null");
-        Preconditions.checkArgument(!emailAddress.isEmpty(), "email address cannot be empty");
-        Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(emailAddress), "Malformed email address");
+        Preconditions.checkNotNull(emailAddress);
+        Preconditions.checkArgument(!emailAddress.isEmpty());
+        Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(emailAddress));
 
         MessageDigest messageDigest;
         try {

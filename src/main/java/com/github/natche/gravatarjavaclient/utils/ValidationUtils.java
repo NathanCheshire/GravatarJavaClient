@@ -4,7 +4,6 @@ import com.github.natche.gravatarjavaclient.image.GravatarImageRequestBuilder;
 import com.google.common.base.Preconditions;
 
 import javax.imageio.ImageIO;
-import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Pattern;
 
@@ -41,8 +40,8 @@ public final class ValidationUtils {
      * @throws IllegalArgumentException if the provided email address is empty
      */
     public static boolean isValidEmailAddress(String emailAddress) {
-        Preconditions.checkNotNull(emailAddress, "email address cannot be null");
-        Preconditions.checkArgument(!emailAddress.isEmpty(), "email address cannot be empty");
+        Preconditions.checkNotNull(emailAddress);
+        Preconditions.checkArgument(!emailAddress.isEmpty());
 
         return emailAddressRegexPattern.matcher(emailAddress).matches();
     }
@@ -52,7 +51,7 @@ public final class ValidationUtils {
      *
      * @param url the url
      * @return whether the provided url is a valid default image url
-     * @throws NullPointerException if the url is null
+     * @throws NullPointerException     if the url is null
      * @throws IllegalArgumentException if the url is empty
      */
     public static boolean isValidDefaultUrl(String url) {
@@ -60,9 +59,8 @@ public final class ValidationUtils {
         Preconditions.checkArgument(!url.isEmpty());
 
         try {
-            ImageIO.read(new URL(url));
-            return false;
-        } catch (IOException ignored) {
+            return ImageIO.read(new URL(url)).getWidth() > 0;
+        } catch (Exception ignored) {
             return false;
         }
     }
