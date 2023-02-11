@@ -2,6 +2,7 @@ package com.github.natche.gravatarjavaclient.image;
 
 import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
 import com.github.natche.gravatarjavaclient.enums.GravatarRating;
+import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
 import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
@@ -188,7 +189,8 @@ public class GravatarImageRequestHandlerTest {
                 () -> GravatarImageRequestHandler.saveImage(null));
         assertThrows(NullPointerException.class,
                 () -> GravatarImageRequestHandler.saveImage(null, null));
-        GravatarImageRequestBuilderImpl minecraftBuilder = new GravatarImageRequestBuilderImpl("email@domain.com")
+        String userEmail = "email@domain.com";
+        GravatarImageRequestBuilderImpl minecraftBuilder = new GravatarImageRequestBuilderImpl(userEmail)
                 .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")
                 .setForceDefaultImage(true);
         assertThrows(NullPointerException.class,
@@ -212,5 +214,15 @@ public class GravatarImageRequestHandlerTest {
         assertTrue(minecraftImageFile.exists());
         assertTrue(minecraftImageFile.delete());
         assertFalse(minecraftImageFile.exists());
+
+        AtomicReference<File> savedToFile = new AtomicReference<>();
+        assertDoesNotThrow(() -> savedToFile.set(GravatarImageRequestHandler.saveImage(minecraftBuilder)));
+        assertTrue(savedToFile.get().exists());
+
+        String fileName = savedToFile.get().getName();
+        String[] parts = fileName.split("-");
+        assertEquals(GeneralUtils.emailAddressToGravatarHash(userEmail), parts[0]);
+        assertTrue(savedToFile.get().delete());
+        assertFalse(savedToFile.get().exists());
     }
 }

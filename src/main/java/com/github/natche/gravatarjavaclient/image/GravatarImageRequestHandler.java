@@ -22,6 +22,7 @@ public final class GravatarImageRequestHandler {
      * The date formatter for image save files.
      */
     @SuppressWarnings("SpellCheckingInspection")
+    // todo if this was configurable by instance like a GSON that would be cool
     private static final SimpleDateFormat saveFileFormatter = new SimpleDateFormat("yyMMdd_HHmmss");
 
     /**
@@ -43,12 +44,18 @@ public final class GravatarImageRequestHandler {
      * The character to separate the email hash from the timestamp
      * when saving an image when a save file was not provided.
      */
+    // todo if this was configurable by instance like a GSON that would be cool
     private static final String emailHashTimestampSeparator = "-";
+
+    /**
+     * The jpg extension without the leading period.
+     */
+    private static final String jpgExtensionWithoutPeriod = "jpg";
 
     /**
      * The JPG extension appended to the end of an email hash if shouldAppendJpgSuffix is true.
      */
-    private static final String jpgExtension = ".jpg";
+    private static final String jpgExtension = "." + jpgExtensionWithoutPeriod;
 
     /**
      * The string to accompany {@link GravatarUrlParameter#FORCE_DEFAULT} to indicate the default url should be used.
@@ -149,7 +156,7 @@ public final class GravatarImageRequestHandler {
         Preconditions.checkNotNull(gravatarImageRequestBuilder);
 
         String filename = gravatarImageRequestBuilder.getGravatarUserEmailHash()
-                + emailHashTimestampSeparator + saveFileFormatter.format(new Date());
+                + emailHashTimestampSeparator + saveFileFormatter.format(new Date()) + jpgExtension;
         File saveToFile = new File(filename);
         saveImage(gravatarImageRequestBuilder, saveToFile);
         return saveToFile;
@@ -170,6 +177,6 @@ public final class GravatarImageRequestHandler {
         Preconditions.checkNotNull(saveToFile);
         Preconditions.checkArgument(!saveToFile.exists());
 
-        ImageIO.write(getImage(gravatarImageRequestBuilder), "jpg", saveToFile);
+        ImageIO.write(getImage(gravatarImageRequestBuilder), jpgExtensionWithoutPeriod, saveToFile);
     }
 }
