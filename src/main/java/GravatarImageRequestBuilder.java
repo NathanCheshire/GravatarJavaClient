@@ -20,9 +20,19 @@ import java.util.Collection;
  */
 public final class GravatarImageRequestBuilder implements GravatarImageRequest {
     /**
-     * The base url for the image request API.
+     * The hyper text transfer protocol string.
      */
-    private static final String imageRequestBaseUrl = "https://www.gravatar.com/avatar/";
+    private static final String http = "http";
+
+    /**
+     * The safe hyper text transfer protocol string.
+     */
+    private static final String https = "https";
+
+    /**
+     * The base url for the image request API without the protocol prefix.
+     */
+    private static final String imageRequestBaseUrl = "://www.gravatar.com/avatar/";
 
     /**
      * The default length for an image request.
@@ -93,6 +103,16 @@ public final class GravatarImageRequestBuilder implements GravatarImageRequest {
      * The default image url.
      */
     private String defaultImageUrl = null;
+
+    /**
+     * Whether to use https as the protocol for Gravatar image requests.
+     */
+    private boolean useHttps = true;
+
+    /**
+     * Whether the full URL parameter names should be used in the request as opposed to the shorthand versions.
+     */
+    private boolean useFullUrlParameterNames = false;
 
     /**
      * Constructs a new GravatarImageRequestBuilder.
@@ -269,31 +289,66 @@ public final class GravatarImageRequestBuilder implements GravatarImageRequest {
     }
 
     /**
+     * Sets whether to use https as the protocol for Gravatar image requests.
+     * Http will be used if false is provided.
+     *
+     * @param useHttps whether to use https as the protocol
+     * @return this builder
+     */
+    @CanIgnoreReturnValue
+    public synchronized GravatarImageRequestBuilder setUseHttps(boolean useHttps) {
+        this.useHttps = useHttps;
+        return this;
+    }
+
+    /**
+     * Sets whether the full URL parameter names should be used in the request as opposed to the shorthand versions.
+     * For example, instead of appending "&d=default-url-here", "&default=default-url-here" would be used.
+     *
+     * @param useFullUrlParameterNames whether the full URL parameter names should be used
+     * @return this builder
+     */
+    @CanIgnoreReturnValue
+    public synchronized GravatarImageRequestBuilder setUseFullUrlParameterNames(boolean useFullUrlParameterNames) {
+        this.useFullUrlParameterNames = useFullUrlParameterNames;
+        return this;
+    }
+
+    /**
      * {@inheritDoc}
      */
-    public synchronized String buildUrl() throws GravatarJavaClientException {
-        StringBuilder urlBuilder = new StringBuilder(imageRequestBaseUrl);
+    public synchronized String buildUrl() {
+        StringBuilder urlBuilder = new StringBuilder(useHttps ? https : http);
+        urlBuilder.append(imageRequestBaseUrl);
         urlBuilder.append(hash);
 
-        if (appendJpgSuffix) urlBuilder.append(jpgExtension);
-
-        String sizeString = String.valueOf(size);
-        if (sizeString.isEmpty()) throw new GravatarJavaClientException("Failed to convert size to a valid string");
-        urlBuilder.append(GravatarUrlParameter.SIZE.constructUrlParameterWithValue(sizeString, true));
-
-        StringBuilder ratingsBuilder = new StringBuilder();
-        if (ratings.isEmpty()) ratings.add(defaultRating);
-        ratings.forEach(rating -> ratingsBuilder.append(rating.getUrlParameter()));
-        urlBuilder.append(GravatarUrlParameter.RATING.constructUrlParameterWithValue(ratingsBuilder.toString()));
-        if (defaultImageType != null) {
-            urlBuilder.append(GravatarUrlParameter.DEFAULT_IMAGE_TYPE
-                    .constructUrlParameterWithValue(defaultImageType.getUrlParameterValue()));
-        } else if (defaultImageUrl != null) {
-            urlBuilder.append(GravatarUrlParameter.DEFAULT_IMAGE_URL.constructUrlParameterWithValue(defaultImageUrl));
+        if (appendJpgSuffix) {
+            urlBuilder.append(jpgExtension);
         }
 
-        if (forceDefaultImage) urlBuilder.append(GravatarUrlParameter.FORCE_DEFAULT
-                .constructUrlParameterWithValue(forceDefaultUrlTrueString));
+        urlBuilder.append(GravatarUrlParameter.SIZE
+                .constructUrlParameterWithValue(String.valueOf(size), true, useFullUrlParameterNames));
+
+        StringBuilder ratingsBuilder = new StringBuilder();
+        if (ratings.isEmpty()){
+            ratings.add(defaultRating);
+        }
+        ratings.forEach(rating -> ratingsBuilder.append(rating.getUrlParameter()));
+        urlBuilder.append(GravatarUrlParameter.RATING
+                .constructUrlParameterWithValue(ratingsBuilder.toString(), useFullUrlParameterNames));
+
+        if (defaultImageType != null) {
+            urlBuilder.append(GravatarUrlParameter.DEFAULT_IMAGE_TYPE
+                    .constructUrlParameterWithValue(defaultImageType.getUrlParameterValue(), useFullUrlParameterNames));
+        } else if (defaultImageUrl != null) {
+            urlBuilder.append(GravatarUrlParameter.DEFAULT_IMAGE_URL
+                    .constructUrlParameterWithValue(defaultImageUrl, useFullUrlParameterNames));
+        }
+
+        if (forceDefaultImage) {
+            urlBuilder.append(GravatarUrlParameter.FORCE_DEFAULT
+                    .constructUrlParameterWithValue(forceDefaultUrlTrueString, useFullUrlParameterNames));
+        }
 
         return urlBuilder.toString();
     }

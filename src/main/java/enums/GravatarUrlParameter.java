@@ -34,6 +34,17 @@ public enum GravatarUrlParameter {
     RATING("r", "rating");
 
     /**
+     * The character prefix for the initial url parameter directly following the path.
+     * Sometimes called the query string separator.
+     */
+    private static final String initialUrlParameterPrefix = "?";
+
+    /**
+     * The character prefix for any additional url parameters following the initial url parameter.
+     */
+    private static final String nonInitialUrlParameterPrefix = "&";
+
+    /**
      * The short url parameter for this Gravatar url parameter.
      */
     private final String shortUrlParameter;
@@ -41,7 +52,7 @@ public enum GravatarUrlParameter {
     /**
      * The full url parameter for this Gravatar url parameter.
      */
-    private final String fullUrlParameter; // todo
+    private final String fullUrlParameter;
 
     /**
      * Constructs a new GravatarUrlParameter.
@@ -59,14 +70,15 @@ public enum GravatarUrlParameter {
      * It is assumed this is not the first url parameter after the query.
      *
      * @param value the value
+     * @param useFullUrlParameter whether to use the full url parameter
      * @param <T>   the type of value
      * @return the string for this url parameter and value
      * @throws NullPointerException if the provided value is null
      */
-    public <T> String constructUrlParameterWithValue(T value) {
+    public <T> String constructUrlParameterWithValue(T value, boolean useFullUrlParameter) {
         Preconditions.checkNotNull(value);
 
-        return constructUrlParameterWithValue(value, false);
+        return constructUrlParameterWithValue(value, false, useFullUrlParameter);
     }
 
     /**
@@ -77,12 +89,16 @@ public enum GravatarUrlParameter {
      * @param value          the value
      * @param <T>            the type of value
      * @param firstParameter whether this url parameter is the first after the query
+     * @param useFullUrlParameter whether to use the full url parameter
      * @return the string for this url parameter and value
      * @throws NullPointerException if the provided value is null
      */
-    public <T> String constructUrlParameterWithValue(T value, boolean firstParameter) {
+    public <T> String constructUrlParameterWithValue(T value, boolean firstParameter, boolean useFullUrlParameter) {
         Preconditions.checkNotNull(value);
 
-        return firstParameter ? "?" : "&" + shortUrlParameter + "=" + value;
+        String prefix = firstParameter ? initialUrlParameterPrefix : nonInitialUrlParameterPrefix;
+        String urlParameter = useFullUrlParameter ? fullUrlParameter : shortUrlParameter;
+
+        return prefix + urlParameter + "=" + value;
     }
 }

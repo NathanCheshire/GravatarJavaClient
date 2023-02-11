@@ -85,7 +85,7 @@ public interface GravatarImageRequest {
     GravatarImageRequestBuilder setDefaultImageUrl(String defaultImageUrl);
 
     /**
-     * Builds the Gravatar image request url represented by the current state of this builder.
+     * Builds the Gravatar image request url represented by the current state of this.
      *
      * @return the Gravatar image request url
      * @throws GravatarJavaClientException if an exception occurs
