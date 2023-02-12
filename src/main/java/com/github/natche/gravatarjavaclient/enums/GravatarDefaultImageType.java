@@ -55,7 +55,7 @@ public enum GravatarDefaultImageType {
     BLANK("blank");
 
     /**
-     * The url parameter value for this {@link GravatarDefaultImageType}
+     * The url parameter value for this {@link GravatarDefaultImageType}.
      */
     private final String urlParameterValue;
 

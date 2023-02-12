@@ -13,7 +13,7 @@ class GravatarImageRequestBuilderImplTest {
     /**
      * Creates a new instance of this class for testing purposes.
      */
-    public GravatarImageRequestBuilderImplTest() {}
+    GravatarImageRequestBuilderImplTest() {}
 
     /**
      * Tests for creation of Gravatar image request builder impls.

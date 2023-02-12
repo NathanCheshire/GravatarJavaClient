@@ -17,7 +17,7 @@ class GeneralUtilsTest {
     /**
      * Creates a new instance of this class for testing purposes.
      */
-    public GeneralUtilsTest() {}
+    GeneralUtilsTest() {}
 
     /**
      * Tests to ensure reflection is guarded against.

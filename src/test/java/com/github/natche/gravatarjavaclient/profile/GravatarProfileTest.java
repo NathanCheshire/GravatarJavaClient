@@ -41,7 +41,7 @@ class GravatarProfileTest {
     /**
      * Creates a new instance of this class for testing purposes.
      */
-    public GravatarProfileTest() {}
+    GravatarProfileTest() {}
 
     /**
      * Tests for creation of profiles via the from user email method.

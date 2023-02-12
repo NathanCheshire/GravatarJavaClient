@@ -14,7 +14,7 @@ class ValidationUtilsTest {
     /**
      * Creates a new instance of this class for testing purposes.
      */
-    public ValidationUtilsTest() {}
+    ValidationUtilsTest() {}
 
     /**
      * Tests to ensure reflection is guarded against.

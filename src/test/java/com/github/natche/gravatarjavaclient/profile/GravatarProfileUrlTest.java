@@ -11,7 +11,7 @@ class GravatarProfileUrlTest {
     /**
      * Creates a new instance of this class for testing purposes.
      */
-    public GravatarProfileUrlTest() {}
+    GravatarProfileUrlTest() {}
 
     /**
      * Tests for creation of Gravatar profile urls.

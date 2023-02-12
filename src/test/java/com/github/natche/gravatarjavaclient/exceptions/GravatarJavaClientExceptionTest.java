@@ -11,7 +11,7 @@ class GravatarJavaClientExceptionTest {
     /**
      * Creates a new instance of this class for testing purposes.
      */
-    public GravatarJavaClientExceptionTest() {}
+    GravatarJavaClientExceptionTest() {}
 
     /**
      * Tests for creation of exceptions.

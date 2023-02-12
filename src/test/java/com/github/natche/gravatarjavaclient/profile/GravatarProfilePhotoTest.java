@@ -11,7 +11,7 @@ class GravatarProfilePhotoTest {
     /**
      * Creates a new instance of this class for testing purposes.
      */
-    public GravatarProfilePhotoTest() {}
+    GravatarProfilePhotoTest() {}
 
     /**
      * Tests for creation of Gravatar profile photos.

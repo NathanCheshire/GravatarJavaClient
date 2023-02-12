@@ -22,7 +22,7 @@ class GravatarImageRequestHandlerTest {
     /**
      * Creates a new instance of this class for testing purposes.
      */
-    public GravatarImageRequestHandlerTest() {}
+    GravatarImageRequestHandlerTest() {}
 
     /**
      * Tests to ensure reflection is guarded against.

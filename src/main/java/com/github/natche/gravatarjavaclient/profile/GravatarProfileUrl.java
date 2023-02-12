@@ -15,7 +15,7 @@ public final class GravatarProfileUrl {
     private final String name;
 
     /**
-     * The link for this profile URL,
+     * The link for this profile URL.
      */
     private final String link;
 

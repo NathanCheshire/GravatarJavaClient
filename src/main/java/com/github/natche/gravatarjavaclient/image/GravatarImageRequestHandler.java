@@ -125,6 +125,7 @@ public final class GravatarImageRequestHandler {
     /**
      * Returns a buffered image of the Gravatar image represented by the state of the provided request builder.
      *
+     * @param gravatarImageRequestBuilder the image request builder
      * @return the Gravatar URL
      * @throws NullPointerException        if the provided Gravatar image request is null
      * @throws GravatarJavaClientException if an exception reading from the built URL occurs
@@ -140,6 +141,7 @@ public final class GravatarImageRequestHandler {
      * the user email and the current timestamp.
      * Filename format: "emailHash-timestamp" where timestamp is in the format "yyMMdd_HHmms".
      *
+     * @param gravatarImageRequestBuilder the image request builder
      * @throws NullPointerException        if the provided Gravatar image request is null
      * @throws GravatarJavaClientException if the image cannot be read
      * @throws IOException                 if the image cannot be saved to the newly created file
@@ -159,7 +161,8 @@ public final class GravatarImageRequestHandler {
     /**
      * Saves the buffered image returned by {@link #getImage(GravatarImageRequestBuilder)} to the provided file.
      *
-     * @param saveToFile the file to save the image to
+     * @param gravatarImageRequestBuilder the image request builder
+     * @param saveToFile                  the file to save the image to
      * @throws NullPointerException        if the provided image request or file is null
      * @throws IllegalArgumentException    if the file the image will be saved to already exists
      * @throws GravatarJavaClientException if the image cannot be read

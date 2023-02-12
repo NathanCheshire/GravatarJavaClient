@@ -111,7 +111,7 @@ public final class GravatarProfile {
     /**
      * Constructs a new GravatarProfile object.
      *
-     * @param jsonData  the json data to parse for this profile object
+     * @param jsonData the json data to parse for this profile object
      * @throws NullPointerException     if the json data is null
      * @throws IllegalArgumentException if the json data is empty or invalid
      * @throws JSONException            if a required key does not exist in the user's json data
