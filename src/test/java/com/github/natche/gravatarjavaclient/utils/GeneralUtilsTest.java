@@ -97,4 +97,16 @@ public class GeneralUtilsTest {
         assertEquals("c83512d02db256cc5afb78376147ea0f2ea02e6a4e3399b980dea3bef9fc6168",
                 GeneralUtils.hashInput("nathan.vincent.2.718@gmail.com", "SHA256"));
     }
+
+    /**
+     * Tests for the read url method.
+     */
+    @Test
+    void testReadUrl() {
+        assertThrows(NullPointerException.class, () -> GeneralUtils.readUrl(null));
+        assertThrows(IllegalArgumentException.class, () -> GeneralUtils.readUrl(""));
+        assertThrows(GravatarJavaClientException.class, () -> GeneralUtils.readUrl("invalid url"));
+
+        assertDoesNotThrow(() -> GeneralUtils.readUrl("https://www.google.com"));
+    }
 }

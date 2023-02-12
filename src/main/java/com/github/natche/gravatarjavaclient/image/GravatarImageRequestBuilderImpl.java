@@ -18,24 +18,34 @@ import java.util.Objects;
  */
 public final class GravatarImageRequestBuilderImpl implements GravatarImageRequestBuilder {
     /**
-     * The default length for an image request.
-     */
-    private static final int defaultImageLength = 80;
-
-    /**
      * The range a {@link GravatarUrlParameter#SIZE} parameter must fall within.
      */
     private static final Range<Integer> sizeRange = Range.closed(1, 2048);
 
     /**
+     * The default length for an image request.
+     */
+    private static final int defaultImageLength = 80;
+
+    /**
      * Whether the JPG suffix should be appended to the user email hash in the request url.
      */
-    private static final boolean requireJpgExtensionSuffixByDefault = true;
+    private static final boolean appendJpgExtensionSuffixByDefault = true;
 
     /**
      * The default rating to use if none is provided.
      */
     private static final GravatarRating defaultRating = GravatarRating.G;
+
+    /**
+     * The default value for whether https should be used.
+     */
+    private static final boolean defaultUseHttps = true;
+
+    /**
+     * The default value for whether full parameter names should be used.
+     */
+    private static final boolean defaultUseFullParameterNames = false;
 
     /**
      * The hash computed from the user email for this builder.
@@ -45,7 +55,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * Whether the JPG suffix should be appended to the {@link #hash} when constructing the image request url.
      */
-    private boolean shouldAppendJpgSuffix = requireJpgExtensionSuffixByDefault;
+    private boolean shouldAppendJpgSuffix = appendJpgExtensionSuffixByDefault;
 
     /**
      * The size for the image returned by this builder.
@@ -75,12 +85,12 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * Whether to use https as the protocol for Gravatar image requests.
      */
-    private boolean useHttps = true;
+    private boolean useHttps = defaultUseHttps;
 
     /**
      * Whether the full URL parameter names should be used in the request as opposed to the shorthand versions.
      */
-    private boolean useFullUrlParameterNames = false;
+    private boolean useFullUrlParameterNames = defaultUseFullParameterNames;
 
     /**
      * Constructs a new GravatarImageRequestBuilder.

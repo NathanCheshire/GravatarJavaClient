@@ -22,8 +22,13 @@ public final class GravatarImageRequestHandler {
      * The date formatter for image save files.
      */
     @SuppressWarnings("SpellCheckingInspection")
-    // todo if this was configurable by instance like a GSON that would be cool
     private static final SimpleDateFormat saveFileFormatter = new SimpleDateFormat("yyMMdd_HHmmss");
+
+    /**
+     * The character to separate the email hash from the timestamp
+     * when saving an image when a save file was not provided.
+     */
+    private static final String emailHashTimestampSeparator = "-";
 
     /**
      * The hyper text transfer protocol string.
@@ -39,13 +44,6 @@ public final class GravatarImageRequestHandler {
      * The base url for the image request API without the protocol prefix.
      */
     private static final String imageRequestBaseUrl = "://www.gravatar.com/avatar/";
-
-    /**
-     * The character to separate the email hash from the timestamp
-     * when saving an image when a save file was not provided.
-     */
-    // todo if this was configurable by instance like a GSON that would be cool
-    private static final String emailHashTimestampSeparator = "-";
 
     /**
      * The jpg extension without the leading period.

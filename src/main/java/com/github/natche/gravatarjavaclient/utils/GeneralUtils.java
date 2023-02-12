@@ -5,6 +5,9 @@ import com.google.common.base.Preconditions;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.URL;
 import java.nio.ByteBuffer;
@@ -50,6 +53,37 @@ public final class GeneralUtils {
         } catch (Exception e) {
             throw new GravatarJavaClientException("Failed to get image from url: "
                     + url + ", error: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Reads from the provided url and returns the response.
+     *
+     * @param url the string of the url to ping and get contents from
+     * @return the resulting url response
+     * @throws NullPointerException        if the provided url is null
+     * @throws IllegalArgumentException    if the provided url is empty
+     * @throws GravatarJavaClientException if an exception occurs when reading from the provided url
+     */
+    public static String readUrl(String url) {
+        Preconditions.checkNotNull(url);
+        Preconditions.checkArgument(!url.isEmpty());
+
+        try {
+            URL urlObj = new URL(url);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(urlObj.openStream()));
+            StringBuilder sb = new StringBuilder();
+            int read;
+            char[] chars = new char[1024];
+
+            while ((read = reader.read(chars)) != -1) {
+                sb.append(chars, 0, read);
+            }
+
+            reader.close();
+            return sb.toString();
+        } catch (IOException e) {
+            throw new GravatarJavaClientException("Failed to read from url: " + url);
         }
     }
 
