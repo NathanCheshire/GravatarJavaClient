@@ -1,11 +1,11 @@
 package com.github.natche.gravatarjavaclient.profile;
 
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
+import com.google.common.collect.ImmutableList;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the {@link GravatarProfile}.
@@ -75,7 +75,52 @@ class GravatarProfileTest {
      */
     @Test
     void testAccessorsMutators() {
+        GravatarProfile minimal = new GravatarProfile(minimalJson);
+        assertEquals("231564699", minimal.getUserId());
+        assertEquals("2bf1b7a19bcad06a8e894d7373a4cfc7", minimal.getHash());
+        assertEquals("2bf1b7a19bcad06a8e894d7373a4cfc7", minimal.getRequestHash());
+        assertEquals("http://gravatar.com/nathanvcheshire", minimal.getProfileUrl());
+        assertTrue(minimal.getPreferredUsername().isEmpty());
+        assertTrue(minimal.getThumbnailUrl().isEmpty());
+        assertTrue(minimal.getProfilePhotos().isEmpty());
+        assertTrue(minimal.getGivenName().isEmpty());
+        assertTrue(minimal.getFamilyName().isEmpty());
+        assertTrue(minimal.getDisplayName().isEmpty());
+        assertTrue(minimal.getPronouns().isEmpty());
+        assertTrue(minimal.getAboutMe().isEmpty());
+        assertTrue(minimal.getCurrentLocation().isEmpty());
+        assertTrue(minimal.getProfileUrls().isEmpty());
 
+        GravatarProfile full = new GravatarProfile(fullJson);
+        assertEquals("231564699", full.getUserId());
+        assertEquals("2bf1b7a19bcad06a8e894d7373a4cfc7", full.getHash());
+        assertEquals("2bf1b7a19bcad06a8e894d7373a4cfc7", full.getRequestHash());
+        assertEquals("http://gravatar.com/nathanvcheshire", full.getProfileUrl());
+        assertTrue(full.getPreferredUsername().isPresent());
+        assertEquals("nathanvcheshire", full.getPreferredUsername().get());
+        assertTrue(full.getThumbnailUrl().isPresent());
+        assertEquals("https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7",
+                full.getThumbnailUrl().get());
+        assertFalse(full.getProfilePhotos().isEmpty());
+        assertEquals(ImmutableList.of(new GravatarProfilePhoto("thumbnail",
+                "https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7")), full.getProfilePhotos());
+        assertTrue(full.getGivenName().isPresent());
+        assertEquals("Nathan", full.getGivenName().get());
+        assertTrue(full.getFamilyName().isPresent());
+        assertEquals("Cheshire", full.getFamilyName().get());
+        assertTrue(full.getDisplayName().isPresent());
+        assertEquals("Nathan Cheshire", full.getDisplayName().get());
+        assertTrue(full.getPronouns().isPresent());
+        assertEquals("Time/Lord", full.getPronouns().get());
+        assertTrue(full.getAboutMe().isPresent());
+        assertEquals("I make the computer go beep boop and then people ask me to fix their printer.",
+                full.getAboutMe().get());
+        assertTrue(full.getCurrentLocation().isPresent());
+        assertEquals("Gallifrey", full.getCurrentLocation().get());
+        assertFalse(full.getProfileUrls().isEmpty());
+        assertEquals(ImmutableList.of(new GravatarProfileUrl("GitHub", "https://www.github.com"),
+                        new GravatarProfileUrl("Personal Website", "https://www.nathancheshire.com")),
+                full.getProfileUrls());
     }
 
     /**
@@ -83,7 +128,27 @@ class GravatarProfileTest {
      */
     @Test
     void testToString() {
+        GravatarProfile full = new GravatarProfile(fullJson);
+        assertEquals("GravatarProfile{, id=\"231564699\", hash=\"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+                + " requestHash=\"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+                + " profileUrl=\"http://gravatar.com/nathanvcheshire\", preferredUsername=\"nathanvcheshire\","
+                + " thumbnailUrl=\"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+                + " profilePhotos=[GravatarProfilePhoto{type=\"thumbnail\","
+                + " link=\"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\"}],"
+                + " givenName=\"Nathan\", familyName=\"Cheshire\", displayName=\"Nathan Cheshire\","
+                + " pronouns=\"Time/Lord\", aboutMe=\"I make the computer go beep boop and then people"
+                + " ask me to fix their printer.\", currentLocation=\"Gallifrey\","
+                + " profileUrls=[GravatarProfileUrl{name=\"GitHub\", link=\"https://www.github.com\"},"
+                + " GravatarProfileUrl{name=\"Personal Website\", link=\"https://www.nathancheshire.com\"}]}",
+                full.toString());
 
+        GravatarProfile minimal = new GravatarProfile(minimalJson);
+        assertEquals("GravatarProfile{, id=\"231564699\", hash=\"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+                + " requestHash=\"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+                + " profileUrl=\"http://gravatar.com/nathanvcheshire\", preferredUsername=\"null\","
+                + " thumbnailUrl=\"null\", profilePhotos=[], givenName=\"null\", familyName=\"null\","
+                + " displayName=\"null\", pronouns=\"null\", aboutMe=\"null\", currentLocation=\"null\","
+                + " profileUrls=[]}", minimal.toString());
     }
 
     /**
@@ -91,7 +156,15 @@ class GravatarProfileTest {
      */
     @Test
     void testHashCode() {
+        GravatarProfile full = new GravatarProfile(fullJson);
+        GravatarProfile equalToFull = new GravatarProfile(fullJson);
+        GravatarProfile nonEqualToFull = new GravatarProfile(minimalJson);
 
+        assertEquals(-1489177108, full.hashCode());
+        assertEquals(-1489177108, equalToFull.hashCode());
+        assertEquals(-980714800, nonEqualToFull.hashCode());
+        assertEquals(full.hashCode(), equalToFull.hashCode());
+        assertNotEquals(equalToFull.hashCode(), nonEqualToFull.hashCode());
     }
 
     /**
@@ -99,6 +172,13 @@ class GravatarProfileTest {
      */
     @Test
     void testEquals() {
+        GravatarProfile full = new GravatarProfile(fullJson);
+        GravatarProfile equalToFull = new GravatarProfile(fullJson);
+        GravatarProfile nonEqualToFull = new GravatarProfile(minimalJson);
 
+        assertEquals(full, full);
+        assertEquals(full, equalToFull);
+        assertNotEquals(equalToFull, nonEqualToFull);
+        assertNotEquals(equalToFull, new Object());
     }
 }

@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -408,16 +409,16 @@ public final class GravatarProfile {
         ret = 31 * ret + hash.hashCode();
         ret = 31 * ret + requestHash.hashCode();
         ret = 31 * ret + profileUrl.hashCode();
-        ret = 31 * ret + preferredUsername.hashCode();
-        ret = 31 * ret + thumbnailUrl.hashCode();
-        ret = 31 * ret + profilePhotos.hashCode();
-        ret = 31 * ret + givenName.hashCode();
-        ret = 31 * ret + familyName.hashCode();
-        ret = 31 * ret + displayName.hashCode();
-        ret = 31 * ret + pronouns.hashCode();
-        ret = 31 * ret + aboutMe.hashCode();
-        ret = 31 * ret + currentLocation.hashCode();
-        ret = 31 * ret + profileUrls.hashCode();
+        ret = 31 * ret + Objects.hash(preferredUsername);
+        ret = 31 * ret + Objects.hash(thumbnailUrl);
+        ret = 31 * ret + Objects.hashCode(profilePhotos);
+        ret = 31 * ret + Objects.hashCode(givenName);
+        ret = 31 * ret + Objects.hashCode(familyName);
+        ret = 31 * ret + Objects.hashCode(displayName);
+        ret = 31 * ret + Objects.hashCode(pronouns);
+        ret = 31 * ret + Objects.hashCode(aboutMe);
+        ret = 31 * ret + Objects.hashCode(currentLocation);
+        ret = 31 * ret + Objects.hashCode(profileUrls);
         return ret;
     }
 
