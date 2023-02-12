@@ -28,11 +28,6 @@ public final class GravatarProfile {
      */
     private static final String formatType = ".json";
 
-    /**
-     * The user email address.
-     */
-    private final String userEmail;
-
     // -----------------------------------
     // Fields which will always be present
     // -----------------------------------
@@ -114,45 +109,43 @@ public final class GravatarProfile {
     /**
      * Constructs a new Gravatar profile object.
      *
-     * @param userEmail the user email to pull the profile data from.
-     * @throws NullPointerException     if the provided user email is null
-     * @throws IllegalArgumentException if the provided user email is empty or invalid
+     * @param jsonData  the json data to parse for this profile object
+     * @throws NullPointerException     if the json data is null
+     * @throws IllegalArgumentException if the json data is empty or invalid
+     * @throws JSONException            if a required key does not exist in the user's json data
      */
-    public GravatarProfile(String userEmail) {
+    public GravatarProfile(String jsonData) {
+        Preconditions.checkNotNull(jsonData);
+        Preconditions.checkArgument(!jsonData.isEmpty());
+
+        JSONObject masterObject = new JSONObject(jsonData);
+        JSONArray entryArray = masterObject.getJSONArray("entry");
+        JSONObject entryObject = entryArray.getJSONObject(0);
+
+        extractAndSetRequiredFields(entryObject);
+        extractAndSetOptionalFields(entryObject);
+    }
+
+    /**
+     * Constructs and returns a new Gravatar profile object using the provided user email.
+     *
+     * @param userEmail the user's email to return the profile of
+     * @return a new Gravatar profile object
+     * @throws NullPointerException        if the provided email is null
+     * @throws IllegalArgumentException    if the provided email is empty or invalid
+     * @throws GravatarJavaClientException if the Gravatar profile cannot be read from the constructed url
+     * @throws JSONException               if a required key does not exist in the user's json data
+     */
+    public static GravatarProfile fromUserEmail(String userEmail) {
         Preconditions.checkNotNull(userEmail);
         Preconditions.checkArgument(!userEmail.isEmpty());
         Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(userEmail));
 
-        this.userEmail = userEmail;
-
-        requestData();
-    }
-
-    /**
-     * Performs a request to the Gravatar API using the provided email address and fills the data fields of this class.
-     *
-     * @throws GravatarJavaClientException if an exception occurs reading from the url generated from the user email
-     * @throws JSONException               if an expected key is missing
-     */
-    private void requestData() {
         String emailHash = GeneralUtils.emailAddressToGravatarHash(userEmail);
         String requestUrl = gravatarProfileRequestHeader + emailHash + formatType;
-        JSONObject masterObject = new JSONObject(GeneralUtils.readUrl(requestUrl));
-        JSONArray entry = masterObject.getJSONArray("entry");
-        if (entry.isEmpty()) return;
-        JSONObject firstEntry = entry.getJSONObject(0);
+        String jsonData = GeneralUtils.readUrl(requestUrl);
 
-        extractAndSetRequiredFields(firstEntry);
-        extractAndSetOptionalFields(firstEntry);
-    }
-
-    /**
-     * Returns this profile's email address.
-     *
-     * @return this profile's email address
-     */
-    public String getUserEmail() {
-        return userEmail;
+        return new GravatarProfile(jsonData);
     }
 
     /**
@@ -285,6 +278,7 @@ public final class GravatarProfile {
      * Extracts and sets the required fields from the provided object.
      *
      * @param object the object
+     * @throws JSONException if an expected key cannot does not exist on the provided object
      */
     private void extractAndSetRequiredFields(JSONObject object) {
         id = object.getString("id");
@@ -380,5 +374,78 @@ public final class GravatarProfile {
         }
 
         return ImmutableList.copyOf(profileUrls);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "GravatarProfile{"
+                + ", id=\"" + id + "\""
+                + ", hash=\"" + hash + "\""
+                + ", requestHash=\"" + requestHash + "\""
+                + ", profileUrl=\"" + profileUrl + "\""
+                + ", preferredUsername=\"" + preferredUsername + "\""
+                + ", thumbnailUrl=\"" + thumbnailUrl + "\""
+                + ", profilePhotos=" + profilePhotos
+                + ", givenName=\"" + givenName + "\""
+                + ", familyName=\"" + familyName + "\""
+                + ", displayName=\"" + displayName + "\""
+                + ", pronouns=\"" + pronouns + "\""
+                + ", aboutMe=\"" + aboutMe + "\""
+                + ", currentLocation=\"" + currentLocation + "\""
+                + ", profileUrls=" + profileUrls
+                + "}";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        int ret = id.hashCode();
+        ret = 31 * ret + hash.hashCode();
+        ret = 31 * ret + requestHash.hashCode();
+        ret = 31 * ret + profileUrl.hashCode();
+        ret = 31 * ret + preferredUsername.hashCode();
+        ret = 31 * ret + thumbnailUrl.hashCode();
+        ret = 31 * ret + profilePhotos.hashCode();
+        ret = 31 * ret + givenName.hashCode();
+        ret = 31 * ret + familyName.hashCode();
+        ret = 31 * ret + displayName.hashCode();
+        ret = 31 * ret + pronouns.hashCode();
+        ret = 31 * ret + aboutMe.hashCode();
+        ret = 31 * ret + currentLocation.hashCode();
+        ret = 31 * ret + profileUrls.hashCode();
+        return ret;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof GravatarProfile)) {
+            return false;
+        }
+
+        GravatarProfile other = (GravatarProfile) o;
+        return id.equals(other.id)
+                && hash.equals(other.hash)
+                && requestHash.equals(other.requestHash)
+                && profileUrl.equals(other.profileUrl)
+                && preferredUsername.equals(other.preferredUsername)
+                && thumbnailUrl.equals(other.thumbnailUrl)
+                && profilePhotos.equals(other.profilePhotos)
+                && givenName.equals(other.givenName)
+                && familyName.equals(other.familyName)
+                && displayName.equals(other.displayName)
+                && pronouns.equals(other.pronouns)
+                && aboutMe.equals(other.aboutMe)
+                && currentLocation.equals(other.currentLocation)
+                && profileUrls.equals(other.profileUrls);
     }
 }

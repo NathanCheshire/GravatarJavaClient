@@ -43,11 +43,8 @@ class GravatarProfilePhotoTest {
         GravatarProfilePhoto photo = new GravatarProfilePhoto("type", "link");
         assertEquals("GravatarProfilePhoto{type=\"type\", link=\"link\"}", photo.toString());
 
-        // todo here
-        GravatarProfilePhoto myGitHub =
-                new GravatarProfilePhoto("GitHub", "https://www.github.com/nathancheshire");
-        assertEquals("GravatarProfileUrl{name=\"GitHub\", link=\"https://www.github.com/nathancheshire\"}",
-                myGitHub.toString());
+        GravatarProfilePhoto myGitHub = new GravatarProfilePhoto("thumbnail", "link");
+        assertEquals("GravatarProfilePhoto{type=\"thumbnail\", link=\"link\"}", myGitHub.toString());
     }
 
     /**
@@ -55,9 +52,9 @@ class GravatarProfilePhotoTest {
      */
     @Test
     void testEquals() {
-        GravatarProfilePhoto url = new GravatarProfilePhoto("name", "link");
-        GravatarProfilePhoto equalToUrl = new GravatarProfilePhoto("name", "link");
-        GravatarProfilePhoto noteEqualToUrl = new GravatarProfilePhoto("other name", "link");
+        GravatarProfilePhoto url = new GravatarProfilePhoto("thumbnail", "link");
+        GravatarProfilePhoto equalToUrl = new GravatarProfilePhoto("thumbnail", "link");
+        GravatarProfilePhoto noteEqualToUrl = new GravatarProfilePhoto("other thumbnail", "link");
 
         assertEquals(url, url);
         assertEquals(url, equalToUrl);
@@ -70,13 +67,13 @@ class GravatarProfilePhotoTest {
      */
     @Test
     void testHashCode() {
-        GravatarProfilePhoto url = new GravatarProfilePhoto("name", "link");
-        GravatarProfilePhoto equalToUrl = new GravatarProfilePhoto("name", "link");
-        GravatarProfilePhoto noteEqualToUrl = new GravatarProfilePhoto("other name", "link");
+        GravatarProfilePhoto url = new GravatarProfilePhoto("thumbnail", "link");
+        GravatarProfilePhoto equalToUrl = new GravatarProfilePhoto("thumbnail", "link");
+        GravatarProfilePhoto noteEqualToUrl = new GravatarProfilePhoto("other thumbnail", "link");
 
-        assertEquals(107906767, url.hashCode());
-        assertEquals(107906767, equalToUrl.hashCode());
-        assertEquals(1134857663, noteEqualToUrl.hashCode());
+        assertEquals(-1699840882, url.hashCode());
+        assertEquals(-1699840882, equalToUrl.hashCode());
+        assertEquals(97995678, noteEqualToUrl.hashCode());
         assertEquals(url.hashCode(), equalToUrl.hashCode());
         assertNotEquals(equalToUrl.hashCode(), noteEqualToUrl.hashCode());
     }
