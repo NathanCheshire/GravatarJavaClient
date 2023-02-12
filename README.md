@@ -30,6 +30,13 @@ You may then pass this builder to the `GravatarImageRequestHandler` to perform c
 - Getting a buffered image read from the generated URL
 - Saving the buffered image to a file (if no file is provided, a file is generated with the naming scheme of "emailHash-timestamp")
 
+```java
+String url = GravatarImageRequestHandler.buildUrl(builder);
+BufferedImage image = GravatarImageRequestHandler.getImage(builder);
+File imageFile = GravatarImageRequestHandler.getImage(builder);
+File imageFile = GravatarImageRequestHandler.getImage(builder, new File("/path/to/my/image_file.png"));
+```
+
 ## Contributing
 
 If you think some feature is missing or have an idea for how to improve the API, then by all means, contribute! Make sure you follow clean-code styles and elagent API implementation. I closely follow the principles set forth in books such as Effective Java by Joshua Bloch, Clean Code, and The Clean Coder by Robert Cecil Martin.
