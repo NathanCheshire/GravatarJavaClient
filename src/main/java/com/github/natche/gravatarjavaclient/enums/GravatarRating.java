@@ -3,7 +3,7 @@ package com.github.natche.gravatarjavaclient.enums;
 /**
  * Ratings of a Gravatar user image.
  * Gravatar allows users to self-rate their images so that they can indicate if an image is appropriate
- * for a certain audience. By default, only 'G' rated images are displayed unless
+ * for a certain audience. By default, only G rated images are displayed unless
  * you indicate that you would like to see higher ratings.
  */
 public enum GravatarRating {

@@ -32,7 +32,7 @@ public final class ValidationUtils {
 
     /**
      * Returns whether the provided email address is valid.
-     * Note, this does not check for existence, merely syntax.
+     * Note, this does not check for existence, merely proper syntactical structure.
      *
      * @param emailAddress the email address to validate
      * @return whether the provided email address is valid
@@ -47,19 +47,19 @@ public final class ValidationUtils {
     }
 
     /**
-     * Returns whether the provided url is a valid default image url.
+     * Returns whether the provided URL is a valid default image URL.
      *
-     * @param url the url
-     * @return whether the provided url is a valid default image url
-     * @throws NullPointerException     if the url is null
-     * @throws IllegalArgumentException if the url is empty
+     * @param defaultUrl the default URL
+     * @return whether the provided URL is a valid default image URL
+     * @throws NullPointerException     if the URL is null
+     * @throws IllegalArgumentException if the URL is empty
      */
-    public static boolean isValidDefaultUrl(String url) {
-        Preconditions.checkNotNull(url);
-        Preconditions.checkArgument(!url.isEmpty());
+    public static boolean isValidDefaultUrl(String defaultUrl) {
+        Preconditions.checkNotNull(defaultUrl);
+        Preconditions.checkArgument(!defaultUrl.isEmpty());
 
         try {
-            return ImageIO.read(new URL(url)).getWidth() > 0;
+            return ImageIO.read(new URL(defaultUrl)).getWidth() > 0;
         } catch (Exception ignored) {
             return false;
         }

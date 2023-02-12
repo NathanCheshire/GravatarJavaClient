@@ -20,7 +20,7 @@ public final class GravatarProfilePhoto {
     private final String link;
 
     /**
-     * Constructs a new profile photo.
+     * Constructs a new GravatarProfilePhoto.
      *
      * @param type the type of this profile photo
      * @param link the link for this profile photo

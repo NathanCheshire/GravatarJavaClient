@@ -15,18 +15,18 @@ public interface GravatarImageRequestBuilder {
     String getGravatarUserEmailHash();
 
     /**
-     * Sets whether the JPG suffix should be appended to the user email hash when constructing the image request url.
+     * Sets whether the JPG suffix should be appended to the user email hash when constructing the image request URL.
      *
      * @param shouldAppendJpgSuffix whether the JPG suffix should be appended to the
-     *                              user email hash when constructing the image request url.
+     *                              user email hash when constructing the image request URL
      * @return this builder
      */
     GravatarImageRequestBuilder setShouldAppendJpgSuffix(boolean shouldAppendJpgSuffix);
 
     /**
-     * Returns whether the JPG suffix should be appended to the user email hash when constructing the image request url.
+     * Returns whether the JPG suffix should be appended to the user email hash when constructing the image request URL.
      *
-     * @return whether the JPG suffix should be appended to the user email hash when constructing the image request url
+     * @return whether the JPG suffix should be appended to the user email hash when constructing the image request URL
      */
     boolean shouldAppendJpgSuffix();
 
@@ -46,7 +46,7 @@ public interface GravatarImageRequestBuilder {
     int getSize();
 
     /**
-     * Sets the ratings to the provided singular rating.
+     * Sets the maximum acceptable rating to the provided rating.
      *
      * @param rating the rating
      * @return this builder
@@ -62,7 +62,7 @@ public interface GravatarImageRequestBuilder {
 
     /**
      * Sets whether to force the default image to be returned from this image request,
-     * regardless of whether the a Gravatar for the user email is valid.
+     * regardless of whether a Gravatar for the user email is valid.
      *
      * @param forceDefaultImage whether to force the default image to be returned
      * @return this builder
@@ -93,20 +93,20 @@ public interface GravatarImageRequestBuilder {
     GravatarDefaultImageType getDefaultImageType();
 
     /**
-     * Sets the default image url.
+     * Returns the default image URL.
+     *
+     * @return the default image URL
+     */
+    String getDefaultImageUrl();
+
+    /**
+     * Sets the default image URL.
      * Note, this removes the value set by {@link #setDefaultImageType(GravatarDefaultImageType)} if set.
      *
-     * @param defaultImageUrl the default image url
+     * @param defaultImageUrl the default image URL
      * @return this builder
      */
     GravatarImageRequestBuilder setDefaultImageUrl(String defaultImageUrl);
-
-    /**
-     * Returns the default image url.
-     *
-     * @return the default image url
-     */
-    String getDefaultImageUrl();
 
     /**
      * Sets whether to use https as the protocol for Gravatar image requests.
@@ -126,7 +126,8 @@ public interface GravatarImageRequestBuilder {
 
     /**
      * Sets whether the full URL parameter names should be used in the request as opposed to the shorthand versions.
-     * For example, instead of appending "&d=default-url-here", "&default=default-url-here" would be used.
+     * For example, instead of appending "&d=https://www.image/com/image.png",
+     * "&default=https://www.image/com/image.png" would be used.
      *
      * @param useFullUrlParameterNames whether the full URL parameter names should be used
      * @return this builder

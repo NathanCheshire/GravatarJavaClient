@@ -18,13 +18,23 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 /**
- * General utility methods used throughout the GravatarJavaClient API.
+ * General utility methods used throughout the GravatarJavaClient.
  */
 public final class GeneralUtils {
     /**
      * The hashing algorithm used to transform a user email address into their gravatar UUID.
      */
     private static final String hashingAlgorithm = "MD5";
+
+    /**
+     * The buffer size used by the {@link BufferedReader} when reading the contents of a URL.
+     */
+    private static final int readUrlBufferSize = 1024;
+
+    /**
+     * The number of digits in the hexadecimal base system.
+     */
+    private static final int hexBase = 16;
 
     /**
      * Suppress default constructor.
@@ -36,13 +46,13 @@ public final class GeneralUtils {
     }
 
     /**
-     * Returns a buffered image from the provided url.
+     * Returns a buffered image read from the provided URL.
      *
-     * @param url the url
-     * @return the url from the provided image
-     * @throws NullPointerException        if the provided url is null
-     * @throws IllegalArgumentException    if the provided url is empty
-     * @throws GravatarJavaClientException if an image cannot be read from the provided url
+     * @param url the URL
+     * @return the URL from the provided image
+     * @throws NullPointerException        if the provided URL is null
+     * @throws IllegalArgumentException    if the provided URL is empty
+     * @throws GravatarJavaClientException if an image cannot be read from the provided URL
      */
     public static BufferedImage readBufferedImage(String url) {
         Preconditions.checkNotNull(url);
@@ -57,39 +67,36 @@ public final class GeneralUtils {
     }
 
     /**
-     * Reads from the provided url and returns the response.
+     * Reads from the provided URL and returns the response data.
      *
-     * @param url the string of the url to ping and get contents from
-     * @return the resulting url response
-     * @throws NullPointerException        if the provided url is null
-     * @throws IllegalArgumentException    if the provided url is empty
-     * @throws GravatarJavaClientException if an exception occurs when reading from the provided url
+     * @param url the URL to ping and read data from
+     * @return the contents of the provided URL
+     * @throws NullPointerException        if the provided URL is null
+     * @throws IllegalArgumentException    if the provided URL is empty
+     * @throws GravatarJavaClientException if an exception occurs when reading from the provided URL
      */
     public static String readUrl(String url) {
         Preconditions.checkNotNull(url);
         Preconditions.checkArgument(!url.isEmpty());
 
-        try {
-            URL urlObj = new URL(url);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(urlObj.openStream()));
-            StringBuilder sb = new StringBuilder();
-            int read;
-            char[] chars = new char[1024];
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream()))) {
+            StringBuilder builder = new StringBuilder();
 
+            char[] chars = new char[readUrlBufferSize];
+            int read;
             while ((read = reader.read(chars)) != -1) {
-                sb.append(chars, 0, read);
+                builder.append(chars, 0, read);
             }
 
-            reader.close();
-            return sb.toString();
+            return builder.toString();
         } catch (IOException e) {
-            throw new GravatarJavaClientException("Failed to read from url: " + url);
+            throw new GravatarJavaClientException("Failed to read contents of URL: " + url);
         }
     }
 
     /**
      * Hashes the provided email address to obtain the MD5 hash
-     * corresponding to the Gravatar icon linked to the provided email address.
+     * corresponding to the Gravatar icon linked to the email address.
      * <p>
      * Algorithm steps:
      * <ul>
@@ -139,6 +146,6 @@ public final class GeneralUtils {
         byte[] digest = messageDigest.digest(bytes);
 
         BigInteger number = new BigInteger(1, digest);
-        return number.toString(16);
+        return number.toString(hexBase);
     }
 }

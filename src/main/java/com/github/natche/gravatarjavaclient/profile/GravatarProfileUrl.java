@@ -10,20 +10,20 @@ import com.google.errorprone.annotations.Immutable;
 @SuppressWarnings("ClassCanBeRecord")
 public final class GravatarProfileUrl {
     /**
-     * The display name for this profile url.
+     * The display name for this profile URL.
      */
     private final String name;
 
     /**
-     * The link for this profile url,
+     * The link for this profile URL,
      */
     private final String link;
 
     /**
-     * Constructs a new profile url.
+     * Constructs a new profile URL.
      *
-     * @param name the name for this profile url
-     * @param link the link for this profile url
+     * @param name the name for this profile URL
+     * @param link the link for this profile URL
      * @throws NullPointerException     if any parameter is null
      * @throws IllegalArgumentException if any parameter is empty
      */
@@ -38,18 +38,18 @@ public final class GravatarProfileUrl {
     }
 
     /**
-     * Returns the display name for this profile url.
+     * Returns the display name for this profile URL.
      *
-     * @return the display name for this profile url
+     * @return the display name for this profile URL
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Returns the link for this profile url.
+     * Returns the link for this profile URL.
      *
-     * @return the link for this profile url
+     * @return the link for this profile URL
      */
     public String getLink() {
         return link;

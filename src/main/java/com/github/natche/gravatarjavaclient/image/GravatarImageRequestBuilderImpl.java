@@ -28,7 +28,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     private static final int defaultImageLength = 80;
 
     /**
-     * Whether the JPG suffix should be appended to the user email hash in the request url.
+     * Whether the JPG suffix should be appended to the user email hash in the request URL.
      */
     private static final boolean appendJpgExtensionSuffixByDefault = true;
 
@@ -53,7 +53,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     private final String hash;
 
     /**
-     * Whether the JPG suffix should be appended to the {@link #hash} when constructing the image request url.
+     * Whether the JPG suffix should be appended to the {@link #hash} when constructing the image request URL.
      */
     private boolean shouldAppendJpgSuffix = appendJpgExtensionSuffixByDefault;
 
@@ -63,7 +63,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     private int size = defaultImageLength;
 
     /**
-     * The rating allowable for this image request.
+     * The maximum rating allowable for this image request.
      */
     private GravatarRating rating = defaultRating;
 
@@ -78,7 +78,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     private GravatarDefaultImageType defaultImageType = null;
 
     /**
-     * The default image url.
+     * The default image URL.
      */
     private String defaultImageUrl = null;
 
@@ -95,7 +95,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * Constructs a new GravatarImageRequestBuilder.
      *
-     * @param userEmail the user email for this Gravatar image request.
+     * @param userEmail the user email for this Gravatar image request
      * @throws NullPointerException        if the user email is null
      * @throws IllegalArgumentException    if the provided user email is empty or invalid
      * @throws GravatarJavaClientException if any other exception occurs
@@ -154,7 +154,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     }
 
     /**
-     * Sets the ratings to the provided singular rating.
+     * Sets the maximum acceptable rating.
      *
      * @param rating the rating
      * @return this builder
@@ -218,7 +218,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     }
 
     /**
-     * Sets the default image url.
+     * Sets the default image URL.
      * Note, this removes the {@link #defaultImageType} if set.
      * <p>
      * Conditions which must be met for the Gravatar API endpoint to return a default image:
@@ -231,10 +231,10 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
      *     <li>MUST NOT include a query string (if it does, it will be ignored)</li>
      * </ul>
      *
-     * @param defaultImageUrl the default image url
+     * @param defaultImageUrl the default image URL
      * @return this builder
-     * @throws NullPointerException     if the provided image url is null
-     * @throws IllegalArgumentException if the provided image url is empty or invalid
+     * @throws NullPointerException     if the provided image URL is null
+     * @throws IllegalArgumentException if the provided image URL is empty or invalid
      */
     @CanIgnoreReturnValue
     public GravatarImageRequestBuilderImpl setDefaultImageUrl(String defaultImageUrl) {

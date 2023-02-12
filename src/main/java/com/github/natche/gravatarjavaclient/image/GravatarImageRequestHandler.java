@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * The request handler for sending out {@link GravatarImageRequestBuilder}s and parsing the returned response.
+ * The request handler for sending out {@link GravatarImageRequestBuilder}s and parsing the returned image data.
  */
 public final class GravatarImageRequestHandler {
     /**
@@ -26,7 +26,7 @@ public final class GravatarImageRequestHandler {
 
     /**
      * The character to separate the email hash from the timestamp
-     * when saving an image when a save file was not provided.
+     * when saving an image if a save to file was not provided.
      */
     private static final String emailHashTimestampSeparator = "-";
 
@@ -41,7 +41,7 @@ public final class GravatarImageRequestHandler {
     private static final String https = "https";
 
     /**
-     * The base url for the image request API without the protocol prefix.
+     * The base URL for the image request API without the protocol prefix.
      */
     private static final String imageRequestBaseUrl = "://www.gravatar.com/avatar/";
 
@@ -51,12 +51,14 @@ public final class GravatarImageRequestHandler {
     private static final String jpgExtensionWithoutPeriod = "jpg";
 
     /**
-     * The JPG extension appended to the end of an email hash if shouldAppendJpgSuffix is true.
+     * The JPG extension to append to the end of an email hash if
+     * {@link GravatarImageRequestBuilder#shouldAppendJpgSuffix()} is true.
      */
     private static final String jpgExtension = "." + jpgExtensionWithoutPeriod;
 
     /**
-     * The string to accompany {@link GravatarUrlParameter#FORCE_DEFAULT} to indicate the default url should be used.
+     * The string to accompany {@link GravatarUrlParameter#FORCE_DEFAULT} to indicate the default URL
+     * should be used regardless of the validity of the user account.
      */
     private static final String forceDefaultUrlTrueString = "y";
 
@@ -110,7 +112,7 @@ public final class GravatarImageRequestHandler {
 
         if (gravatarImageRequestBuilder.shouldForceDefaultImage()) {
             if (defaultImageUrl == null) {
-                throw new GravatarJavaClientException("Must provide default url if force default is enabled");
+                throw new GravatarJavaClientException("Must provide default URL if force default is enabled");
             }
 
             urlBuilder.append(GravatarUrlParameter.FORCE_DEFAULT
@@ -123,9 +125,9 @@ public final class GravatarImageRequestHandler {
     /**
      * Returns a buffered image of the Gravatar image represented by the state of the provided request builder.
      *
-     * @return the Gravatar url
+     * @return the Gravatar URL
      * @throws NullPointerException        if the provided Gravatar image request is null
-     * @throws GravatarJavaClientException if an exception reading from the built url occurs
+     * @throws GravatarJavaClientException if an exception reading from the built URL occurs
      */
     public static BufferedImage getImage(GravatarImageRequestBuilder gravatarImageRequestBuilder) {
         Preconditions.checkNotNull(gravatarImageRequestBuilder);
@@ -136,6 +138,7 @@ public final class GravatarImageRequestHandler {
     /**
      * Saves the buffered image returned by {@link #getImage(GravatarImageRequestBuilder)} to a file named using
      * the user email and the current timestamp.
+     * Filename format: "emailHash-timestamp" where timestamp is in the format "yyMMdd_HHmms".
      *
      * @throws NullPointerException        if the provided Gravatar image request is null
      * @throws GravatarJavaClientException if the image cannot be read

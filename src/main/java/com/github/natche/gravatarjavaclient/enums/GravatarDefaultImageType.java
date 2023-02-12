@@ -1,7 +1,8 @@
 package com.github.natche.gravatarjavaclient.enums;
 
 /**
- * The default image types supported by Gravatar for random themed images.
+ * The default image types supported by Gravatar for the image API.
+ * These themes are generated based off of the user email hash.
  */
 public enum GravatarDefaultImageType {
     /**
@@ -25,7 +26,7 @@ public enum GravatarDefaultImageType {
 
     /**
      * The monster id image type.
-     * A generated 'monster' with different colors, faces, etc.
+     * A generated "monster" with different colors, faces, etc.
      */
     MONSTER_ID("monsterid"),
 

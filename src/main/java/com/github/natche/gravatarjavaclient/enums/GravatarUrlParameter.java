@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 /**
  * A url parameter for a Gravatar request.
  */
-@SuppressWarnings("SpellCheckingInspection") /* Long parameter names */
 public enum GravatarUrlParameter {
     /**
      * The size of the image to be returned by a Gravatar request.
@@ -13,7 +12,7 @@ public enum GravatarUrlParameter {
     SIZE("s", "size"),
 
     /**
-     * The URL to the default image to return in the case of a user email hash being invalid.
+     * The URL to the default image to return in the case a user email hash is invalid.
      */
     DEFAULT_IMAGE_URL("d", "default"),
 

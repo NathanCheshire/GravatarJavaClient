@@ -16,6 +16,7 @@ import java.util.Optional;
 
 /**
  * The results of a Gravatar profile request.
+ * <a href="https://en.gravatar.com/site/implement/profiles/">Profile Request API Documentation</a>.
  */
 @Immutable
 public final class GravatarProfile {
@@ -49,7 +50,7 @@ public final class GravatarProfile {
     private String requestHash = null;
 
     /**
-     * The url to this profile.
+     * The URL to this profile.
      */
     private String profileUrl = null;
 
@@ -63,7 +64,7 @@ public final class GravatarProfile {
     private String preferredUsername = null;
 
     /**
-     * The url to this profile's primary thumbnail.
+     * The URL to this profile's primary thumbnail.
      */
     private String thumbnailUrl = null;
 
@@ -103,12 +104,12 @@ public final class GravatarProfile {
     private String currentLocation = null;
 
     /**
-     * The list of urls the user has linked to their profile.
+     * The list of URLs the user has linked to their profile.
      */
     private ImmutableList<GravatarProfileUrl> profileUrls = ImmutableList.of();
 
     /**
-     * Constructs a new Gravatar profile object.
+     * Constructs a new GravatarProfile object.
      *
      * @param jsonData  the json data to parse for this profile object
      * @throws NullPointerException     if the json data is null
@@ -128,13 +129,13 @@ public final class GravatarProfile {
     }
 
     /**
-     * Constructs and returns a new Gravatar profile object using the provided user email.
+     * Constructs and returns a new GravatarProfile object using the provided email.
      *
-     * @param userEmail the user's email to return the profile of
+     * @param userEmail the user's email linked to their Gravatar profile
      * @return a new Gravatar profile object
      * @throws NullPointerException        if the provided email is null
      * @throws IllegalArgumentException    if the provided email is empty or invalid
-     * @throws GravatarJavaClientException if the Gravatar profile cannot be read from the constructed url
+     * @throws GravatarJavaClientException if the Gravatar profile cannot be read from the constructed URL
      * @throws JSONException               if a required key does not exist in the user's json data
      */
     public static GravatarProfile fromUserEmail(String userEmail) {
@@ -177,9 +178,9 @@ public final class GravatarProfile {
     }
 
     /**
-     * Returns the url to this profile.
+     * Returns the URL to this profile.
      *
-     * @return the url to this profile
+     * @return the URL to this profile
      */
     public String getProfileUrl() {
         return profileUrl;
@@ -195,81 +196,81 @@ public final class GravatarProfile {
     }
 
     /**
-     * Returns the thumbnail url.
+     * Returns the thumbnail URL if present. Empty optional else.
      *
-     * @return the thumbnail url
+     * @return the thumbnail URL if present. Empty optional else
      */
     public Optional<String> getThumbnailUrl() {
         return Optional.ofNullable(thumbnailUrl);
     }
 
     /**
-     * Returns the list of profile photos.
+     * Returns the list of profile photos if present. Empty optional else.
      *
-     * @return the list of profile photos
+     * @return the list of profile photos if present. Empty optional else
      */
     public ImmutableList<GravatarProfilePhoto> getProfilePhotos() {
         return profilePhotos;
     }
 
     /**
-     * Returns the user's given name.
+     * Returns the user's given name if present. Empty optional else.
      *
-     * @return the user's given name
+     * @return the user's given name if present. Empty optional else
      */
     public Optional<String> getGivenName() {
         return Optional.ofNullable(givenName);
     }
 
     /**
-     * Returns the user's family/last name.
+     * Returns the user's family/last name if present. Empty optional else.
      *
-     * @return the user's family/last name
+     * @return the user's family/last name if present. Empty optional else
      */
     public Optional<String> getFamilyName() {
         return Optional.ofNullable(familyName);
     }
 
     /**
-     * Returns the user's display name.
+     * Returns the user's display name if present. Empty optional else.
      *
-     * @return the user's display name
+     * @return the user's display name if present. Empty optional else
      */
     public Optional<String> getDisplayName() {
         return Optional.ofNullable(displayName);
     }
 
     /**
-     * Returns the user's pronouns.
+     * Returns the user's pronouns if present. Empty optional else.
      *
-     * @return the user's pronouns
+     * @return the user's pronouns if present. Empty optional else
      */
     public Optional<String> getPronouns() {
         return Optional.ofNullable(pronouns);
     }
 
     /**
-     * Returns the user's about me section.
+     * Returns the user's about me section if present. Empty optional else.
      *
-     * @return the user's about me section
+     * @return the user's about me section if present. Empty optional else
      */
     public Optional<String> getAboutMe() {
         return Optional.ofNullable(aboutMe);
     }
 
     /**
-     * Returns the user's current location.
+     * Returns the user's current location if present. Empty optional else.
      *
-     * @return the user's current location
+     * @return the user's current location if present. Empty optional else
      */
     public Optional<String> getCurrentLocation() {
         return Optional.ofNullable(currentLocation);
     }
 
     /**
-     * Returns a list of the user's profile urls.
+     * Returns a list of the user's profile URLs if present. Empty optional else.
      *
-     * @return a list of the user's profile urls
+     * @return a list of the user's profile URLs if present. Empty optional else
      */
     public ImmutableList<GravatarProfileUrl> getProfileUrls() {
         return profileUrls;
