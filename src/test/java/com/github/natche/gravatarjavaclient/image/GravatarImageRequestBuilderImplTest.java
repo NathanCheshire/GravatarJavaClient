@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests for the implementation of the Gravatar image request builder.
  */
-public class GravatarImageRequestBuilderImplTest {
+class GravatarImageRequestBuilderImplTest {
     /**
      * Creates a new instance of this class for testing purposes.
      */

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests for the {@link ValidationUtils}.
  */
-public class ValidationUtilsTest {
+class ValidationUtilsTest {
     /**
      * Creates a new instance of this class for testing purposes.
      */

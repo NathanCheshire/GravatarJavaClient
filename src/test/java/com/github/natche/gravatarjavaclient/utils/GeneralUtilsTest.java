@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests for the {@link GeneralUtils}.
  */
-public class GeneralUtilsTest {
+class GeneralUtilsTest {
     /**
      * Creates a new instance of this class for testing purposes.
      */

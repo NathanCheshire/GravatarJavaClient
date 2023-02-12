@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 /**
  * Tests for {@link GravatarJavaClientException}s.
  */
-public class GravatarJavaClientExceptionTest {
+class GravatarJavaClientExceptionTest {
     /**
      * Creates a new instance of this class for testing purposes.
      */

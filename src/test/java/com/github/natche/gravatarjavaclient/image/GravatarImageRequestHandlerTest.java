@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests for the {@link GravatarImageRequestHandler}.
  */
-public class GravatarImageRequestHandlerTest {
+class GravatarImageRequestHandlerTest {
     /**
      * Creates a new instance of this class for testing purposes.
      */
