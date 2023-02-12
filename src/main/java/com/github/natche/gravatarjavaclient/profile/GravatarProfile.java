@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * The results of a Gravatar profile request.
@@ -86,7 +87,7 @@ public final class GravatarProfile {
     private String familyName = null;
 
     /**
-     * The user's dislay name.
+     * The user's display name.
      */
     private String displayName = null;
 
@@ -141,48 +142,192 @@ public final class GravatarProfile {
         if (entry.isEmpty()) return;
         JSONObject firstEntry = entry.getJSONObject(0);
 
-        /*
-        Required fields
-         */
-        id = firstEntry.getString("id");
-        hash = firstEntry.getString("hash");
-        requestHash = firstEntry.getString("requestHash");
-        profileUrl = firstEntry.getString("profileUrl");
-
-        /*
-        Optional fields
-         */
-        if (firstEntry.has("preferredUsername")) {
-            preferredUsername = firstEntry.getString("preferredUsername");
-        }
-        if (firstEntry.has("thumbnailUrl")) {
-            thumbnailUrl = firstEntry.getString("thumbnailUrl");
-        }
-        if (firstEntry.has("photos")) {
-            profilePhotos = extractProfilePhotos(firstEntry.getJSONArray("photos"));
-        }
-        if (firstEntry.has("name")) {
-            JSONObject nameObject = firstEntry.getJSONObject("name");
-            extractNameFields(nameObject);
-        }
-        if (firstEntry.has("displayName")) {
-            displayName = firstEntry.getString("displayName");
-        }
-        if (firstEntry.has("pronouns")) {
-            pronouns = firstEntry.getString("pronouns");
-        }
-        if (firstEntry.has("aboutMe")) {
-            aboutMe = firstEntry.getString("aboutMe");
-        }
-        if (firstEntry.has("currentLocation")) {
-            currentLocation = firstEntry.getString("currentLocation");
-        }
-        if (firstEntry.has("urls")) {
-            profileUrls = extractProfileUrls(firstEntry.getJSONArray("urls"));
-        }
+        extractAndSetRequiredFields(firstEntry);
+        extractAndSetOptionalFields(firstEntry);
     }
 
-    // todo getters for required and optionals for optional params
+    /**
+     * Returns this profile's email address.
+     *
+     * @return this profile's email address
+     */
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    /**
+     * Returns this profile's user id.
+     *
+     * @return this profile's user id
+     */
+    public String getUserId() {
+        return id;
+    }
+
+    /**
+     * Returns this profile's hash.
+     *
+     * @return this profile's hash
+     */
+    public String getHash() {
+        return hash;
+    }
+
+    /**
+     * Returns this profile's request hash.
+     *
+     * @return this profile's request hash
+     */
+    public String getRequestHash() {
+        return requestHash;
+    }
+
+    /**
+     * Returns the url to this profile.
+     *
+     * @return the url to this profile
+     */
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    /**
+     * Returns the user's preferred username if present. Empty optional else.
+     *
+     * @return the user's preferred username if present. Empty optional else
+     */
+    public Optional<String> getPreferredUsername() {
+        return Optional.ofNullable(preferredUsername);
+    }
+
+    /**
+     * Returns the thumbnail url.
+     *
+     * @return the thumbnail url
+     */
+    public Optional<String> getThumbnailUrl() {
+        return Optional.ofNullable(thumbnailUrl);
+    }
+
+    /**
+     * Returns the list of profile photos.
+     *
+     * @return the list of profile photos
+     */
+    public ImmutableList<GravatarProfilePhoto> getProfilePhotos() {
+        return profilePhotos;
+    }
+
+    /**
+     * Returns the user's given name.
+     *
+     * @return the user's given name
+     */
+    public Optional<String> getGivenName() {
+        return Optional.ofNullable(givenName);
+    }
+
+    /**
+     * Returns the user's family/last name.
+     *
+     * @return the user's family/last name
+     */
+    public Optional<String> getFamilyName() {
+        return Optional.ofNullable(familyName);
+    }
+
+    /**
+     * Returns the user's display name.
+     *
+     * @return the user's display name
+     */
+    public Optional<String> getDisplayName() {
+        return Optional.ofNullable(displayName);
+    }
+
+    /**
+     * Returns the user's pronouns.
+     *
+     * @return the user's pronouns
+     */
+    public Optional<String> getPronouns() {
+        return Optional.ofNullable(pronouns);
+    }
+
+    /**
+     * Returns the user's about me section.
+     *
+     * @return the user's about me section
+     */
+    public Optional<String> getAboutMe() {
+        return Optional.ofNullable(aboutMe);
+    }
+
+    /**
+     * Returns the user's current location.
+     *
+     * @return the user's current location
+     */
+    public Optional<String> getCurrentLocation() {
+        return Optional.ofNullable(currentLocation);
+    }
+
+    /**
+     * Returns a list of the user's profile urls.
+     *
+     * @return a list of the user's profile urls
+     */
+    public ImmutableList<GravatarProfileUrl> getProfileUrls() {
+        return profileUrls;
+    }
+
+    /**
+     * Extracts and sets the required fields from the provided object.
+     *
+     * @param object the object
+     */
+    private void extractAndSetRequiredFields(JSONObject object) {
+        id = object.getString("id");
+        hash = object.getString("hash");
+        requestHash = object.getString("requestHash");
+        profileUrl = object.getString("profileUrl");
+    }
+
+    /**
+     * Extracts and sets the optional fields from the provided object.
+     *
+     * @param object the object
+     */
+    private void extractAndSetOptionalFields(JSONObject object) {
+        if (object.has("preferredUsername")) {
+            preferredUsername = object.getString("preferredUsername");
+        }
+        if (object.has("thumbnailUrl")) {
+            thumbnailUrl = object.getString("thumbnailUrl");
+        }
+        if (object.has("photos")) {
+            profilePhotos = extractProfilePhotos(object.getJSONArray("photos"));
+        }
+        if (object.has("name")) {
+            JSONObject nameObject = object.getJSONObject("name");
+            extractNameFields(nameObject);
+        }
+        if (object.has("displayName")) {
+            displayName = object.getString("displayName");
+        }
+        if (object.has("pronouns")) {
+            pronouns = object.getString("pronouns");
+        }
+        if (object.has("aboutMe")) {
+            aboutMe = object.getString("aboutMe");
+        }
+        if (object.has("currentLocation")) {
+            currentLocation = object.getString("currentLocation");
+        }
+        if (object.has("urls")) {
+            profileUrls = extractProfileUrls(object.getJSONArray("urls"));
+        }
+    }
 
     /**
      * Extracts the name field parts from the provided name object.
@@ -206,7 +351,7 @@ public final class GravatarProfile {
      * @param photosArray the photos JSON array
      * @return the profile photos from the provided array
      */
-    private ImmutableList<GravatarProfilePhoto> extractProfilePhotos(JSONArray photosArray) {
+    private static ImmutableList<GravatarProfilePhoto> extractProfilePhotos(JSONArray photosArray) {
         ArrayList<GravatarProfilePhoto> profilePhotos = new ArrayList<>();
 
         for (int i = 0 ; i < photosArray.length() ; i++) {
@@ -224,7 +369,7 @@ public final class GravatarProfile {
      * @param urlsArray the url JSON array
      * @return the profile urls from the provided array
      */
-    private ImmutableList<GravatarProfileUrl> extractProfileUrls(JSONArray urlsArray) {
+    private static ImmutableList<GravatarProfileUrl> extractProfileUrls(JSONArray urlsArray) {
         ArrayList<GravatarProfileUrl> profileUrls = new ArrayList<>();
 
         for (int i = 0 ; i < urlsArray.length() ; i++) {
