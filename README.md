@@ -1,3 +1,4 @@
+![Logo](./logo.png)
 # GravatarJavaClient
 ### By Nate Cheshire
 
