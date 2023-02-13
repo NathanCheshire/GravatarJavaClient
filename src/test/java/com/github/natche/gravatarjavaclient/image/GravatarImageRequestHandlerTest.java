@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,6 +42,26 @@ class GravatarImageRequestHandlerTest {
             assertTrue(target instanceof AssertionError);
             assertEquals("Cannot create instances of GravatarImageRequestHandler", target.getMessage());
         }
+    }
+
+    /**
+     * Tests for the setter methods of the handler.
+     */
+    @Test
+    void testSetters() {
+        assertThrows(NullPointerException.class, () -> GravatarImageRequestHandler.setsSaveFileFormatter(null));
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.setsSaveFileFormatter(new SimpleDateFormat("")));
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.setsSaveFileFormatter(new SimpleDateFormat("mm")));
+
+        assertThrows(NullPointerException.class,
+                () -> GravatarImageRequestHandler.setEmailHashTimestampSeparator(null));
+        assertThrows(IllegalArgumentException.class,
+                () -> GravatarImageRequestHandler.setEmailHashTimestampSeparator(""));
+        assertThrows(IllegalArgumentException.class,
+                () -> GravatarImageRequestHandler.setEmailHashTimestampSeparator("<>"));
+        assertThrows(IllegalArgumentException.class,
+                () -> GravatarImageRequestHandler.setEmailHashTimestampSeparator("%:^&"));
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.setEmailHashTimestampSeparator("_separator_"));
     }
 
     /**

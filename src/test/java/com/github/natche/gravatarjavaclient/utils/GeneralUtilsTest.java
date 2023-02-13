@@ -109,4 +109,22 @@ class GeneralUtilsTest {
 
         assertDoesNotThrow(() -> GeneralUtils.readUrl("https://www.google.com"));
     }
+
+    /**
+     * Tests for the is valid filename method.
+     */
+    @Test
+    void testIsValidFilename() {
+        assertThrows(NullPointerException.class, () -> GeneralUtils.isValidFilename(null));
+        assertThrows(IllegalArgumentException.class, () -> GeneralUtils.isValidFilename(""));
+        assertDoesNotThrow(() -> GeneralUtils.isValidFilename("filename"));
+
+        assertTrue(GeneralUtils.isValidFilename("filename"));
+        assertTrue(GeneralUtils.isValidFilename("my_filename_123456789"));
+        assertTrue(GeneralUtils.isValidFilename("my_filename_123456789.txt"));
+        assertTrue(GeneralUtils.isValidFilename("my_filename_123456789...txt"));
+
+        assertFalse(GeneralUtils.isValidFilename("$%^&*()"));
+        assertFalse(GeneralUtils.isValidFilename("<>:/"));
+    }
 }

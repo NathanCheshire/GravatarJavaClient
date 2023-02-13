@@ -22,15 +22,13 @@ public final class GravatarImageRequestHandler {
      * The date formatter for image save files.
      */
     @SuppressWarnings("SpellCheckingInspection")
-    private static final SimpleDateFormat saveFileFormatter = new SimpleDateFormat("yyMMdd_HHmmss");
+    private static SimpleDateFormat saveFileFormatter = new SimpleDateFormat("yyMMdd_HHmmss");
 
     /**
      * The character to separate the email hash from the timestamp
      * when saving an image if a save to file was not provided.
      */
-    private static final String emailHashTimestampSeparator = "-";
-
-    // todo allow setting of above
+    private static String emailHashTimestampSeparator = "-";
 
     /**
      * The hyper text transfer protocol string.
@@ -71,6 +69,32 @@ public final class GravatarImageRequestHandler {
      */
     private GravatarImageRequestHandler() {
         throw new AssertionError("Cannot create instances of GravatarImageRequestHandler");
+    }
+
+    /**
+     * Sets the file date formatter to use when saving images to files to the provided simple date format.
+     *
+     * @param fileDateFormat the simple date format to use
+     * @throws NullPointerException if the provided formatter is null
+     */
+    public static void setsSaveFileFormatter(SimpleDateFormat fileDateFormat) {
+        Preconditions.checkNotNull(fileDateFormat);
+        GravatarImageRequestHandler.saveFileFormatter = fileDateFormat;
+    }
+
+    /**
+     * Sets the separating string between the email hash and the timestamp when saving images to files.
+     *
+     * @param emailHashTimestampSeparator the separating string to use
+     * @throws NullPointerException     if the provided separator is null
+     * @throws IllegalArgumentException if the provided separator is empty
+     */
+    public static void setEmailHashTimestampSeparator(String emailHashTimestampSeparator) {
+        Preconditions.checkNotNull(emailHashTimestampSeparator);
+        Preconditions.checkArgument(!emailHashTimestampSeparator.isEmpty());
+        Preconditions.checkArgument(GeneralUtils.isValidFilename(emailHashTimestampSeparator));
+
+        GravatarImageRequestHandler.emailHashTimestampSeparator = emailHashTimestampSeparator;
     }
 
     /**

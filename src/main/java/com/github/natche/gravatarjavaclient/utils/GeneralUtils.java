@@ -13,6 +13,7 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -91,6 +92,26 @@ public final class GeneralUtils {
             return builder.toString();
         } catch (IOException e) {
             throw new GravatarJavaClientException("Failed to read contents of URL: " + url);
+        }
+    }
+
+    /**
+     * Returns whether the provided filename is valid for this operating system.
+     *
+     * @param filename the filename
+     * @return whether the provided filename is valid for this operating system
+     * @throws NullPointerException     if the provided filename is null
+     * @throws IllegalArgumentException if the provided filename is empty
+     */
+    public static boolean isValidFilename(String filename) {
+        Preconditions.checkNotNull(filename);
+        Preconditions.checkArgument(!filename.isEmpty());
+
+        try {
+            Paths.get(filename);
+            return true;
+        } catch (Exception ignored) {
+            return false;
         }
     }
 
