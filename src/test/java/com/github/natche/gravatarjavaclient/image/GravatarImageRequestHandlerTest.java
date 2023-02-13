@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -282,6 +283,20 @@ class GravatarImageRequestHandlerTest {
         String fileName = savedToFile.get().getName();
         String[] parts = fileName.split("-");
         assertEquals(GeneralUtils.emailAddressToGravatarHash(userEmail), parts[0]);
+        assertTrue(savedToFile.get().delete());
+        assertFalse(savedToFile.get().exists());
+
+        String sep = "_sep_";
+        GravatarImageRequestHandler.setEmailHashTimestampSeparator(sep);
+        SimpleDateFormat formatter = new SimpleDateFormat("MM");
+        GravatarImageRequestHandler.setsSaveFileFormatter(formatter);
+        assertDoesNotThrow(() -> savedToFile.set(GravatarImageRequestHandler.saveImage(minecraftBuilder)));
+        assertTrue(savedToFile.get().exists());
+
+        fileName = savedToFile.get().getName();
+        parts = fileName.split(sep);
+        assertEquals(GeneralUtils.emailAddressToGravatarHash(userEmail), parts[0]);
+        assertEquals(formatter.format(new Date()) + ".jpg", parts[1]);
         assertTrue(savedToFile.get().delete());
         assertFalse(savedToFile.get().exists());
     }
