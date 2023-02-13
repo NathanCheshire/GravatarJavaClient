@@ -31,6 +31,10 @@ javadoc {
     source = sourceSets.main.allJava
 }
 
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+}
+
 publishing {
     repositories {
         maven {
