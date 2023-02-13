@@ -1,6 +1,8 @@
 ![Logo](./logo.png)
-# GravatarJavaClient
-### By Nate Cheshire
+
+![tagline](https://user-images.githubusercontent.com/60986919/218579442-7c435f2b-6aad-428e-9d6e-1f60c9fcac22.png)
+
+![author](https://user-images.githubusercontent.com/60986919/218579464-e28ddf8f-96f7-4814-ad90-d0e22132552d.png)
 
 ## Intro
 
