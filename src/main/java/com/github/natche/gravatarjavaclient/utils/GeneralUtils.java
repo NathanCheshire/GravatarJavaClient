@@ -2,6 +2,7 @@ package com.github.natche.gravatarjavaclient.utils;
 
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -13,7 +14,6 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -22,6 +22,13 @@ import java.util.Arrays;
  * General utility methods used throughout the GravatarJavaClient.
  */
 public final class GeneralUtils {
+    /**
+     * The invalid filename characters for Windows and Unix based systems.
+     */
+    private static final ImmutableList<Character> invalidFilenameChars = ImmutableList.of(
+            '<', '>', ':', '\\', '|', '?', '*', '/', '\'', '"', '\u0000'
+    );
+
     /**
      * The hashing algorithm used to transform a user email address into their gravatar UUID.
      */
@@ -107,12 +114,11 @@ public final class GeneralUtils {
         Preconditions.checkNotNull(filename);
         Preconditions.checkArgument(!filename.isEmpty());
 
-        try {
-            Paths.get(filename);
-            return true;
-        } catch (Exception ignored) {
-            return false;
+        for (char c : filename.toCharArray()) {
+            if (invalidFilenameChars.contains(c)) return false;
         }
+
+        return true;
     }
 
     /**

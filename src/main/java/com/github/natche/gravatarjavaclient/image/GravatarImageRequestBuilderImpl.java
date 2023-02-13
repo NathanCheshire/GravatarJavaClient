@@ -58,7 +58,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * Whether the JPG suffix should be appended to the {@link #hash} when constructing the image request URL.
      */
-    private boolean shouldAppendJpgSuffix = appendJpgExtensionSuffixByDefault;
+    private boolean shouldAppendJpgSuffix = appendJpgExtensionSuffixByDefault; // todo true, get from handler
 
     /**
      * The size for the image returned by this builder.
