@@ -1,5 +1,6 @@
 plugins {
-    id 'java'
+    id("java")
+    id("maven-publish")
 }
 
 group 'com.github.natch.gravatarjavaclient'
@@ -24,4 +25,22 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/nathancheshire/GravatarJavaClient")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
 }
