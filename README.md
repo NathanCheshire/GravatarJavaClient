@@ -12,7 +12,7 @@ This client features support for all Gravatar requests, that of:
 - Gravatar image requests
 - Gravatar profile requests
 
-This client also follows [Effective Java](https://www.amazon.com/Effective-Java-Joshua-Bloch/dp/0134685997) item 52, refer to objects by their interfaces. I can't see a case where a developer using this library wants to implement their own `GravatarImageRequestBuilder`, but if for whatever reason they wanted to, they could easily do so by implementing from the `GravatarImageRequestBuilder` interface. The default implementation, however, I'll be maintaining and keeping up to date, ensuring tested and feature rich methods are exposed. If a method you'd like to exist in this class is not present, feel free to make it yourself and create a PR.
+This client also follows [Effective Java](https://www.amazon.com/Effective-Java-Joshua-Bloch/dp/0134685997) items, such as item 52: refer to objects by their interfaces. I cannot see a case where a developer using this library wants to implement their own `GravatarImageRequestBuilder`, but if for whatever reason it was desired to, a developer could easily do so by implementing from the `GravatarImageRequestBuilder` interface. The default implementation, however, I'll be maintaining and keeping up to date, ensuring tested and feature rich methods are exposed. If a method you would like to exist in this class is not present, and you think others would benefit from it, feel free to implement it yourself and create a PR.
 
 ## Getting Started
 
@@ -48,11 +48,11 @@ General guidelines for this project are as follows:
 - Make sure to add Javadoc to every member, field, class, method, etc.
 - Make sure to write unit tests if applicable for your added code up update any tests which might be failing due to a change you made
 - Make sure all unit tests are passing before you submit a PR
-- Make sure that 100% code coverage is still maintained before you submit a PR
+- Make sure that  code coverage is maintained at 100% before you submit a PR
 
 ## Issues
 
-I don't care really care about an issue format, just make sure an issue does not already exist for what you want to report. If you want to submit a PR to fix an issue, make sure to create an issue that you can reference from the PR if one does not aleady exist.
+I don't care really care about a specific issue format, just make sure an issue does not already exist for what you want to report. If you want to submit a PR to fix an issue, make sure to create an issue that you can reference from the PR if one does not aleady exist.
 
 ## Resources
 
