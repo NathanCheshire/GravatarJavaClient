@@ -3,8 +3,8 @@ plugins {
     id("maven-publish")
 }
 
-group 'com.github.natch.gravatarjavaclient'
-version '1.0-SNAPSHOT'
+group 'com.github.natche.gravatarjavaclient'
+version '0.1.0'
 
 repositories {
     mavenCentral()
