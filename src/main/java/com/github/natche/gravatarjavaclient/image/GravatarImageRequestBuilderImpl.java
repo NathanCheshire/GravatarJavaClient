@@ -47,6 +47,10 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
      */
     private static final boolean defaultUseFullParameterNames = false;
 
+    // todo allow setting the above params for an instance of the handler class, on creation
+    //  of a builder impl this class would then reference that handler object for the default values.
+    //  This means we'll need to allow instances of the request handler
+
     /**
      * The hash computed from the user email for this builder.
      */

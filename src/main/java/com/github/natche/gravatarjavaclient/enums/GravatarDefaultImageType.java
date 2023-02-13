@@ -59,6 +59,11 @@ public enum GravatarDefaultImageType {
      */
     private final String urlParameterValue;
 
+    /**
+     * Constructs a new GravatarDefaultImageType.
+     *
+     * @param urlParameterValue the url parameter for this default image type
+     */
     GravatarDefaultImageType(String urlParameterValue) {
         this.urlParameterValue = urlParameterValue;
     }

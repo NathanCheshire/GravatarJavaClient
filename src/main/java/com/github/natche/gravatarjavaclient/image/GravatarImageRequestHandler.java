@@ -30,6 +30,8 @@ public final class GravatarImageRequestHandler {
      */
     private static final String emailHashTimestampSeparator = "-";
 
+    // todo allow setting of above
+
     /**
      * The hyper text transfer protocol string.
      */

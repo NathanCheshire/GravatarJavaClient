@@ -3,7 +3,7 @@ package com.github.natche.gravatarjavaclient.exceptions;
 import com.google.common.base.Preconditions;
 
 /**
- * An exception thrown by exposed API features.
+ * An exception thrown by public methods of the GravatarJavaClient API.
  */
 public final class GravatarJavaClientException extends RuntimeException {
     /**

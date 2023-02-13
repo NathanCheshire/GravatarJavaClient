@@ -32,6 +32,11 @@ public enum GravatarRating {
     X;
 
     /**
+     * Constructs a new GravatarRating.
+     */
+    GravatarRating() {}
+
+    /**
      * Returns the url parameter for this {@link GravatarRating}.
      *
      * @return the url parameter for this {@link GravatarRating}

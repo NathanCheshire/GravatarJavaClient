@@ -9,11 +9,17 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    junitVersion = '5.7.0'
+    guavaVersion = '31.1-jre'
+    jsonVersion = '20211205'
+}
+
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-    implementation 'com.google.guava:guava:31.1-jre'
-    implementation 'org.json:json:20211205'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:' + junitVersion
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:' + junitVersion
+    implementation 'com.google.guava:guava:' + guavaVersion
+    implementation 'org.json:json:' + jsonVersion
 }
 
 test {
