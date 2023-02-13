@@ -63,6 +63,26 @@ class GravatarImageRequestHandlerTest {
         assertThrows(IllegalArgumentException.class,
                 () -> GravatarImageRequestHandler.setEmailHashTimestampSeparator("%:^&"));
         assertDoesNotThrow(() -> GravatarImageRequestHandler.setEmailHashTimestampSeparator("_separator_"));
+
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.setAppendJpgSuffixByDefault(false));
+        assertFalse(GravatarImageRequestHandler.shouldAppendJpgSuffixByDefault());
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.setAppendJpgSuffixByDefault(true));
+        assertTrue(GravatarImageRequestHandler.shouldAppendJpgSuffixByDefault());
+
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.setDefaultRating(GravatarRating.X));
+        assertEquals(GravatarRating.X, GravatarImageRequestHandler.getDefaultRating());
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.setDefaultRating(GravatarRating.R));
+        assertEquals(GravatarRating.R, GravatarImageRequestHandler.getDefaultRating());
+
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.setUseHttpsByDefault(false));
+        assertFalse(GravatarImageRequestHandler.shouldUseHttpsByDefault());
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.setUseHttpsByDefault(true));
+        assertTrue(GravatarImageRequestHandler.shouldUseHttpsByDefault());
+
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.setUseFullParameterNamesByDefault(false));
+        assertFalse(GravatarImageRequestHandler.shouldUseFullParameterNamesByDefault());
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.setUseFullParameterNamesByDefault(true));
+        assertTrue(GravatarImageRequestHandler.shouldUseFullParameterNamesByDefault());
     }
 
     /**

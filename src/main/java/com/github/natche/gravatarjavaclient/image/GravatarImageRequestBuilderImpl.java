@@ -28,29 +28,6 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     private static final int defaultImageLength = 80;
 
     /**
-     * Whether the JPG suffix should be appended to the user email hash in the request URL.
-     */
-    private static final boolean appendJpgExtensionSuffixByDefault = true;
-
-    /**
-     * The default rating to use if none is provided.
-     */
-    private static final GravatarRating defaultRating = GravatarRating.G;
-
-    /**
-     * The default value for whether https should be used.
-     */
-    private static final boolean defaultUseHttps = true;
-
-    /**
-     * The default value for whether full parameter names should be used.
-     */
-    private static final boolean defaultUseFullParameterNames = false;
-
-    // todo allow setting the above params for an instance of the handler class, on creation
-    //  of a builder impl this class would then reference the handler object for the default values
-
-    /**
      * The hash computed from the user email for this builder.
      */
     private final String hash;
@@ -58,7 +35,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * Whether the JPG suffix should be appended to the {@link #hash} when constructing the image request URL.
      */
-    private boolean shouldAppendJpgSuffix = appendJpgExtensionSuffixByDefault; // todo true, get from handler
+    private boolean shouldAppendJpgSuffix = GravatarImageRequestHandler.shouldAppendJpgSuffixByDefault();
 
     /**
      * The size for the image returned by this builder.
@@ -68,7 +45,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * The maximum rating allowable for this image request.
      */
-    private GravatarRating rating = defaultRating;
+    private GravatarRating rating = GravatarImageRequestHandler.getDefaultRating();
 
     /**
      * Whether to force the default image to be returned.
@@ -88,12 +65,12 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * Whether to use https as the protocol for Gravatar image requests.
      */
-    private boolean useHttps = defaultUseHttps;
+    private boolean useHttps = GravatarImageRequestHandler.shouldUseHttpsByDefault();
 
     /**
      * Whether the full URL parameter names should be used in the request as opposed to the shorthand versions.
      */
-    private boolean useFullUrlParameterNames = defaultUseFullParameterNames;
+    private boolean useFullUrlParameterNames = GravatarImageRequestHandler.shouldUseFullParameterNamesByDefault();
 
     /**
      * Constructs a new GravatarImageRequestBuilder.

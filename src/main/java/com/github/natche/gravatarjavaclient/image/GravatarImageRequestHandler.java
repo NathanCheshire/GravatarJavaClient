@@ -1,6 +1,7 @@
 package com.github.natche.gravatarjavaclient.image;
 
 import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
+import com.github.natche.gravatarjavaclient.enums.GravatarRating;
 import com.github.natche.gravatarjavaclient.enums.GravatarUrlParameter;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
@@ -63,6 +64,30 @@ public final class GravatarImageRequestHandler {
     private static final String forceDefaultUrlTrueString = "y";
 
     /**
+     * The default state new instances of {@link GravatarImageRequestBuilderImpl} should contain for
+     * the append jpg suffix member.
+     */
+    private static boolean appendJpgSuffixByDefault = true;
+
+    /**
+     * The default state new instances of {@link GravatarImageRequestBuilderImpl} should contain for
+     * the rating member.
+     */
+    private static GravatarRating defaultRating = GravatarRating.G;
+
+    /**
+     * The default state new instances of {@link GravatarImageRequestBuilderImpl} should contain for
+     * the use https member.
+     */
+    private static boolean useHttpsByDefault = true;
+
+    /**
+     * The default state new instances of {@link GravatarImageRequestBuilderImpl} should contain for
+     * the use full parameter names member.
+     */
+    private static boolean useFullParameterNamesByDefault = false;
+
+    /**
      * Suppress default constructor.
      *
      * @throws AssertionError if invoked
@@ -95,6 +120,88 @@ public final class GravatarImageRequestHandler {
         Preconditions.checkArgument(GeneralUtils.isValidFilename(emailHashTimestampSeparator));
 
         GravatarImageRequestHandler.emailHashTimestampSeparator = emailHashTimestampSeparator;
+    }
+
+    /**
+     * Sets the state of the append jpg suffix by default for new instances of {@link GravatarImageRequestBuilderImpl}.
+     *
+     * @param appendJpgSuffixByDefault the state of the append jpg suffix by default for
+     *                                 new instances of {@link GravatarImageRequestBuilderImpl}
+     */
+    public static void setAppendJpgSuffixByDefault(boolean appendJpgSuffixByDefault) {
+        GravatarImageRequestHandler.appendJpgSuffixByDefault = appendJpgSuffixByDefault;
+    }
+
+    /**
+     * Returns the state of the append jpg suffix by default
+     * for new instances of {@link GravatarImageRequestBuilderImpl}.
+     *
+     * @return the state of the append jpg suffix by default
+     * for new instances of {@link GravatarImageRequestBuilderImpl}
+     */
+    public static boolean shouldAppendJpgSuffixByDefault() {
+        return appendJpgSuffixByDefault;
+    }
+
+    /**
+     * Sets the initial state of the rating for new instances of {@link GravatarImageRequestBuilderImpl}.
+     *
+     * @param defaultRating the initial state of the rating
+     *                      for new instances of {@link GravatarImageRequestBuilderImpl}
+     */
+    public static void setDefaultRating(GravatarRating defaultRating) {
+        Preconditions.checkNotNull(defaultRating);
+        GravatarImageRequestHandler.defaultRating = defaultRating;
+    }
+
+    /**
+     * Returns the initial state of the rating for new instances of {@link GravatarImageRequestBuilderImpl}.
+     *
+     * @return the initial state of the rating for new instances of {@link GravatarImageRequestBuilderImpl}
+     */
+    public static GravatarRating getDefaultRating() {
+        return defaultRating;
+    }
+
+    /**
+     * Sets the initial state of the use https member for new instances of {@link GravatarImageRequestBuilderImpl}.
+     *
+     * @param useHttpsByDefault the initial state of the use https
+     *                          member for new instances of {@link GravatarImageRequestBuilderImpl}
+     */
+    public static void setUseHttpsByDefault(boolean useHttpsByDefault) {
+        GravatarImageRequestHandler.useHttpsByDefault = useHttpsByDefault;
+    }
+
+    /**
+     * Returns the initial state of the use https member for new instances of {@link GravatarImageRequestBuilderImpl}.
+     *
+     * @return the initial state of the use https member for new instances of {@link GravatarImageRequestBuilderImpl}
+     */
+    public static boolean shouldUseHttpsByDefault() {
+        return useHttpsByDefault;
+    }
+
+    /**
+     * Sets the initial state of the use full parameter names member
+     * for new instances of {@link GravatarImageRequestBuilderImpl}.
+     *
+     * @param useFullParameterNamesByDefault the initial state of the use full parameter names member
+     *                                       for new instances of {@link GravatarImageRequestBuilderImpl}
+     */
+    public static void setUseFullParameterNamesByDefault(boolean useFullParameterNamesByDefault) {
+        GravatarImageRequestHandler.useFullParameterNamesByDefault = useFullParameterNamesByDefault;
+    }
+
+    /**
+     * Returns the initial state of the use full parameter names
+     * member for new instances of {@link GravatarImageRequestBuilderImpl}
+     *
+     * @return the initial state of the use full parameter names
+     * member for new instances of {@link GravatarImageRequestBuilderImpl}
+     */
+    public static boolean shouldUseFullParameterNamesByDefault() {
+        return useFullParameterNamesByDefault;
     }
 
     /**
