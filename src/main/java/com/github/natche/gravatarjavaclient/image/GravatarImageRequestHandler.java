@@ -275,6 +275,7 @@ public final class GravatarImageRequestHandler {
      * Filename format: "emailHash-timestamp" where timestamp is in the format "yyMMdd_HHmms".
      *
      * @param gravatarImageRequestBuilder the image request builder
+     * @return the file pointer to the saved image
      * @throws NullPointerException        if the provided Gravatar image request is null
      * @throws GravatarJavaClientException if the image cannot be read
      * @throws IOException                 if the image cannot be saved to the newly created file

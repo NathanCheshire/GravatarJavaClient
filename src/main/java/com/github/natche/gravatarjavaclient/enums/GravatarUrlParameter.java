@@ -83,11 +83,11 @@ public enum GravatarUrlParameter {
     /**
      * Constructs a string for this url parameter with the provided value.
      * If this is the first parameter after the query, a "?" character is the leading character.
-     * Otherwise a "&" character is the leading character.
+     * Otherwise a "&amp;" character is the leading character.
      *
-     * @param value          the value
-     * @param <T>            the type of value
-     * @param firstParameter whether this url parameter is the first after the query
+     * @param value               the value
+     * @param <T>                 the type of value
+     * @param firstParameter      whether this url parameter is the first after the query
      * @param useFullUrlParameter whether to use the full url parameter
      * @return the string for this url parameter and value
      * @throws NullPointerException if the provided value is null

@@ -126,8 +126,8 @@ public interface GravatarImageRequestBuilder {
 
     /**
      * Sets whether the full URL parameter names should be used in the request as opposed to the shorthand versions.
-     * For example, instead of appending "&d=https://www.image/com/image.png",
-     * "&default=https://www.image/com/image.png" would be used.
+     * For example, instead of appending "&amp;d=https://www.image/com/image.png",
+     * "&amp;default=https://www.image/com/image.png" would be used.
      *
      * @param useFullUrlParameterNames whether the full URL parameter names should be used
      * @return this builder
