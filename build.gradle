@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.github.natche.gravatarjavaclient'
-version '0.1.3'
+version '0.1.31'
 
 repositories {
     mavenCentral()
@@ -55,6 +55,9 @@ publishing {
         maven(MavenPublication) {
             artifactId 'gravatar-java-client'
             from components.java
+            artifact(tasks.getByName("javadocJar")) {
+                classifier = "javadoc"
+            }
         }
     }
 }
