@@ -1,18 +1,20 @@
 ![Logo](./logo.png)
-# GravatarJavaClient
-### By Nate Cheshire
+
+![tagline](https://user-images.githubusercontent.com/60986919/218580845-63982860-3f09-4954-a84f-949910754561.png)
+
+![author](https://user-images.githubusercontent.com/60986919/218579464-e28ddf8f-96f7-4814-ad90-d0e22132552d.png)
 
 ## Intro
 
-This library is a Java API wrapper for Gravatar image and profile requests. When wanting to integrate the Gravatar API into [Cyder](https://github.com/NathanCheshire/Cyder) (my main project), I came across super old Java API wrappers which have not been touched for 14 years! The last updated statistic by itself does not indicate a library is not maintained or poorly implemented, but in this case there were some issues and PRs on the GitHub repository which were never addressed. I looked at this and thought "I can do it myself and do it better." Henceforce, GravatarJavaClient was born, being named by ChatGPT.
+This library is a Java wrapper for the Gravatar image and profile API. When wanting to integrate the Gravatar API into [Cyder](https://github.com/NathanCheshire/Cyder) (my main project), I came across super old Java API wrappers, some of which have not been touched for 14 years! The last-updated statistic by itself does not indicate a library is not maintained or poorly implemented, but in this case there were some issues and PRs on the GitHub repository which were never addressed. I looked at this and thought "I can do it myself and do it better." Henceforce, GravatarJavaClient was born, being named by ChatGPT.
 
 ## API Support
 
-This client features support for all Gravatar requests, that of:
+This client features support for the comprehensive Gravatar API, that of:
 - Gravatar image requests
 - Gravatar profile requests
 
-This client also follows [Effective Java](https://www.amazon.com/Effective-Java-Joshua-Bloch/dp/0134685997) items, such as item 52: refer to objects by their interfaces. I cannot see a case where a developer using this library wants to implement their own `GravatarImageRequestBuilder`, but if for whatever reason it was desired to, a developer could easily do so by implementing from the `GravatarImageRequestBuilder` interface. The default implementation, however, I'll be maintaining and keeping up to date, ensuring tested and feature rich methods are exposed. If a method you would like to exist in this class is not present, and you think others would benefit from it, feel free to implement it yourself and create a PR.
+This client also follows [Effective Java](https://www.amazon.com/Effective-Java-Joshua-Bloch/dp/0134685997) items, such as item 52: refer to objects by their interfaces. I cannot see a case where a developer using this library would want to implement their own `GravatarImageRequestBuilder`, but if for whatever reason it was desired, a developer could easily do so by implementing from `GravatarImageRequestBuilder`. The `GravatarImageRequestHandler` will accepts the interface. The default implementation (`GravatarImageRequestBuilderImpl`) I will be maintaining and keeping up to date, ensuring tested and feature rich methods are exposed. If a method you would like to exist in this class is not present, and you think others would benefit from it, feel free to implement it yourself and create a PR.
 
 ## Getting Started
 
@@ -40,7 +42,7 @@ File imageFile = GravatarImageRequestHandler.getImage(builder, new File("/path/t
 
 ## Contributing
 
-If you think some feature is missing or have an idea for how to improve the API, then by all means, contribute! Make sure you follow clean-code styles and elagent API implementation. I closely follow the principles set forth in books such as Effective Java by Joshua Bloch, Clean Code, and The Clean Coder by Robert Cecil Martin.
+If you think some feature is missing, or have an idea for how to improve the API, then by all means, contribute! Make sure you follow clean-code styles and elagent API implementation. I closely follow the principles set forth in books such as Effective Java by Joshua Bloch, Clean Code, and The Clean Coder by Robert Cecil Martin.
 
 General guidelines for this project are as follows:
 
@@ -52,7 +54,7 @@ General guidelines for this project are as follows:
 
 ## Issues
 
-I don't care really care about a specific issue format, just make sure an issue does not already exist for what you want to report. If you want to submit a PR to fix an issue, make sure to create an issue that you can reference from the PR if one does not aleady exist.
+I do not care about a specific issue format, just make sure an issue does not already exist for what you want to report. If you want to submit a PR to fix an issue, make sure to create an issue that you can reference from the PR if one does not already exist.
 
 ## Resources
 
