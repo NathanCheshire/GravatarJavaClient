@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.github.natche.gravatarjavaclient'
-version '0.1.11'
+version '0.1.2'
 
 repositories {
     mavenCentral()
@@ -27,19 +27,6 @@ test {
     useJUnitPlatform()
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
-
 publishing {
     repositories {
         maven {
@@ -53,7 +40,8 @@ publishing {
     }
     publications {
         maven(MavenPublication) {
-            from(components["java"])
+            artifactId 'gravatar-java-client'
+            from components.java
         }
     }
 }
