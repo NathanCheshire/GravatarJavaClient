@@ -184,6 +184,7 @@ class GravatarImageRequestBuilderImplTest {
                 .setForceDefaultImage(true)
                 .setUseFullUrlParameterNames(true)
                 .setShouldAppendJpgSuffix(false);
+        assertEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com"));
         assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("something@email.com"));
     }
 }
