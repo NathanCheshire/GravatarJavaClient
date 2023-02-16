@@ -171,30 +171,31 @@ class GravatarImageRequestBuilderImplTest {
         GravatarImageRequestBuilderImpl impl1 = new GravatarImageRequestBuilderImpl("nathan@email.com");
         GravatarImageRequestBuilderImpl equalImpl1 = new GravatarImageRequestBuilderImpl("nathan@email.com");
         GravatarImageRequestBuilderImpl nonEqualImpl1 = new GravatarImageRequestBuilderImpl("e@email.com");
-        GravatarImageRequestBuilderImpl setters = new GravatarImageRequestBuilderImpl("e@email.com")
-                .setDefaultImageType(GravatarDefaultImageType._404);
-        GravatarImageRequestBuilderImpl allSetters = new GravatarImageRequestBuilderImpl("nathanc@email.com")
+
+        assertEquals(impl1, impl1);
+        assertEquals(impl1, equalImpl1);
+        assertNotEquals(equalImpl1, nonEqualImpl1);
+        assertNotEquals(equalImpl1, new Object());
+
+        GravatarImageRequestBuilderImpl truthBuilder = new GravatarImageRequestBuilderImpl("n@email.com")
                 .setUseHttps(false)
                 .setDefaultImageType(GravatarDefaultImageType.RETRO)
                 .setRating(GravatarRating.X)
                 .setForceDefaultImage(true)
                 .setUseFullUrlParameterNames(true)
                 .setShouldAppendJpgSuffix(false);
-        GravatarImageRequestBuilderImpl defaultImageUrl =
-                new GravatarImageRequestBuilderImpl("nathanc@email.com")
-                        .setUseHttps(false)
-                        .setDefaultImageType(GravatarDefaultImageType.RETRO)
-                        .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")
-                        .setForceDefaultImage(true)
-                        .setUseFullUrlParameterNames(true)
-                        .setShouldAppendJpgSuffix(false);
-
-        assertEquals(impl1, impl1);
-        assertEquals(impl1, equalImpl1);
-        assertNotEquals(equalImpl1, nonEqualImpl1);
-        assertNotEquals(equalImpl1, new Object());
-        assertNotEquals(nonEqualImpl1, setters);
-        assertNotEquals(allSetters, setters);
-        assertNotEquals(allSetters, defaultImageUrl);
+        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("na@email.com"));
+        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
+                .setShouldAppendJpgSuffix(true));
+        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
+                .setDefaultImageType(GravatarDefaultImageType._404));
+        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
+                .setRating(GravatarRating.R));
+        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
+                .setForceDefaultImage(false));
+        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
+                .setUseFullUrlParameterNames(false));
+        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
+                .setShouldAppendJpgSuffix(true));
     }
 }
