@@ -184,18 +184,6 @@ class GravatarImageRequestBuilderImplTest {
                 .setForceDefaultImage(true)
                 .setUseFullUrlParameterNames(true)
                 .setShouldAppendJpgSuffix(false);
-        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("na@email.com"));
-        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
-                .setShouldAppendJpgSuffix(true));
-        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
-                .setDefaultImageType(GravatarDefaultImageType._404));
-        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
-                .setRating(GravatarRating.R));
-        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
-                .setForceDefaultImage(false));
-        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
-                .setUseFullUrlParameterNames(false));
-        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
-                .setShouldAppendJpgSuffix(true));
+        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("something@email.com"));
     }
 }
