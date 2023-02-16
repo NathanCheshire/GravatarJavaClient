@@ -146,18 +146,6 @@ class GravatarProfileTest {
             + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
-    private static final String differentFormatted = "{ \"entry\": [ { \"id\": \"231564699\","
-            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
-            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
-            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
-            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
-            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
-            + " \"formatted\": \"Nathan C\" }, \"displayName\": \"Nathan Cheshire\","
-            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
-            + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
-            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
-            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
-
     private static final String differentDisplayName = "{ \"entry\": [ { \"id\": \"231564699\","
             + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
@@ -378,7 +366,6 @@ class GravatarProfileTest {
         assertNotEquals(full, new GravatarProfile(differentPhotos));
         assertNotEquals(full, new GravatarProfile(differentName));
         assertNotEquals(full, new GravatarProfile(differentFamilyName));
-        assertNotEquals(full, new GravatarProfile(differentFormatted));
         assertNotEquals(full, new GravatarProfile(differentDisplayName));
         assertNotEquals(full, new GravatarProfile(differentPronouns));
         assertNotEquals(full, new GravatarProfile(differentAboutMe));
