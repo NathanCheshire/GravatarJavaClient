@@ -60,6 +60,152 @@ class GravatarProfileTest {
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Other Website\" } ] } ] }";
 
     /**
+     * The full JSON string with a different request hash to {@link #fullJson}.
+     */
+    private static final String differentRequestHash = "{ \"entry\": [ { \"id\": \"231564699\","
+            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1bba19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
+            + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Cheshire\","
+            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
+            + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
+
+    private static final String differentProfileUrl = "{ \"entry\": [ { \"id\": \"231564699\","
+            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshiree\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
+            + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Cheshire\","
+            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
+            + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
+
+    private static final String differentPreferredUsername = "{ \"entry\": [ { \"id\": \"231564699\","
+            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathancheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
+            + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Cheshire\","
+            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
+            + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
+
+    private static final String differentThumbnailUrl = "{ \"entry\": [ { \"id\": \"231564699\","
+            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc4\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
+            + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Cheshire\","
+            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
+            + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
+
+    private static final String differentPhotos = "{ \"entry\": [ { \"id\": \"231564699\","
+            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a5e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
+            + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Cheshire\","
+            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
+            + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
+
+    private static final String differentName = "{ \"entry\": [ { \"id\": \"231564699\","
+            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nate\", \"familyName\": \"Cheshire\","
+            + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Cheshire\","
+            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
+            + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
+
+    private static final String differentFamilyName = "{ \"entry\": [ { \"id\": \"231564699\","
+            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Chesh\","
+            + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Cheshire\","
+            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
+            + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
+
+    private static final String differentFormatted = "{ \"entry\": [ { \"id\": \"231564699\","
+            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
+            + " \"formatted\": \"Nathan C\" }, \"displayName\": \"Nathan Cheshire\","
+            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
+            + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
+
+    private static final String differentDisplayName = "{ \"entry\": [ { \"id\": \"231564699\","
+            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
+            + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Chesh\","
+            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
+            + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
+
+    private static final String differentPronouns = "{ \"entry\": [ { \"id\": \"231564699\","
+            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
+            + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Cheshire\","
+            + " \"pronouns\": \"who/cares\", \"aboutMe\": \"I make the computer go beep boop and then"
+            + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
+
+    private static final String differentAboutMe = "{ \"entry\": [ { \"id\": \"231564699\","
+            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
+            + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Cheshire\","
+            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I do\", \"currentLocation\": \"Gallifrey\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
+
+    private static final String differentCurrentLocation = "{ \"entry\": [ { \"id\": \"231564699\","
+            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
+            + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Cheshire\","
+            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
+            + " people ask me to fix their printer.\", \"currentLocation\": \"Home\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
+
+    /**
      * The full JSON string with different urls to {@link #fullJson}.
      */
     private static final String differentUrls = "{ \"entry\": [ { \"id\": \"231564699\","
@@ -217,16 +363,25 @@ class GravatarProfileTest {
         GravatarProfile full = new GravatarProfile(fullJson);
         GravatarProfile equalToFull = new GravatarProfile(fullJson);
         GravatarProfile nonEqualToFull = new GravatarProfile(minimalJson);
-        GravatarProfile differentUrlsObject = new GravatarProfile(differentUrls);
-        GravatarProfile differentIdsObject = new GravatarProfile(differentIds);
-        GravatarProfile differentHashObject = new GravatarProfile(differentHash);
 
         assertEquals(full, full);
         assertEquals(full, equalToFull);
         assertNotEquals(equalToFull, nonEqualToFull);
         assertNotEquals(equalToFull, new Object());
-        assertNotEquals(full, differentUrlsObject);
-        assertNotEquals(full, differentIdsObject);
-        assertNotEquals(full, differentHashObject);
+        assertNotEquals(full, new GravatarProfile(differentUrls));
+        assertNotEquals(full, new GravatarProfile(differentIds));
+        assertNotEquals(full, new GravatarProfile(differentHash));
+        assertNotEquals(full, new GravatarProfile(differentRequestHash));
+        assertNotEquals(full, new GravatarProfile(differentProfileUrl));
+        assertNotEquals(full, new GravatarProfile(differentPreferredUsername));
+        assertNotEquals(full, new GravatarProfile(differentThumbnailUrl));
+        assertNotEquals(full, new GravatarProfile(differentPhotos));
+        assertNotEquals(full, new GravatarProfile(differentName));
+        assertNotEquals(full, new GravatarProfile(differentFamilyName));
+        assertNotEquals(full, new GravatarProfile(differentFormatted));
+        assertNotEquals(full, new GravatarProfile(differentDisplayName));
+        assertNotEquals(full, new GravatarProfile(differentPronouns));
+        assertNotEquals(full, new GravatarProfile(differentAboutMe));
+        assertNotEquals(full, new GravatarProfile(differentCurrentLocation));
     }
 }
