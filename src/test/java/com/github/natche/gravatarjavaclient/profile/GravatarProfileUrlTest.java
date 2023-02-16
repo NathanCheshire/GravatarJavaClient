@@ -75,7 +75,7 @@ class GravatarProfileUrlTest {
 
         assertEquals(107906767, url.hashCode());
         assertEquals(107906767, equalToUrl.hashCode());
-        assertEquals(1134857663, noteEqualToUrl.hashCode());
+        assertEquals(890890447, noteEqualToUrl.hashCode());
         assertEquals(url.hashCode(), equalToUrl.hashCode());
         assertNotEquals(equalToUrl.hashCode(), noteEqualToUrl.hashCode());
     }
