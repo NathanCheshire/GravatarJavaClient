@@ -57,7 +57,7 @@ class GravatarProfileUrlTest {
         GravatarProfileUrl url = new GravatarProfileUrl("name", "link");
         GravatarProfileUrl equalToUrl = new GravatarProfileUrl("name", "link");
         GravatarProfileUrl notEqualToUrl = new GravatarProfileUrl("other name", "link");
-        GravatarProfileUrl notEqualToUrlEither = new GravatarProfileUrl("other name", "other link");
+        GravatarProfileUrl notEqualToUrlEither = new GravatarProfileUrl("name", "other link");
 
         assertEquals(url, url);
         assertEquals(url, equalToUrl);
