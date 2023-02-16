@@ -201,11 +201,12 @@ class GravatarProfileTest {
             + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
             + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
-            + " \"type\": \"thumbnail\" } ], \"name\": {  }, \"displayName\": \"Nathan Cheshire\","
+            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
+            + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Cheshire\","
             + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
             + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
             + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
-            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Other Website\" } ] } ] }";
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Websiter\" } ] } ] }";
 
     /**
      * The minimal JSON string to parse a Gravatar profile from.
