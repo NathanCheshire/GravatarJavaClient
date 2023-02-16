@@ -71,7 +71,7 @@ class GravatarProfileUrlTest {
     void testHashCode() {
         GravatarProfileUrl url = new GravatarProfileUrl("name", "link");
         GravatarProfileUrl equalToUrl = new GravatarProfileUrl("name", "link");
-        GravatarProfileUrl noteEqualToUrl = new GravatarProfileUrl("other name", "link");
+        GravatarProfileUrl noteEqualToUrl = new GravatarProfileUrl("other name", "other link");
 
         assertEquals(107906767, url.hashCode());
         assertEquals(107906767, equalToUrl.hashCode());

@@ -32,16 +32,14 @@ class GravatarProfileTest {
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
     /**
-     * The full JSON string to parse a Gravatar profile from
-     * with the last field different than that of {@link #fullJson}.
+     * The full JSON string with different urls to {@link #fullJson}.
      */
-    private static final String differentFullJson = "{ \"entry\": [ { \"id\": \"231564699\","
+    private static final String differentUrls = "{ \"entry\": [ { \"id\": \"231564699\","
             + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
             + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
-            + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
-            + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Cheshire\","
+            + " \"type\": \"thumbnail\" } ], \"name\": {  }, \"displayName\": \"Nathan Cheshire\","
             + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
             + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
             + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
@@ -191,7 +189,7 @@ class GravatarProfileTest {
         GravatarProfile full = new GravatarProfile(fullJson);
         GravatarProfile equalToFull = new GravatarProfile(fullJson);
         GravatarProfile nonEqualToFull = new GravatarProfile(minimalJson);
-        GravatarProfile differentToFull = new GravatarProfile(differentFullJson);
+        GravatarProfile differentToFull = new GravatarProfile(differentUrls);
 
         assertEquals(full, full);
         assertEquals(full, equalToFull);
