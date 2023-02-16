@@ -32,6 +32,34 @@ class GravatarProfileTest {
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
     /**
+     * The full JSON string with a different id to {@link #fullJson}.
+     */
+    private static final String differentIds = "{ \"entry\": [ { \"id\": \"2315612699\","
+            + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": {  }, \"displayName\": \"Nathan Cheshire\","
+            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
+            + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Other Website\" } ] } ] }";
+
+    /**
+     * The full JSON string with a different hash to {@link #fullJson}.
+     */
+    private static final String differentHash = "{ \"entry\": [ { \"id\": \"231564699\","
+            + " \"hash\": \"2bf1b7a19ccad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
+            + " \"type\": \"thumbnail\" } ], \"name\": {  }, \"displayName\": \"Nathan Cheshire\","
+            + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
+            + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
+            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " \"https://www.nathancheshire.com\", \"title\": \"Personal Other Website\" } ] } ] }";
+
+    /**
      * The full JSON string with different urls to {@link #fullJson}.
      */
     private static final String differentUrls = "{ \"entry\": [ { \"id\": \"231564699\","
@@ -189,12 +217,16 @@ class GravatarProfileTest {
         GravatarProfile full = new GravatarProfile(fullJson);
         GravatarProfile equalToFull = new GravatarProfile(fullJson);
         GravatarProfile nonEqualToFull = new GravatarProfile(minimalJson);
-        GravatarProfile differentToFull = new GravatarProfile(differentUrls);
+        GravatarProfile differentUrlsObject = new GravatarProfile(differentUrls);
+        GravatarProfile differentIdsObject = new GravatarProfile(differentIds);
+        GravatarProfile differentHashObject = new GravatarProfile(differentHash);
 
         assertEquals(full, full);
         assertEquals(full, equalToFull);
         assertNotEquals(equalToFull, nonEqualToFull);
-        assertNotEquals(full, differentToFull);
         assertNotEquals(equalToFull, new Object());
+        assertNotEquals(full, differentUrlsObject);
+        assertNotEquals(full, differentIdsObject);
+        assertNotEquals(full, differentHashObject);
     }
 }
