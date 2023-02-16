@@ -177,10 +177,17 @@ class GravatarImageRequestBuilderImplTest {
         assertNotEquals(equalImpl1, nonEqualImpl1);
         assertNotEquals(equalImpl1, new Object());
 
-        GravatarImageRequestBuilderImpl truthBuilder = new GravatarImageRequestBuilderImpl("n@email.com");
-        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
+        GravatarImageRequestBuilderImpl truthBuilder = new GravatarImageRequestBuilderImpl("n@email.com")
+                .setShouldAppendJpgSuffix(false);
+        GravatarImageRequestBuilderImpl truthBuilderA = new GravatarImageRequestBuilderImpl("n@email.com")
+                .setShouldAppendJpgSuffix(true);
+        assertEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
                 .setShouldAppendJpgSuffix(false));
-        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("something@email.com")
+        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
+                .setShouldAppendJpgSuffix(true));
+        assertNotEquals(truthBuilderA, new GravatarImageRequestBuilderImpl("n@email.com")
+                .setShouldAppendJpgSuffix(false));
+        assertEquals(truthBuilderA, new GravatarImageRequestBuilderImpl("n@email.com")
                 .setShouldAppendJpgSuffix(true));
     }
 }
