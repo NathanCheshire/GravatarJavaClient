@@ -59,7 +59,8 @@ public final class ValidationUtils {
         Preconditions.checkArgument(!defaultUrl.isEmpty());
 
         try {
-            return ImageIO.read(new URL(defaultUrl)).getWidth() > 0;
+            ImageIO.read(new URL(defaultUrl)).getWidth();
+            return true;
         } catch (Exception ignored) {
             return false;
         }
