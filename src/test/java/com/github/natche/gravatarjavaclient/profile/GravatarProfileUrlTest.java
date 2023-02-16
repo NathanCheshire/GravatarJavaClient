@@ -56,11 +56,13 @@ class GravatarProfileUrlTest {
     void testEquals() {
         GravatarProfileUrl url = new GravatarProfileUrl("name", "link");
         GravatarProfileUrl equalToUrl = new GravatarProfileUrl("name", "link");
-        GravatarProfileUrl noteEqualToUrl = new GravatarProfileUrl("other name", "link");
+        GravatarProfileUrl notEqualToUrl = new GravatarProfileUrl("other name", "link");
+        GravatarProfileUrl notEqualToUrlEither = new GravatarProfileUrl("other name", "other link");
 
         assertEquals(url, url);
         assertEquals(url, equalToUrl);
-        assertNotEquals(equalToUrl, noteEqualToUrl);
+        assertNotEquals(equalToUrl, notEqualToUrl);
+        assertNotEquals(equalToUrl, notEqualToUrlEither);
         assertNotEquals(url, new Object());
     }
 
@@ -71,12 +73,12 @@ class GravatarProfileUrlTest {
     void testHashCode() {
         GravatarProfileUrl url = new GravatarProfileUrl("name", "link");
         GravatarProfileUrl equalToUrl = new GravatarProfileUrl("name", "link");
-        GravatarProfileUrl noteEqualToUrl = new GravatarProfileUrl("other name", "other link");
+        GravatarProfileUrl notEqualToUrl = new GravatarProfileUrl("other name", "other link");
 
         assertEquals(107906767, url.hashCode());
         assertEquals(107906767, equalToUrl.hashCode());
-        assertEquals(890890447, noteEqualToUrl.hashCode());
+        assertEquals(890890447, notEqualToUrl.hashCode());
         assertEquals(url.hashCode(), equalToUrl.hashCode());
-        assertNotEquals(equalToUrl.hashCode(), noteEqualToUrl.hashCode());
+        assertNotEquals(equalToUrl.hashCode(), notEqualToUrl.hashCode());
     }
 }
