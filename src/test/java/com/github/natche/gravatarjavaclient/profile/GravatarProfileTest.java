@@ -76,14 +76,14 @@ class GravatarProfileTest {
 
     private static final String differentProfileUrl = "{ \"entry\": [ { \"id\": \"231564699\","
             + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
-            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshiree\", \"preferredUsername\": \"nathanvcheshire\","
+            + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
             + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"photos\": [ { \"value\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"type\": \"thumbnail\" } ], \"name\": { \"givenName\": \"Nathan\", \"familyName\": \"Cheshire\","
             + " \"formatted\": \"Nathan Cheshire\" }, \"displayName\": \"Nathan Cheshire\","
             + " \"pronouns\": \"Time/Lord\", \"aboutMe\": \"I make the computer go beep boop and then"
             + " people ask me to fix their printer.\", \"currentLocation\": \"Gallifrey\", \"urls\":"
-            + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
+            + " [ { \"value\": \"https://wwww.github.com\", \"title\": \"GitHubs\" }, { \"value\":"
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
     private static final String differentPreferredUsername = "{ \"entry\": [ { \"id\": \"231564699\","
