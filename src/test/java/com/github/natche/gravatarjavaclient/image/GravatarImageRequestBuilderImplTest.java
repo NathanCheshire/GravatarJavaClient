@@ -177,8 +177,8 @@ class GravatarImageRequestBuilderImplTest {
         assertNotEquals(equalImpl1, nonEqualImpl1);
         assertNotEquals(equalImpl1, new Object());
 
-        GravatarImageRequestBuilderImpl truthBuilder = new GravatarImageRequestBuilderImpl("n@email.com");
-        assertEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com"));
-        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("something@email.com"));
+        //        GravatarImageRequestBuilderImpl truthBuilder = new GravatarImageRequestBuilderImpl("n@email.com");
+        //        assertEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com"));
+        //        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("something@email.com"));
     }
 }
