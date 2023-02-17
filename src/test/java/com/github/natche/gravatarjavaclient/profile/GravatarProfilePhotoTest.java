@@ -54,13 +54,13 @@ class GravatarProfilePhotoTest {
     void testEquals() {
         GravatarProfilePhoto url = new GravatarProfilePhoto("thumbnail", "link");
         GravatarProfilePhoto equalToUrl = new GravatarProfilePhoto("thumbnail", "link");
-        GravatarProfilePhoto notEqualToUrl = new GravatarProfilePhoto("other thumbnail", "link");
-        GravatarProfilePhoto notEqualToUrlEither = new GravatarProfilePhoto("thumbnail", "other link");
+        GravatarProfilePhoto differentThumbnail = new GravatarProfilePhoto("other thumbnail", "link");
+        GravatarProfilePhoto differentLink = new GravatarProfilePhoto("thumbnail", "other link");
 
         assertEquals(url, url);
         assertEquals(url, equalToUrl);
-        assertNotEquals(equalToUrl, notEqualToUrl);
-        assertNotEquals(equalToUrl, notEqualToUrlEither);
+        assertNotEquals(equalToUrl, differentThumbnail);
+        assertNotEquals(equalToUrl, differentLink);
         assertNotEquals(url, new Object());
     }
 
@@ -71,12 +71,12 @@ class GravatarProfilePhotoTest {
     void testHashCode() {
         GravatarProfilePhoto url = new GravatarProfilePhoto("thumbnail", "link");
         GravatarProfilePhoto equalToUrl = new GravatarProfilePhoto("thumbnail", "link");
-        GravatarProfilePhoto notEqualToUrl = new GravatarProfilePhoto("other thumbnail", "link");
+        GravatarProfilePhoto notEqual = new GravatarProfilePhoto("other thumbnail", "link");
 
         assertEquals(-1699840882, url.hashCode());
         assertEquals(-1699840882, equalToUrl.hashCode());
-        assertEquals(97995678, notEqualToUrl.hashCode());
+        assertEquals(97995678, notEqual.hashCode());
         assertEquals(url.hashCode(), equalToUrl.hashCode());
-        assertNotEquals(equalToUrl.hashCode(), notEqualToUrl.hashCode());
+        assertNotEquals(equalToUrl.hashCode(), notEqual.hashCode());
     }
 }

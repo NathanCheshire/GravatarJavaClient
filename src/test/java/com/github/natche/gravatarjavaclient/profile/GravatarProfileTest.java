@@ -74,6 +74,9 @@ class GravatarProfileTest {
             + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
+    /**
+     * The full JSON string with a different profile url to {@link #fullJson}.
+     */
     private static final String differentProfileUrl = "{ \"entry\": [ { \"id\": \"231564699\","
             + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"profileUrl\": \"http://gravatar.com/nathancheshire\", \"preferredUsername\": \"nathanvcheshire\","
@@ -86,6 +89,9 @@ class GravatarProfileTest {
             + " [ { \"value\": \"https://wwww.github.com\", \"title\": \"GitHubs\" }, { \"value\":"
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
+    /**
+     * The full JSON string with a different preferred username to {@link #fullJson}.
+     */
     private static final String differentPreferredUsername = "{ \"entry\": [ { \"id\": \"231564699\","
             + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathancheshire\","
@@ -98,6 +104,9 @@ class GravatarProfileTest {
             + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
+    /**
+     * The full JSON string with a different thumbnail url to {@link #fullJson}.
+     */
     private static final String differentThumbnailUrl = "{ \"entry\": [ { \"id\": \"231564699\","
             + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
@@ -110,6 +119,9 @@ class GravatarProfileTest {
             + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
+    /**
+     * The full JSON string with a different photos list to {@link #fullJson}.
+     */
     private static final String differentPhotos = "{ \"entry\": [ { \"id\": \"231564699\","
             + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
@@ -122,7 +134,10 @@ class GravatarProfileTest {
             + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
-    private static final String differentName = "{ \"entry\": [ { \"id\": \"231564699\","
+    /**
+     * The full JSON string with a different given name to {@link #fullJson}.
+     */
+    private static final String differentGivenName = "{ \"entry\": [ { \"id\": \"231564699\","
             + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
             + " \"thumbnailUrl\": \"https://secure.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7\","
@@ -134,6 +149,9 @@ class GravatarProfileTest {
             + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
+    /**
+     * The full JSON string with a different family name to {@link #fullJson}.
+     */
     private static final String differentFamilyName = "{ \"entry\": [ { \"id\": \"231564699\","
             + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
@@ -146,6 +164,9 @@ class GravatarProfileTest {
             + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
+    /**
+     * The full JSON string with a different display name to {@link #fullJson}.
+     */
     private static final String differentDisplayName = "{ \"entry\": [ { \"id\": \"231564699\","
             + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
@@ -158,6 +179,9 @@ class GravatarProfileTest {
             + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
+    /**
+     * The full JSON string with a different pronouns to {@link #fullJson}.
+     */
     private static final String differentPronouns = "{ \"entry\": [ { \"id\": \"231564699\","
             + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
@@ -170,6 +194,9 @@ class GravatarProfileTest {
             + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
+    /**
+     * The full JSON string with a different about me to {@link #fullJson}.
+     */
     private static final String differentAboutMe = "{ \"entry\": [ { \"id\": \"231564699\","
             + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
@@ -181,6 +208,9 @@ class GravatarProfileTest {
             + " [ { \"value\": \"https://www.github.com\", \"title\": \"GitHub\" }, { \"value\":"
             + " \"https://www.nathancheshire.com\", \"title\": \"Personal Website\" } ] } ] }";
 
+    /**
+     * The full JSON string with a different current location to {@link #fullJson}.
+     */
     private static final String differentCurrentLocation = "{ \"entry\": [ { \"id\": \"231564699\","
             + " \"hash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\", \"requestHash\": \"2bf1b7a19bcad06a8e894d7373a4cfc7\","
             + " \"profileUrl\": \"http://gravatar.com/nathanvcheshire\", \"preferredUsername\": \"nathanvcheshire\","
@@ -365,7 +395,7 @@ class GravatarProfileTest {
         assertNotEquals(full, new GravatarProfile(differentPreferredUsername));
         assertNotEquals(full, new GravatarProfile(differentThumbnailUrl));
         assertNotEquals(full, new GravatarProfile(differentPhotos));
-        assertNotEquals(full, new GravatarProfile(differentName));
+        assertNotEquals(full, new GravatarProfile(differentGivenName));
         assertNotEquals(full, new GravatarProfile(differentFamilyName));
         assertNotEquals(full, new GravatarProfile(differentDisplayName));
         assertNotEquals(full, new GravatarProfile(differentPronouns));

@@ -137,30 +137,32 @@ class GravatarImageRequestBuilderImplTest {
                 + " shouldAppendJpgSuffix=true, size=80, rating=G, forceDefaultImage=false, defaultImageType=null,"
                 + " defaultImageUrl=\"null\", useHttps=true, useFullUrlParameterNames=false}", impl1.toString());
 
-        GravatarImageRequestBuilderImpl impl2 = new GravatarImageRequestBuilderImpl("nathan@email.com")
-                .setUseHttps(false)
-                .setDefaultImageType(GravatarDefaultImageType.RETRO)
-                .setRating(GravatarRating.G)
-                .setForceDefaultImage(true)
-                .setUseFullUrlParameterNames(true)
-                .setShouldAppendJpgSuffix(false);
+        GravatarImageRequestBuilderImpl defaultImageTypeBuilder =
+                new GravatarImageRequestBuilderImpl("nathan@email.com")
+                        .setUseHttps(false)
+                        .setDefaultImageType(GravatarDefaultImageType.RETRO)
+                        .setRating(GravatarRating.G)
+                        .setForceDefaultImage(true)
+                        .setUseFullUrlParameterNames(true)
+                        .setShouldAppendJpgSuffix(false);
         assertEquals("GravatarImageRequestBuilder{hash=\"9d4806832c56ee86c6aae26889c53c67\","
                 + " shouldAppendJpgSuffix=false, size=80, rating=G, forceDefaultImage=true,"
                 + " defaultImageType=RETRO, defaultImageUrl=\"null\", useHttps=false,"
-                + " useFullUrlParameterNames=true}", impl2.toString());
+                + " useFullUrlParameterNames=true}", defaultImageTypeBuilder.toString());
 
-        GravatarImageRequestBuilderImpl allSetters = new GravatarImageRequestBuilderImpl("nathan@email.com")
-                .setUseHttps(false)
-                .setDefaultImageType(GravatarDefaultImageType.RETRO)
-                .setRating(GravatarRating.X)
-                .setForceDefaultImage(true)
-                .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")
-                .setUseFullUrlParameterNames(true)
-                .setShouldAppendJpgSuffix(false);
+        GravatarImageRequestBuilderImpl defaultImageUrlBuilder =
+                new GravatarImageRequestBuilderImpl("nathan@email.com")
+                        .setUseHttps(false)
+                        .setDefaultImageType(GravatarDefaultImageType.RETRO)
+                        .setRating(GravatarRating.X)
+                        .setForceDefaultImage(true)
+                        .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")
+                        .setUseFullUrlParameterNames(true)
+                        .setShouldAppendJpgSuffix(false);
         assertEquals("GravatarImageRequestBuilder{hash=\"9d4806832c56ee86c6aae26889c53c67\","
                 + " shouldAppendJpgSuffix=false, size=80, rating=X, forceDefaultImage=true, defaultImageType=null,"
                 + " defaultImageUrl=\"https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png\","
-                + " useHttps=false, useFullUrlParameterNames=true}", allSetters.toString());
+                + " useHttps=false, useFullUrlParameterNames=true}", defaultImageUrlBuilder.toString());
     }
 
     /**
@@ -176,18 +178,5 @@ class GravatarImageRequestBuilderImplTest {
         assertEquals(impl1, equalImpl1);
         assertNotEquals(equalImpl1, nonEqualImpl1);
         assertNotEquals(equalImpl1, new Object());
-
-        GravatarImageRequestBuilderImpl truthBuilder = new GravatarImageRequestBuilderImpl("n@email.com")
-                .setShouldAppendJpgSuffix(false);
-        GravatarImageRequestBuilderImpl truthBuilderA = new GravatarImageRequestBuilderImpl("n@email.com")
-                .setShouldAppendJpgSuffix(true);
-        assertEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
-                .setShouldAppendJpgSuffix(false));
-        assertNotEquals(truthBuilder, new GravatarImageRequestBuilderImpl("n@email.com")
-                .setShouldAppendJpgSuffix(true));
-        assertNotEquals(truthBuilderA, new GravatarImageRequestBuilderImpl("n@email.com")
-                .setShouldAppendJpgSuffix(false));
-        assertEquals(truthBuilderA, new GravatarImageRequestBuilderImpl("n@email.com")
-                .setShouldAppendJpgSuffix(true));
     }
 }

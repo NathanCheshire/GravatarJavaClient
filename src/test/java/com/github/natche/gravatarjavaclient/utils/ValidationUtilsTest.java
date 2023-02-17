@@ -23,8 +23,7 @@ class ValidationUtilsTest {
     @Test
     void testCreation() {
         try {
-            Constructor<ValidationUtils> constructor =
-                    ValidationUtils.class.getDeclaredConstructor();
+            Constructor<ValidationUtils> constructor = ValidationUtils.class.getDeclaredConstructor();
             constructor.setAccessible(true);
             constructor.newInstance();
         } catch (Exception e) {
