@@ -180,16 +180,32 @@ class GravatarImageRequestBuilderImplTest {
         assertNotEquals(equalImpl1, new Object());
 
         assertNotEquals(
+                new GravatarImageRequestBuilderImpl("nathan@email.com").setShouldAppendJpgSuffix(true),
+                new GravatarImageRequestBuilderImpl("nathan@email.com").setShouldAppendJpgSuffix(false));
+        assertNotEquals(
+                new GravatarImageRequestBuilderImpl("nathan@email.com").setSize(420),
+                new GravatarImageRequestBuilderImpl("nathan@email.com").setSize(69));
+        assertNotEquals(
+                new GravatarImageRequestBuilderImpl("nathan@email.com").setRating(GravatarRating.X),
+                new GravatarImageRequestBuilderImpl("nathan@email.com").setRating(GravatarRating.R));
+        assertNotEquals(
+                new GravatarImageRequestBuilderImpl("nathan@email.com").setForceDefaultImage(true),
+                new GravatarImageRequestBuilderImpl("nathan@email.com").setForceDefaultImage(false));
+        assertNotEquals(
+                new GravatarImageRequestBuilderImpl("nathan@email.com")
+                        .setDefaultImageType(GravatarDefaultImageType.RETRO),
+                new GravatarImageRequestBuilderImpl("nathan@email.com")
+                        .setDefaultImageType(GravatarDefaultImageType.MONSTER_ID));
+        assertNotEquals(
+                new GravatarImageRequestBuilderImpl("nathan@email.com")
+                        .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png"),
+                new GravatarImageRequestBuilderImpl("nathan@email.com")
+                        .setDefaultImageUrl("https://tinyurl.com/mtcdfa7w"));
+        assertNotEquals(
+                new GravatarImageRequestBuilderImpl("nathan@email.com").setUseHttps(true),
+                new GravatarImageRequestBuilderImpl("nathan@email.com").setUseHttps(false));
+        assertNotEquals(
                 new GravatarImageRequestBuilderImpl("nathan@email.com").setUseFullUrlParameterNames(true),
                 new GravatarImageRequestBuilderImpl("nathan@email.com").setUseFullUrlParameterNames(false));
-        //        assertNotEquals(
-        //                new GravatarImageRequestBuilderImpl("nathan@email.com").setUseFullUrlParameterNames(false),
-        //                new GravatarImageRequestBuilderImpl("nathan@email.com").setUseFullUrlParameterNames(true));
-        //        assertEquals(
-        //                new GravatarImageRequestBuilderImpl("nathan@email.com").setUseFullUrlParameterNames(true),
-        //                new GravatarImageRequestBuilderImpl("nathan@email.com").setUseFullUrlParameterNames(true));
-        //        assertEquals(
-        //                new GravatarImageRequestBuilderImpl("nathan@email.com").setUseFullUrlParameterNames(false),
-        //                new GravatarImageRequestBuilderImpl("nathan@email.com").setUseFullUrlParameterNames(false));
     }
 }
