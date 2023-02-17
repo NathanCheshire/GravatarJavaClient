@@ -178,5 +178,9 @@ class GravatarImageRequestBuilderImplTest {
         assertEquals(impl1, equalImpl1);
         assertNotEquals(equalImpl1, nonEqualImpl1);
         assertNotEquals(equalImpl1, new Object());
+
+        assertNotEquals(
+                new GravatarImageRequestBuilderImpl("nathan@email.com").setUseFullUrlParameterNames(true),
+                new GravatarImageRequestBuilderImpl("nathan@email.com").setUseFullUrlParameterNames(false));
     }
 }
