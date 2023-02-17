@@ -286,8 +286,8 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
                 && forceDefaultImage == other.forceDefaultImage
                 && defaultImageType == other.defaultImageType
                 && Objects.equals(defaultImageUrl, other.defaultImageUrl)
-                && useHttps == other.useHttps
-                && useFullUrlParameterNames == other.useFullUrlParameterNames;
+                && Objects.equals(useHttps, other.useHttps)
+                && Objects.equals(useFullUrlParameterNames, other.useFullUrlParameterNames);
     }
 
     /**
