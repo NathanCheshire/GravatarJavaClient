@@ -12,7 +12,7 @@ This library is a Java wrapper for the Gravatar image and profile API. When want
 
 ## Pulling in with Gradle
 
-Make sure you have the following line in your `repositories` Gradle config: 
+Make sure you have the following line in your `repositories` Gradle config (it is recommended that JitPack be at the end of the repositories section): 
 
 `maven { url 'https://jitpack.io' }` 
 
