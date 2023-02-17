@@ -10,6 +10,17 @@
 
 This library is a Java wrapper for the Gravatar image and profile API. When wanting to integrate the Gravatar API into [Cyder](https://github.com/NathanCheshire/Cyder) (my main project), I came across super old Java API wrappers, some of which have not been touched for 14 years! The last-updated statistic by itself does not indicate a library is not maintained or poorly implemented, but in this case there were some issues and PRs on the GitHub repository which were never addressed. I looked at this and thought "I can do it myself and do it better." Henceforce, GravatarJavaClient was born, being named by ChatGPT.
 
+## Pulling in with Gradle
+
+Make sure you have the following line in your `repositories` Gradle config: 
+
+`maven { url 'https://jitpack.io' }` 
+
+Then add the following to your dependencies: 
+`implementation 'com.github.nathancheshire:gravatarjavaclient:COMMIT_HASH'`.
+
+The `COMMIT_HASH` may be whatever commit hash you want to use, `b011c6e` for example.
+
 ## API Support
 
 This client features support for the comprehensive Gravatar API, that of:
