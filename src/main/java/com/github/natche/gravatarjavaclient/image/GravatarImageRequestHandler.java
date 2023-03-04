@@ -34,34 +34,34 @@ public final class GravatarImageRequestHandler {
     /**
      * The hyper text transfer protocol string.
      */
-    private static final String http = "http";
+    private static final String HTTP = "http";
 
     /**
      * The safe hyper text transfer protocol string.
      */
-    private static final String https = "https";
+    private static final String HTTPS = "https";
 
     /**
      * The base URL for the image request API without the protocol prefix.
      */
-    private static final String imageRequestBaseUrl = "://www.gravatar.com/avatar/";
+    private static final String IMAGE_REQUEST_BASE_URL = "://www.gravatar.com/avatar/";
 
     /**
      * The jpg extension without the leading period.
      */
-    private static final String jpgExtensionWithoutPeriod = "jpg";
+    private static final String JPG_EXTENSION_WITHOUT_PERIOD = "jpg";
 
     /**
      * The JPG extension to append to the end of an email hash if
      * {@link GravatarImageRequestBuilder#shouldAppendJpgSuffix()} is true.
      */
-    private static final String jpgExtension = "." + jpgExtensionWithoutPeriod;
+    private static final String JPG_EXTENSION = "." + JPG_EXTENSION_WITHOUT_PERIOD;
 
     /**
      * The string to accompany {@link GravatarUrlParameter#FORCE_DEFAULT} to indicate the default URL
      * should be used regardless of the validity of the user account.
      */
-    private static final String forceDefaultUrlTrueString = "y";
+    private static final String FORCE_DEFAULT_URL_TRUE_STRING = "y";
 
     /**
      * The default state new instances of {@link GravatarImageRequestBuilderImpl} should contain for
@@ -216,12 +216,12 @@ public final class GravatarImageRequestHandler {
         boolean fullParameters = gravatarImageRequestBuilder.shouldUseFullUrlParameterNames();
         boolean useHttps = gravatarImageRequestBuilder.shouldUseHttps();
 
-        StringBuilder urlBuilder = new StringBuilder(useHttps ? https : http);
-        urlBuilder.append(imageRequestBaseUrl);
+        StringBuilder urlBuilder = new StringBuilder(useHttps ? HTTPS : HTTP);
+        urlBuilder.append(IMAGE_REQUEST_BASE_URL);
         urlBuilder.append(gravatarImageRequestBuilder.getGravatarUserEmailHash());
 
         if (gravatarImageRequestBuilder.shouldAppendJpgSuffix()) {
-            urlBuilder.append(jpgExtension);
+            urlBuilder.append(JPG_EXTENSION);
         }
 
         String size = String.valueOf(gravatarImageRequestBuilder.getSize());
@@ -249,7 +249,7 @@ public final class GravatarImageRequestHandler {
             }
 
             urlBuilder.append(GravatarUrlParameter.FORCE_DEFAULT
-                    .constructUrlParameterWithValue(forceDefaultUrlTrueString, fullParameters));
+                    .constructUrlParameterWithValue(FORCE_DEFAULT_URL_TRUE_STRING, fullParameters));
         }
 
         return urlBuilder.toString();
@@ -286,7 +286,7 @@ public final class GravatarImageRequestHandler {
         Preconditions.checkNotNull(gravatarImageRequestBuilder);
 
         String filename = gravatarImageRequestBuilder.getGravatarUserEmailHash()
-                + emailHashTimestampSeparator + saveFileFormatter.format(new Date()) + jpgExtension;
+                + emailHashTimestampSeparator + saveFileFormatter.format(new Date()) + JPG_EXTENSION;
         File saveToFile = new File(filename);
         saveImage(gravatarImageRequestBuilder, saveToFile);
         return saveToFile;
@@ -308,6 +308,6 @@ public final class GravatarImageRequestHandler {
         Preconditions.checkNotNull(saveToFile);
         Preconditions.checkArgument(!saveToFile.exists());
 
-        ImageIO.write(getImage(gravatarImageRequestBuilder), jpgExtensionWithoutPeriod, saveToFile);
+        ImageIO.write(getImage(gravatarImageRequestBuilder), JPG_EXTENSION_WITHOUT_PERIOD, saveToFile);
     }
 }

@@ -20,12 +20,12 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * The range a {@link GravatarUrlParameter#SIZE} parameter must fall within.
      */
-    private static final Range<Integer> sizeRange = Range.closed(1, 2048);
+    private static final Range<Integer> SIZE_RANGE = Range.closed(1, 2048);
 
     /**
      * The default length for an image request.
      */
-    private static final int defaultImageLength = 80;
+    private static final int DEFAULT_IMAGE_LENGTH = 80;
 
     /**
      * The hash computed from the user email for this builder.
@@ -40,7 +40,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * The size for the image returned by this builder.
      */
-    private int size = defaultImageLength;
+    private int size = DEFAULT_IMAGE_LENGTH;
 
     /**
      * The maximum rating allowable for this image request.
@@ -116,11 +116,11 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
      *
      * @param size the requested size
      * @return this builder
-     * @throws IllegalArgumentException if the requested size is not in the range {@link #sizeRange}
+     * @throws IllegalArgumentException if the requested size is not in the range {@link #SIZE_RANGE}
      */
     @CanIgnoreReturnValue
     public GravatarImageRequestBuilderImpl setSize(int size) {
-        Preconditions.checkArgument(sizeRange.contains(size));
+        Preconditions.checkArgument(SIZE_RANGE.contains(size));
 
         this.size = size;
         return this;
@@ -268,7 +268,10 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     }
 
     /**
-     * {@inheritDoc}
+     * Returns whether the provided object is equal to this.
+     *
+     * @param o the object
+     * @return whether the provided object is equal to this
      */
     @Override
     public boolean equals(Object o) {
@@ -291,7 +294,9 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     }
 
     /**
-     * {@inheritDoc}
+     * Returns a hashcode for this object.
+     *
+     * @return a hashcode for this object
      */
     @Override
     public int hashCode() {
@@ -308,7 +313,9 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     }
 
     /**
-     * {@inheritDoc}
+     * Returns a string representation of this object.
+     *
+     * @return a string representation of this object
      */
     @Override
     public String toString() {

@@ -15,7 +15,7 @@ public final class GravatarProfilePhoto {
     private final String type;
 
     /**
-     * The link for this profile photo,
+     * The link for this profile photo.
      */
     private final String link;
 
@@ -56,7 +56,9 @@ public final class GravatarProfilePhoto {
     }
 
     /**
-     * {@inheritDoc}
+     * Returns a string representation of this object.
+     *
+     * @return a string representation of this object
      */
     @Override
     public String toString() {
@@ -67,7 +69,9 @@ public final class GravatarProfilePhoto {
     }
 
     /**
-     * {@inheritDoc}
+     * Returns a hashcode for this object.
+     *
+     * @return a hashcode for this object
      */
     @Override
     public int hashCode() {
@@ -77,7 +81,10 @@ public final class GravatarProfilePhoto {
     }
 
     /**
-     * {@inheritDoc}
+     * Returns whether the provided object is equal to this.
+     *
+     * @param o the object
+     * @return whether the provided object is equal to this
      */
     @Override
     public boolean equals(Object o) {

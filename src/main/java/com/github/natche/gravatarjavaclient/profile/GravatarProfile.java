@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 /**
  * The results of a Gravatar profile request.
@@ -23,12 +24,12 @@ public final class GravatarProfile {
     /**
      * The header for Gravatar profile requests.
      */
-    private static final String gravatarProfileRequestHeader = "https://www.gravatar.com/";
+    private static final String GRAVATAR_PROFILE_REQUEST_HEADER = "https://www.gravatar.com/";
 
     /**
      * The format for the returned data from profile requests.
      */
-    private static final String formatType = ".json";
+    private static final String DATA_FORMAT_TYPE = ".json";
 
     // -----------------------------------
     // Fields which will always be present
@@ -144,7 +145,7 @@ public final class GravatarProfile {
         Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(userEmail));
 
         String emailHash = GeneralUtils.emailAddressToGravatarHash(userEmail);
-        String requestUrl = gravatarProfileRequestHeader + emailHash + formatType;
+        String requestUrl = GRAVATAR_PROFILE_REQUEST_HEADER + emailHash + DATA_FORMAT_TYPE;
         String jsonData = GeneralUtils.readUrl(requestUrl);
 
         return new GravatarProfile(jsonData);
@@ -350,12 +351,13 @@ public final class GravatarProfile {
     private static ImmutableList<GravatarProfilePhoto> extractProfilePhotos(JSONArray photosArray) {
         ArrayList<GravatarProfilePhoto> profilePhotos = new ArrayList<>();
 
-        for (int i = 0 ; i < photosArray.length() ; i++) {
-            JSONObject urlObject = photosArray.getJSONObject(i);
+        IntStream.range(0, photosArray.length()).forEach(index -> {
+            JSONObject urlObject = photosArray.getJSONObject(index);
             String name = urlObject.getString("type");
             String link = urlObject.getString("value");
             profilePhotos.add(new GravatarProfilePhoto(name, link));
-        }
+        });
+
         return ImmutableList.copyOf(profilePhotos);
     }
 
@@ -368,18 +370,20 @@ public final class GravatarProfile {
     private static ImmutableList<GravatarProfileUrl> extractProfileUrls(JSONArray urlsArray) {
         ArrayList<GravatarProfileUrl> profileUrls = new ArrayList<>();
 
-        for (int i = 0 ; i < urlsArray.length() ; i++) {
-            JSONObject urlObject = urlsArray.getJSONObject(i);
+        IntStream.range(0, urlsArray.length()).forEach(index -> {
+            JSONObject urlObject = urlsArray.getJSONObject(index);
             String name = urlObject.getString("title");
             String link = urlObject.getString("value");
             profileUrls.add(new GravatarProfileUrl(name, link));
-        }
+        });
 
         return ImmutableList.copyOf(profileUrls);
     }
 
     /**
-     * {@inheritDoc}
+     * Returns a string representation of this object.
+     *
+     * @return a string representation of this object
      */
     @Override
     public String toString() {
@@ -402,7 +406,9 @@ public final class GravatarProfile {
     }
 
     /**
-     * {@inheritDoc}
+     * Returns a hashcode for this object.
+     *
+     * @return a hashcode for this object
      */
     @Override
     public int hashCode() {
@@ -424,7 +430,10 @@ public final class GravatarProfile {
     }
 
     /**
-     * {@inheritDoc}
+     * Returns whether the provided object is equal to this.
+     *
+     * @param o the object
+     * @return whether the provided object is equal to this
      */
     @Override
     public boolean equals(Object o) {

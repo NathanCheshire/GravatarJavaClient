@@ -25,24 +25,24 @@ public final class GeneralUtils {
     /**
      * The invalid filename characters for Windows and Unix based systems.
      */
-    private static final ImmutableList<Character> invalidFilenameChars = ImmutableList.of(
+    private static final ImmutableList<Character> INVALID_FILENAME_CHARS = ImmutableList.of(
             '<', '>', ':', '\\', '|', '?', '*', '/', '\'', '"', '\u0000'
     );
 
     /**
      * The hashing algorithm used to transform a user email address into their gravatar UUID.
      */
-    private static final String hashingAlgorithm = "MD5";
+    private static final String HASHING_ALGORITHM = "MD5";
 
     /**
      * The buffer size used by the {@link BufferedReader} when reading the contents of a URL.
      */
-    private static final int readUrlBufferSize = 1024;
+    private static final int READ_URL_BUFFER_SIZE = 1024;
 
     /**
      * The number of digits in the hexadecimal base system.
      */
-    private static final int hexBase = 16;
+    private static final int HEX_BASE = 16;
 
     /**
      * Suppress default constructor.
@@ -90,7 +90,7 @@ public final class GeneralUtils {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream()))) {
             StringBuilder builder = new StringBuilder();
 
-            char[] chars = new char[readUrlBufferSize];
+            char[] chars = new char[READ_URL_BUFFER_SIZE];
             int read;
             while ((read = reader.read(chars)) != -1) {
                 builder.append(chars, 0, read);
@@ -115,7 +115,7 @@ public final class GeneralUtils {
         Preconditions.checkArgument(!filename.isEmpty());
 
         for (char c : filename.toCharArray()) {
-            if (invalidFilenameChars.contains(c)) return false;
+            if (INVALID_FILENAME_CHARS.contains(c)) return false;
         }
 
         return true;
@@ -142,7 +142,7 @@ public final class GeneralUtils {
         Preconditions.checkArgument(!emailAddress.isEmpty());
         Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(emailAddress));
 
-        return hashInput(emailAddress.trim().toLowerCase(), hashingAlgorithm);
+        return hashInput(emailAddress.trim().toLowerCase(), HASHING_ALGORITHM);
     }
 
     /**
@@ -173,6 +173,6 @@ public final class GeneralUtils {
         byte[] digest = messageDigest.digest(bytes);
 
         BigInteger number = new BigInteger(1, digest);
-        return number.toString(hexBase);
+        return number.toString(HEX_BASE);
     }
 }
