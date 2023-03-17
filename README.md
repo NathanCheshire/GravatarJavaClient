@@ -4,7 +4,7 @@
 
 ![author](https://user-images.githubusercontent.com/60986919/219560101-6fd7400d-4e24-49b9-9b3a-82247e777d81.png)
 
-[![codecov](https://user-images.githubusercontent.com/60986919/219558682-4834c081-ad8f-4e57-a4fc-f500cb2c4c9e.png)](https://codecov.io/gh/NathanCheshire/GravatarJavaClient)
+[![codecov](https://codecov.io/gh/NathanCheshire/GravatarJavaClient/branch/main/graph/badge.svg?token=T0DQD31N7S)](https://codecov.io/gh/NathanCheshire/GravatarJavaClient)
 
 ## Intro
 
