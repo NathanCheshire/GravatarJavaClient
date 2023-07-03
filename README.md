@@ -8,9 +8,9 @@
 
 ## Intro
 
-This library is a Java wrapper for the Gravatar image and profile API. When wanting to integrate the Gravatar API into [Cyder](https://github.com/NathanCheshire/Cyder) (my main project), I came across super old Java API wrappers, some of which have not been touched for 14 years! The last-updated statistic by itself does not indicate a library is not maintained or poorly implemented, but in this case there were some issues and PRs on the GitHub repository which were never addressed. I looked at this and thought "I can do it myself and do it better." Henceforce, GravatarJavaClient was born, being named by ChatGPT.
+This library is a Java wrapper for the Gravatar image and profile API. When wanting to integrate the Gravatar API into [Cyder](https://github.com/NathanCheshire/Cyder), a project of mine, I came across super old Java API wrappers, some of which have not been touched for 14 years! The last-updated statistic by itself does not indicate a library is not maintained or poorly implemented, but in this case there were some issues and PRs on the GitHub repository which were never addressed. I looked at this and thought "I can do it myself and do it better." Henceforce, GravatarJavaClient was born.
 
-## Pulling in with Gradle
+## Using with Gradle
 
 Make sure you have the following line in your `repositories` Gradle config (it is recommended that JitPack be at the end of the repositories section): 
 
@@ -27,7 +27,7 @@ This client features support for the comprehensive Gravatar API, that of:
 - Gravatar image requests
 - Gravatar profile requests
 
-This client also follows [Effective Java](https://www.amazon.com/Effective-Java-Joshua-Bloch/dp/0134685997) items, such as item 52: refer to objects by their interfaces. I cannot see a case where a developer using this library would want to implement their own `GravatarImageRequestBuilder`, but if for whatever reason it was desired, a developer could easily do so by implementing from `GravatarImageRequestBuilder`. The `GravatarImageRequestHandler` will accepts the interface. The default implementation (`GravatarImageRequestBuilderImpl`) I will be maintaining and keeping up to date, ensuring tested and feature rich methods are exposed. If a method you would like to exist in this class is not present, and you think others would benefit from it, feel free to implement it yourself and create a PR.
+This client also follows [Effective Java](https://www.amazon.com/Effective-Java-Joshua-Bloch/dp/0134685997) items, such as item 52: refer to objects by their interfaces. I cannot see a case where a developer using this library would want to implement their own `GravatarImageRequestBuilder`, but if for whatever reason it was desired, a developer could easily do so by inheriting from the `GravatarImageRequestBuilder` interface. The `GravatarImageRequestHandler` will accept the interface instead of my implementation (GravatarImageRequestBuilderImpl) making the API work for both mine and possibly yours should you feel the need to write one. The default implementation (`GravatarImageRequestBuilderImpl`) I will be maintaining and keeping up to date, ensuring tested and feature rich methods are exposed. If a method you would like to exist in this class is not present, and you think others would benefit from it, feel free to implement it yourself and create a PR.
 
 ## Getting Started
 
@@ -47,17 +47,21 @@ You may then pass this builder to the `GravatarImageRequestHandler` to perform c
 - Saving the buffered image to a file (if no file is provided, a file is generated with the naming scheme of "emailHash-timestamp")
 
 ```java
+// Get the URL to the image.
 String url = GravatarImageRequestHandler.buildUrl(builder);
+// Read the BufferedImage into memory from the URL.
 BufferedImage image = GravatarImageRequestHandler.getImage(builder);
-File imageFile = GravatarImageRequestHandler.getImage(builder);
-File imageFile = GravatarImageRequestHandler.getImage(builder, new File("/path/to/my/image_file.png"));
+// Save the BufferedImage to the local directory.
+File imageFile = GravatarImageRequestHandler.saveImage(builder);
+// Save the bufferedImage to a specific File pointer.
+File imageFile = GravatarImageRequestHandler.saveImage(builder, new File("/path/to/my/image_file.png"));
 ```
 
 ## Contributing
 
-If you think some feature is missing, or have an idea for how to improve the API, then by all means, contribute! Make sure you follow clean-code styles and elagent API implementation. I closely follow the principles set forth in books such as Effective Java by Joshua Bloch, Clean Code, and The Clean Coder by Robert Cecil Martin.
+If you think a feature is missing, or have an idea for how to improve the API, then by all means contribute! Make sure to follow clean-code styles. I closely follow the principles set forth by books such as Effective Java by Joshua Bloch, Clean Code, and The Clean Coder by Robert Cecil Martin.
 
-General guidelines for this project are as follows:
+General guidelines are as follows:
 
 - Make sure your implementation closely matches the implementation you see present in the source files (same code style)
 - Make sure to add Javadoc to every member, field, class, method, etc.
