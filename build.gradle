@@ -26,6 +26,7 @@ dependencies {
 jacocoTestReport {
     reports {
         xml.enabled true
+        xml.outputLocation.set(file("$buildDir/reports/jacoco/test/xml/index.xml"))
         html.enabled false
     }
 }
