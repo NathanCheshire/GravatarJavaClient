@@ -27,3 +27,7 @@ jobs:
           arguments: jacocoTestReport
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
+        with:
+          file: ./build/reports/jacoco/test/xml/index.xml
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
