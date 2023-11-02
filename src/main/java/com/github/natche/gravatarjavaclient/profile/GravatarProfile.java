@@ -285,7 +285,7 @@ public final class GravatarProfile {
      *
      * @param entryObjectMap the entry object map
      */
-    @SuppressWarnings("unchecked") /* Object casts */
+    @SuppressWarnings({"unchecked", "DataFlowIssue"}) /* Object casts, null not possible in scenario */
     private void extractAndSetOptionalFields(ImmutableMap<String, Object> entryObjectMap) {
         if (entryObjectMap.containsKey("preferredUsername")) {
             preferredUsername = (String) entryObjectMap.get("preferredUsername");
@@ -295,17 +295,13 @@ public final class GravatarProfile {
         }
         if (entryObjectMap.containsKey("photos")) {
             Object photosObject = entryObjectMap.get("photos");
-            if (photosObject != null) {
-                ImmutableList<Object> photosList = ImmutableList.copyOf((List<?>) photosObject);
-                profilePhotos = extractProfilePhotos(photosList);
-            }
+            ImmutableList<Object> photosList = ImmutableList.copyOf((List<?>) photosObject);
+            profilePhotos = extractProfilePhotos(photosList);
         }
         if (entryObjectMap.containsKey("name")) {
             Object nameObject = entryObjectMap.get("name");
-            if (nameObject != null) {
-                Map<String, Object> names = (Map<String, Object>) nameObject;
-                extractNameFields(names);
-            }
+            Map<String, Object> names = (Map<String, Object>) nameObject;
+            extractNameFields(names);
         }
         if (entryObjectMap.containsKey("displayName")) {
             displayName = (String) entryObjectMap.get("displayName");
@@ -321,10 +317,8 @@ public final class GravatarProfile {
         }
         if (entryObjectMap.containsKey("urls")) {
             Object urlsObject = entryObjectMap.get("urls");
-            if (urlsObject != null) {
-                ImmutableList<Map<String, Object>> urlsList = ImmutableList.copyOf((List<Map<String, Object>>) urlsObject);
-                profileUrls = extractProfileUrls(urlsList);
-            }
+            ImmutableList<Map<String, Object>> urlsList = ImmutableList.copyOf((List<Map<String, Object>>) urlsObject);
+            profileUrls = extractProfileUrls(urlsList);
         }
     }
 
