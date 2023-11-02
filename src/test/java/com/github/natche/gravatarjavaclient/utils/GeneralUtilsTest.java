@@ -50,8 +50,8 @@ class GeneralUtilsTest {
         AtomicReference<BufferedImage> bi = new AtomicReference<>();
         assertDoesNotThrow(() -> bi.set(GeneralUtils.readBufferedImage(
                 "https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")));
-        assertEquals(255, bi.get().getWidth());
-        assertEquals(383, bi.get().getHeight());
+        assertEquals(220, bi.get().getWidth());
+        assertEquals(280, bi.get().getHeight());
     }
 
     /**

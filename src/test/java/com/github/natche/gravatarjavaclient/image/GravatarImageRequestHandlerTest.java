@@ -257,8 +257,8 @@ class GravatarImageRequestHandlerTest {
                         .setForceDefaultImage(true);
         AtomicReference<BufferedImage> bi = new AtomicReference<>();
         assertDoesNotThrow(() -> bi.set(GravatarImageRequestHandler.getImage(forceDefaultImage)));
-        assertEquals(255, bi.get().getWidth());
-        assertEquals(383, bi.get().getHeight());
+        assertEquals(220, bi.get().getWidth());
+        assertEquals(280, bi.get().getHeight());
     }
 
     /**
