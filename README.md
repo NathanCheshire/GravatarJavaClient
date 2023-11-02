@@ -50,11 +50,11 @@ Using the client is extremely straight forward. `GravatarImageRequestHandlerImpl
 set parameters as follows:
 
 ```java
-GravatarImageRequestBuilderImpl builder=new GravatarImageRequestBuilderImpl("EmailAddress@email.domain.com")
-        .setRating(GravatarRating.R)
-        .setSize(500)
-        .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-        .setShouldAppendJpgSuffix(true);
+GravatarImageRequestBuilderImpl builder = new GravatarImageRequestBuilderImpl("EmailAddress@email.domain.com")
+    .setRating(GravatarRating.R)
+    .setSize(500)
+    .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+    .setShouldAppendJpgSuffix(true);
 ```
 
 You may then pass this builder to the `GravatarImageRequestHandler` to perform certain actions:
@@ -66,13 +66,13 @@ You may then pass this builder to the `GravatarImageRequestHandler` to perform c
 
 ```java
 // Get the URL to the image.
-String url=GravatarImageRequestHandler.buildUrl(builder);
-        // Read the BufferedImage into memory from the URL.
-        BufferedImage image=GravatarImageRequestHandler.getImage(builder);
-        // Save the BufferedImage to the local directory.
-        File imageFile=GravatarImageRequestHandler.saveImage(builder);
-        // Save the bufferedImage to a specific File pointer.
-        File imageFile=GravatarImageRequestHandler.saveImage(builder,new File("/path/to/my/image_file.png"));
+String url = GravatarImageRequestHandler.buildUrl(builder);
+// Read the BufferedImage into memory from the URL.
+BufferedImage image = GravatarImageRequestHandler.getImage(builder);
+// Save the BufferedImage to the local directory.
+File imageFile = GravatarImageRequestHandler.saveImage(builder);
+// Save the bufferedImage to a specific File pointer.
+File imageFile = GravatarImageRequestHandler.saveImage(builder,new File("/path/to/my/image_file.png"));
 ```
 
 ## Contributing
