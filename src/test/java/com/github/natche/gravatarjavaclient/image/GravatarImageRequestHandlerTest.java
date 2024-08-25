@@ -1,5 +1,6 @@
 package com.github.natche.gravatarjavaclient.image;
 
+import com.github.natche.gravatarjavaclient.TestingConstants;
 import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
 import com.github.natche.gravatarjavaclient.enums.GravatarRating;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
@@ -196,14 +197,14 @@ class GravatarImageRequestHandlerTest {
 
         GravatarImageRequestBuilderImpl defaultImageUrl =
                 new GravatarImageRequestBuilderImpl("nathan.vincent.2.718@gmail.com")
-                        .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png");
+                        .setDefaultImageUrl(TestingConstants.foreignImageUrl);
         assertEquals("https://www.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7.jpg?s=80&r=g&"
-                        + "d=https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png",
+                        + "d=" + TestingConstants.foreignImageUrl,
                 GravatarImageRequestHandler.buildUrl(defaultImageUrl));
 
         GravatarImageRequestBuilderImpl defaultImageUrlOverridden =
                 new GravatarImageRequestBuilderImpl("nathan.vincent.2.718@gmail.com")
-                        .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png");
+                        .setDefaultImageUrl(TestingConstants.foreignImageUrl);
         defaultImageUrlOverridden.setDefaultImageType(GravatarDefaultImageType.RETRO);
         assertEquals("https://www.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7.jpg?s=80&r=g&d=retro",
                 GravatarImageRequestHandler.buildUrl(defaultImageUrlOverridden));
@@ -212,17 +213,17 @@ class GravatarImageRequestHandlerTest {
                 new GravatarImageRequestBuilderImpl("nathan.vincent.2.718@gmail.com")
                         .setDefaultImageType(GravatarDefaultImageType.RETRO);
         defaultImageTypeOverridden.setDefaultImageUrl(
-                "https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png");
+                TestingConstants.foreignImageUrl);
         assertEquals("https://www.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7"
-                        + ".jpg?s=80&r=g&d=https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png",
+                        + ".jpg?s=80&r=g&d=" + TestingConstants.foreignImageUrl,
                 GravatarImageRequestHandler.buildUrl(defaultImageTypeOverridden));
 
         GravatarImageRequestBuilderImpl forceDefaultImage =
                 new GravatarImageRequestBuilderImpl("nathan.vincent.2.718@gmail.com")
-                        .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")
+                        .setDefaultImageUrl(TestingConstants.foreignImageUrl)
                         .setForceDefaultImage(true);
         assertEquals("https://www.gravatar.com/avatar/2bf1b7a19bcad06a8e894d7373a4cfc7.jpg"
-                        + "?s=80&r=g&d=https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png&f=y",
+                        + "?s=80&r=g&d=" + TestingConstants.foreignImageUrl + "&f=y",
                 GravatarImageRequestHandler.buildUrl(forceDefaultImage));
 
         GravatarImageRequestBuilderImpl forceDefaultImageWithNoUrl =
@@ -253,12 +254,12 @@ class GravatarImageRequestHandlerTest {
 
         GravatarImageRequestBuilderImpl forceDefaultImage =
                 new GravatarImageRequestBuilderImpl("email@domain.com")
-                        .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")
+                        .setDefaultImageUrl("https://nathancheshire.com/static/media/silverpreview.17963d7d61a9d67498c0.png")
                         .setForceDefaultImage(true);
         AtomicReference<BufferedImage> bi = new AtomicReference<>();
         assertDoesNotThrow(() -> bi.set(GravatarImageRequestHandler.getImage(forceDefaultImage)));
-        assertEquals(220, bi.get().getWidth());
-        assertEquals(280, bi.get().getHeight());
+        assertEquals(500, bi.get().getWidth());
+        assertEquals(500, bi.get().getHeight());
     }
 
     /**
@@ -271,13 +272,13 @@ class GravatarImageRequestHandlerTest {
         assertThrows(NullPointerException.class,
                 () -> GravatarImageRequestHandler.saveImage(null, null));
         String userEmail = "email@domain.com";
-        GravatarImageRequestBuilderImpl minecraftBuilder = new GravatarImageRequestBuilderImpl(userEmail)
-                .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")
+        GravatarImageRequestBuilderImpl builder = new GravatarImageRequestBuilderImpl(userEmail)
+                .setDefaultImageUrl("https://nathancheshire.com/static/media/silverpreview.17963d7d61a9d67498c0.png")
                 .setForceDefaultImage(true);
         assertThrows(NullPointerException.class,
-                () -> GravatarImageRequestHandler.saveImage(minecraftBuilder, null));
+                () -> GravatarImageRequestHandler.saveImage(builder, null));
         assertThrows(IllegalArgumentException.class,
-                () -> GravatarImageRequestHandler.saveImage(minecraftBuilder, new File(".")));
+                () -> GravatarImageRequestHandler.saveImage(builder, new File(".")));
         File tmpFile = new File("tmp_file.png");
         try {
             assertTrue(tmpFile.createNewFile());
@@ -286,18 +287,18 @@ class GravatarImageRequestHandlerTest {
         }
         assertTrue(tmpFile.exists());
         assertThrows(IllegalArgumentException.class,
-                () -> GravatarImageRequestHandler.saveImage(minecraftBuilder, tmpFile));
+                () -> GravatarImageRequestHandler.saveImage(builder, tmpFile));
         assertTrue(tmpFile.delete());
         assertFalse(tmpFile.exists());
 
-        File minecraftImageFile = new File("Minecraft.png");
-        assertDoesNotThrow(() -> GravatarImageRequestHandler.saveImage(minecraftBuilder, minecraftImageFile));
-        assertTrue(minecraftImageFile.exists());
-        assertTrue(minecraftImageFile.delete());
-        assertFalse(minecraftImageFile.exists());
+        File builderImageFile = new File("Builder.png");
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.saveImage(builder, builderImageFile));
+        assertTrue(builderImageFile.exists());
+        assertTrue(builderImageFile.delete());
+        assertFalse(builderImageFile.exists());
 
         AtomicReference<File> savedToFile = new AtomicReference<>();
-        assertDoesNotThrow(() -> savedToFile.set(GravatarImageRequestHandler.saveImage(minecraftBuilder)));
+        assertDoesNotThrow(() -> savedToFile.set(GravatarImageRequestHandler.saveImage(builder)));
         assertTrue(savedToFile.get().exists());
 
         String fileName = savedToFile.get().getName();
@@ -310,7 +311,7 @@ class GravatarImageRequestHandlerTest {
         GravatarImageRequestHandler.setEmailHashTimestampSeparator(sep);
         SimpleDateFormat formatter = new SimpleDateFormat("MM");
         GravatarImageRequestHandler.setsSaveFileFormatter(formatter);
-        assertDoesNotThrow(() -> savedToFile.set(GravatarImageRequestHandler.saveImage(minecraftBuilder)));
+        assertDoesNotThrow(() -> savedToFile.set(GravatarImageRequestHandler.saveImage(builder)));
         assertTrue(savedToFile.get().exists());
 
         fileName = savedToFile.get().getName();

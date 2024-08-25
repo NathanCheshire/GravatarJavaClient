@@ -1,5 +1,6 @@
 package com.github.natche.gravatarjavaclient.utils;
 
+import com.github.natche.gravatarjavaclient.TestingConstants;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
@@ -65,8 +66,7 @@ class ValidationUtilsTest {
         assertFalse(ValidationUtils.isValidDefaultUrl("url"));
         assertFalse(ValidationUtils.isValidDefaultUrl("https://www.google.com"));
         assertFalse(ValidationUtils.isValidDefaultUrl("https://www.youtube.com"));
-        assertFalse(ValidationUtils.isValidDefaultUrl("https://www.dailymotion.com/video/x6tjilq"));
-        assertTrue(ValidationUtils.isValidDefaultUrl(
-                "https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png"));
+        assertFalse(ValidationUtils.isValidDefaultUrl("https://www.dailymotion.com/video/some-id"));
+        assertTrue(ValidationUtils.isValidDefaultUrl(TestingConstants.foreignImageUrl));
     }
 }

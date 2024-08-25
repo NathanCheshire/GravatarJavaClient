@@ -1,5 +1,6 @@
 package com.github.natche.gravatarjavaclient.utils;
 
+import com.github.natche.gravatarjavaclient.TestingConstants;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import org.junit.jupiter.api.Test;
 
@@ -48,10 +49,9 @@ class GeneralUtilsTest {
         assertThrows(GravatarJavaClientException.class, () -> GeneralUtils.readBufferedImage("url"));
 
         AtomicReference<BufferedImage> bi = new AtomicReference<>();
-        assertDoesNotThrow(() -> bi.set(GeneralUtils.readBufferedImage(
-                "https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")));
-        assertEquals(220, bi.get().getWidth());
-        assertEquals(280, bi.get().getHeight());
+        assertDoesNotThrow(() -> bi.set(GeneralUtils.readBufferedImage(TestingConstants.foreignImageUrl)));
+        assertEquals(200, bi.get().getWidth());
+        assertEquals(300, bi.get().getHeight());
     }
 
     /**

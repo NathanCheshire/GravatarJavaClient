@@ -1,5 +1,6 @@
 package com.github.natche.gravatarjavaclient.image;
 
+import com.github.natche.gravatarjavaclient.TestingConstants;
 import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
 import com.github.natche.gravatarjavaclient.enums.GravatarRating;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class GravatarImageRequestBuilderImplTest {
     /**
+     * t
      * Creates a new instance of this class for testing purposes.
      */
     GravatarImageRequestBuilderImplTest() {}
@@ -91,10 +93,8 @@ class GravatarImageRequestBuilderImplTest {
         assertThrows(NullPointerException.class, () -> impl.setDefaultImageUrl(null));
         assertThrows(IllegalArgumentException.class, () -> impl.setDefaultImageUrl(""));
         assertThrows(IllegalArgumentException.class, () -> impl.setDefaultImageUrl("invalid url"));
-        assertDoesNotThrow(() -> impl.setDefaultImageUrl(
-                "https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png"));
-        assertEquals("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png",
-                impl.getDefaultImageUrl());
+        assertDoesNotThrow(() -> impl.setDefaultImageUrl(TestingConstants.foreignImageUrl));
+        assertEquals(TestingConstants.foreignImageUrl, impl.getDefaultImageUrl());
         assertNull(impl.getDefaultImageType());
         assertDoesNotThrow(() -> impl.setDefaultImageType(GravatarDefaultImageType.ROBO_HASH));
         assertNull(impl.getDefaultImageUrl());
@@ -156,12 +156,12 @@ class GravatarImageRequestBuilderImplTest {
                         .setDefaultImageType(GravatarDefaultImageType.RETRO)
                         .setRating(GravatarRating.X)
                         .setForceDefaultImage(true)
-                        .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png")
+                        .setDefaultImageUrl(TestingConstants.foreignImageUrl)
                         .setUseFullUrlParameterNames(true)
                         .setShouldAppendJpgSuffix(false);
         assertEquals("GravatarImageRequestBuilder{hash=\"9d4806832c56ee86c6aae26889c53c67\","
                 + " shouldAppendJpgSuffix=false, size=80, rating=X, forceDefaultImage=true, defaultImageType=null,"
-                + " defaultImageUrl=\"https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png\","
+                + " defaultImageUrl=\"" + TestingConstants.foreignImageUrl + "\","
                 + " useHttps=false, useFullUrlParameterNames=true}", defaultImageUrlBuilder.toString());
     }
 
@@ -198,9 +198,9 @@ class GravatarImageRequestBuilderImplTest {
                         .setDefaultImageType(GravatarDefaultImageType.MONSTER_ID));
         assertNotEquals(
                 new GravatarImageRequestBuilderImpl("nathan@email.com")
-                        .setDefaultImageUrl("https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png"),
+                        .setDefaultImageUrl(TestingConstants.foreignImageUrl),
                 new GravatarImageRequestBuilderImpl("nathan@email.com")
-                        .setDefaultImageUrl("https://tinyurl.com/mtcdfa7w"));
+                        .setDefaultImageUrl(TestingConstants.otherForeignImageUrl));
         assertNotEquals(
                 new GravatarImageRequestBuilderImpl("nathan@email.com").setUseHttps(true),
                 new GravatarImageRequestBuilderImpl("nathan@email.com").setUseHttps(false));
