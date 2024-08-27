@@ -5,6 +5,7 @@ import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
 import com.github.natche.gravatarjavaclient.enums.GravatarRating;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
@@ -26,6 +27,12 @@ class GravatarImageRequestHandlerTest {
      * Creates a new instance of this class for testing purposes.
      */
     GravatarImageRequestHandlerTest() {}
+
+    @BeforeEach
+    void beforeEach() {
+        //noinspection ResultOfMethodCallIgnored
+        new File("tmp_file.png").delete();
+    }
 
     /**
      * Tests to ensure reflection is guarded against.
@@ -263,6 +270,25 @@ class GravatarImageRequestHandlerTest {
     }
 
     /**
+     * Tests for the saveImage which save directly to a provided pointer file returns true.
+     */
+    @Test
+    void testSaveImageReturnsTrue() {
+        String userEmail = "nathan.vincent.2.718@gmail.com";
+        GravatarImageRequestBuilderImpl builder = new GravatarImageRequestBuilderImpl(userEmail)
+                .setDefaultImageUrl(TestingConstants.silverPreview)
+                .setForceDefaultImage(true);
+        File tmpFile = new File("tmp_file.png");
+        assertFalse(tmpFile.exists());
+
+        try {
+            assertTrue(GravatarImageRequestHandler.saveImage(builder, tmpFile));
+        } catch (Exception ignored) {
+            // do nothing
+        }
+    }
+
+    /**
      * Tests for the save image method.
      */
     @Test
@@ -277,7 +303,7 @@ class GravatarImageRequestHandlerTest {
                 .setForceDefaultImage(true);
         assertThrows(NullPointerException.class,
                 () -> GravatarImageRequestHandler.saveImage(builder, null));
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(IllegalStateException.class,
                 () -> GravatarImageRequestHandler.saveImage(builder, new File(".")));
         File tmpFile = new File("tmp_file.png");
         try {
@@ -286,7 +312,7 @@ class GravatarImageRequestHandlerTest {
             // Don't care for unit test
         }
         assertTrue(tmpFile.exists());
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(IllegalStateException.class,
                 () -> GravatarImageRequestHandler.saveImage(builder, tmpFile));
         assertTrue(tmpFile.delete());
         assertFalse(tmpFile.exists());
