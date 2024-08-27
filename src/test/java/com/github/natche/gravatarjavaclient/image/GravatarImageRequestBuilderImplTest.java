@@ -18,7 +18,7 @@ class GravatarImageRequestBuilderImplTest {
     GravatarImageRequestBuilderImplTest() {}
 
     /**
-     * Tests for creation of Gravatar image request builder impls.
+     * Tests for creation of Gravatar image request builder implementation.
      */
     @Test
     void testCreation() {

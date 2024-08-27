@@ -58,6 +58,7 @@ class GeneralUtilsTest {
      * Tests for the email address to gravatar hash method.
      */
     @Test
+    @SuppressWarnings("SpellCheckingInspection")
     void testEmailAddressToGravatarHash() {
         assertThrows(NullPointerException.class, () -> GeneralUtils.emailAddressToGravatarHash(null));
         assertThrows(IllegalArgumentException.class, () -> GeneralUtils.emailAddressToGravatarHash(""));
@@ -78,6 +79,7 @@ class GeneralUtilsTest {
      * Tests for the hash input method.
      */
     @Test
+    @SuppressWarnings("SpellCheckingInspection")
     void testHashInput() {
         assertThrows(NullPointerException.class, () -> GeneralUtils.hashInput(null, null));
         assertThrows(NullPointerException.class, () -> GeneralUtils.hashInput("", null));

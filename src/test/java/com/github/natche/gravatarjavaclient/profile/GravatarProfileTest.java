@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests for the {@link GravatarProfile}.
  */
+@SuppressWarnings("SpellCheckingInspection") /* hashes */
 class GravatarProfileTest {
     /**
      * The JSON string missing required keys to test for throwing.
