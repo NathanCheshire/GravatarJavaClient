@@ -20,14 +20,14 @@ import java.util.Date;
  */
 public final class GravatarImageRequestHandler {
     /**
-     * The date formatter for image save files.
+     * The date formatter for image files saved to disc.
      */
     @SuppressWarnings("SpellCheckingInspection")
     private static SimpleDateFormat saveFileFormatter = new SimpleDateFormat("yyMMdd_HHmmss");
 
     /**
      * The character to separate the email hash from the timestamp
-     * when saving an image if a save to file was not provided.
+     * when saving an image if a file pointer to save the image to disc was not provided.
      */
     private static String emailHashTimestampSeparator = "-";
 
@@ -42,7 +42,7 @@ public final class GravatarImageRequestHandler {
     private static final String HTTPS = "https";
 
     /**
-     * The base URL for the image request API without the protocol prefix.
+     * The base URL for the image request API without a protocol prefix.
      */
     private static final String IMAGE_REQUEST_BASE_URL = "://www.gravatar.com/avatar/";
 
@@ -64,26 +64,26 @@ public final class GravatarImageRequestHandler {
     private static final String FORCE_DEFAULT_URL_TRUE_STRING = "y";
 
     /**
-     * The default state new instances of {@link GravatarImageRequestBuilderImpl} should contain for
-     * the append jpg suffix member.
+     * The default state new instances of {@link GravatarImageRequestBuilderImpl} should use for
+     * the "append jpg suffix" member.
      */
     private static boolean appendJpgSuffixByDefault = true;
 
     /**
-     * The default state new instances of {@link GravatarImageRequestBuilderImpl} should contain for
+     * The default state new instances of {@link GravatarImageRequestBuilderImpl} should use for
      * the rating member.
      */
     private static GravatarRating defaultRating = GravatarRating.G;
 
     /**
-     * The default state new instances of {@link GravatarImageRequestBuilderImpl} should contain for
-     * the use https member.
+     * The default state new instances of {@link GravatarImageRequestBuilderImpl} should use for
+     * the "use https" member.
      */
     private static boolean useHttpsByDefault = true;
 
     /**
-     * The default state new instances of {@link GravatarImageRequestBuilderImpl} should contain for
-     * the use full parameter names member.
+     * The default state new instances of {@link GravatarImageRequestBuilderImpl} should use for
+     * the "use full parameter names" member.
      */
     private static boolean useFullParameterNamesByDefault = false;
 
@@ -97,12 +97,12 @@ public final class GravatarImageRequestHandler {
     }
 
     /**
-     * Sets the file date formatter to use when saving images to files to the provided simple date format.
+     * Sets the simple date formatter to use when saving images to files.
      *
      * @param fileDateFormat the simple date format to use
      * @throws NullPointerException if the provided formatter is null
      */
-    public static void setsSaveFileFormatter(SimpleDateFormat fileDateFormat) {
+    public static void setSaveFileFormatter(SimpleDateFormat fileDateFormat) {
         Preconditions.checkNotNull(fileDateFormat);
         GravatarImageRequestHandler.saveFileFormatter = fileDateFormat;
     }
@@ -123,9 +123,9 @@ public final class GravatarImageRequestHandler {
     }
 
     /**
-     * Sets the state of the append jpg suffix by default for new instances of {@link GravatarImageRequestBuilderImpl}.
+     * Sets the default state of the "append jpg suffix" for new instances of {@link GravatarImageRequestBuilderImpl}.
      *
-     * @param appendJpgSuffixByDefault the state of the append jpg suffix by default for
+     * @param appendJpgSuffixByDefault the state of the "append jpg suffix" for
      *                                 new instances of {@link GravatarImageRequestBuilderImpl}
      */
     public static void setAppendJpgSuffixByDefault(boolean appendJpgSuffixByDefault) {
@@ -133,11 +133,9 @@ public final class GravatarImageRequestHandler {
     }
 
     /**
-     * Returns the state of the append jpg suffix by default
-     * for new instances of {@link GravatarImageRequestBuilderImpl}.
+     * Returns the state of the "append jpg suffix" for new instances of {@link GravatarImageRequestBuilderImpl}.
      *
-     * @return the state of the append jpg suffix by default
-     * for new instances of {@link GravatarImageRequestBuilderImpl}
+     * @return the state of the "append jpg suffix" for new instances of {@link GravatarImageRequestBuilderImpl}
      */
     public static boolean shouldAppendJpgSuffixByDefault() {
         return appendJpgSuffixByDefault;
@@ -146,8 +144,7 @@ public final class GravatarImageRequestHandler {
     /**
      * Sets the initial state of the rating for new instances of {@link GravatarImageRequestBuilderImpl}.
      *
-     * @param defaultRating the initial state of the rating
-     *                      for new instances of {@link GravatarImageRequestBuilderImpl}
+     * @param defaultRating the initial state of the rating for new instances of {@link GravatarImageRequestBuilderImpl}
      */
     public static void setDefaultRating(GravatarRating defaultRating) {
         Preconditions.checkNotNull(defaultRating);
@@ -164,9 +161,9 @@ public final class GravatarImageRequestHandler {
     }
 
     /**
-     * Sets the initial state of the use https member for new instances of {@link GravatarImageRequestBuilderImpl}.
+     * Sets the initial state of the "use https" member for new instances of {@link GravatarImageRequestBuilderImpl}.
      *
-     * @param useHttpsByDefault the initial state of the use https
+     * @param useHttpsByDefault the initial state of the "use https"
      *                          member for new instances of {@link GravatarImageRequestBuilderImpl}
      */
     public static void setUseHttpsByDefault(boolean useHttpsByDefault) {
@@ -174,19 +171,19 @@ public final class GravatarImageRequestHandler {
     }
 
     /**
-     * Returns the initial state of the use https member for new instances of {@link GravatarImageRequestBuilderImpl}.
+     * Returns the initial state of the "use https" member for new instances of {@link GravatarImageRequestBuilderImpl}.
      *
-     * @return the initial state of the use https member for new instances of {@link GravatarImageRequestBuilderImpl}
+     * @return the initial state of the "use https" member for new instances of {@link GravatarImageRequestBuilderImpl}
      */
     public static boolean shouldUseHttpsByDefault() {
         return useHttpsByDefault;
     }
 
     /**
-     * Sets the initial state of the use full parameter names member
+     * Sets the initial state of the "use full parameter names" member
      * for new instances of {@link GravatarImageRequestBuilderImpl}.
      *
-     * @param useFullParameterNamesByDefault the initial state of the use full parameter names member
+     * @param useFullParameterNamesByDefault the initial state of the "use full parameter names" member
      *                                       for new instances of {@link GravatarImageRequestBuilderImpl}
      */
     public static void setUseFullParameterNamesByDefault(boolean useFullParameterNamesByDefault) {
@@ -194,10 +191,10 @@ public final class GravatarImageRequestHandler {
     }
 
     /**
-     * Returns the initial state of the use full parameter names
+     * Returns the initial state of the "use full parameter names"
      * member for new instances of {@link GravatarImageRequestBuilderImpl}
      *
-     * @return the initial state of the use full parameter names
+     * @return the initial state of the "use full parameter names"
      * member for new instances of {@link GravatarImageRequestBuilderImpl}
      */
     public static boolean shouldUseFullParameterNamesByDefault() {
@@ -256,7 +253,8 @@ public final class GravatarImageRequestHandler {
     }
 
     /**
-     * Returns a buffered image of the Gravatar image represented by the state of the provided request builder.
+     * Returns a new {@link BufferedImage} of the Gravatar image represented
+     * by the state of the provided {@link GravatarImageRequestBuilder}.
      *
      * @param gravatarImageRequestBuilder the image request builder
      * @return the Gravatar URL
@@ -270,16 +268,13 @@ public final class GravatarImageRequestHandler {
     }
 
     /**
-     * Saves the buffered image returned by {@link #getImage(GravatarImageRequestBuilder)} to a file named using
+     * Saves an image returned by {@link #getImage(GravatarImageRequestBuilder)} to a file named using
      * the user email and the current timestamp.
-     * Filename format: "emailHash-timestamp" where timestamp is in the format "yyMMdd_HHmms".
+     * Filename format: "emailHash-timestamp" where timestamp is in the format {@link #saveFileFormatter}.
      *
      * @param gravatarImageRequestBuilder the image request builder
      * @return the file pointer to the saved image
-     * @throws NullPointerException        if the provided Gravatar image request is null
-     * @throws GravatarJavaClientException if the image cannot be read
-     * @throws IOException                 if the image cannot be saved to the newly created file
-     * @throws IllegalArgumentException    if the file the image will be saved to already exists
+     * @throws NullPointerException        if the provided request builder is null
      */
     @CanIgnoreReturnValue
     public static File saveImage(GravatarImageRequestBuilder gravatarImageRequestBuilder) throws IOException {
@@ -293,12 +288,12 @@ public final class GravatarImageRequestHandler {
     }
 
     /**
-     * Saves the buffered image returned by {@link #getImage(GravatarImageRequestBuilder)} to the provided file.
+     * Saves an image returned by {@link #getImage(GravatarImageRequestBuilder)} to the provided file.
      *
      * @param gravatarImageRequestBuilder the image request builder
      * @param saveToFile                  the file to save the image to
      * @throws NullPointerException        if the provided image request or file is null
-     * @throws IllegalArgumentException    if the file the image will be saved to already exists
+     * @throws IllegalStateException    if the file already exists
      * @throws GravatarJavaClientException if the image cannot be read
      * @throws IOException                 if the image cannot be saved to the newly created file
      */
@@ -306,8 +301,9 @@ public final class GravatarImageRequestHandler {
                                  File saveToFile) throws IOException {
         Preconditions.checkNotNull(gravatarImageRequestBuilder);
         Preconditions.checkNotNull(saveToFile);
-        Preconditions.checkArgument(!saveToFile.exists());
+        Preconditions.checkState(!saveToFile.exists());
 
+        // todo we should return something here
         ImageIO.write(getImage(gravatarImageRequestBuilder), JPG_EXTENSION_WITHOUT_PERIOD, saveToFile);
     }
 }

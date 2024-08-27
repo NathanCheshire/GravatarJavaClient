@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public final class ValidationUtils {
     /**
-     * A pattern for validating email addresses.
+     * A compiled regex pattern for validating email addresses.
      */
     private static final Pattern EMAIL_ADDRESS_REGEX_PATTERN = Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+"
             + "(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b"
@@ -48,6 +48,7 @@ public final class ValidationUtils {
 
     /**
      * Returns whether the provided URL is a valid default image URL.
+     * See {@link ImageIO#read(URL)} for more information.
      *
      * @param defaultUrl the default URL
      * @return whether the provided URL is a valid default image URL

@@ -3,7 +3,6 @@ package com.github.natche.gravatarjavaclient.image;
 import com.github.natche.gravatarjavaclient.enums.GravatarDefaultImageType;
 import com.github.natche.gravatarjavaclient.enums.GravatarRating;
 import com.github.natche.gravatarjavaclient.enums.GravatarUrlParameter;
-import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
 import com.github.natche.gravatarjavaclient.utils.ValidationUtils;
 import com.google.common.base.Preconditions;
@@ -20,7 +19,7 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
     /**
      * The range a {@link GravatarUrlParameter#SIZE} parameter must fall within.
      */
-    private static final Range<Integer> SIZE_RANGE = Range.closed(1, 2048);
+    private static final Range<Integer> IMAGE_SIZE_RANGE = Range.closed(1, 2048);
 
     /**
      * The default length for an image request.
@@ -78,7 +77,6 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
      * @param userEmail the user email for this Gravatar image request
      * @throws NullPointerException        if the user email is null
      * @throws IllegalArgumentException    if the provided user email is empty or invalid
-     * @throws GravatarJavaClientException if any other exception occurs
      */
     public GravatarImageRequestBuilderImpl(String userEmail) {
         Preconditions.checkNotNull(userEmail);
@@ -116,11 +114,11 @@ public final class GravatarImageRequestBuilderImpl implements GravatarImageReque
      *
      * @param size the requested size
      * @return this builder
-     * @throws IllegalArgumentException if the requested size is not in the range {@link #SIZE_RANGE}
+     * @throws IllegalArgumentException if the requested size is not in the range {@link #IMAGE_SIZE_RANGE}
      */
     @CanIgnoreReturnValue
     public GravatarImageRequestBuilderImpl setSize(int size) {
-        Preconditions.checkArgument(SIZE_RANGE.contains(size));
+        Preconditions.checkArgument(IMAGE_SIZE_RANGE.contains(size));
 
         this.size = size;
         return this;

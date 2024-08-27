@@ -3,7 +3,7 @@ package com.github.natche.gravatarjavaclient.enums;
 import com.google.common.base.Preconditions;
 
 /**
- * A url parameter for a Gravatar request.
+ * A URL parameter for a Gravatar request.
  */
 public enum GravatarUrlParameter {
     /**
@@ -12,7 +12,7 @@ public enum GravatarUrlParameter {
     SIZE("s", "size"),
 
     /**
-     * The URL to the default image to return in the case a user email hash is invalid.
+     * The URL of the default image to return in the case a user email hash is invalid or results in no valid images.
      */
     DEFAULT_IMAGE_URL("d", "default"),
 
@@ -33,31 +33,31 @@ public enum GravatarUrlParameter {
     RATING("r", "rating");
 
     /**
-     * The character prefix for the initial url parameter directly following the path.
+     * The character prefix for the initial URL parameter directly following the path.
      * Sometimes called the query string separator.
      */
     private static final String initialUrlParameterPrefix = "?";
 
     /**
-     * The character prefix for any additional url parameters following the initial url parameter.
+     * The character prefix for any additional URL parameters following the initial URL parameter.
      */
     private static final String nonInitialUrlParameterPrefix = "&";
 
     /**
-     * The short url parameter for this Gravatar url parameter.
+     * The short URL parameter for this Gravatar URL parameter.
      */
     private final String shortUrlParameter;
 
     /**
-     * The full url parameter for this Gravatar url parameter.
+     * The full URL parameter for this Gravatar URL parameter.
      */
     private final String fullUrlParameter;
 
     /**
      * Constructs a new GravatarUrlParameter.
      *
-     * @param urlParameter the short url parameter prefix
-     * @param fullUrlParameter the full url parameter prefix
+     * @param urlParameter the short URL parameter
+     * @param fullUrlParameter the full URL parameter
      */
     GravatarUrlParameter(String urlParameter, String fullUrlParameter) {
         this.shortUrlParameter = urlParameter;
@@ -65,13 +65,13 @@ public enum GravatarUrlParameter {
     }
 
     /**
-     * Constructs a string for this url parameter with the provided value.
-     * It is assumed this is not the first url parameter after the query.
+     * Constructs a string for this URL parameter with the provided value.
+     * It is assumed this is NOT the first URL parameter after the path in the URL.
      *
      * @param value the value
-     * @param useFullUrlParameter whether to use the full url parameter
+     * @param useFullUrlParameter whether to use the full URL parameter
      * @param <T>   the type of value
-     * @return the string for this url parameter and value
+     * @return the string for this URL parameter and value
      * @throws NullPointerException if the provided value is null
      */
     public <T> String constructUrlParameterWithValue(T value, boolean useFullUrlParameter) {
@@ -81,15 +81,15 @@ public enum GravatarUrlParameter {
     }
 
     /**
-     * Constructs a string for this url parameter with the provided value.
+     * Constructs a string for this URL parameter with the provided value.
      * If this is the first parameter after the query, a "?" character is the leading character.
-     * Otherwise a "&amp;" character is the leading character.
+     * Otherwise, a "&amp;" character is the leading character.
      *
      * @param value               the value
      * @param <T>                 the type of value
-     * @param firstParameter      whether this url parameter is the first after the query
-     * @param useFullUrlParameter whether to use the full url parameter
-     * @return the string for this url parameter and value
+     * @param firstParameter      whether this URL parameter is the first after the query
+     * @param useFullUrlParameter whether to use the full URL parameter
+     * @return the string for this URL parameter and value
      * @throws NullPointerException if the provided value is null
      */
     public <T> String constructUrlParameterWithValue(T value, boolean firstParameter, boolean useFullUrlParameter) {

@@ -54,9 +54,9 @@ public interface GravatarImageRequestBuilder {
     GravatarImageRequestBuilder setRating(GravatarRating rating);
 
     /**
-     * Returns the rating for this image request.
+     * Returns the maximum acceptable rating for this image request.
      *
-     * @return the rating for this image request
+     * @return the maximum acceptable rating for this image request
      */
     GravatarRating getRating();
 
@@ -126,8 +126,7 @@ public interface GravatarImageRequestBuilder {
 
     /**
      * Sets whether the full URL parameter names should be used in the request as opposed to the shorthand versions.
-     * For example, instead of appending "&amp;d=https://www.image/com/image.png",
-     * "&amp;default=https://www.image/com/image.png" would be used.
+     * For example, instead of appending "&amp;d=your-url", "&amp;default=your-url" would be used.
      *
      * @param useFullUrlParameterNames whether the full URL parameter names should be used
      * @return this builder

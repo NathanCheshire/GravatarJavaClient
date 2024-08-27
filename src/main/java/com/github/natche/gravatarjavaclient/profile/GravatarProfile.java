@@ -30,9 +30,9 @@ public final class GravatarProfile {
      */
     private static final String DATA_FORMAT_TYPE = ".json";
 
-    // -----------------------------------
-    // Fields which will always be present
-    // -----------------------------------
+    // ------------------------
+    // Guaranteed present fields
+    // ------------------------
 
     /**
      * The user email MD5 hash.
@@ -49,9 +49,9 @@ public final class GravatarProfile {
      */
     private String profileUrl = null;
 
-    // --------------------------------------------
-    // Optional fields not guaranteed to be present
-    // --------------------------------------------
+    // -----------------------------------
+    // Fields not guaranteed to be present
+    // -----------------------------------
 
     /**
      * The profile's preferred username.
@@ -89,17 +89,17 @@ public final class GravatarProfile {
     private String pronouns = null;
 
     /**
-     * The user's about me section.
+     * The user's "about me" section.
      */
     private String aboutMe = null;
 
     /**
-     * The user's set location.
+     * The user's publicly displayed location.
      */
     private String currentLocation = null;
 
     /**
-     * The list of URLs the user has linked to their profile.
+     * The list of URLs the user has linked on their profile.
      */
     private ImmutableList<GravatarProfileUrl> profileUrls = ImmutableList.of();
 
@@ -236,18 +236,18 @@ public final class GravatarProfile {
     }
 
     /**
-     * Returns the user's about me section if present. Empty optional else.
+     * Returns the user's "about me" section if present. Empty optional else.
      *
-     * @return the user's about me section if present. Empty optional else
+     * @return the user's "about me" section if present. Empty optional else
      */
     public Optional<String> getAboutMe() {
         return Optional.ofNullable(aboutMe);
     }
 
     /**
-     * Returns the user's current location if present. Empty optional else.
+     * Returns the user's publicly displayed location if present. Empty optional else.
      *
-     * @return the user's current location if present. Empty optional else
+     * @return the user's publicly displayed location if present. Empty optional else
      */
     public Optional<String> getCurrentLocation() {
         return Optional.ofNullable(currentLocation);
@@ -354,7 +354,6 @@ public final class GravatarProfile {
         ArrayList<GravatarProfilePhoto> profilePhotos = new ArrayList<>();
 
         IntStream.range(0, photos.size()).forEach(index -> {
-
             Map<String, Object> urlMap = (Map<String, Object>) photos.get(index);
             String name = (String) urlMap.get("type");
             String link = (String) urlMap.get("value");
@@ -365,10 +364,10 @@ public final class GravatarProfile {
     }
 
     /**
-     * Extracts the profile urls from the provided list.
+     * Extracts the profile URLs from the provided list.
      *
-     * @param urlsList the url list
-     * @return the profile urls from the provided list
+     * @param urlsList the URL list
+     * @return the profile URLs from the provided list
      */
     private static ImmutableList<GravatarProfileUrl> extractProfileUrls(ImmutableList<Map<String, Object>> urlsList) {
         ArrayList<GravatarProfileUrl> profileUrls = new ArrayList<>();

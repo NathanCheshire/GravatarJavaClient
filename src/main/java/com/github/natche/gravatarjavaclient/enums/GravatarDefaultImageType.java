@@ -2,7 +2,8 @@ package com.github.natche.gravatarjavaclient.enums;
 
 /**
  * The default image types supported by Gravatar for the image API.
- * These themes are generated based off of the user email hash.
+ * These themes are generated per-user based off of the
+ * MD5 hash of the user's email address.
  */
 public enum GravatarDefaultImageType {
     /**
@@ -14,7 +15,8 @@ public enum GravatarDefaultImageType {
 
     /**
      * The mystery person image type.
-     * A simple, cartoon-style silhouetted outline of a person (does not vary by email hash).
+     * A simple, cartoon-style silhouetted outline of a person.
+     * Note: this does not vary by email hash.
      */
     MYSTERY_PERSON("mp"),
 
@@ -26,7 +28,7 @@ public enum GravatarDefaultImageType {
 
     /**
      * The monster id image type.
-     * A generated "monster" with different colors, faces, etc.
+     * A generated "monster" with different colors, faces, and features.
      */
     MONSTER_ID("monsterid"),
 
@@ -43,8 +45,10 @@ public enum GravatarDefaultImageType {
     RETRO("retro"),
 
     /**
-     * The robo hash image type.
-     * A generated robot with different colors, faces, etc; this is what the GitLens plugin for vscode uses.
+     * The RoboHash image type.
+     * A generated robot with different colors, faces, and features.
+     * This is what the GitLens plugin for vscode uses.
+     * See <a href="https://github.com/nathancheshire/jrobohash">JRoboHash</a> for a RoboHash JVM wrapper library.
      */
     ROBO_HASH("robohash"),
 
@@ -55,23 +59,23 @@ public enum GravatarDefaultImageType {
     BLANK("blank");
 
     /**
-     * The url parameter value for this {@link GravatarDefaultImageType}.
+     * The URL parameter value for this {@link GravatarDefaultImageType}.
      */
     private final String urlParameterValue;
 
     /**
      * Constructs a new GravatarDefaultImageType.
      *
-     * @param urlParameterValue the url parameter for this default image type
+     * @param urlParameterValue the URL parameter for this default image type
      */
     GravatarDefaultImageType(String urlParameterValue) {
         this.urlParameterValue = urlParameterValue;
     }
 
     /**
-     * Returns the url parameter value for this {@link GravatarDefaultImageType}.
+     * Returns the URL parameter value for this {@link GravatarDefaultImageType}.
      *
-     * @return the url parameter value for this {@link GravatarDefaultImageType}
+     * @return the URL parameter value for this {@link GravatarDefaultImageType}
      */
     public String getUrlParameterValue() {
         return urlParameterValue;

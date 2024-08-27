@@ -51,9 +51,9 @@ class GravatarImageRequestHandlerTest {
      */
     @Test
     void testSetters() {
-        assertThrows(NullPointerException.class, () -> GravatarImageRequestHandler.setsSaveFileFormatter(null));
-        assertDoesNotThrow(() -> GravatarImageRequestHandler.setsSaveFileFormatter(new SimpleDateFormat("")));
-        assertDoesNotThrow(() -> GravatarImageRequestHandler.setsSaveFileFormatter(new SimpleDateFormat("mm")));
+        assertThrows(NullPointerException.class, () -> GravatarImageRequestHandler.setSaveFileFormatter(null));
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.setSaveFileFormatter(new SimpleDateFormat("")));
+        assertDoesNotThrow(() -> GravatarImageRequestHandler.setSaveFileFormatter(new SimpleDateFormat("mm")));
 
         assertThrows(NullPointerException.class,
                 () -> GravatarImageRequestHandler.setEmailHashTimestampSeparator(null));
@@ -254,7 +254,7 @@ class GravatarImageRequestHandlerTest {
 
         GravatarImageRequestBuilderImpl forceDefaultImage =
                 new GravatarImageRequestBuilderImpl("email@domain.com")
-                        .setDefaultImageUrl("https://nathancheshire.com/static/media/silverpreview.17963d7d61a9d67498c0.png")
+                        .setDefaultImageUrl(TestingConstants.silverPreview)
                         .setForceDefaultImage(true);
         AtomicReference<BufferedImage> bi = new AtomicReference<>();
         assertDoesNotThrow(() -> bi.set(GravatarImageRequestHandler.getImage(forceDefaultImage)));
@@ -273,7 +273,7 @@ class GravatarImageRequestHandlerTest {
                 () -> GravatarImageRequestHandler.saveImage(null, null));
         String userEmail = "email@domain.com";
         GravatarImageRequestBuilderImpl builder = new GravatarImageRequestBuilderImpl(userEmail)
-                .setDefaultImageUrl("https://nathancheshire.com/static/media/silverpreview.17963d7d61a9d67498c0.png")
+                .setDefaultImageUrl(TestingConstants.silverPreview)
                 .setForceDefaultImage(true);
         assertThrows(NullPointerException.class,
                 () -> GravatarImageRequestHandler.saveImage(builder, null));
@@ -310,7 +310,7 @@ class GravatarImageRequestHandlerTest {
         String sep = "_sep_";
         GravatarImageRequestHandler.setEmailHashTimestampSeparator(sep);
         SimpleDateFormat formatter = new SimpleDateFormat("MM");
-        GravatarImageRequestHandler.setsSaveFileFormatter(formatter);
+        GravatarImageRequestHandler.setSaveFileFormatter(formatter);
         assertDoesNotThrow(() -> savedToFile.set(GravatarImageRequestHandler.saveImage(builder)));
         assertTrue(savedToFile.get().exists());
 

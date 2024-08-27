@@ -30,7 +30,7 @@ public final class GeneralUtils {
     );
 
     /**
-     * The hashing algorithm used to transform a user email address into their gravatar UUID.
+     * The hashing algorithm used to transform a user email address into a Gravatar UUID.
      */
     private static final String HASHING_ALGORITHM = "MD5";
 
@@ -40,7 +40,7 @@ public final class GeneralUtils {
     private static final int READ_URL_BUFFER_SIZE = 1024;
 
     /**
-     * The number of digits in the hexadecimal base system.
+     * The radix in the hexadecimal number system.
      */
     private static final int HEX_BASE = 16;
 
@@ -54,10 +54,10 @@ public final class GeneralUtils {
     }
 
     /**
-     * Returns a buffered image read from the provided URL.
+     * Returns a new {@link BufferedImage} read from the provided URL.
      *
      * @param url the URL
-     * @return the URL from the provided image
+     * @return the image read from the provided URL
      * @throws NullPointerException        if the provided URL is null
      * @throws IllegalArgumentException    if the provided URL is empty
      * @throws GravatarJavaClientException if an image cannot be read from the provided URL
@@ -68,7 +68,7 @@ public final class GeneralUtils {
 
         try {
             return ImageIO.read(new URL(url));
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new GravatarJavaClientException("Failed to get image from url: "
                     + url + ", error: " + e.getMessage());
         }
@@ -77,7 +77,7 @@ public final class GeneralUtils {
     /**
      * Reads from the provided URL and returns the response data.
      *
-     * @param url the URL to ping and read data from
+     * @param url the URL to query and retrieve data from
      * @return the contents of the provided URL
      * @throws NullPointerException        if the provided URL is null
      * @throws IllegalArgumentException    if the provided URL is empty
@@ -123,7 +123,7 @@ public final class GeneralUtils {
 
     /**
      * Hashes the provided email address to obtain the MD5 hash
-     * corresponding to the Gravatar icon linked to the email address.
+     * corresponding to the Gravatar icon linked to an email address.
      * <p>
      * Algorithm steps:
      * <ul>
@@ -131,6 +131,11 @@ public final class GeneralUtils {
      *     <li>Force all characters to be lower-case</li>
      *     <li>MD5 hash the final string</li>
      * </ul>
+     *
+     * Note, while Google email addresses such as "email.address@gmail.com" and "emailaddress@gmail.com"
+     * are equal in Google's eyes, they result in different profiles on Gravatar's side due to the hashes
+     * being different. If using this method results in a problem as such, you will likely want to create
+     * a decorator or wrapper method to ensure periods are stripped from the username.
      *
      * @param emailAddress the email address to hash
      * @return the MD5 hash for the provided email address
@@ -153,6 +158,7 @@ public final class GeneralUtils {
      * @return the hash for the provided input and hashing algorithm
      * @throws NullPointerException     if the provided input or algorithm is null
      * @throws IllegalArgumentException if the provided algorithm is empty
+     * @throws GravatarJavaClientException if the provided hashing algorithm does not exist
      */
     static String hashInput(String input, String hashingAlgorithm) {
         Preconditions.checkNotNull(input);
