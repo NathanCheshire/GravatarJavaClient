@@ -274,7 +274,7 @@ public final class GravatarImageRequestHandler {
      *
      * @param gravatarImageRequestBuilder the image request builder
      * @return the file pointer to the saved image
-     * @throws NullPointerException        if the provided request builder is null
+     * @throws NullPointerException if the provided request builder is null
      */
     @CanIgnoreReturnValue
     public static File saveImage(GravatarImageRequestBuilder gravatarImageRequestBuilder) throws IOException {
@@ -292,18 +292,20 @@ public final class GravatarImageRequestHandler {
      *
      * @param gravatarImageRequestBuilder the image request builder
      * @param saveToFile                  the file to save the image to
+     * @return whether the provided saveToFile exists
      * @throws NullPointerException        if the provided image request or file is null
-     * @throws IllegalStateException    if the file already exists
+     * @throws IllegalStateException       if the file already exists
      * @throws GravatarJavaClientException if the image cannot be read
      * @throws IOException                 if the image cannot be saved to the newly created file
      */
-    public static void saveImage(GravatarImageRequestBuilder gravatarImageRequestBuilder,
-                                 File saveToFile) throws IOException {
+    @CanIgnoreReturnValue
+    public static boolean saveImage(GravatarImageRequestBuilder gravatarImageRequestBuilder,
+                                    File saveToFile) throws IOException {
         Preconditions.checkNotNull(gravatarImageRequestBuilder);
         Preconditions.checkNotNull(saveToFile);
         Preconditions.checkState(!saveToFile.exists());
 
-        // todo we should return something here
         ImageIO.write(getImage(gravatarImageRequestBuilder), JPG_EXTENSION_WITHOUT_PERIOD, saveToFile);
+        return saveToFile.exists();
     }
 }
