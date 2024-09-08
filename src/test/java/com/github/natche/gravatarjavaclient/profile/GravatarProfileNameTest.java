@@ -64,10 +64,12 @@ public class GravatarProfileNameTest {
         GravatarProfileName name = new GravatarProfileName("first", "last", "formatted");
         GravatarProfileName equal = new GravatarProfileName("first", "last", "formatted");
         GravatarProfileName notEqual = new GravatarProfileName("first", "other", "formatted");
+        GravatarProfileName alsoNotEqual = new GravatarProfileName("diff", "other", "diff");
 
         assertEquals(name, name);
         assertEquals(name, equal);
         assertNotEquals(name, notEqual);
+        assertNotEquals(notEqual, alsoNotEqual);
         assertNotEquals(name, new Object());
     }
 }

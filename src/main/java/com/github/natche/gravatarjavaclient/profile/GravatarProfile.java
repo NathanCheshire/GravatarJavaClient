@@ -1,20 +1,20 @@
 package com.github.natche.gravatarjavaclient.profile;
 
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
+import com.github.natche.gravatarjavaclient.profile.gson.ImmutableListDeserializer;
 import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
 import com.github.natche.gravatarjavaclient.utils.ValidationUtils;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.reflect.TypeParameter;
-import com.google.common.reflect.TypeToken;
 import com.google.errorprone.annotations.Immutable;
 import com.google.gson.*;
 import com.google.gson.annotations.SerializedName;
 
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The results of a Gravatar profile request.
@@ -68,53 +68,15 @@ public final class GravatarProfile {
     @SerializedName("urls")
     private ImmutableList<GravatarProfileUrl> profileUrls = ImmutableList.of();
 
-    @SuppressWarnings({"unchecked"})
-    static class Types {
-        private Types() {}
-
-        static <K, V> TypeToken<HashMap<K, V>> hashMapOf(Type key, Type value) {
-            TypeParameter<K> newKeyTypeParameter = new TypeParameter<K>() {};
-            TypeParameter<V> newValueTypeParameter = new TypeParameter<V>() {};
-            return new TypeToken<HashMap<K, V>>() {}
-                    .where(newKeyTypeParameter, Types.typeTokenOf(key))
-                    .where(newValueTypeParameter, Types.typeTokenOf(value));
-        }
-
-        static <E> TypeToken<Collection<E>> collectionOf(Type type) {
-            TypeParameter<E> newTypeParameter = new TypeParameter<E>() {};
-            return new TypeToken<Collection<E>>() {}
-                    .where(newTypeParameter, Types.typeTokenOf(type));
-        }
-
-        private static <E> TypeToken<E> typeTokenOf(Type type) {
-            return (TypeToken<E>) TypeToken.of(type);
-        }
-    }
-
-    abstract static class BaseCollectionDeserializer<E> implements JsonDeserializer<E> {
-
-        protected abstract E buildFrom(Collection<?> collection);
-        public E deserialize(JsonElement json, Type type, JsonDeserializationContext context) {
-            try {
-                Type[] typeArguments = ((ParameterizedType) type).getActualTypeArguments();
-                Type parameterizedType = Types.collectionOf(typeArguments[0]).getType();
-                Collection<?> collection = context.deserialize(json, parameterizedType);
-
-                return buildFrom(collection);
-            } catch (Exception e) {
-                throw e;
-            }
-        }
-    }
-
-    public static class ImmutableListDeserializer extends BaseCollectionDeserializer<ImmutableList<?>> {
-        @Override
-        protected ImmutableList<?> buildFrom(Collection<?> collection) {
-            return ImmutableList.copyOf(collection);
-        }
-
-    }
-
+    /**
+     * Constructs and returns a new GravatarProfile object from the provided JSON.
+     *
+     * @param jsonData the JSON data
+     * @return a new GravatarProfile object
+     * @throws NullPointerException     if the provided string is null
+     * @throws IllegalArgumentException if the provided data is empty or the
+     *                                  provided data is missing the "entry" key
+     */
     public static GravatarProfile fromJson(String jsonData) {
         Preconditions.checkNotNull(jsonData);
         Preconditions.checkArgument(!jsonData.trim().isEmpty());
@@ -124,9 +86,9 @@ public final class GravatarProfile {
         if (entryArray.size() < 1) throw new IllegalArgumentException("Provided data has no entries");
 
         Map<Type, JsonDeserializer<?>> immutableTypeMap
-            = ImmutableMap.<Type, JsonDeserializer<?>>builder()
-                    .put(ImmutableList.class, new ImmutableListDeserializer())
-                    .build();
+                = ImmutableMap.<Type, JsonDeserializer<?>>builder()
+                .put(ImmutableList.class, new ImmutableListDeserializer())
+                .build();
 
         GsonBuilder builder = new GsonBuilder();
         immutableTypeMap.forEach(builder::registerTypeAdapter);
