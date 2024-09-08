@@ -8,41 +8,31 @@
 
 ## Intro
 
-This library is a Java wrapper for the Gravatar image and profile API. When wanting to integrate the Gravatar API
-into [Cyder](https://github.com/NathanCheshire/Cyder), a project of mine, I came across ancient Java API wrappers,
-some of which have not been touched for 14 years! The last-updated statistic by itself does not indicate a library is
-not maintained or poorly implemented, but in this case there were some issues and PRs on the GitHub repository which
-were never addressed. I looked at this and thought "I can do it myself and do it better." Henceforth, GravatarJavaClient
-was born.
+This library is a Java wrapper for the Gravatar image and profile API.
 
 ## Using with Gradle
 
-Make sure you have the following line in your `repositories` Gradle config (it is recommended that JitPack be at the end
-of the repositories section):
+Make sure you have the following line in your `repositories` scope within your `build.gradle` (or `build.gradle.kts`).
+Jitpack recommends it be placed at the end of the repositories section.
 
 `maven { url 'https://jitpack.io' }`
 
 Then add the following to your dependencies:
 `implementation 'com.github.nathancheshire:gravatarjavaclient:COMMIT_HASH_OR_RELEASE'`.
 
-The `COMMIT_HASH_OR_RELEASE` may be whatever commit hash or release you want to use, `b011c6e` or `v1.0.0` for example.
+The `COMMIT_HASH_OR_RELEASE` may be whatever commit hash or release you want to use; `v1.0.0` for example. Checkout the
+releases section for the most recent version.
 
 ## API Support
 
-This client features support for the comprehensive Gravatar API, that of:
-
-- Gravatar image requests
-- Gravatar profile requests
-
-This client also follows [Effective Java](https://www.amazon.com/Effective-Java-Joshua-Bloch/dp/0134685997) items, such
+This library features support for the comprehensive Gravatar API, that of both `image` and `profile` requests. This
+library also follows [Effective Java](https://www.amazon.com/Effective-Java-Joshua-Bloch/dp/0134685997) principles, such
 as item 52: refer to objects by their interfaces. I cannot see a case where a developer using this library would want to
 implement their own `GravatarImageRequestBuilder`, but if for whatever reason it was desired, a developer could easily
 do so by inheriting from the `GravatarImageRequestBuilder` interface. The `GravatarImageRequestHandler` will accept the
-interface instead of my implementation (GravatarImageRequestBuilderImpl) making the API work for both mine and possibly
-yours should you feel the need to write one. The default implementation (`GravatarImageRequestBuilderImpl`) I will be
-maintaining and keeping up to date, ensuring tested and feature rich methods are exposed. If a method you would like to
-exist in this class is not present, and you think others would benefit from it, feel free to implement it yourself and
-create a PR.
+interface instead of my implementation (GravatarImageRequestBuilderImpl) making the API work for the default
+implementation and any third-party implementations. The default implementation (`GravatarImageRequestBuilderImpl`) will be
+maintained and kept up to date in this repository. Feel free to create a PR to add in additional features.
 
 ## Getting Started
 
@@ -50,14 +40,14 @@ Using the client is extremely straight forward. `GravatarImageRequestHandlerImpl
 set parameters as follows:
 
 ```java
-GravatarImageRequestBuilderImpl builder = new GravatarImageRequestBuilderImpl("EmailAddress@email.domain.com")
-    .setRating(GravatarRating.R)
-    .setSize(500)
-    .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-    .setShouldAppendJpgSuffix(true);
+GravatarImageRequestBuilderImpl builder=new GravatarImageRequestBuilderImpl("EmailAddress@email.domain.com")
+        .setRating(GravatarRating.R)
+        .setSize(500)
+        .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+        .setShouldAppendJpgSuffix(true);
 ```
 
-You may then pass this builder to the `GravatarImageRequestHandler` to perform certain actions:
+You may then pass the builder to the `GravatarImageRequestHandler` to perform actions:
 
 - Getting the URL representing the state of your builder
 - Getting a buffered image read from the generated URL
@@ -66,13 +56,13 @@ You may then pass this builder to the `GravatarImageRequestHandler` to perform c
 
 ```java
 // Get the URL to the image.
-String url = GravatarImageRequestHandler.buildUrl(builder);
-// Read the BufferedImage into memory from the URL.
-BufferedImage image = GravatarImageRequestHandler.getImage(builder);
-// Save the BufferedImage to the local directory.
-File imageFile = GravatarImageRequestHandler.saveImage(builder);
-// Save the bufferedImage to a specific File pointer.
-File imageFile = GravatarImageRequestHandler.saveImage(builder,new File("/path/to/my/image_file.png"));
+String url=GravatarImageRequestHandler.buildUrl(builder);
+        // Read the BufferedImage into memory from the URL.
+        BufferedImage image=GravatarImageRequestHandler.getImage(builder);
+        // Save the BufferedImage to the local directory.
+        File imageFile=GravatarImageRequestHandler.saveImage(builder);
+        // Save the bufferedImage to a specific File pointer.
+        File imageFile=GravatarImageRequestHandler.saveImage(builder,new File("/path/to/my/image_file.png"));
 ```
 
 ## Contributing

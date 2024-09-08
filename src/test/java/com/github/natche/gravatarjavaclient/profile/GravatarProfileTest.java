@@ -266,6 +266,7 @@ class GravatarProfileTest {
         assertThrows(NullPointerException.class, () -> GravatarProfile.fromJson(null));
         assertThrows(IllegalArgumentException.class, () -> GravatarProfile.fromJson(""));
         assertThrows(IllegalArgumentException.class, () -> GravatarProfile.fromJson("    "));
+        assertThrows(IllegalArgumentException.class, () -> GravatarProfile.fromJson("{\"entry\": []}"));
 
         assertDoesNotThrow(() -> GravatarProfile.fromJson(fullJson));
         assertDoesNotThrow(() -> GravatarProfile.fromJson(minimalJson));
