@@ -2,21 +2,24 @@ package com.github.natche.gravatarjavaclient.profile;
 
 import com.google.common.base.Preconditions;
 import com.google.errorprone.annotations.Immutable;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * A linked URL on a user's Gravatar profile page.
  */
 @Immutable
-@SuppressWarnings("ClassCanBeRecord")
+@SuppressWarnings("ClassCanBeRecord") /* GSON needs this */
 public final class GravatarProfileUrl {
     /**
      * The display name for this profile URL.
      */
+    @SerializedName("title")
     private final String name;
 
     /**
      * The link for this profile URL.
      */
+    @SerializedName("value")
     private final String link;
 
     /**

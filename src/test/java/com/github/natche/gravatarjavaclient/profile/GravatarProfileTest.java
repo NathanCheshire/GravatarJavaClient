@@ -2,7 +2,6 @@ package com.github.natche.gravatarjavaclient.profile;
 
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.google.common.collect.ImmutableList;
-import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,11 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @SuppressWarnings("SpellCheckingInspection") /* hashes */
 class GravatarProfileTest {
-    /**
-     * The JSON string missing required keys to test for throwing.
-     */
-    private static final String missingKeyJson = "{ \"entry\": [ { \"id\": \"231564699\" } ] }";
-
     /**
      * The full JSON string to parse a Gravatar profile from.
      */
@@ -269,13 +263,12 @@ class GravatarProfileTest {
      */
     @Test
     void testCreation() {
-        assertThrows(NullPointerException.class, () -> new GravatarProfile(null));
-        assertThrows(IllegalArgumentException.class, () -> new GravatarProfile(""));
-        assertThrows(JSONException.class, () -> new GravatarProfile("{}"));
-        assertThrows(IllegalArgumentException.class, () -> new GravatarProfile(missingKeyJson));
+        assertThrows(NullPointerException.class, () -> GravatarProfile.fromJson(null));
+        assertThrows(IllegalArgumentException.class, () -> GravatarProfile.fromJson(""));
+        assertThrows(IllegalArgumentException.class, () -> GravatarProfile.fromJson("    "));
 
-        assertDoesNotThrow(() -> new GravatarProfile(fullJson));
-        assertDoesNotThrow(() -> new GravatarProfile(minimalJson));
+        assertDoesNotThrow(() -> GravatarProfile.fromJson(fullJson));
+        assertDoesNotThrow(() -> GravatarProfile.fromJson(minimalJson));
     }
 
     /**
@@ -283,7 +276,7 @@ class GravatarProfileTest {
      */
     @Test
     void testAccessorsMutators() {
-        GravatarProfile minimal = new GravatarProfile(minimalJson);
+        GravatarProfile minimal = GravatarProfile.fromJson(minimalJson);
         assertEquals("2bf1b7a19bcad06a8e894d7373a4cfc7", minimal.getHash());
         assertEquals("2bf1b7a19bcad06a8e894d7373a4cfc7", minimal.getRequestHash());
         assertEquals("http://gravatar.com/nathanvcheshire", minimal.getProfileUrl());
@@ -298,7 +291,7 @@ class GravatarProfileTest {
         assertTrue(minimal.getCurrentLocation().isEmpty());
         assertTrue(minimal.getProfileUrls().isEmpty());
 
-        GravatarProfile full = new GravatarProfile(fullJson);
+        GravatarProfile full = GravatarProfile.fromJson(fullJson);
         assertEquals("2bf1b7a19bcad06a8e894d7373a4cfc7", full.getHash());
         assertEquals("2bf1b7a19bcad06a8e894d7373a4cfc7", full.getRequestHash());
         assertEquals("http://gravatar.com/nathanvcheshire", full.getProfileUrl());
@@ -334,7 +327,7 @@ class GravatarProfileTest {
      */
     @Test
     void testToString() {
-        GravatarProfile full = new GravatarProfile(fullJson);
+        GravatarProfile full = GravatarProfile.fromJson(fullJson);
         assertEquals("GravatarProfile{hash=\"2bf1b7a19bcad06a8e894d7373a4cfc7\","
                 + " requestHash=\"2bf1b7a19bcad06a8e894d7373a4cfc7\","
                 + " profileUrl=\"http://gravatar.com/nathanvcheshire\", preferredUsername=\"nathanvcheshire\","
@@ -348,11 +341,11 @@ class GravatarProfileTest {
                 + " GravatarProfileUrl{name=\"Personal Website\", link=\"https://www.nathancheshire.com\"}]}",
                 full.toString());
 
-        GravatarProfile minimal = new GravatarProfile(minimalJson);
+        GravatarProfile minimal = GravatarProfile.fromJson(minimalJson);
         assertEquals("GravatarProfile{hash=\"2bf1b7a19bcad06a8e894d7373a4cfc7\","
                 + " requestHash=\"2bf1b7a19bcad06a8e894d7373a4cfc7\","
                 + " profileUrl=\"http://gravatar.com/nathanvcheshire\", preferredUsername=\"null\","
-                + " thumbnailUrl=\"null\", profilePhotos=[], givenName=\"null\", familyName=\"null\","
+                + " thumbnailUrl=\"null\", profilePhotos=[], givenName=\"\", familyName=\"\","
                 + " displayName=\"null\", pronouns=\"null\", aboutMe=\"null\", currentLocation=\"null\","
                 + " profileUrls=[]}", minimal.toString());
     }
@@ -362,9 +355,9 @@ class GravatarProfileTest {
      */
     @Test
     void testHashCode() {
-        GravatarProfile full = new GravatarProfile(fullJson);
-        GravatarProfile equalToFull = new GravatarProfile(fullJson);
-        GravatarProfile nonEqualToFull = new GravatarProfile(minimalJson);
+        GravatarProfile full = GravatarProfile.fromJson(fullJson);
+        GravatarProfile equalToFull = GravatarProfile.fromJson(fullJson);
+        GravatarProfile nonEqualToFull = GravatarProfile.fromJson(minimalJson);
 
         assertEquals(974991455, full.hashCode());
         assertEquals(974991455, equalToFull.hashCode());
@@ -378,27 +371,27 @@ class GravatarProfileTest {
      */
     @Test
     void testEquals() {
-        GravatarProfile full = new GravatarProfile(fullJson);
-        GravatarProfile equalToFull = new GravatarProfile(fullJson);
-        GravatarProfile nonEqualToFull = new GravatarProfile(minimalJson);
+        GravatarProfile full = GravatarProfile.fromJson(fullJson);
+        GravatarProfile equalToFull = GravatarProfile.fromJson(fullJson);
+        GravatarProfile nonEqualToFull = GravatarProfile.fromJson(minimalJson);
 
         assertEquals(full, full);
         assertEquals(full, equalToFull);
         assertNotEquals(equalToFull, nonEqualToFull);
         assertNotEquals(equalToFull, new Object());
-        assertNotEquals(full, new GravatarProfile(differentUrls));
-        assertNotEquals(full, new GravatarProfile(differentIds));
-        assertNotEquals(full, new GravatarProfile(differentHash));
-        assertNotEquals(full, new GravatarProfile(differentRequestHash));
-        assertNotEquals(full, new GravatarProfile(differentProfileUrl));
-        assertNotEquals(full, new GravatarProfile(differentPreferredUsername));
-        assertNotEquals(full, new GravatarProfile(differentThumbnailUrl));
-        assertNotEquals(full, new GravatarProfile(differentPhotos));
-        assertNotEquals(full, new GravatarProfile(differentGivenName));
-        assertNotEquals(full, new GravatarProfile(differentFamilyName));
-        assertNotEquals(full, new GravatarProfile(differentDisplayName));
-        assertNotEquals(full, new GravatarProfile(differentPronouns));
-        assertNotEquals(full, new GravatarProfile(differentAboutMe));
-        assertNotEquals(full, new GravatarProfile(differentCurrentLocation));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentUrls));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentIds));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentHash));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentRequestHash));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentProfileUrl));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentPreferredUsername));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentThumbnailUrl));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentPhotos));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentGivenName));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentFamilyName));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentDisplayName));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentPronouns));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentAboutMe));
+        assertNotEquals(full,  GravatarProfile.fromJson(differentCurrentLocation));
     }
 }

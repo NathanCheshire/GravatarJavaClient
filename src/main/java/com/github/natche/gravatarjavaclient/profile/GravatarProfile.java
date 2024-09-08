@@ -6,13 +6,15 @@ import com.github.natche.gravatarjavaclient.utils.ValidationUtils;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.reflect.TypeParameter;
+import com.google.common.reflect.TypeToken;
 import com.google.errorprone.annotations.Immutable;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.*;
+import com.google.gson.annotations.SerializedName;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.*;
-import java.util.stream.IntStream;
 
 /**
  * The results of a Gravatar profile request.
@@ -30,97 +32,107 @@ public final class GravatarProfile {
      */
     private static final String DATA_FORMAT_TYPE = ".json";
 
-    // ------------------------
-    // Guaranteed present fields
-    // ------------------------
+    @SerializedName("hash")
+    private String hash;
 
-    /**
-     * The user email MD5 hash.
-     */
-    private String hash = null;
+    @SerializedName("requestHash")
+    private String requestHash;
 
-    /**
-     * The user request hash, identical to {@link #hash}.
-     */
-    private String requestHash = null;
+    @SerializedName("profileUrl")
+    private String profileUrl;
 
-    /**
-     * The URL to this profile.
-     */
-    private String profileUrl = null;
+    @SerializedName("preferredUsername")
+    private String preferredUsername;
 
-    // -----------------------------------
-    // Fields not guaranteed to be present
-    // -----------------------------------
+    @SerializedName("thumbnailUrl")
+    private String thumbnailUrl;
 
-    /**
-     * The profile's preferred username.
-     */
-    private String preferredUsername = null;
-
-    /**
-     * The URL to this profile's primary thumbnail.
-     */
-    private String thumbnailUrl = null;
-
-    /**
-     * The list of profile photos on this profile.
-     */
+    @SerializedName("photos")
     private ImmutableList<GravatarProfilePhoto> profilePhotos = ImmutableList.of();
 
-    /**
-     * The user's first name.
-     */
-    private String givenName = null;
+    @SerializedName("name")
+    private GravatarProfileName name;
 
-    /**
-     * The user's last name.
-     */
-    private String familyName = null;
+    @SerializedName("displayName")
+    private String displayName;
 
-    /**
-     * The user's display name.
-     */
-    private String displayName = null;
+    @SerializedName("pronouns")
+    private String pronouns;
 
-    /**
-     * The user's pronouns.
-     */
-    private String pronouns = null;
+    @SerializedName("aboutMe")
+    private String aboutMe;
 
-    /**
-     * The user's "about me" section.
-     */
-    private String aboutMe = null;
+    @SerializedName("currentLocation")
+    private String currentLocation;
 
-    /**
-     * The user's publicly displayed location.
-     */
-    private String currentLocation = null;
-
-    /**
-     * The list of URLs the user has linked on their profile.
-     */
+    @SerializedName("urls")
     private ImmutableList<GravatarProfileUrl> profileUrls = ImmutableList.of();
 
-    /**
-     * Constructs a new GravatarProfile object.
-     *
-     * @param jsonData the json data to parse for this profile object
-     * @throws NullPointerException     if the json data is null
-     * @throws IllegalArgumentException if the json data is empty or invalid
-     * @throws JSONException            if a required key does not exist in the user's json data
-     */
-    public GravatarProfile(String jsonData) {
+    @SuppressWarnings({"unchecked"})
+    static class Types {
+        private Types() {}
+
+        static <K, V> TypeToken<HashMap<K, V>> hashMapOf(Type key, Type value) {
+            TypeParameter<K> newKeyTypeParameter = new TypeParameter<K>() {};
+            TypeParameter<V> newValueTypeParameter = new TypeParameter<V>() {};
+            return new TypeToken<HashMap<K, V>>() {}
+                    .where(newKeyTypeParameter, Types.typeTokenOf(key))
+                    .where(newValueTypeParameter, Types.typeTokenOf(value));
+        }
+
+        static <E> TypeToken<Collection<E>> collectionOf(Type type) {
+            TypeParameter<E> newTypeParameter = new TypeParameter<E>() {};
+            return new TypeToken<Collection<E>>() {}
+                    .where(newTypeParameter, Types.typeTokenOf(type));
+        }
+
+        private static <E> TypeToken<E> typeTokenOf(Type type) {
+            return (TypeToken<E>) TypeToken.of(type);
+        }
+    }
+
+    abstract static class BaseCollectionDeserializer<E> implements JsonDeserializer<E> {
+
+        protected abstract E buildFrom(Collection<?> collection);
+        public E deserialize(JsonElement json, Type type, JsonDeserializationContext context) {
+            try {
+                Type[] typeArguments = ((ParameterizedType) type).getActualTypeArguments();
+                Type parameterizedType = Types.collectionOf(typeArguments[0]).getType();
+                Collection<?> collection = context.deserialize(json, parameterizedType);
+
+                return buildFrom(collection);
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+    }
+
+    public static class ImmutableListDeserializer extends BaseCollectionDeserializer<ImmutableList<?>> {
+        @Override
+        protected ImmutableList<?> buildFrom(Collection<?> collection) {
+            return ImmutableList.copyOf(collection);
+        }
+
+    }
+
+    public static GravatarProfile fromJson(String jsonData) {
         Preconditions.checkNotNull(jsonData);
-        Preconditions.checkArgument(!jsonData.isEmpty());
+        Preconditions.checkArgument(!jsonData.trim().isEmpty());
 
-        JSONObject masterObject = new JSONObject(jsonData);
-        JSONArray entryArray = masterObject.getJSONArray("entry");
-        ImmutableMap<String, Object> entryObjectMap = ImmutableMap.copyOf(entryArray.getJSONObject(0).toMap());
+        JsonObject jsonObject = JsonParser.parseString(jsonData).getAsJsonObject();
+        JsonArray entryArray = jsonObject.getAsJsonArray("entry");
+        if (entryArray.size() < 1) throw new IllegalArgumentException("Provided data has no entries");
 
-        extractAndSetRequiredFields(entryObjectMap);
-        extractAndSetOptionalFields(entryObjectMap);
+        Map<Type, JsonDeserializer<?>> immutableTypeMap
+            = ImmutableMap.<Type, JsonDeserializer<?>>builder()
+                    .put(ImmutableList.class, new ImmutableListDeserializer())
+                    .build();
+
+        GsonBuilder builder = new GsonBuilder();
+        immutableTypeMap.forEach(builder::registerTypeAdapter);
+        Gson gson = builder.create();
+        JsonObject firstEntry = entryArray.get(0).getAsJsonObject();
+        return gson.fromJson(firstEntry, GravatarProfile.class);
     }
 
     /**
@@ -131,7 +143,6 @@ public final class GravatarProfile {
      * @throws NullPointerException        if the provided email is null
      * @throws IllegalArgumentException    if the provided email is empty or invalid
      * @throws GravatarJavaClientException if the Gravatar profile cannot be read from the constructed URL
-     * @throws JSONException               if a required key does not exist in the user's json data
      */
     public static GravatarProfile fromUserEmail(String userEmail) {
         Preconditions.checkNotNull(userEmail);
@@ -142,7 +153,7 @@ public final class GravatarProfile {
         String requestUrl = GRAVATAR_PROFILE_REQUEST_HEADER + emailHash + DATA_FORMAT_TYPE;
         String jsonData = GeneralUtils.readUrl(requestUrl);
 
-        return new GravatarProfile(jsonData);
+        return GravatarProfile.fromJson(jsonData);
     }
 
     /**
@@ -205,7 +216,8 @@ public final class GravatarProfile {
      * @return the user's given name if present. Empty optional else
      */
     public Optional<String> getGivenName() {
-        return Optional.ofNullable(givenName);
+        if (name == null) return Optional.empty();
+        return Optional.ofNullable(name.getGivenName());
     }
 
     /**
@@ -214,7 +226,8 @@ public final class GravatarProfile {
      * @return the user's family/last name if present. Empty optional else
      */
     public Optional<String> getFamilyName() {
-        return Optional.ofNullable(familyName);
+        if (name == null) return Optional.empty();
+        return Optional.ofNullable(name.getFamilyName());
     }
 
     /**
@@ -263,126 +276,6 @@ public final class GravatarProfile {
     }
 
     /**
-     * Extracts and sets the required fields from the provided object.
-     *
-     * @param entryObjectMap the entry object map
-     * @throws NullPointerException if the provided entryObjectMap is null
-     * @throws IllegalStateException if any required field is missing
-     */
-    private void extractAndSetRequiredFields(ImmutableMap<String, Object> entryObjectMap) {
-        Preconditions.checkNotNull(entryObjectMap);
-        Preconditions.checkArgument(entryObjectMap.containsKey("hash"));
-        Preconditions.checkArgument(entryObjectMap.containsKey("requestHash"));
-        Preconditions.checkArgument(entryObjectMap.containsKey("profileUrl"));
-
-        hash = (String) entryObjectMap.get("hash");
-        requestHash = (String) entryObjectMap.get("requestHash");
-        profileUrl = (String) entryObjectMap.get("profileUrl");
-    }
-
-    /**
-     * Extracts and sets the optional fields from the provided object.
-     *
-     * @param entryObjectMap the entry object map
-     */
-    @SuppressWarnings({"unchecked", "DataFlowIssue"}) /* Object casts, null not possible in scenario */
-    private void extractAndSetOptionalFields(ImmutableMap<String, Object> entryObjectMap) {
-        if (entryObjectMap.containsKey("preferredUsername")) {
-            preferredUsername = (String) entryObjectMap.get("preferredUsername");
-        }
-        if (entryObjectMap.containsKey("thumbnailUrl")) {
-            thumbnailUrl = (String) entryObjectMap.get("thumbnailUrl");
-        }
-        if (entryObjectMap.containsKey("photos")) {
-            Object photosObject = entryObjectMap.get("photos");
-            ImmutableList<Object> photosList = ImmutableList.copyOf((List<?>) photosObject);
-            profilePhotos = extractProfilePhotos(photosList);
-        }
-        if (entryObjectMap.containsKey("name")) {
-            Object nameObject = entryObjectMap.get("name");
-            Map<String, Object> names = (Map<String, Object>) nameObject;
-            extractNameFields(names);
-        }
-        if (entryObjectMap.containsKey("displayName")) {
-            displayName = (String) entryObjectMap.get("displayName");
-        }
-        if (entryObjectMap.containsKey("pronouns")) {
-            pronouns = (String) entryObjectMap.get("pronouns");
-        }
-        if (entryObjectMap.containsKey("aboutMe")) {
-            aboutMe = (String) entryObjectMap.get("aboutMe");
-        }
-        if (entryObjectMap.containsKey("currentLocation")) {
-            currentLocation = (String) entryObjectMap.get("currentLocation");
-        }
-        if (entryObjectMap.containsKey("urls")) {
-            Object urlsObject = entryObjectMap.get("urls");
-            ImmutableList<Map<String, Object>> urlsList = ImmutableList.copyOf((List<Map<String, Object>>) urlsObject);
-            profileUrls = extractProfileUrls(urlsList);
-        }
-    }
-
-    /**
-     * Extracts the name field parts from the provided name object.
-     *
-     * @param nameObjectMap the name object map
-     */
-    private void extractNameFields(Map<String, Object> nameObjectMap) {
-        if (nameObjectMap.containsKey("givenName")) {
-            givenName = (String) nameObjectMap.get("givenName");
-        }
-        if (nameObjectMap.containsKey("familyName")) {
-            familyName = (String) nameObjectMap.get("familyName");
-        }
-
-        /*
-        Note to maintainers: the key "formatted" is present here which just performs a string
-        concatenation using givenName and familyName. I have no idea why gravatar sends this information,
-        but I think it is rather stupid and obviously is redundant. Therefore, I have chosen to ignore it.
-        Feel free to PR it in and make a case for why you need it as opposed to doing a string concatenation.
-         */
-    }
-
-    /**
-     * Extracts the profile photos from the provided list.
-     *
-     * @param photos the photos list
-     * @return the profile photos from the provided list
-     */
-    @SuppressWarnings("unchecked") /* Cast to map */
-    private static ImmutableList<GravatarProfilePhoto> extractProfilePhotos(ImmutableList<Object> photos) {
-        ArrayList<GravatarProfilePhoto> profilePhotos = new ArrayList<>();
-
-        IntStream.range(0, photos.size()).forEach(index -> {
-            Map<String, Object> urlMap = (Map<String, Object>) photos.get(index);
-            String name = (String) urlMap.get("type");
-            String link = (String) urlMap.get("value");
-            profilePhotos.add(new GravatarProfilePhoto(name, link));
-        });
-
-        return ImmutableList.copyOf(profilePhotos);
-    }
-
-    /**
-     * Extracts the profile URLs from the provided list.
-     *
-     * @param urlsList the URL list
-     * @return the profile URLs from the provided list
-     */
-    private static ImmutableList<GravatarProfileUrl> extractProfileUrls(ImmutableList<Map<String, Object>> urlsList) {
-        ArrayList<GravatarProfileUrl> profileUrls = new ArrayList<>();
-
-        IntStream.range(0, urlsList.size()).forEach(index -> {
-            Map<String, Object> url = urlsList.get(index);
-            String name = (String) url.get("title");
-            String link = (String) url.get("value");
-            profileUrls.add(new GravatarProfileUrl(name, link));
-        });
-
-        return ImmutableList.copyOf(profileUrls);
-    }
-
-    /**
      * Returns a string representation of this object.
      *
      * @return a string representation of this object
@@ -396,8 +289,8 @@ public final class GravatarProfile {
                 + ", preferredUsername=\"" + preferredUsername + "\""
                 + ", thumbnailUrl=\"" + thumbnailUrl + "\""
                 + ", profilePhotos=" + profilePhotos
-                + ", givenName=\"" + givenName + "\""
-                + ", familyName=\"" + familyName + "\""
+                + ", givenName=\"" + getGivenName().orElse("") + "\""
+                + ", familyName=\"" + getFamilyName().orElse("") + "\""
                 + ", displayName=\"" + displayName + "\""
                 + ", pronouns=\"" + pronouns + "\""
                 + ", aboutMe=\"" + aboutMe + "\""
@@ -419,8 +312,8 @@ public final class GravatarProfile {
         ret = 31 * ret + Objects.hash(preferredUsername);
         ret = 31 * ret + Objects.hash(thumbnailUrl);
         ret = 31 * ret + Objects.hashCode(profilePhotos);
-        ret = 31 * ret + Objects.hashCode(givenName);
-        ret = 31 * ret + Objects.hashCode(familyName);
+        ret = 31 * ret + Objects.hashCode(getGivenName());
+        ret = 31 * ret + Objects.hashCode(getFamilyName());
         ret = 31 * ret + Objects.hashCode(displayName);
         ret = 31 * ret + Objects.hashCode(pronouns);
         ret = 31 * ret + Objects.hashCode(aboutMe);
@@ -450,8 +343,8 @@ public final class GravatarProfile {
                 && preferredUsername.equals(other.preferredUsername)
                 && thumbnailUrl.equals(other.thumbnailUrl)
                 && profilePhotos.equals(other.profilePhotos)
-                && givenName.equals(other.givenName)
-                && familyName.equals(other.familyName)
+                && getGivenName().equals(other.getGivenName())
+                && getFamilyName().equals(other.getFamilyName())
                 && displayName.equals(other.displayName)
                 && pronouns.equals(other.pronouns)
                 && aboutMe.equals(other.aboutMe)

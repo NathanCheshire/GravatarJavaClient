@@ -261,12 +261,12 @@ class GravatarImageRequestHandlerTest {
 
         GravatarImageRequestBuilderImpl forceDefaultImage =
                 new GravatarImageRequestBuilderImpl("email@domain.com")
-                        .setDefaultImageUrl(TestingConstants.silverPreview)
+                        .setDefaultImageUrl(TestingConstants.meAtTheZoo)
                         .setForceDefaultImage(true);
         AtomicReference<BufferedImage> bi = new AtomicReference<>();
         assertDoesNotThrow(() -> bi.set(GravatarImageRequestHandler.getImage(forceDefaultImage)));
-        assertEquals(500, bi.get().getWidth());
-        assertEquals(500, bi.get().getHeight());
+        assertEquals(480, bi.get().getWidth());
+        assertEquals(360, bi.get().getHeight());
     }
 
     /**
@@ -276,7 +276,7 @@ class GravatarImageRequestHandlerTest {
     void testSaveImageReturnsTrue() {
         String userEmail = "nathan.vincent.2.718@gmail.com";
         GravatarImageRequestBuilderImpl builder = new GravatarImageRequestBuilderImpl(userEmail)
-                .setDefaultImageUrl(TestingConstants.silverPreview)
+                .setDefaultImageUrl(TestingConstants.meAtTheZoo)
                 .setForceDefaultImage(true);
         File tmpFile = new File("tmp_file.png");
         assertFalse(tmpFile.exists());
@@ -299,7 +299,7 @@ class GravatarImageRequestHandlerTest {
                 () -> GravatarImageRequestHandler.saveImage(null, null));
         String userEmail = "email@domain.com";
         GravatarImageRequestBuilderImpl builder = new GravatarImageRequestBuilderImpl(userEmail)
-                .setDefaultImageUrl(TestingConstants.silverPreview)
+                .setDefaultImageUrl(TestingConstants.meAtTheZoo)
                 .setForceDefaultImage(true);
         assertThrows(NullPointerException.class,
                 () -> GravatarImageRequestHandler.saveImage(builder, null));

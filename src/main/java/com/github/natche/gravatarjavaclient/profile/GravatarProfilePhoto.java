@@ -2,21 +2,24 @@ package com.github.natche.gravatarjavaclient.profile;
 
 import com.google.common.base.Preconditions;
 import com.google.errorprone.annotations.Immutable;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * A photo on a user's Gravatar profile page.
  */
 @Immutable
-@SuppressWarnings("ClassCanBeRecord")
+@SuppressWarnings("ClassCanBeRecord") /* GSON needs this */
 public final class GravatarProfilePhoto {
     /**
      * The type of this profile photo.
      */
+    @SerializedName("type")
     private final String type;
 
     /**
      * The link for this profile photo.
      */
+    @SerializedName("value")
     private final String link;
 
     /**
