@@ -4,13 +4,15 @@ import com.github.natche.gravatarjavaclient.TestingImageUrls;
 import com.github.natche.gravatarjavaclient.enums.*;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
+import javax.imageio.ImageIO;
 import java.io.File;
-import java.net.MalformedURLException;
+import java.io.IOException;
+import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Tests for {@link GravatarAvatarRequest}s.
@@ -275,9 +277,10 @@ public class GravatarAvatarRequestTest {
                 .setUseFullUrlParameters(GravatarUseFullUrlParameters.True);
 
         assertEquals("GravatarAvatarRequest{hash=\"80c44e7f3f5082023ede351d396844f5\", size=2000,"
-                + " rating=X, forceDefaultImage=Force, defaultImageType=null, protocol=HTTP,"
-                + " useFullUrlParameters=False,"
-                + " defaultImageUrl=\"https://picsum.photos/seed/gravatar-java-client/200/300\", }", fromEmail.toString());
+                        + " rating=X, forceDefaultImage=Force, defaultImageType=null, protocol=HTTP,"
+                        + " useFullUrlParameters=False,"
+                        + " defaultImageUrl=\"https://picsum.photos/seed/gravatar-java-client/200/300\", }",
+                fromEmail.toString());
         assertEquals("GravatarAvatarRequest{hash=\"80c44e7f3f5082023ede351d396844f5\", size=1776,"
                 + " rating=R, forceDefaultImage=DoNotForce, defaultImageType=WAVATAR, protocol=HTTPS,"
                 + " useFullUrlParameters=True, defaultImageUrl=\"null\", }", fromHash.toString());
@@ -310,10 +313,17 @@ public class GravatarAvatarRequestTest {
         assertNotNull(fromEmail.getImageIcon());
         assertDoesNotThrow(fromHash::getImageIcon);
         assertNotNull(fromHash.getImageIcon());
+    }
 
-        GravatarAvatarRequest mockRequest = mock(GravatarAvatarRequest.class);
-        when(mockRequest.getImageIcon()).thenThrow(new GravatarJavaClientException("Invalid URL"));
-        assertThrows(GravatarJavaClientException.class, mockRequest::getImageIcon);
+    @Test
+    void testGetBufferedImageThrowsGravatarJavaClientException() throws IOException {
+        URL mockUrl = mock(URL.class);
+        //noinspection ResultOfMethodCallIgnored
+        mockStatic(ImageIO.class);
+        when(ImageIO.read(mockUrl)).thenThrow(new IOException("Simulated IOException"));
+        GravatarAvatarRequest mockRequest = Mockito.spy(GravatarAvatarRequest.class);
+        doReturn(mockUrl).when(mockRequest).getRequestUrl();
+        assertThrows(GravatarJavaClientException.class, mockRequest::getBufferedImage);
     }
 
     /**
@@ -332,16 +342,13 @@ public class GravatarAvatarRequestTest {
 
         assertDoesNotThrow(fromHash::getBufferedImage);
         assertNotNull(fromHash.getBufferedImage());
-
-        GravatarAvatarRequest mockRequest = mock(GravatarAvatarRequest.class);
-        when(mockRequest.getBufferedImage()).thenThrow(new GravatarJavaClientException("Invalid URL"));
-        assertThrows(GravatarJavaClientException.class, mockRequest::getBufferedImage);
     }
 
     /**
      * Tests for the save to method.
      */
     @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     void testSaveTo() {
         GravatarAvatarRequest fromHash = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
                 .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
