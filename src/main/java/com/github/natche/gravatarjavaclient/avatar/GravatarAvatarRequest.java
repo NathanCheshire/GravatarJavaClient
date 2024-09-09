@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 
 /**
  * A class for building a Gravatar Image request, requesting the resource, and saving
@@ -60,7 +61,7 @@ public final class GravatarAvatarRequest {
     /**
      * The default image type.
      */
-    private GravatarDefaultImageType defaultImageType = null;
+    private GravatarDefaultImageType defaultImageType = GravatarDefaultImageType.IDENT_ICON;
 
     /**
      * The image protocol.
@@ -114,6 +115,15 @@ public final class GravatarAvatarRequest {
         Preconditions.checkArgument(!hash.trim().isEmpty());
 
         return new GravatarAvatarRequest(hash);
+    }
+
+    /**
+     * Returns the hash for this request.
+     *
+     * @return the hash for this request
+     */
+    public String getHash() {
+        return this.hash;
     }
 
     /**
@@ -361,14 +371,14 @@ public final class GravatarAvatarRequest {
      * @return whether the save operation was successful
      * @throws NullPointerException     if any parameter is null
      * @throws IllegalArgumentException if the provided format is empty or
-     *                                  the provided file is not a valid file pointer
+     *                                  the provided file is a directory
      */
     @CheckReturnValue
     public boolean saveTo(File saveTo, String format) {
         Preconditions.checkNotNull(saveTo);
         Preconditions.checkNotNull(format);
         Preconditions.checkArgument(!format.trim().isEmpty());
-        Preconditions.checkArgument(saveTo.isFile());
+        Preconditions.checkArgument(!saveTo.isDirectory());
 
         return GravatarAvatarRequestImageSaver.INSTANCE.saveTo(getBufferedImage(), saveTo, format);
     }
@@ -388,7 +398,7 @@ public final class GravatarAvatarRequest {
                 + "defaultImageType=" + defaultImageType + ", "
                 + "protocol=" + protocol + ", "
                 + "useFullUrlParameters=" + useFullUrlParameters + ", "
-                + "defaultImageUrl=" + defaultImageUrl + ", "
+                + "defaultImageUrl=\"" + defaultImageUrl + "\", "
                 + "}";
     }
 
@@ -404,7 +414,7 @@ public final class GravatarAvatarRequest {
         ret = 31 * ret + Integer.hashCode(size);
         ret = 31 * ret + rating.hashCode();
         ret = 31 * ret + forceDefaultImage.hashCode();
-        ret = 31 * ret + defaultImageType.hashCode();
+        ret = 31 * ret + Objects.hashCode(defaultImageType);
         ret = 31 * ret + protocol.hashCode();
         ret = 31 * ret + useFullUrlParameters.hashCode();
         ret = 31 * ret + defaultImageUrl.hashCode();

@@ -36,7 +36,7 @@ enum GravatarAvatarRequestImageSaver {
      * @param file   The file to save the image to
      * @param format The format in which to save the image (must be a valid format)
      * @throws NullPointerException     if any parameter is null
-     * @throws IllegalArgumentException if the provided file is not a valid file or if the provided format
+     * @throws IllegalArgumentException if the provided file is a directory or if the provided format
      *                                  is not supported by the current file system.
      * @throws GravatarJavaClientException if the file write fails
      */
@@ -44,7 +44,7 @@ enum GravatarAvatarRequestImageSaver {
     public boolean saveTo(BufferedImage image, File file, String format) {
         Preconditions.checkNotNull(image);
         Preconditions.checkNotNull(file);
-        Preconditions.checkArgument(file.isFile());
+        Preconditions.checkArgument(!file.isDirectory());
         Preconditions.checkNotNull(format);
         Preconditions.checkArgument(SUPPORTED_IMAGE_FORMATS.contains(format.toLowerCase()));
 

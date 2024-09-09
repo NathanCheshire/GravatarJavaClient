@@ -37,6 +37,7 @@ enum GravatarAvatarRequestHandler {
 
         StringBuilder urlBuilder =
                 new StringBuilder(gravatarImageRequest.getProtocol().getAvatarRequestBaseurl());
+        urlBuilder.append(gravatarImageRequest.getHash());
         urlBuilder.append(gravatarImageRequest.getShouldAppendJpgSuffix().getSuffix());
 
         String size = String.valueOf(gravatarImageRequest.getSize());
