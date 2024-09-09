@@ -6,8 +6,11 @@ import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientExcepti
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.net.MalformedURLException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests for {@link GravatarAvatarRequest}s.
@@ -307,6 +310,10 @@ public class GravatarAvatarRequestTest {
         assertNotNull(fromEmail.getImageIcon());
         assertDoesNotThrow(fromHash::getImageIcon);
         assertNotNull(fromHash.getImageIcon());
+
+        GravatarAvatarRequest mockRequest = mock(GravatarAvatarRequest.class);
+        when(mockRequest.getImageIcon()).thenThrow(new GravatarJavaClientException("Invalid URL"));
+        assertThrows(GravatarJavaClientException.class, mockRequest::getImageIcon);
     }
 
     /**
@@ -325,6 +332,10 @@ public class GravatarAvatarRequestTest {
 
         assertDoesNotThrow(fromHash::getBufferedImage);
         assertNotNull(fromHash.getBufferedImage());
+
+        GravatarAvatarRequest mockRequest = mock(GravatarAvatarRequest.class);
+        when(mockRequest.getBufferedImage()).thenThrow(new GravatarJavaClientException("Invalid URL"));
+        assertThrows(GravatarJavaClientException.class, mockRequest::getBufferedImage);
     }
 
     /**
@@ -340,6 +351,10 @@ public class GravatarAvatarRequestTest {
                 .setProtocol(GravatarProtocol.HTTPS)
                 .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
                 .setUseFullUrlParameters(GravatarUseFullUrlParameters.True);
+
+        assertThrows(NullPointerException.class, () -> fromHash.saveTo(null, null));
+        assertThrows(IllegalArgumentException.class, () -> fromHash.saveTo(new File("."), "png"));
+        assertThrows(NullPointerException.class, () -> fromHash.saveTo(new File("file.png"), null));
 
         File saveToOutput = new File("./save_to_output");
         //noinspection ResultOfMethodCallIgnored

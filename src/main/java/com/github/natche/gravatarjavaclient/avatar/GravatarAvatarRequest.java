@@ -22,7 +22,7 @@ import java.util.Objects;
  * to a {@link java.io.File} or a {@link java.awt.image.BufferedImage}.
  * <a href="https://docs.gravatar.com/api/avatars/images/">Image Request API Documentation</a>.
  */
-public final class GravatarAvatarRequest {
+public class GravatarAvatarRequest {
     /**
      * The range a {@link GravatarUrlParameter#SIZE} parameter must fall within.
      */
