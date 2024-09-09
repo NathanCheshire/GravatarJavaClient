@@ -25,29 +25,31 @@ enum GravatarAvatarRequestHandler {
     /**
      * Builds the provided Gravatar image request into a URL representing the state of the builder.
      *
-     * @param gravatarImageRequestBuilder the builder to construct the URL from
+     * @param gravatarImageRequest the request to construct the URL from
      * @return the built URL
+     * @throws NullPointerException        if the provided gravatarImageRequest is null
+     * @throws GravatarJavaClientException if force default image is enabled yet no default image URL is provided
      */
-    String buildUrl(GravatarAvatarRequest gravatarImageRequestBuilder) {
-        Preconditions.checkNotNull(gravatarImageRequestBuilder);
+    String buildUrl(GravatarAvatarRequest gravatarImageRequest) {
+        Preconditions.checkNotNull(gravatarImageRequest);
 
-        GravatarUseFullUrlParameters fullParams = gravatarImageRequestBuilder.getUseFullUrlParameters();
+        GravatarUseFullUrlParameters fullParams = gravatarImageRequest.getUseFullUrlParameters();
 
         StringBuilder urlBuilder =
-                new StringBuilder(gravatarImageRequestBuilder.getProtocol().getAvatarRequestBaseurl());
-        urlBuilder.append(gravatarImageRequestBuilder.getShouldAppendJpgSuffix().getSuffix());
+                new StringBuilder(gravatarImageRequest.getProtocol().getAvatarRequestBaseurl());
+        urlBuilder.append(gravatarImageRequest.getShouldAppendJpgSuffix().getSuffix());
 
-        String size = String.valueOf(gravatarImageRequestBuilder.getSize());
+        String size = String.valueOf(gravatarImageRequest.getSize());
         String sizeParameter = GravatarUrlParameter.SIZE.constructUrlParameterWithValue(
                 size, true, fullParams);
         urlBuilder.append(sizeParameter);
 
         String ratingsParameter = GravatarUrlParameter.RATING.constructUrlParameterWithValue(
-                gravatarImageRequestBuilder.getRating().getUrlParameter(), fullParams);
+                gravatarImageRequest.getRating().getUrlParameter(), fullParams);
         urlBuilder.append(ratingsParameter);
 
-        GravatarDefaultImageType defaultImageType = gravatarImageRequestBuilder.getDefaultImageType();
-        String defaultImageUrl = gravatarImageRequestBuilder.getDefaultImageUrl();
+        GravatarDefaultImageType defaultImageType = gravatarImageRequest.getDefaultImageType();
+        String defaultImageUrl = gravatarImageRequest.getDefaultImageUrl();
 
         if (defaultImageType != null) {
             String defaultImageTypeQueryString = GravatarUrlParameter.DEFAULT_IMAGE_TYPE
@@ -59,7 +61,7 @@ enum GravatarAvatarRequestHandler {
             urlBuilder.append(defaultImageUrlQueryString);
         }
 
-        if (gravatarImageRequestBuilder.shouldForceDefaultImage() == GravatarForceDefaultImage.DoNotForce) {
+        if (gravatarImageRequest.shouldForceDefaultImage() == GravatarForceDefaultImage.DoNotForce) {
             return urlBuilder.toString();
         }
 

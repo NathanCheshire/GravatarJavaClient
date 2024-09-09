@@ -5,5 +5,9 @@ package com.github.natche.gravatarjavaclient.enums;
  */
 public enum GravatarUseFullUrlParameters {
     True,
-    False
+    False;
+
+    boolean bool() {
+        return this == True;
+    }
 }

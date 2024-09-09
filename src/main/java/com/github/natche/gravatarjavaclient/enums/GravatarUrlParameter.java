@@ -96,13 +96,9 @@ public enum GravatarUrlParameter {
                                                      boolean firstParameter,
                                                      GravatarUseFullUrlParameters useFullUrlParameter) {
         Preconditions.checkNotNull(value);
+        Preconditions.checkNotNull(useFullUrlParameter);
 
         String prefix = firstParameter ? initialUrlParameterPrefix : nonInitialUrlParameterPrefix;
-        return prefix + getUrlParameter(useFullUrlParameter) + "=" + value;
-    }
-
-    private String getUrlParameter(GravatarUseFullUrlParameters useFullUrlParameter) {
-        if (useFullUrlParameter == GravatarUseFullUrlParameters.True) return fullUrlParameter;
-        else return shortUrlParameter;
+        return prefix + (useFullUrlParameter.bool() ? fullUrlParameter : shortUrlParameter) + "=" + value;
     }
 }
