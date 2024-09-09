@@ -2,6 +2,7 @@ package com.github.natche.gravatarjavaclient.avatar;
 
 import com.github.natche.gravatarjavaclient.TestingImageUrls;
 import com.github.natche.gravatarjavaclient.enums.*;
+import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -159,6 +160,16 @@ public class GravatarAvatarRequestTest {
                 .getRequestUrl();
         assertEquals("https://www.gravatar.com/avatar/80c44e7f3f5082023ede351d396844f5"
                 + "?size=1776&rating=r&default=wavatar", fromHashUrl);
+
+        GravatarAvatarRequest invalidDefaultUrl = GravatarAvatarRequest.fromEmail("my.email@email.com")
+                .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+                .setForceDefaultImage(GravatarForceDefaultImage.Force)
+                .setRating(GravatarRating.X)
+                .setSize(2000)
+                .setProtocol(GravatarProtocol.HTTP)
+                .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
+                .setUseFullUrlParameters(GravatarUseFullUrlParameters.False);
+        assertThrows(GravatarJavaClientException.class, invalidDefaultUrl::getRequestUrl);
     }
 
     /**
@@ -266,7 +277,7 @@ public class GravatarAvatarRequestTest {
                 + " defaultImageUrl=\"https://picsum.photos/seed/gravatar-java-client/200/300\", }", fromEmail.toString());
         assertEquals("GravatarAvatarRequest{hash=\"80c44e7f3f5082023ede351d396844f5\", size=1776,"
                 + " rating=R, forceDefaultImage=DoNotForce, defaultImageType=WAVATAR, protocol=HTTPS,"
-                + " useFullUrlParameters=True, defaultImageUrl=\"\", }", fromHash.toString());
+                + " useFullUrlParameters=True, defaultImageUrl=\"null\", }", fromHash.toString());
     }
 
     /**

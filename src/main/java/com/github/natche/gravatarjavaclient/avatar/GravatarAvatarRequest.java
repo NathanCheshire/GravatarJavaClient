@@ -76,7 +76,7 @@ public final class GravatarAvatarRequest {
     /**
      * The default image URL to use in the event an Avatar cannot be found.
      */
-    private String defaultImageUrl = "";
+    private String defaultImageUrl = null;
 
     /**
      * Constructs a new GravatarAvatarRequest from the provided hash.
@@ -417,7 +417,7 @@ public final class GravatarAvatarRequest {
         ret = 31 * ret + Objects.hashCode(defaultImageType);
         ret = 31 * ret + protocol.hashCode();
         ret = 31 * ret + useFullUrlParameters.hashCode();
-        ret = 31 * ret + defaultImageUrl.hashCode();
+        ret = 31 * ret + Objects.hash(defaultImageUrl);
         return ret;
     }
 
@@ -441,6 +441,6 @@ public final class GravatarAvatarRequest {
                 && defaultImageType == other.defaultImageType
                 && protocol == other.protocol
                 && useFullUrlParameters == other.useFullUrlParameters
-                && defaultImageUrl.equals(other.defaultImageUrl);
+                && Objects.equals(defaultImageUrl, other.defaultImageUrl);
     }
 }
