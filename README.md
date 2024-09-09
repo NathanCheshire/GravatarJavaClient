@@ -25,45 +25,12 @@ releases section for the most recent version.
 
 ## API Support
 
-This library features support for the comprehensive Gravatar API, that of both `image` and `profile` requests. This
-library also follows [Effective Java](https://www.amazon.com/Effective-Java-Joshua-Bloch/dp/0134685997) principles, such
-as item 52: refer to objects by their interfaces. I cannot see a case where a developer using this library would want to
-implement their own `GravatarImageRequestBuilder`, but if for whatever reason it was desired, a developer could easily
-do so by inheriting from the `GravatarImageRequestBuilder` interface. The `GravatarImageRequestHandler` will accept the
-interface instead of my implementation (GravatarImageRequestBuilderImpl) making the API work for the default
-implementation and any third-party implementations. The default implementation (`GravatarImageRequestBuilderImpl`) will be
-maintained and kept up to date in this repository. Feel free to create a PR to add in additional features.
+This library features support for the comprehensive Gravatar API, that of both `avatar` and `profile` requests. This
+library also follows [Effective Java](https://www.amazon.com/Effective-Java-Joshua-Bloch/dp/0134685997) principles.
+The `GravatarAvatarRequest` handles all needs related to the `avatar` API whilst the `GravatarProfileRequest` handles
+all needs related to the `profile` request.
 
-## Getting Started
-
-Using the client is extremely straight forward. `GravatarImageRequestHandlerImpl` uses a builder pattern allowing you to
-set parameters as follows:
-
-```java
-GravatarImageRequestBuilderImpl builder=new GravatarImageRequestBuilderImpl("EmailAddress@email.domain.com")
-        .setRating(GravatarRating.R)
-        .setSize(500)
-        .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-        .setShouldAppendJpgSuffix(true);
-```
-
-You may then pass the builder to the `GravatarImageRequestHandler` to perform actions:
-
-- Getting the URL representing the state of your builder
-- Getting a buffered image read from the generated URL
-- Saving the buffered image to a file (if no file is provided, a file is generated with the naming scheme of "
-  emailHash-timestamp")
-
-```java
-// Get the URL to the image.
-String url=GravatarImageRequestHandler.buildUrl(builder);
-        // Read the BufferedImage into memory from the URL.
-        BufferedImage image=GravatarImageRequestHandler.getImage(builder);
-        // Save the BufferedImage to the local directory.
-        File imageFile=GravatarImageRequestHandler.saveImage(builder);
-        // Save the bufferedImage to a specific File pointer.
-        File imageFile=GravatarImageRequestHandler.saveImage(builder,new File("/path/to/my/image_file.png"));
-```
+todo section on builder and methods for each
 
 ## Contributing
 
