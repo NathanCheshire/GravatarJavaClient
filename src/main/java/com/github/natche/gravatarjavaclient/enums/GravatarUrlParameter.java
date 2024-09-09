@@ -56,7 +56,7 @@ public enum GravatarUrlParameter {
     /**
      * Constructs a new GravatarUrlParameter.
      *
-     * @param urlParameter the short URL parameter
+     * @param urlParameter     the short URL parameter
      * @param fullUrlParameter the full URL parameter
      */
     GravatarUrlParameter(String urlParameter, String fullUrlParameter) {
@@ -68,13 +68,13 @@ public enum GravatarUrlParameter {
      * Constructs a string for this URL parameter with the provided value.
      * It is assumed this is NOT the first URL parameter after the path in the URL.
      *
-     * @param value the value
+     * @param value               the value
      * @param useFullUrlParameter whether to use the full URL parameter
-     * @param <T>   the type of value
+     * @param <T>                 the type of value
      * @return the string for this URL parameter and value
      * @throws NullPointerException if the provided value is null
      */
-    public <T> String constructUrlParameterWithValue(T value, boolean useFullUrlParameter) {
+    public <T> String constructUrlParameterWithValue(T value, GravatarUseFullUrlParameters useFullUrlParameter) {
         Preconditions.checkNotNull(value);
 
         return constructUrlParameterWithValue(value, false, useFullUrlParameter);
@@ -92,12 +92,17 @@ public enum GravatarUrlParameter {
      * @return the string for this URL parameter and value
      * @throws NullPointerException if the provided value is null
      */
-    public <T> String constructUrlParameterWithValue(T value, boolean firstParameter, boolean useFullUrlParameter) {
+    public <T> String constructUrlParameterWithValue(T value,
+                                                     boolean firstParameter,
+                                                     GravatarUseFullUrlParameters useFullUrlParameter) {
         Preconditions.checkNotNull(value);
 
         String prefix = firstParameter ? initialUrlParameterPrefix : nonInitialUrlParameterPrefix;
-        String urlParameter = useFullUrlParameter ? fullUrlParameter : shortUrlParameter;
+        return prefix + getUrlParameter(useFullUrlParameter) + "=" + value;
+    }
 
-        return prefix + urlParameter + "=" + value;
+    private String getUrlParameter(GravatarUseFullUrlParameters useFullUrlParameter) {
+        if (useFullUrlParameter == GravatarUseFullUrlParameters.True) return fullUrlParameter;
+        else return shortUrlParameter;
     }
 }

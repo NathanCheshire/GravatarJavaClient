@@ -1,6 +1,6 @@
 package com.github.natche.gravatarjavaclient.utils;
 
-import com.github.natche.gravatarjavaclient.image.GravatarImageRequestBuilderImpl;
+import com.github.natche.gravatarjavaclient.avatar.GravatarAvatarRequest;
 import com.google.common.base.Preconditions;
 
 import javax.imageio.ImageIO;
@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.regex.Pattern;
 
 /**
- * Validation utils used by {@link GravatarImageRequestBuilderImpl}s.
+ * Validation utils used by {@link GravatarAvatarRequest}s.
  */
 public final class ValidationUtils {
     /**
