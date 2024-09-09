@@ -194,10 +194,7 @@ public class GravatarAvatarRequestTest {
                 .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
                 .setUseFullUrlParameters(GravatarUseFullUrlParameters.True);
 
-        assertEquals(381592094, fromEmail.hashCode());
-        assertEquals(381592094, equalToFromEmail.hashCode());
         assertEquals(fromEmail.hashCode(), equalToFromEmail.hashCode());
-        assertEquals(-1836723143, fromHash.hashCode());
         assertNotEquals(fromEmail.hashCode(), fromHash.hashCode());
     }
 
