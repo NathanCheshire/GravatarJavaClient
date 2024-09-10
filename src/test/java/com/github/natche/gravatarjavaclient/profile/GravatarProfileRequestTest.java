@@ -1,9 +1,16 @@
 package com.github.natche.gravatarjavaclient.profile;
 
+import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfile;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Tests for {@link GravatarProfileRequest}s.
@@ -96,7 +103,54 @@ public class GravatarProfileRequestTest {
      */
     @Test
     void testWriteToFile() {
+        try {
+            File outputDirectory = new File("./save_to_output");
+            GravatarProfileRequest authenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
+                    .setTokenSupplier(TokenSupplier.getTokenSupplier());
 
+            assertThrows(NullPointerException.class, () -> authenticatedRequest.writeToFile(null, null));
+            assertThrows(NullPointerException.class, () -> authenticatedRequest.writeToFile(new Gson(), null));
+            assertThrows(IllegalArgumentException.class,
+                    () -> authenticatedRequest.writeToFile(new Gson(), new File(".")));
+            assertThrows(IllegalArgumentException.class,
+                    () -> authenticatedRequest.writeToFile(new Gson(), new File("non_existent_file.json")));
+
+            File tempFile = new File(outputDirectory, "test.json");
+            //noinspection ResultOfMethodCallIgnored
+            tempFile.createNewFile();
+
+            Thread.sleep(100);
+            assertTrue(authenticatedRequest.writeToFile(tempFile));
+            assertTrue(tempFile.exists());
+            assertTrue(tempFile.length() > 0);
+
+            File mockFile = mock(File.class);
+            when(mockFile.isDirectory()).thenReturn(false);
+            when(mockFile.getAbsolutePath()).thenReturn(tempFile.getAbsolutePath());
+            when(mockFile.exists()).thenReturn(true);
+            doThrow(new IOException("Test exception")).when(mockFile).getCanonicalFile();
+            assertThrows(GravatarJavaClientException.class, () -> authenticatedRequest.writeToFile(mockFile));
+
+            Gson customSerializer = new Gson();
+            assertTrue(authenticatedRequest.writeToFile(customSerializer, tempFile));
+            assertTrue(tempFile.exists());
+            assertTrue(tempFile.length() > 0);
+
+            authenticatedRequest.writeToFile(tempFile);
+            String content = new String(Files.readAllBytes(tempFile.toPath()));
+            assertNotNull(content);
+            assertTrue(content.contains("\"registration_date\":"));  // Authenticated field
+
+            //noinspection ResultOfMethodCallIgnored
+            tempFile.delete();
+            Thread.sleep(50);
+            //noinspection ResultOfMethodCallIgnored
+            outputDirectory.delete();
+            Thread.sleep(50);
+            assertFalse(tempFile.exists());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -134,6 +188,15 @@ public class GravatarProfileRequestTest {
      */
     @Test
     void testEquals() {
+        GravatarProfileRequest authenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
+                .setTokenSupplier(TokenSupplier.getTokenSupplier());
+        GravatarProfileRequest equal = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
+                .setTokenSupplier(TokenSupplier.getTokenSupplier());
+        GravatarProfileRequest notEqual = GravatarProfileRequest.fromHashOrId("nathanvcheshire");
 
+        assertEquals(authenticatedRequest, authenticatedRequest);
+        assertEquals(authenticatedRequest, equal);
+        assertNotEquals(authenticatedRequest, notEqual);
+        assertNotEquals(authenticatedRequest, new Object());
     }
 }

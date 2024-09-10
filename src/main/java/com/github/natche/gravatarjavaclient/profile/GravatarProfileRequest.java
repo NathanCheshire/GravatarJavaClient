@@ -119,13 +119,14 @@ public final class GravatarProfileRequest {
      * @param file       the file to write the object to
      * @return whether the write operation was successful
      * @throws NullPointerException     if the provided file or serializer is null
-     * @throws IllegalArgumentException if the provided file is a directory
+     * @throws IllegalArgumentException if the provided file is a directory or does not exist
      */
     @CanIgnoreReturnValue
     public boolean writeToFile(Gson serializer, File file) {
         Preconditions.checkNotNull(serializer);
         Preconditions.checkNotNull(file);
         Preconditions.checkArgument(!file.isDirectory());
+        Preconditions.checkArgument(file.exists());
 
         try (FileWriter writer = new FileWriter(file)) {
             serializer.toJson(getProfile(), writer);
