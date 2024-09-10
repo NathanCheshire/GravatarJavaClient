@@ -48,8 +48,8 @@ public class GravatarProfileRequestTest {
     void testSetTokenSupplier() {
         assertThrows(NullPointerException.class,
                 () -> GravatarProfileRequest.fromHashOrId("hash").setTokenSupplier(null));
-        assertDoesNotThrow(() -> GravatarProfileRequest.fromHashOrId("hash").setTokenSupplier(() -> null));
-        assertDoesNotThrow(() -> GravatarProfileRequest.fromHashOrId("hash").setTokenSupplier(() -> new byte[0]));
+        assertDoesNotThrow(
+                () -> GravatarProfileRequest.fromHashOrId("hash").setTokenSupplier(TokenSupplier.getTokenSupplier()));
     }
 
     /**
@@ -109,7 +109,8 @@ public class GravatarProfileRequestTest {
         GravatarProfileRequest unauthenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire");
 
         assertEquals("GravatarProfileRequest{hash=\"nathanvcheshire\","
-                + " tokenSupplier=null}", authenticatedRequest.toString());
+                + " tokenSupplier=GravatarProfileTokenProvider{source=\"TokenSupplier class\"}}",
+                authenticatedRequest.toString());
         assertEquals("GravatarProfileRequest{hash=\"nathanvcheshire\", tokenSupplier=null}",
                 unauthenticatedRequest.toString());
     }

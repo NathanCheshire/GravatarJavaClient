@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.function.Supplier;
 
 /**
  * A request for obtaining a Gravatar Profile from the API.
@@ -23,7 +22,7 @@ public final class GravatarProfileRequest {
     /**
      * The authorization token supplier
      */
-    private Supplier<byte[]> tokenSupplier;
+    private GravatarProfileTokenProvider tokenSupplier;
 
     /**
      * The SHA256 hash or profile ID.
@@ -39,7 +38,7 @@ public final class GravatarProfileRequest {
      *
      * @param hashOrId the hash or ID
      * @return a new GravatarProfileRequest
-     * @throws NullPointerException if the provided hash/ID is null
+     * @throws NullPointerException     if the provided hash/ID is null
      * @throws IllegalArgumentException if the provided hash/ID is empty
      */
     public static GravatarProfileRequest fromHashOrId(String hashOrId) {
@@ -54,7 +53,7 @@ public final class GravatarProfileRequest {
      *
      * @param email the email address
      * @return a new GravatarProfileRequest
-     * @throws NullPointerException if the provided email is null
+     * @throws NullPointerException     if the provided email is null
      * @throws IllegalArgumentException if the provided email is empty or not a valid address
      */
     public static GravatarProfileRequest fromEmail(String email) {
@@ -72,7 +71,7 @@ public final class GravatarProfileRequest {
      * @param tokenSupplier a supplier for returning a token
      * @return this request builder
      */
-    public GravatarProfileRequest setTokenSupplier(Supplier<byte[]> tokenSupplier) {
+    public GravatarProfileRequest setTokenSupplier(GravatarProfileTokenProvider tokenSupplier) {
         Preconditions.checkNotNull(tokenSupplier);
         this.tokenSupplier = tokenSupplier;
         return this;
@@ -95,7 +94,7 @@ public final class GravatarProfileRequest {
      * @throws GravatarJavaClientException if an exception occurs when fetching the profile
      */
     public GravatarProfile getProfile() {
-        byte[] token = tokenSupplier == null ? null : tokenSupplier.get();
+        byte[] token = tokenSupplier == null ? null : tokenSupplier.getToken();
         return GravatarProfileRequestHandler.INSTANCE.getProfile(token, hashOrId);
     }
 
@@ -104,7 +103,7 @@ public final class GravatarProfileRequest {
      *
      * @param file the file to write the object to
      * @return whether the write operation was successful
-     * @throws NullPointerException if the provided file is null
+     * @throws NullPointerException     if the provided file is null
      * @throws IllegalArgumentException if the provided file is a directory
      */
     @CanIgnoreReturnValue
@@ -117,9 +116,9 @@ public final class GravatarProfileRequest {
      * provided GSON object as the serializer.
      *
      * @param serializer the GSON object to serialize the profile
-     * @param file the file to write the object to
+     * @param file       the file to write the object to
      * @return whether the write operation was successful
-     * @throws NullPointerException if the provided file or serializer is null
+     * @throws NullPointerException     if the provided file or serializer is null
      * @throws IllegalArgumentException if the provided file is a directory
      */
     @CanIgnoreReturnValue
@@ -144,7 +143,7 @@ public final class GravatarProfileRequest {
     @Override
     public int hashCode() {
         int ret = hashOrId.hashCode();
-        if (tokenSupplier != null) ret = 31 * ret + Arrays.hashCode(tokenSupplier.get());
+        if (tokenSupplier != null) ret = 31 * ret + Arrays.hashCode(tokenSupplier.getToken());
         return ret;
     }
 
