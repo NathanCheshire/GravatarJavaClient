@@ -49,28 +49,51 @@ public enum GravatarProfileRequestHandler {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String line;
                 StringBuilder responseBody = new StringBuilder();
-                while ((line = in.readLine()) != null) if (line.isEmpty()) break;
 
+                // Read headers
+                while ((line = in.readLine()) != null) {
+                    if (line.isEmpty()) break; // Headers end with an empty line
+                }
+
+                // Read the chunked body
                 while (true) {
                     String chunkSizeLine = in.readLine();
-                    if (chunkSizeLine == null) break;
-                    int chunkSize = Integer.parseInt(chunkSizeLine.trim(), HEX_BASE);
+                    if (chunkSizeLine == null || chunkSizeLine.isEmpty()) break;
 
-                    // End of response
+                    int chunkSize;
+                    try {
+                        chunkSize = Integer.parseInt(chunkSizeLine.trim(), HEX_BASE);
+                    } catch (NumberFormatException e) {
+                        throw new GravatarJavaClientException(e);
+                    }
+
+                    // End of the chunks
                     if (chunkSize == 0) break;
 
                     char[] chunk = new char[chunkSize];
-                    int bytesRead = in.read(chunk, 0, chunkSize);
-                    responseBody.append(chunk, 0, bytesRead);
-                    in.readLine();
+                    int totalBytesRead = 0;
+
+                    // Read the chunk data fully
+                    while (totalBytesRead < chunkSize) {
+                        int bytesRead = in.read(chunk, totalBytesRead, chunkSize - totalBytesRead);
+                        if (bytesRead == -1) break; // End of stream
+                        totalBytesRead += bytesRead;
+                    }
+
+                    responseBody.append(chunk, 0, totalBytesRead);
+                    in.readLine(); // Read the trailing CRLF after each chunk
                 }
 
-//                return GsonProvider.INSTANCE.get().fromJson(String.valueOf(responseBody), GravatarProfile.class);
+                // Debug: print the full response
                 System.out.println(responseBody);
-                return null;
+
+                // Convert the response body to GravatarProfile
+                return GsonProvider.INSTANCE.get().fromJson(responseBody.toString(), GravatarProfile.class);
+
             }
         } catch (Exception e) {
             throw new GravatarJavaClientException(e);
         }
     }
+
 }
