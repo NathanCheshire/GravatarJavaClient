@@ -434,7 +434,7 @@ public class GravatarAvatarRequest {
 
         GravatarAvatarRequest other = (GravatarAvatarRequest) o;
         return hash.equals(other.hash)
-                && shouldAppendJpgSuffix.equals(other.shouldAppendJpgSuffix)
+                && shouldAppendJpgSuffix == other.shouldAppendJpgSuffix
                 && size == other.size
                 && rating == other.rating
                 && forceDefaultImage == other.forceDefaultImage
