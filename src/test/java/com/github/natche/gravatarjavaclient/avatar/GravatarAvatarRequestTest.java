@@ -262,36 +262,35 @@ public class GravatarAvatarRequestTest {
 
         // Tests for Codecov to report 100%
         GravatarAvatarRequest hashOne = GravatarAvatarRequest.fromHash("one");
-        GravatarAvatarRequest hashTwo = GravatarAvatarRequest.fromHash("two");
-        assertNotEquals(hashOne, hashTwo);
+        GravatarAvatarRequest alsoHashOne = GravatarAvatarRequest.fromHash("two");
 
         hashOne.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True);
-        hashTwo.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False);
-        assertNotEquals(hashOne, hashTwo);
+        alsoHashOne.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False);
+        assertNotEquals(hashOne, alsoHashOne);
 
         hashOne.setSize(100);
-        hashTwo.setSize(101);
-        assertNotEquals(hashOne, hashTwo);
+        alsoHashOne.setSize(101);
+        assertNotEquals(hashOne, alsoHashOne);
 
         hashOne.setForceDefaultImage(GravatarForceDefaultImage.Force);
-        hashTwo.setForceDefaultImage(GravatarForceDefaultImage.DoNotForce);
-        assertNotEquals(hashOne, hashTwo);
+        alsoHashOne.setForceDefaultImage(GravatarForceDefaultImage.DoNotForce);
+        assertNotEquals(hashOne, alsoHashOne);
 
         hashOne.setDefaultImageType(GravatarDefaultImageType.ROBO_HASH);
-        hashTwo.setDefaultImageType(GravatarDefaultImageType.WAVATAR);
-        assertNotEquals(hashOne, hashTwo);
+        alsoHashOne.setDefaultImageType(GravatarDefaultImageType.WAVATAR);
+        assertNotEquals(hashOne, alsoHashOne);
 
         hashOne.setProtocol(GravatarProtocol.HTTP);
-        hashTwo.setProtocol(GravatarProtocol.HTTPS);
-        assertNotEquals(hashOne, hashTwo);
+        alsoHashOne.setProtocol(GravatarProtocol.HTTPS);
+        assertNotEquals(hashOne, alsoHashOne);
 
         hashOne.setUseFullUrlParameters(GravatarUseFullUrlParameters.False);
-        hashTwo.setUseFullUrlParameters(GravatarUseFullUrlParameters.True);
-        assertNotEquals(hashOne, hashTwo);
+        alsoHashOne.setUseFullUrlParameters(GravatarUseFullUrlParameters.True);
+        assertNotEquals(hashOne, alsoHashOne);
 
         hashOne.setDefaultImageUrl(TestingImageUrls.foreignImageUrl);
-        hashTwo.setDefaultImageUrl(TestingImageUrls.anotherForeignImageUrl);
-        assertNotEquals(hashOne, hashTwo);
+        alsoHashOne.setDefaultImageUrl(TestingImageUrls.anotherForeignImageUrl);
+        assertNotEquals(hashOne, alsoHashOne);
     }
 
     /**
