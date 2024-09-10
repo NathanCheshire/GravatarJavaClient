@@ -26,27 +26,27 @@ public final class GravatarProfileRequest {
     private Supplier<byte[]> tokenSupplier;
 
     /**
-     * The SHA256 hash.
+     * The SHA256 hash or profile ID.
      */
-    private final String hash;
+    private final String hashOrId;
 
-    private GravatarProfileRequest(String hash) {
-        this.hash = hash;
+    private GravatarProfileRequest(String hashOrId) {
+        this.hashOrId = hashOrId;
     }
 
     /**
-     * Constructs a new GravatarProfileRequest from the provided hash.
+     * Constructs a new GravatarProfileRequest from the provided hash or ID such as "nathanvcheshire".
      *
-     * @param hash the hash
+     * @param hashOrId the hash or ID
      * @return a new GravatarProfileRequest
-     * @throws NullPointerException if the provided hash is null
-     * @throws IllegalArgumentException if the provided hash is empty
+     * @throws NullPointerException if the provided hash/ID is null
+     * @throws IllegalArgumentException if the provided hash/ID is empty
      */
-    public static GravatarProfileRequest fromHash(String hash) {
-        Preconditions.checkNotNull(hash);
-        Preconditions.checkArgument(!hash.trim().isEmpty());
+    public static GravatarProfileRequest fromHash(String hashOrId) {
+        Preconditions.checkNotNull(hashOrId);
+        Preconditions.checkArgument(!hashOrId.trim().isEmpty());
 
-        return new GravatarProfileRequest(hash);
+        return new GravatarProfileRequest(hashOrId);
     }
 
     /**
@@ -79,12 +79,12 @@ public final class GravatarProfileRequest {
     }
 
     /**
-     * Returns the SHA256 hash this request will use.
+     * Returns the SHA256 hash or ID this request will use.
      *
-     * @return the SHA256 hash this request will use
+     * @return the SHA256 hash or ID this request will use
      */
-    public String getHash() {
-        return hash;
+    public String getHashOrId() {
+        return hashOrId;
     }
 
     /**
@@ -96,7 +96,7 @@ public final class GravatarProfileRequest {
      */
     public GravatarProfile getProfile() {
         byte[] token = tokenSupplier == null ? null : tokenSupplier.get();
-        return GravatarProfileRequestHandler.INSTANCE.getProfile(token, hash);
+        return GravatarProfileRequestHandler.INSTANCE.getProfile(token, hashOrId);
     }
 
     /**
@@ -143,7 +143,7 @@ public final class GravatarProfileRequest {
      */
     @Override
     public int hashCode() {
-        int ret = hash.hashCode();
+        int ret = hashOrId.hashCode();
         if (tokenSupplier != null) ret = 31 * ret + Arrays.hashCode(tokenSupplier.get());
         return ret;
     }
@@ -160,7 +160,7 @@ public final class GravatarProfileRequest {
         else if (!(o instanceof GravatarProfileRequest)) return false;
 
         GravatarProfileRequest other = (GravatarProfileRequest) o;
-        return hash.equals(other.hash)
+        return hashOrId.equals(other.hashOrId)
                 && Objects.equals(tokenSupplier, other.tokenSupplier);
     }
 
@@ -171,7 +171,7 @@ public final class GravatarProfileRequest {
      */
     public String toString() {
         return "GravatarProfileRequest{"
-                + "hash=\"" + hash + "\", "
+                + "hash=\"" + hashOrId + "\", "
                 + "tokenSupplier=" + tokenSupplier
                 + "}";
     }
