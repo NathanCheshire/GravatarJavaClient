@@ -3,7 +3,6 @@ package com.github.natche.gravatarjavaclient.avatar;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -35,12 +34,11 @@ enum GravatarAvatarRequestImageSaver {
      *
      * @param file   The file to save the image to
      * @param format The format in which to save the image (must be a valid format)
-     * @throws NullPointerException     if any parameter is null
-     * @throws IllegalArgumentException if the provided file is a directory or if the provided format
-     *                                  is not supported by the current file system.
+     * @throws NullPointerException        if any parameter is null
+     * @throws IllegalArgumentException    if the provided file is a directory or if the provided format
+     *                                     is not supported by the current file system.
      * @throws GravatarJavaClientException if the file write fails
      */
-    @CanIgnoreReturnValue
     public boolean saveTo(BufferedImage image, File file, String format) {
         Preconditions.checkNotNull(image);
         Preconditions.checkNotNull(file);
@@ -49,7 +47,8 @@ enum GravatarAvatarRequestImageSaver {
         Preconditions.checkArgument(SUPPORTED_IMAGE_FORMATS.contains(format.toLowerCase()));
 
         try {
-            return ImageIO.write(image, format.toLowerCase(), file);
+            if (!ImageIO.write(image, format.toLowerCase(), file)) throw new IOException("Failed");
+            return true;
         } catch (IOException e) {
             throw new GravatarJavaClientException("Failed to write image to file system");
         }
