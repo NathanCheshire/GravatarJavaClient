@@ -8,6 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      GRAVATAR_JAVA_CLIENT_GITHUB_API_KEY: ${{ secrets.GRAVATAR_JAVA_CLIENT_GITHUB_API_KEY }}
+
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17

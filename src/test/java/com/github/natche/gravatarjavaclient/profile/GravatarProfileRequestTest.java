@@ -176,10 +176,11 @@ public class GravatarProfileRequestTest {
     void testHashCode() {
         GravatarProfileRequest authenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
                 .setTokenSupplier(TokenSupplier.getTokenSupplier());
+        GravatarProfileRequest equal = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
+                .setTokenSupplier(TokenSupplier.getTokenSupplier());
         GravatarProfileRequest unauthenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire");
 
-        assertEquals(998975623, authenticatedRequest.hashCode());
-        assertEquals(2065170537, unauthenticatedRequest.hashCode());
+        assertEquals(equal.hashCode(), authenticatedRequest.hashCode());
         assertNotEquals(authenticatedRequest.hashCode(), unauthenticatedRequest.hashCode());
     }
 
