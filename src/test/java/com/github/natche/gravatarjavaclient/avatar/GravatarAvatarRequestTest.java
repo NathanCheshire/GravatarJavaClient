@@ -271,6 +271,8 @@ public class GravatarAvatarRequestTest {
         jpgSuffix.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True);
         differentJpgSuffix.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False);
         assertNotEquals(jpgSuffix, differentJpgSuffix);
+        differentJpgSuffix.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True);
+        assertEquals(jpgSuffix, differentJpgSuffix);
 
         GravatarAvatarRequest size = GravatarAvatarRequest.fromHash("one");
         GravatarAvatarRequest differentSize = GravatarAvatarRequest.fromHash("one");
