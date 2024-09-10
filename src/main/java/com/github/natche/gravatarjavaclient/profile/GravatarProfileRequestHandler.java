@@ -3,6 +3,8 @@ package com.github.natche.gravatarjavaclient.profile;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.github.natche.gravatarjavaclient.profile.gson.GsonProvider;
 import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfile;
+import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfileRequestResult;
+import com.google.common.collect.ImmutableList;
 
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
@@ -10,6 +12,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.github.natche.gravatarjavaclient.utils.GeneralUtils.HEX_BASE;
 
@@ -37,8 +42,33 @@ public enum GravatarProfileRequestHandler {
      */
     private static final String API_VERSION = "3";
 
-    // todo unauthenticated requests are limited to 100 an hour, authed are 1000 per hour
-    //  feature to track this would be cool
+    /**
+     * The result of all authenticated requests during this JVM runtime.
+     */
+    private static final ArrayList<GravatarProfileRequestResult> AUTHENTICATED_REQUESTS = new ArrayList<>();
+
+    /**
+     * The result of all unauthenticated requests during this JVM runtime.
+     */
+    private static final ArrayList<GravatarProfileRequestResult> UNAUTHENTICATED_REQUESTS = new ArrayList<>();
+
+    /**
+     * Returns the result of all authenticated requests during this JVM runtime.
+     *
+     * @return the result of all authenticated requests during this JVM runtime
+     */
+    public ImmutableList<GravatarProfileRequestResult> getAuthenticatedRequestResults() {
+        return ImmutableList.copyOf(AUTHENTICATED_REQUESTS);
+    }
+
+    /**
+     * Returns the result of all unauthenticated requests during this JVM runtime.
+     *
+     * @return the result of all unauthenticated requests during this JVM runtime
+     */
+    public ImmutableList<GravatarProfileRequestResult> getUnauthenticatedRequestResults() {
+        return ImmutableList.copyOf(UNAUTHENTICATED_REQUESTS);
+    }
 
     /**
      * Reads and returns a serialized object from the Gravatar profiles API endpoint.
@@ -48,6 +78,9 @@ public enum GravatarProfileRequestHandler {
      * @return a profile object
      */
     GravatarProfile getProfile(byte[] bearerToken, String nameOrHash) {
+        Instant requestTime = Instant.now();
+        AtomicBoolean failed = new AtomicBoolean(true);
+
         try {
             SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
@@ -97,12 +130,17 @@ public enum GravatarProfileRequestHandler {
                     in.readLine(); // trailing CRLF after chunk
                 }
 
-                return GsonProvider.INSTANCE.get().fromJson(responseBody.toString(), GravatarProfile.class);
-
+                GravatarProfile ret =
+                        GsonProvider.INSTANCE.get().fromJson(responseBody.toString(), GravatarProfile.class);
+                failed.set(false);
+                return ret;
             }
         } catch (Exception e) {
             throw new GravatarJavaClientException(e);
+        } finally {
+            GravatarProfileRequestResult result = new GravatarProfileRequestResult(requestTime, !failed.get());
+            if (bearerToken == null) UNAUTHENTICATED_REQUESTS.add(result);
+            else AUTHENTICATED_REQUESTS.add(result);
         }
     }
-
 }

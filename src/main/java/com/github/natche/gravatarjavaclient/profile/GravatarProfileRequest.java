@@ -66,7 +66,7 @@ public final class GravatarProfileRequest {
     }
 
     /**
-     * Sets the API token to use when requesting this profile from the Gravatar API.]
+     * Sets the API token to use when requesting this profile from the Gravatar API.
      * If not provided, only certain fields will be returned.
      *
      * @param tokenSupplier a supplier for returning a token
