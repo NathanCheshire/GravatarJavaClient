@@ -42,7 +42,7 @@ public final class GravatarProfileRequest {
      * @throws NullPointerException if the provided hash/ID is null
      * @throws IllegalArgumentException if the provided hash/ID is empty
      */
-    public static GravatarProfileRequest fromHash(String hashOrId) {
+    public static GravatarProfileRequest fromHashOrId(String hashOrId) {
         Preconditions.checkNotNull(hashOrId);
         Preconditions.checkArgument(!hashOrId.trim().isEmpty());
 

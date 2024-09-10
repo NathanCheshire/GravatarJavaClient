@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The results of a Gravatar profile request.
@@ -343,13 +344,17 @@ public final class GravatarProfile {
         return pronouns;
     }
 
+    /*
+    Fields which require authentication.
+     */
+
     /**
      * Returns the timezone the user has set.
      *
      * @return the timezone the user has set
      */
-    public String getTimezone() {
-        return timezone;
+    public Optional<String> getTimezone() {
+        return Optional.ofNullable(timezone);
     }
 
     /**
@@ -358,7 +363,7 @@ public final class GravatarProfile {
      * @return the languages the user has selected on their profile
      */
     public ImmutableList<GravatarProfileLanguage> getLanguages() {
-        return languages;
+        return languages == null ? ImmutableList.of() : languages;
     }
 
     /**
@@ -366,8 +371,8 @@ public final class GravatarProfile {
      *
      * @return the user's first name
      */
-    public String getFirstName() {
-        return firstName;
+    public Optional<String> getFirstName() {
+        return Optional.ofNullable(firstName);
     }
 
     /**
@@ -375,8 +380,8 @@ public final class GravatarProfile {
      *
      * @return the user's last name
      */
-    public String getLastName() {
-        return lastName;
+    public Optional<String> getLastName() {
+        return Optional.ofNullable(lastName);
     }
 
     /**
@@ -394,7 +399,7 @@ public final class GravatarProfile {
      * @return the links the user has displayed on their profile
      */
     public ImmutableList<GravatarProfileUrl> getLinks() {
-        return links;
+        return links == null ? ImmutableList.of() : links;
     }
 
     /**
@@ -403,7 +408,7 @@ public final class GravatarProfile {
      * @return the interests the user has displayed on their profile
      */
     public ImmutableList<GravatarProfileInterest> getInterests() {
-        return interests;
+        return interests == null ? ImmutableList.of() : interests;
     }
 
     /**
@@ -411,8 +416,8 @@ public final class GravatarProfile {
      *
      * @return the payments objects containing the payment data the user has displayed on their account
      */
-    public GravatarProfilePayments getPayments() {
-        return payments;
+    public Optional<GravatarProfilePayments> getPayments() {
+        return Optional.of(payments);
     }
 
     /**
@@ -420,8 +425,8 @@ public final class GravatarProfile {
      *
      * @return the contact info object containing the contact information the user has displayed on their account
      */
-    public GravatarProfileContactInfo getContactInfo() {
-        return contactInfo;
+    public Optional<GravatarProfileContactInfo> getContactInfo() {
+        return Optional.of(contactInfo);
     }
 
     /**
@@ -430,7 +435,7 @@ public final class GravatarProfile {
      * @return the gallery images the user has displayed on their account
      */
     public ImmutableList<GravatarProfileGalleryImage> getGallery() {
-        return gallery;
+        return gallery == null ? ImmutableList.of() : gallery;
     }
 
     /**
@@ -447,8 +452,8 @@ public final class GravatarProfile {
      *
      * @return the last time this account was edited at
      */
-    public Instant getLastProfileEdit() {
-        return Instant.parse(lastProfileEdit);
+    public Optional<Instant> getLastProfileEdit() {
+        return lastProfileEdit == null ? Optional.empty() : Optional.of(Instant.parse(lastProfileEdit));
     }
 
     /**
@@ -456,8 +461,8 @@ public final class GravatarProfile {
      *
      * @return the date this account was registered at
      */
-    public Instant getRegistrationDate() {
-        return Instant.parse(registrationDate);
+    public Optional<Instant> getRegistrationDate() {
+        return registrationDate == null ? Optional.empty() : Optional.of(Instant.parse(registrationDate));
     }
 
     /**

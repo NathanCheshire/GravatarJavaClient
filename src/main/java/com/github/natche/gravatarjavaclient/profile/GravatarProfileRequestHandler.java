@@ -45,12 +45,12 @@ public enum GravatarProfileRequestHandler {
     /**
      * The result of all authenticated requests during this JVM runtime.
      */
-    private static final ArrayList<GravatarProfileRequestResult> AUTHENTICATED_REQUESTS = new ArrayList<>();
+    private final ArrayList<GravatarProfileRequestResult> AUTHENTICATED_REQUESTS = new ArrayList<>();
 
     /**
      * The result of all unauthenticated requests during this JVM runtime.
      */
-    private static final ArrayList<GravatarProfileRequestResult> UNAUTHENTICATED_REQUESTS = new ArrayList<>();
+    private final ArrayList<GravatarProfileRequestResult> UNAUTHENTICATED_REQUESTS = new ArrayList<>();
 
     /**
      * Returns the result of all authenticated requests during this JVM runtime.
@@ -89,11 +89,13 @@ public enum GravatarProfileRequestHandler {
                 OutputStream outputStream = socket.getOutputStream();
 
                 String httpRequest = "GET /v" + API_VERSION + "/profiles/" + nameOrHash + " HTTP/1.1\r\n" +
-                        "Host: " + API_HOST + "\r\n" +
-                        "Authorization: Bearer ";
+                        "Host: " + API_HOST + "\r\n";
 
                 outputStream.write(httpRequest.getBytes(StandardCharsets.US_ASCII));
-                outputStream.write(bearerToken);
+                if (bearerToken != null) {
+                    outputStream.write("Authorization: Bearer ".getBytes(StandardCharsets.US_ASCII));
+                    outputStream.write(bearerToken);
+                }
                 outputStream.write("\r\n\r\n".getBytes(StandardCharsets.US_ASCII));
                 outputStream.flush();
 
