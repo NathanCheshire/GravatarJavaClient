@@ -56,7 +56,7 @@ enum GravatarAvatarRequestHandler {
             String defaultImageTypeQueryString = GravatarUrlParameter.DEFAULT_IMAGE_TYPE
                     .constructUrlParameterWithValue(defaultImageType.getUrlParameterValue(), fullParams);
             urlBuilder.append(defaultImageTypeQueryString);
-        } else if (defaultImageUrl != null) {
+        } else {
             String defaultImageUrlQueryString = GravatarUrlParameter.DEFAULT_IMAGE_URL
                     .constructUrlParameterWithValue(defaultImageUrl, fullParams);
             urlBuilder.append(defaultImageUrlQueryString);
