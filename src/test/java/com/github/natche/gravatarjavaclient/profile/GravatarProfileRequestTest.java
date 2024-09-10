@@ -109,6 +109,7 @@ public class GravatarProfileRequestTest {
                     .setTokenSupplier(TokenSupplier.getTokenSupplier());
 
             assertThrows(NullPointerException.class, () -> authenticatedRequest.writeToFile(null, null));
+            assertThrows(NullPointerException.class, () -> authenticatedRequest.writeToFile(null));
             assertThrows(NullPointerException.class, () -> authenticatedRequest.writeToFile(new Gson(), null));
             assertThrows(IllegalArgumentException.class,
                     () -> authenticatedRequest.writeToFile(new Gson(), new File(".")));
@@ -194,10 +195,12 @@ public class GravatarProfileRequestTest {
         GravatarProfileRequest equal = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
                 .setTokenSupplier(TokenSupplier.getTokenSupplier());
         GravatarProfileRequest notEqual = GravatarProfileRequest.fromHashOrId("nathanvcheshire");
+        GravatarProfileRequest notEqualToNotEqual = GravatarProfileRequest.fromHashOrId("NathanCheshire");
 
         assertEquals(authenticatedRequest, authenticatedRequest);
         assertEquals(authenticatedRequest, equal);
         assertNotEquals(authenticatedRequest, notEqual);
         assertNotEquals(authenticatedRequest, new Object());
+        assertNotEquals(notEqual, notEqualToNotEqual);
     }
 }
