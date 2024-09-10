@@ -222,9 +222,6 @@ public class GravatarAvatarRequestTest {
         assertNotEquals(fromEmail.hashCode(), fromHash.hashCode());
     }
 
-    /**
-     * Tests for the equals method.
-     */
     @Test
     void testEquals() {
         GravatarAvatarRequest fromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
@@ -254,8 +251,7 @@ public class GravatarAvatarRequestTest {
                 .setProtocol(GravatarProtocol.HTTPS)
                 .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
                 .setUseFullUrlParameters(GravatarUseFullUrlParameters.True);
-        GravatarAvatarRequest differentFromHash
-                = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
+        GravatarAvatarRequest differentFromHash = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
                 .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
                 .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
                 .setRating(GravatarRating.R)
@@ -265,12 +261,28 @@ public class GravatarAvatarRequestTest {
                 .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
                 .setDefaultImageUrl(TestingImageUrls.foreignImageUrl);
 
+        GravatarAvatarRequest withNullUrl = GravatarAvatarRequest.fromEmail("my.email@email.com")
+                .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+                .setForceDefaultImage(GravatarForceDefaultImage.Force)
+                .setRating(GravatarRating.X)
+                .setSize(2000)
+                .setProtocol(GravatarProtocol.HTTP)
+                .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
+                .setUseFullUrlParameters(GravatarUseFullUrlParameters.False);
+
+        GravatarAvatarRequest defaultRequest = GravatarAvatarRequest.fromEmail("my.email@email.com");
+
+        // Standard equals tests
         assertEquals(fromEmail, fromEmail);
         assertEquals(fromEmail, equalToFromEmail);
         assertNotEquals(fromEmail, fromHash);
-        assertNotEquals(fromEmail, new Object());
         assertNotEquals(fromHash, differentFromHash);
+        assertNotEquals(fromEmail, null); // Compare with null
+        assertNotEquals(fromEmail, new Object()); // Compare with different object type
+        assertNotEquals(fromEmail, withNullUrl); // Nullable field comparison
+        assertNotEquals(fromEmail, defaultRequest); // Default field comparison
     }
+
 
     /**
      * Tests for the to string method.
