@@ -1,32 +1,70 @@
 package com.github.natche.gravatarjavaclient.profile;
 
+import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
+import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfile;
+import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
+import com.github.natche.gravatarjavaclient.utils.ValidationUtils;
 import com.google.common.base.Preconditions;
 
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.Supplier;
 
 public class GravatarProfileRequest {
-    // todo from email
-    // todo from hash (sha256)
     // todo get request url
     // todo serialize to a file maybe?
 
     private Supplier<byte[]> tokenSupplier;
+    private String hash;
 
-    public void setTokenSupplier(Supplier<byte[]> tokenSupplier) {
-        Preconditions.checkNotNull(tokenSupplier);
-        this.tokenSupplier = tokenSupplier;
+    private GravatarProfileRequest(String hash) {
+        this.hash = hash;
     }
 
-    public static void main(String[] args) throws Exception {
+    public static GravatarProfileRequest fromHash(String hash) {
+        Preconditions.checkNotNull(hash);
+        Preconditions.checkArgument(!hash.trim().isEmpty());
+
+        return new GravatarProfileRequest(hash);
+    }
+
+    public static GravatarProfileRequest fromEmail(String email) {
+        Preconditions.checkNotNull(email);
+        Preconditions.checkArgument(!email.trim().isEmpty());
+        Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(email));
+
+        return new GravatarProfileRequest(GeneralUtils.emailAddressToProfilesApiHash(email));
+    }
+
+    public GravatarProfileRequest setTokenSupplier(Supplier<byte[]> tokenSupplier) {
+        Preconditions.checkNotNull(tokenSupplier);
+        this.tokenSupplier = tokenSupplier;
+        return this;
+    }
+
+    /**
+     * Returns the SHA256 hash this request will use.
+     *
+     * @return the SHA256 hash this request will use
+     */
+    public String getHash() {
+        return hash;
+    }
+
+    /**
+     * Retrieves the profile using the provided email or hash from the
+     * Gravatar Profile API using HTTPS as the protocol.
+     *
+     * @return the GravatarProfile obtained from the API
+     * @throws GravatarJavaClientException if an exception occurs when fetching the profile
+     */
+    public GravatarProfile getProfile() {
+        byte[] token = tokenSupplier == null ? null : tokenSupplier.get();
+        return GravatarProfileRequestHandler.INSTANCE.getProfile(token, hash);
+    }
+
+    public static void main(String[] args) {
         Supplier<byte[]> myTokenSupplier = () -> {
             try {
                 Path path = Paths.get("./key.txt");
@@ -37,60 +75,8 @@ public class GravatarProfileRequest {
         };
 
         // Send GET request using raw socket communication
-        sendGetRequestWithBearerToken(myTokenSupplier.get(), "nathanvcheshire");
-    }
-
-    public static void sendGetRequestWithBearerToken(byte[] bearerToken, String nameOrHash) throws Exception {
-        int port = 443;  // Port 443 for HTTPS
-        String host = "api.gravatar.com";
-
-        // Create an SSL socket to handle HTTPS
-        SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-        try (SSLSocket socket = (SSLSocket) factory.createSocket(host, port)) {
-            // Enable all available cipher suites
-            socket.setEnabledCipherSuites(socket.getSupportedCipherSuites());
-
-            // Get the output stream to send the request
-            OutputStream outputStream = socket.getOutputStream();
-
-            // Manually construct the HTTP GET request
-            String httpRequest = "GET /v3/profiles/" + nameOrHash + " HTTP/1.1\r\n" +
-                    "Host: " + host + "\r\n" +
-                    "Authorization: Bearer ";
-
-            outputStream.write(httpRequest.getBytes(StandardCharsets.US_ASCII));
-            outputStream.write(bearerToken);
-            outputStream.write("\r\n\r\n".getBytes(StandardCharsets.US_ASCII));
-
-            // Send
-            outputStream.flush();
-
-            // Handle the response: reading from the input stream
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String line;
-            StringBuilder responseBody = new StringBuilder();
-
-            // Read the headers first
-            while ((line = in.readLine()) != null) {
-                if (line.isEmpty()) break;
-            }
-
-            while (true) {
-                String chunkSizeLine = in.readLine();
-                if (chunkSizeLine == null) break;
-                int chunkSize = Integer.parseInt(chunkSizeLine.trim(), 16);
-
-                // End of response
-                if (chunkSize == 0) break;
-
-                char[] chunk = new char[chunkSize];
-                int bytesRead = in.read(chunk, 0, chunkSize);
-                responseBody.append(chunk, 0, bytesRead);
-                in.readLine();
-            }
-
-            System.out.println(System.getenv("GRAVATAR_JAVA_CLIENT_GITHUB_API_KEY"));
-            System.out.println(responseBody);
-        }
+        GravatarProfile profile = GravatarProfileRequestHandler.INSTANCE.getProfile(myTokenSupplier.get(),
+                "c83512d02db256cc5afb78376147ea0f2ea02e6a4e3399b980dea3bef9fc6168");
+        System.out.println("Got profile: " + profile);
     }
 }

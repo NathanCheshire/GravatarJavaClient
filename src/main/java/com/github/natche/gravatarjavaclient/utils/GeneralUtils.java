@@ -30,9 +30,15 @@ public final class GeneralUtils {
     );
 
     /**
-     * The hashing algorithm used to transform a user email address into a Gravatar UUID.
+     * The hashing algorithm used to transform a user email address into a Gravatar UUID
+     * for obtaining Avatar images.
      */
-    private static final String HASHING_ALGORITHM = "MD5";
+    private static final String AVATAR_HASHING_ALGORITHM = "MD5";
+
+    /**
+     * The hashing algorithm used for the profiles API.
+     */
+    private static final String PROFILES_HASHING_ALGORITHM = "SHA-256";
 
     /**
      * The buffer size used by the {@link BufferedReader} when reading the contents of a URL.
@@ -42,7 +48,7 @@ public final class GeneralUtils {
     /**
      * The radix in the hexadecimal number system.
      */
-    private static final int HEX_BASE = 16;
+    public static final int HEX_BASE = 16;
 
     /**
      * Suppress default constructor.
@@ -123,7 +129,7 @@ public final class GeneralUtils {
 
     /**
      * Hashes the provided email address to obtain the MD5 hash
-     * corresponding to the Gravatar icon linked to an email address.
+     * corresponding to a Gravatar Avatar linked to an email address.
      * <p>
      * Algorithm steps:
      * <ul>
@@ -147,7 +153,23 @@ public final class GeneralUtils {
         Preconditions.checkArgument(!emailAddress.isEmpty());
         Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(emailAddress));
 
-        return hashInput(emailAddress.trim().toLowerCase(), HASHING_ALGORITHM);
+        return hashInput(emailAddress.trim().toLowerCase(), AVATAR_HASHING_ALGORITHM);
+    }
+
+    /**
+     * Hashes the provided email address and returns the SHA256 hash.
+     *
+     * @param emailAddress the email address
+     * @return the hashed email address
+     * @throws NullPointerException if the provided address is null
+     * @throws IllegalArgumentException if the provided address is empty or not a valid address
+     */
+    public static String emailAddressToProfilesApiHash(String emailAddress) {
+        Preconditions.checkNotNull(emailAddress);
+        Preconditions.checkArgument(!emailAddress.isEmpty());
+        Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(emailAddress));
+
+        return hashInput(emailAddress.trim().toLowerCase(), PROFILES_HASHING_ALGORITHM);
     }
 
     /**
