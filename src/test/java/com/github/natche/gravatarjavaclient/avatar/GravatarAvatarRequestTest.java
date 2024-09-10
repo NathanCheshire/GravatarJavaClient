@@ -376,6 +376,8 @@ public class GravatarAvatarRequestTest {
         assertThrows(NullPointerException.class, () -> fromHash.saveTo(null, null));
         assertThrows(IllegalArgumentException.class, () -> fromHash.saveTo(new File("."), "png"));
         assertThrows(NullPointerException.class, () -> fromHash.saveTo(new File("file.png"), null));
+        assertThrows(IllegalArgumentException.class, () -> fromHash.saveTo(new File("file.png"), ""));
+        assertThrows(IllegalArgumentException.class, () -> fromHash.saveTo(new File("file.png"), " "));
 
         File saveToOutput = new File("./save_to_output");
         //noinspection ResultOfMethodCallIgnored
