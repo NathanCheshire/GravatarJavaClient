@@ -76,6 +76,22 @@ class GeneralUtilsTest {
     }
 
     /**
+     * Test for the email address to profiles API hash.
+     */
+    @Test
+    @SuppressWarnings("SpellCheckingInspection")
+    void testEmailAddressToProfilesApiHash() {
+        assertThrows(NullPointerException.class, () -> GeneralUtils.emailAddressToProfilesApiHash(null));
+        assertThrows(IllegalArgumentException.class, () -> GeneralUtils.emailAddressToProfilesApiHash(""));
+        assertThrows(IllegalArgumentException.class, () -> GeneralUtils.emailAddressToProfilesApiHash("   "));
+        assertThrows(IllegalArgumentException.class, () -> GeneralUtils.emailAddressToProfilesApiHash("invalid.email"));
+
+        assertDoesNotThrow(() -> GeneralUtils.emailAddressToProfilesApiHash("valid@domain.com"));
+        assertEquals("8e50ba67083844f6c70829f2ad5e29eb6fff55123f2b34ee63ae9eb9adccb4b4",
+                GeneralUtils.emailAddressToProfilesApiHash("valid.email@gmail.com"));
+    }
+
+    /**
      * Tests for the hash input method.
      */
     @Test
