@@ -37,6 +37,13 @@ public class GravatarProfileRequest {
         return new GravatarProfileRequest(GeneralUtils.emailAddressToProfilesApiHash(email));
     }
 
+    /**
+     * Sets the API token to use when requesting this profile from the Gravatar API.]
+     * If not provided, only certain fields will be returned.
+     *
+     * @param tokenSupplier a supplier for returning a token
+     * @return this request builder
+     */
     public GravatarProfileRequest setTokenSupplier(Supplier<byte[]> tokenSupplier) {
         Preconditions.checkNotNull(tokenSupplier);
         this.tokenSupplier = tokenSupplier;
