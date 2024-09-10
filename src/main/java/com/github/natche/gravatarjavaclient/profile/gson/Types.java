@@ -1,6 +1,5 @@
 package com.github.natche.gravatarjavaclient.profile.gson;
 
-import com.github.natche.gravatarjavaclient.profile.GravatarProfile;
 import com.google.common.reflect.TypeParameter;
 import com.google.common.reflect.TypeToken;
 

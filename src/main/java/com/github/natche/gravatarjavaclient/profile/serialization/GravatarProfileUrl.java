@@ -1,52 +1,51 @@
-package com.github.natche.gravatarjavaclient.profile;
+package com.github.natche.gravatarjavaclient.profile.serialization;
 
 import com.google.common.base.Preconditions;
 import com.google.errorprone.annotations.Immutable;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * A linked URL on a user's Gravatar profile page.
+ * A link on a user's Gravatar profile page.
  */
-@Immutable
 @SuppressWarnings("ClassCanBeRecord") /* GSON needs this */
+@Immutable
 public final class GravatarProfileUrl {
     /**
-     * The display name for this profile URL.
+     * The display label for this profile URL.
      */
-    @SerializedName("title")
-    private final String name;
+    private final String label;
 
     /**
      * The link for this profile URL.
      */
     @SerializedName("value")
-    private final String link;
+    private final String url;
 
     /**
      * Constructs a new profile URL.
      *
-     * @param name the name for this profile URL
-     * @param link the link for this profile URL
+     * @param label the label for this profile URL
+     * @param url the link for this profile URL
      * @throws NullPointerException     if any parameter is null
      * @throws IllegalArgumentException if any parameter is empty
      */
-    public GravatarProfileUrl(String name, String link) {
-        Preconditions.checkNotNull(name);
-        Preconditions.checkNotNull(link);
-        Preconditions.checkArgument(!name.isEmpty());
-        Preconditions.checkArgument(!link.isEmpty());
+    public GravatarProfileUrl(String label, String url) {
+        Preconditions.checkNotNull(label);
+        Preconditions.checkNotNull(url);
+        Preconditions.checkArgument(!label.isEmpty());
+        Preconditions.checkArgument(!url.isEmpty());
 
-        this.name = name;
-        this.link = link;
+        this.label = label;
+        this.url = url;
     }
 
     /**
-     * Returns the display name for this profile URL.
+     * Returns the display label for this profile URL.
      *
-     * @return the display name for this profile URL
+     * @return the display label for this profile URL
      */
-    public String getName() {
-        return name;
+    public String getLabel() {
+        return label;
     }
 
     /**
@@ -54,8 +53,8 @@ public final class GravatarProfileUrl {
      *
      * @return the link for this profile URL
      */
-    public String getLink() {
-        return link;
+    public String getUrl() {
+        return url;
     }
 
     /**
@@ -66,8 +65,8 @@ public final class GravatarProfileUrl {
     @Override
     public String toString() {
         return "GravatarProfileUrl{"
-                + "name=\"" + name + "\""
-                + ", link=\"" + link + "\""
+                + "label=\"" + label + "\""
+                + ", url=\"" + url + "\""
                 + "}";
     }
 
@@ -78,8 +77,8 @@ public final class GravatarProfileUrl {
      */
     @Override
     public int hashCode() {
-        int ret = name.hashCode();
-        ret = 31 * ret + link.hashCode();
+        int ret = label.hashCode();
+        ret = 31 * ret + url.hashCode();
         return ret;
     }
 
@@ -98,7 +97,7 @@ public final class GravatarProfileUrl {
         }
 
         GravatarProfileUrl other = (GravatarProfileUrl) o;
-        return name.equals(other.name)
-                && link.equals(other.link);
+        return label.equals(other.label)
+                && url.equals(other.url);
     }
 }
