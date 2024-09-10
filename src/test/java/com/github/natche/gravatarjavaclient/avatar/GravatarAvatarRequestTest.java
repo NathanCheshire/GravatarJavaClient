@@ -271,14 +271,14 @@ public class GravatarAvatarRequestTest {
         jpgSuffix.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True);
         differentJpgSuffix.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False);
         assertNotEquals(jpgSuffix, differentJpgSuffix);
-        differentJpgSuffix.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True);
-        assertEquals(jpgSuffix, differentJpgSuffix);
 
         GravatarAvatarRequest size = GravatarAvatarRequest.fromHash("one");
         GravatarAvatarRequest differentSize = GravatarAvatarRequest.fromHash("one");
         size.setSize(100);
         differentSize.setSize(101);
         assertNotEquals(size, differentSize);
+        differentSize.setSize(100);
+        assertEquals(size, differentSize);
 
         GravatarAvatarRequest force = GravatarAvatarRequest.fromHash("one");
         GravatarAvatarRequest doNotForce = GravatarAvatarRequest.fromHash("one");
@@ -309,6 +309,12 @@ public class GravatarAvatarRequestTest {
         foreignImage.setDefaultImageUrl(TestingImageUrls.foreignImageUrl);
         otherForeignImage.setDefaultImageUrl(TestingImageUrls.anotherForeignImageUrl);
         assertNotEquals(foreignImage, otherForeignImage);
+
+        GravatarAvatarRequest gRating = GravatarAvatarRequest.fromHash("one");
+        GravatarAvatarRequest pgRating = GravatarAvatarRequest.fromHash("one");
+        gRating.setRating(GravatarRating.G);
+        pgRating.setRating(GravatarRating.PG);
+        assertNotEquals(gRating, pgRating);
     }
 
     /**
