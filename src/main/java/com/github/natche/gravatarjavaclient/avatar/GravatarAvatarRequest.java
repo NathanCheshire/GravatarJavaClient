@@ -434,13 +434,13 @@ public class GravatarAvatarRequest {
 
         GravatarAvatarRequest other = (GravatarAvatarRequest) o;
         return hash.equals(other.hash)
-                && shouldAppendJpgSuffix == other.shouldAppendJpgSuffix
+                && shouldAppendJpgSuffix.equals(other.shouldAppendJpgSuffix)
                 && size == other.size
-                && rating == other.rating
-                && forceDefaultImage == other.forceDefaultImage
-                && defaultImageType == other.defaultImageType
-                && protocol == other.protocol
-                && useFullUrlParameters == other.useFullUrlParameters
+                && rating.equals(other.rating)
+                && forceDefaultImage.equals(other.forceDefaultImage)
+                && defaultImageType.equals(other.defaultImageType)
+                && protocol.equals(other.protocol)
+                && useFullUrlParameters.equals(other.useFullUrlParameters)
                 && Objects.equals(defaultImageUrl, other.defaultImageUrl);
     }
 }
