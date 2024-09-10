@@ -430,17 +430,16 @@ public class GravatarAvatarRequest {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        else if (!(o instanceof GravatarAvatarRequest)) return false;
+        if (!(o instanceof GravatarAvatarRequest other)) return false;
 
-        GravatarAvatarRequest other = (GravatarAvatarRequest) o;
-        return hash.equals(other.hash)
-                && shouldAppendJpgSuffix.equals(other.shouldAppendJpgSuffix)
+        return Objects.equals(hash, other.hash)
+                && Objects.equals(shouldAppendJpgSuffix, other.shouldAppendJpgSuffix)
                 && size == other.size
-                && rating.equals(other.rating)
-                && forceDefaultImage.equals(other.forceDefaultImage)
-                && defaultImageType.equals(other.defaultImageType)
-                && protocol.equals(other.protocol)
-                && useFullUrlParameters.equals(other.useFullUrlParameters)
+                && Objects.equals(rating, other.rating)
+                && Objects.equals(forceDefaultImage, other.forceDefaultImage)
+                && Objects.equals(defaultImageType, other.defaultImageType)
+                && Objects.equals(protocol, other.protocol)
+                && Objects.equals(useFullUrlParameters, other.useFullUrlParameters)
                 && Objects.equals(defaultImageUrl, other.defaultImageUrl);
     }
 }
