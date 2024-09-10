@@ -259,6 +259,39 @@ public class GravatarAvatarRequestTest {
         assertEquals(fromEmail, equalToFromEmail);
         assertNotEquals(fromEmail, fromHash);
         assertNotEquals(fromEmail, new Object());
+
+        // Tests for Codecov to report 100%
+        GravatarAvatarRequest hashOne = GravatarAvatarRequest.fromHash("one");
+        GravatarAvatarRequest hashTwo = GravatarAvatarRequest.fromHash("two");
+        assertNotEquals(hashOne, hashTwo);
+
+        hashOne.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True);
+        hashTwo.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False);
+        assertNotEquals(hashOne, hashTwo);
+
+        hashOne.setSize(100);
+        hashTwo.setSize(101);
+        assertNotEquals(hashOne, hashTwo);
+
+        hashOne.setForceDefaultImage(GravatarForceDefaultImage.Force);
+        hashTwo.setForceDefaultImage(GravatarForceDefaultImage.DoNotForce);
+        assertNotEquals(hashOne, hashTwo);
+
+        hashOne.setDefaultImageType(GravatarDefaultImageType.ROBO_HASH);
+        hashTwo.setDefaultImageType(GravatarDefaultImageType.WAVATAR);
+        assertNotEquals(hashOne, hashTwo);
+
+        hashOne.setProtocol(GravatarProtocol.HTTP);
+        hashTwo.setProtocol(GravatarProtocol.HTTPS);
+        assertNotEquals(hashOne, hashTwo);
+
+        hashOne.setUseFullUrlParameters(GravatarUseFullUrlParameters.False);
+        hashTwo.setUseFullUrlParameters(GravatarUseFullUrlParameters.True);
+        assertNotEquals(hashOne, hashTwo);
+
+        hashOne.setDefaultImageUrl(TestingImageUrls.foreignImageUrl);
+        hashTwo.setDefaultImageUrl(TestingImageUrls.anotherForeignImageUrl);
+        assertNotEquals(hashOne, hashTwo);
     }
 
     /**
