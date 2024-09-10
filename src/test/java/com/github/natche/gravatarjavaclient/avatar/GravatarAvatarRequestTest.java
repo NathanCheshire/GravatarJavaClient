@@ -261,36 +261,52 @@ public class GravatarAvatarRequestTest {
         assertNotEquals(fromEmail, new Object());
 
         // Tests for Codecov to report 100%
+
         GravatarAvatarRequest hashOne = GravatarAvatarRequest.fromHash("one");
-        GravatarAvatarRequest alsoHashOne = GravatarAvatarRequest.fromHash("two");
+        GravatarAvatarRequest hashTwo = GravatarAvatarRequest.fromHash("two");
+        assertNotEquals(hashOne, hashTwo);
 
-        hashOne.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True);
-        alsoHashOne.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False);
-        assertNotEquals(hashOne, alsoHashOne);
+        GravatarAvatarRequest jpgSuffix = GravatarAvatarRequest.fromHash("one");
+        GravatarAvatarRequest differentJpgSuffix = GravatarAvatarRequest.fromHash("one");
+        jpgSuffix.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True);
+        differentJpgSuffix.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False);
+        assertNotEquals(jpgSuffix, differentJpgSuffix);
 
-        hashOne.setSize(100);
-        alsoHashOne.setSize(101);
-        assertNotEquals(hashOne, alsoHashOne);
+        GravatarAvatarRequest size = GravatarAvatarRequest.fromHash("one");
+        GravatarAvatarRequest differentSize = GravatarAvatarRequest.fromHash("one");
+        size.setSize(100);
+        differentSize.setSize(101);
+        assertNotEquals(size, differentSize);
 
-        hashOne.setForceDefaultImage(GravatarForceDefaultImage.Force);
-        alsoHashOne.setForceDefaultImage(GravatarForceDefaultImage.DoNotForce);
-        assertNotEquals(hashOne, alsoHashOne);
+        GravatarAvatarRequest force = GravatarAvatarRequest.fromHash("one");
+        GravatarAvatarRequest doNotForce = GravatarAvatarRequest.fromHash("one");
+        force.setForceDefaultImage(GravatarForceDefaultImage.Force);
+        doNotForce.setForceDefaultImage(GravatarForceDefaultImage.DoNotForce);
+        assertNotEquals(force, doNotForce);
 
-        hashOne.setDefaultImageType(GravatarDefaultImageType.ROBO_HASH);
-        alsoHashOne.setDefaultImageType(GravatarDefaultImageType.WAVATAR);
-        assertNotEquals(hashOne, alsoHashOne);
+        GravatarAvatarRequest roboHash = GravatarAvatarRequest.fromHash("one");
+        GravatarAvatarRequest wavatar = GravatarAvatarRequest.fromHash("one");
+        roboHash.setDefaultImageType(GravatarDefaultImageType.ROBO_HASH);
+        wavatar.setDefaultImageType(GravatarDefaultImageType.WAVATAR);
+        assertNotEquals(roboHash, wavatar);
 
-        hashOne.setProtocol(GravatarProtocol.HTTP);
-        alsoHashOne.setProtocol(GravatarProtocol.HTTPS);
-        assertNotEquals(hashOne, alsoHashOne);
+        GravatarAvatarRequest http = GravatarAvatarRequest.fromHash("one");
+        GravatarAvatarRequest https = GravatarAvatarRequest.fromHash("one");
+        http.setProtocol(GravatarProtocol.HTTP);
+        https.setProtocol(GravatarProtocol.HTTPS);
+        assertNotEquals(http, https);
 
-        hashOne.setUseFullUrlParameters(GravatarUseFullUrlParameters.False);
-        alsoHashOne.setUseFullUrlParameters(GravatarUseFullUrlParameters.True);
-        assertNotEquals(hashOne, alsoHashOne);
+        GravatarAvatarRequest notFullParams = GravatarAvatarRequest.fromHash("one");
+        GravatarAvatarRequest fullParams = GravatarAvatarRequest.fromHash("one");
+        notFullParams.setUseFullUrlParameters(GravatarUseFullUrlParameters.False);
+        fullParams.setUseFullUrlParameters(GravatarUseFullUrlParameters.True);
+        assertNotEquals(notFullParams, fullParams);
 
-        hashOne.setDefaultImageUrl(TestingImageUrls.foreignImageUrl);
-        alsoHashOne.setDefaultImageUrl(TestingImageUrls.anotherForeignImageUrl);
-        assertNotEquals(hashOne, alsoHashOne);
+        GravatarAvatarRequest foreignImage = GravatarAvatarRequest.fromHash("one");
+        GravatarAvatarRequest otherForeignImage = GravatarAvatarRequest.fromHash("one");
+        foreignImage.setDefaultImageUrl(TestingImageUrls.foreignImageUrl);
+        otherForeignImage.setDefaultImageUrl(TestingImageUrls.anotherForeignImageUrl);
+        assertNotEquals(foreignImage, otherForeignImage);
     }
 
     /**
