@@ -254,9 +254,9 @@ public class GravatarAvatarRequestTest {
                 .setProtocol(GravatarProtocol.HTTPS)
                 .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
                 .setUseFullUrlParameters(GravatarUseFullUrlParameters.True);
-        GravatarAvatarRequest fromHashDifferentDefaultImageUrl
+        GravatarAvatarRequest differentFromHash
                 = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
-                .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
+                .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
                 .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
                 .setRating(GravatarRating.R)
                 .setSize(1776)
@@ -269,7 +269,7 @@ public class GravatarAvatarRequestTest {
         assertEquals(fromEmail, equalToFromEmail);
         assertNotEquals(fromEmail, fromHash);
         assertNotEquals(fromEmail, new Object());
-        assertNotEquals(fromHash, fromHashDifferentDefaultImageUrl);
+        assertNotEquals(fromHash, differentFromHash);
     }
 
     /**
