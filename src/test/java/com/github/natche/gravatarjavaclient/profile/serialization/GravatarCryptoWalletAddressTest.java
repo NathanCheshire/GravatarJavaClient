@@ -58,11 +58,13 @@ public class GravatarCryptoWalletAddressTest {
         GravatarCryptoWalletAddress address = new GravatarCryptoWalletAddress("label", "address");
         GravatarCryptoWalletAddress equalAddress = new GravatarCryptoWalletAddress("label", "address");
         GravatarCryptoWalletAddress otherAddress = new GravatarCryptoWalletAddress("label 2", "127");
+        GravatarCryptoWalletAddress differentAddress = new GravatarCryptoWalletAddress("label 2", "128");
 
         assertEquals(address, address);
         assertEquals(address, equalAddress);
         assertNotEquals(address, otherAddress);
         assertNotEquals(address, new Object());
+        assertNotEquals(otherAddress, differentAddress);
     }
 
     /**
