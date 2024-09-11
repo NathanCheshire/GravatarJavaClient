@@ -26,10 +26,12 @@ public final class GravatarProfileGalleryImage {
      * @param url     the URL to the image
      * @param altText the alternative text for the image
      * @throws NullPointerException if any parameter is null
+     * @throws IllegalArgumentException if the provided URL is empty
      */
     public GravatarProfileGalleryImage(String url,
                                        String altText) {
         Preconditions.checkNotNull(url);
+        Preconditions.checkArgument(!url.trim().isEmpty());
         Preconditions.checkNotNull(altText);
 
         this.url = url;
