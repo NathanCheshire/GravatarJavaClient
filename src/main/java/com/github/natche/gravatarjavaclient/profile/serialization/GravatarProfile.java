@@ -511,30 +511,30 @@ public final class GravatarProfile {
     @Override
     public int hashCode() {
         int ret = hash.hashCode();
-        ret = 31 * ret + (displayName != null ? displayName.hashCode() : 0);
+        ret = 31 * ret + Objects.hashCode(displayName);
         ret = 31 * ret + profileUrl.hashCode();
-        ret = 31 * ret + (avatarUrl != null ? avatarUrl.hashCode() : 0);
-        ret = 31 * ret + (avatarAltText != null ? avatarAltText.hashCode() : 0);
-        ret = 31 * ret + (location != null ? location.hashCode() : 0);
-        ret = 31 * ret + (description != null ? description.hashCode() : 0);
-        ret = 31 * ret + (jobTitle != null ? jobTitle.hashCode() : 0);
-        ret = 31 * ret + (company != null ? company.hashCode() : 0);
+        ret = 31 * ret + Objects.hashCode(avatarUrl);
+        ret = 31 * ret + Objects.hashCode(avatarAltText);
+        ret = 31 * ret + Objects.hashCode(location);
+        ret = 31 * ret + Objects.hashCode(description);
+        ret = 31 * ret + Objects.hashCode(jobTitle);
+        ret = 31 * ret + Objects.hashCode(company);
         ret = 31 * ret + verifiedAccounts.hashCode();
-        ret = 31 * ret + (pronunciation != null ? pronunciation.hashCode() : 0);
-        ret = 31 * ret + (pronouns != null ? pronouns.hashCode() : 0);
-        ret = 31 * ret + (timezone != null ? timezone.hashCode() : 0);
+        ret = 31 * ret + Objects.hashCode(pronunciation);
+        ret = 31 * ret + Objects.hashCode(pronouns);
+        ret = 31 * ret + Objects.hashCode(timezone);
         ret = 31 * ret + languages.hashCode();
-        ret = 31 * ret + (firstName != null ? firstName.hashCode() : 0);
-        ret = 31 * ret + (lastName != null ? lastName.hashCode() : 0);
+        ret = 31 * ret + Objects.hashCode(firstName);
+        ret = 31 * ret + Objects.hashCode(lastName);
         ret = 31 * ret + (isOrganization ? 1 : 0);
         ret = 31 * ret + links.hashCode();
         ret = 31 * ret + interests.hashCode();
-        ret = 31 * ret + (payments != null ? payments.hashCode() : 0);
-        ret = 31 * ret + (contactInfo != null ? contactInfo.hashCode() : 0);
+        ret = 31 * ret + Objects.hashCode(payments);
+        ret = 31 * ret + Objects.hashCode(contactInfo);
         ret = 31 * ret + gallery.hashCode();
         ret = 31 * ret + numberVerifiedAccounts;
-        ret = 31 * ret + (lastProfileEdit != null ? lastProfileEdit.hashCode() : 0);
-        ret = 31 * ret + (registrationDate != null ? registrationDate.hashCode() : 0);
+        ret = 31 * ret + Objects.hashCode(lastProfileEdit);
+        ret = 31 * ret + Objects.hashCode(registrationDate);
         return ret;
     }
 
