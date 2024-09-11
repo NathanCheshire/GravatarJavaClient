@@ -21,6 +21,8 @@ class GravatarProfileLanguageTest {
         { GravatarProfileLanguage("", "", false, 0) }
         assertThrows(IllegalArgumentException::class.java)
         { GravatarProfileLanguage("en", "", false, 0) }
+        assertThrows(IllegalArgumentException::class.java)
+        { GravatarProfileLanguage("", "name", false, 0) }
 
         assertDoesNotThrow { GravatarProfileLanguage("en", "English", false, 0) }
     }

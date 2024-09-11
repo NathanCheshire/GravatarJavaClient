@@ -26,11 +26,13 @@ class GravatarProfilePaymentsTest {
         }
 
         assertDoesNotThrow {
-            GravatarProfilePayments(ImmutableList.of(
-                GravatarProfileUrl("label", "url")
-            ), ImmutableList.of(
-                GravatarCryptoWalletAddress("label", "address")
-            ))
+            GravatarProfilePayments(
+                ImmutableList.of(
+                    GravatarProfileUrl("label", "url")
+                ), ImmutableList.of(
+                    GravatarCryptoWalletAddress("label", "address")
+                )
+            )
         }
     }
 
@@ -39,16 +41,22 @@ class GravatarProfilePaymentsTest {
      */
     @Test
     fun testAccessors() {
-        val payments = GravatarProfilePayments(ImmutableList.of(
-            GravatarProfileUrl("label", "url")
-        ), ImmutableList.of(
-            GravatarCryptoWalletAddress("label", "address")
-        ))
+        val payments = GravatarProfilePayments(
+            ImmutableList.of(
+                GravatarProfileUrl("label", "url")
+            ), ImmutableList.of(
+                GravatarCryptoWalletAddress("label", "address")
+            )
+        )
 
-        assertEquals(payments.links,
-            ImmutableList.of(GravatarProfileUrl("label", "url")))
-        assertEquals(payments.cryptoWallets,
-            ImmutableList.of(GravatarCryptoWalletAddress("label", "address")))
+        assertEquals(
+            payments.links,
+            ImmutableList.of(GravatarProfileUrl("label", "url"))
+        )
+        assertEquals(
+            payments.cryptoWallets,
+            ImmutableList.of(GravatarCryptoWalletAddress("label", "address"))
+        )
     }
 
     /**
@@ -56,23 +64,31 @@ class GravatarProfilePaymentsTest {
      */
     @Test
     fun testToString() {
-        val payments = GravatarProfilePayments(ImmutableList.of(
-            GravatarProfileUrl("label", "url")
-        ), ImmutableList.of(
-            GravatarCryptoWalletAddress("label", "address")
-        ))
-        val otherPayment = GravatarProfilePayments(ImmutableList.of(
-            GravatarProfileUrl("label", "url")
-        ), ImmutableList.of(
-            GravatarCryptoWalletAddress("label", "address")
-        ))
+        val payments = GravatarProfilePayments(
+            ImmutableList.of(
+                GravatarProfileUrl("label", "url")
+            ), ImmutableList.of(
+                GravatarCryptoWalletAddress("label", "address")
+            )
+        )
+        val otherPayment = GravatarProfilePayments(
+            ImmutableList.of(
+                GravatarProfileUrl("label", "url")
+            ), ImmutableList.of(
+                GravatarCryptoWalletAddress("label", "address")
+            )
+        )
 
-        assertEquals("GravatarProfilePayments{links=[GravatarProfileUrl{label=\"label\", url=\"url\"}],"
-                + " cryptoWallets=[CryptoWalletAddress{label=\"label\", address=\"address\"}]}",
-            payments.toString())
-        assertEquals("GravatarProfilePayments{links=[GravatarProfileUrl{label=\"label\", url=\"url\"}],"
-                + " cryptoWallets=[CryptoWalletAddress{label=\"label\", address=\"address\"}]}",
-            otherPayment.toString())
+        assertEquals(
+            "GravatarProfilePayments{links=[GravatarProfileUrl{label=\"label\", url=\"url\"}],"
+                    + " cryptoWallets=[CryptoWalletAddress{label=\"label\", address=\"address\"}]}",
+            payments.toString()
+        )
+        assertEquals(
+            "GravatarProfilePayments{links=[GravatarProfileUrl{label=\"label\", url=\"url\"}],"
+                    + " cryptoWallets=[CryptoWalletAddress{label=\"label\", address=\"address\"}]}",
+            otherPayment.toString()
+        )
     }
 
     /**
@@ -80,7 +96,40 @@ class GravatarProfilePaymentsTest {
      */
     @Test
     fun testEquals() {
+        val payments = GravatarProfilePayments(
+            ImmutableList.of(
+                GravatarProfileUrl("label", "url")
+            ), ImmutableList.of(
+                GravatarCryptoWalletAddress("label", "address")
+            )
+        )
+        val equal = GravatarProfilePayments(
+            ImmutableList.of(
+                GravatarProfileUrl("label", "url")
+            ), ImmutableList.of(
+                GravatarCryptoWalletAddress("label", "address")
+            )
+        )
+        val differentLink = GravatarProfilePayments(
+            ImmutableList.of(
+                GravatarProfileUrl("labeler", "urls")
+            ), ImmutableList.of(
+                GravatarCryptoWalletAddress("label", "address")
+            )
+        )
+        val differentCrypto = GravatarProfilePayments(
+            ImmutableList.of(
+                GravatarProfileUrl("label", "url")
+            ), ImmutableList.of(
+                GravatarCryptoWalletAddress("labeler", "other address")
+            )
+        )
 
+        assertEquals(payments, payments)
+        assertEquals(payments, equal)
+        assertNotEquals(payments, differentLink)
+        assertNotEquals(payments, differentCrypto)
+        assertNotEquals(payments, Object())
     }
 
     /**
@@ -88,21 +137,27 @@ class GravatarProfilePaymentsTest {
      */
     @Test
     fun testHashCode() {
-        val payments = GravatarProfilePayments(ImmutableList.of(
-            GravatarProfileUrl("label", "url")
-        ), ImmutableList.of(
-            GravatarCryptoWalletAddress("label", "address")
-        ))
-        val equalToPayments = GravatarProfilePayments(ImmutableList.of(
-            GravatarProfileUrl("label", "url")
-        ), ImmutableList.of(
-            GravatarCryptoWalletAddress("label", "address")
-        ))
-        val otherPayment = GravatarProfilePayments(ImmutableList.of(
-            GravatarProfileUrl("label", "url")
-        ), ImmutableList.of(
-            GravatarCryptoWalletAddress("labeler", "other address")
-        ))
+        val payments = GravatarProfilePayments(
+            ImmutableList.of(
+                GravatarProfileUrl("label", "url")
+            ), ImmutableList.of(
+                GravatarCryptoWalletAddress("label", "address")
+            )
+        )
+        val equalToPayments = GravatarProfilePayments(
+            ImmutableList.of(
+                GravatarProfileUrl("label", "url")
+            ), ImmutableList.of(
+                GravatarCryptoWalletAddress("label", "address")
+            )
+        )
+        val otherPayment = GravatarProfilePayments(
+            ImmutableList.of(
+                GravatarProfileUrl("label", "url")
+            ), ImmutableList.of(
+                GravatarCryptoWalletAddress("labeler", "other address")
+            )
+        )
 
         assertEquals(1977252293, payments.hashCode())
         assertEquals(185752232, otherPayment.hashCode())
