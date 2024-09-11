@@ -88,29 +88,28 @@ public class GravatarProfileDeserializer implements JsonDeserializer<GravatarPro
      * Helper method to retrieve an optional string from a JsonObject.
      */
     private String getOptionalString(JsonObject jsonObject, String memberName) {
-        return jsonObject.has(memberName) && !jsonObject.get(memberName).isJsonNull()
-                ? jsonObject.get(memberName).getAsString()
-                : null;
+        return jsonObject.has(memberName) ? jsonObject.get(memberName).getAsString() : null;
     }
 
     /**
      * Helper method to retrieve an optional list from a JsonObject.
      */
-    private <T> List<T> getOptionalList(JsonObject jsonObject, String memberName, JsonDeserializationContext context,
+    private <T> List<T> getOptionalList(JsonObject jsonObject,
+                                        String memberName,
+                                        JsonDeserializationContext context,
                                         Type type) {
-        return jsonObject.has(memberName) && !jsonObject.get(memberName).isJsonNull()
-                ? context.deserialize(jsonObject.get(memberName), type)
-                : ImmutableList.of();  // Default to empty list
+        return jsonObject.has(memberName)
+                ? context.deserialize(jsonObject.get(memberName), type) : ImmutableList.of();
     }
 
     /**
      * Helper method to retrieve an optional object from a JsonObject.
      */
-    private <T> T getOptionalObject(JsonObject jsonObject, String memberName, JsonDeserializationContext context,
+    private <T> T getOptionalObject(JsonObject jsonObject,
+                                    String memberName,
+                                    JsonDeserializationContext context,
                                     Class<T> classOfT) {
-        return jsonObject.has(memberName) && !jsonObject.get(memberName).isJsonNull()
-                ? context.deserialize(jsonObject.get(memberName), classOfT)
-                : null;
+        return jsonObject.has(memberName) ? context.deserialize(jsonObject.get(memberName), classOfT) : null;
     }
 }
 
