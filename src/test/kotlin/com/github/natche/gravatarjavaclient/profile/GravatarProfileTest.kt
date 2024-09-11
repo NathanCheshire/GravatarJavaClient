@@ -185,4 +185,78 @@ class GravatarProfileTest {
         assertEquals(Instant.parse("2023-09-11T19:46:13Z"), profileFilledLists.registrationDate.get())
         assertEquals(Instant.parse("2024-09-11T19:46:13Z"), profileFilledLists.lastProfileEdit.get())
     }
+
+    /**
+     * Tests for the to string method.
+     */
+    @Test
+    fun testToString() {
+        val profileEmptyLists = GravatarProfile(
+            "hash123", "Test User", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "Test User's avatar", "New York",
+            "A test user", "Software Developer", "Test Company", emptyList(),
+            "test yoo-zer", "they/them", "America/New_York", emptyList(),
+            "Test", "User", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+
+        assertEquals("GravatarProfile{hash=\"hash123\", displayName=\"Test User\","
+                + " profileUrl=\"https://gravatar.com/testuser\", avatarUrl=\"https://gravatar.com/avatar/hash123\","
+                + " avatarAltText=\"Test User's avatar\", location=\"New York\","
+                + " description=\"A test user\", jobTitle=\"Software Developer\", company=\"Test Company\","
+                + " verifiedAccounts=[], pronunciation=\"test yoo-zer\", pronouns=\"they/them\","
+                + " timezone=\"America/New_York\", languages=[], firstName=\"Test\", lastName=\"User\", "
+                + "isOrganization=false, links=[], interests=[], payments=null, contactInfo=null, gallery=[],"
+                + " numberVerifiedAccounts=0, lastProfileEdit=\"2024-09-11T19:46:13Z\","
+                + " registrationDate=\"2023-09-11T19:46:13Z\"}", profileEmptyLists.toString())
+    }
+
+    /**
+     * Tests for the equals method.
+     */
+    @Test
+    fun testEquals() {
+
+    }
+
+    /**
+     * Tests for the hash code method.
+     */
+    @Test
+    fun testHashCode() {
+        val one = GravatarProfile(
+            "hash123", "Test User", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "Test User's avatar", "New York",
+            "A test user", "Software Developer", "Test Company", emptyList(),
+            "test yoo-zer", "they/them", "America/New_York", emptyList(),
+            "Test", "User", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val equal = GravatarProfile(
+            "hash123", "Test User", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "Test User's avatar", "New York",
+            "A test user", "Software Developer", "Test Company", emptyList(),
+            "test yoo-zer", "they/them", "America/New_York", emptyList(),
+            "Test", "User", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val notEqual = GravatarProfile(
+            "hash123", "Test User", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "Test User's avatar", "New York",
+            "A test user", "Software Developer", "Test Company", emptyList(),
+            "test yoo-zer", "they/them", "America/New_York", emptyList(),
+            "Test", "User", false, emptyList(), emptyList(),
+            null, null, emptyList(), 20,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+
+        assertEquals(1145132939, one.hashCode())
+        assertEquals(1145132939, equal.hashCode())
+        assertEquals(1145152159, notEqual.hashCode())
+        assertEquals(one.hashCode(), equal.hashCode())
+        assertNotEquals(one.hashCode(), notEqual.hashCode())
+    }
 }
