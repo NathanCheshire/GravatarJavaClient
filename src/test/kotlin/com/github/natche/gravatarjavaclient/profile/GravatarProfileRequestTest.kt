@@ -1,15 +1,13 @@
 package com.github.natche.gravatarjavaclient.profile
 
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException
-import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfile
 import com.google.gson.Gson
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
-import org.junit.jupiter.api.Assertions.*
 
 /**
  * Tests for [GravatarProfileRequest]s.
@@ -27,8 +25,8 @@ internal constructor() {
         assertThrows(NullPointerException::class.java) { GravatarProfileRequest.fromHashOrId(null) }
         assertThrows(IllegalArgumentException::class.java) { GravatarProfileRequest.fromHashOrId("") }
         assertThrows(IllegalArgumentException::class.java) { GravatarProfileRequest.fromHashOrId("   ") }
-        assertDoesNotThrow<GravatarProfileRequest> { GravatarProfileRequest.fromHashOrId("hash") }
-        assertDoesNotThrow<GravatarProfileRequest> { GravatarProfileRequest.fromHashOrId("nathanvcheshire") }
+        assertDoesNotThrow { GravatarProfileRequest.fromHashOrId("hash") }
+        assertDoesNotThrow { GravatarProfileRequest.fromHashOrId("nathanvcheshire") }
     }
 
     /**
@@ -41,7 +39,7 @@ internal constructor() {
         assertThrows(IllegalArgumentException::class.java) { GravatarProfileRequest.fromEmail("   ") }
         assertThrows(IllegalArgumentException::class.java) { GravatarProfileRequest.fromEmail("email.address") }
         assertThrows(IllegalArgumentException::class.java) { GravatarProfileRequest.fromEmail("email.address@gmail") }
-        assertDoesNotThrow<GravatarProfileRequest> { GravatarProfileRequest.fromEmail("email.address@gmail.com") }
+        assertDoesNotThrow { GravatarProfileRequest.fromEmail("email.address@gmail.com") }
     }
 
     /**
@@ -52,7 +50,7 @@ internal constructor() {
         assertThrows(
             NullPointerException::class.java
         ) { GravatarProfileRequest.fromHashOrId("hash").setTokenSupplier(null) }
-        assertDoesNotThrow<GravatarProfileRequest> {
+        assertDoesNotThrow {
             GravatarProfileRequest.fromHashOrId("hash").setTokenSupplier(TokenSupplier.tokenSupplier)
         }
     }
@@ -63,7 +61,7 @@ internal constructor() {
     @Test
     fun testGetHashOrId() {
         val request = GravatarProfileRequest.fromHashOrId("hash")
-        assertDoesNotThrow<String> { request.hashOrId }
+        assertDoesNotThrow { request.hashOrId }
         assertEquals("hash", request.hashOrId)
         assertEquals(
             "c83512d02db256cc5afb78376147ea0f2ea02e6a4e3399b980dea3bef9fc6168",
@@ -79,8 +77,8 @@ internal constructor() {
         val authenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
             .setTokenSupplier(TokenSupplier.tokenSupplier)
         val unauthenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
-        assertDoesNotThrow<GravatarProfile> { authenticatedRequest.profile }
-        assertDoesNotThrow<GravatarProfile> { unauthenticatedRequest.profile }
+        assertDoesNotThrow { authenticatedRequest.profile }
+        assertDoesNotThrow { unauthenticatedRequest.profile }
         val authenticatedProfile = authenticatedRequest.profile
         val unauthenticatedProfile = unauthenticatedRequest.profile
         assertFalse(authenticatedProfile.links.isEmpty())

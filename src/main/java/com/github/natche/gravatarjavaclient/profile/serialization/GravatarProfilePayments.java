@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Represents a user's payment options in a Gravatar profile.
@@ -29,8 +29,8 @@ public final class GravatarProfilePayments {
      * @param cryptoWallets the list of cryptocurrency wallet addresses
      * @throws NullPointerException if links or cryptoWallets is null
      */
-    public GravatarProfilePayments(Collection<GravatarProfileUrl> links,
-                                   Collection<GravatarCryptoWalletAddress> cryptoWallets) {
+    public GravatarProfilePayments(List<GravatarProfileUrl> links,
+                                   List<GravatarCryptoWalletAddress> cryptoWallets) {
         Preconditions.checkNotNull(links);
         Preconditions.checkNotNull(cryptoWallets);
 

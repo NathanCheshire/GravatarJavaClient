@@ -1,5 +1,6 @@
 package com.github.natche.gravatarjavaclient.profile.gson;
 
+import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfile;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,6 +23,7 @@ public enum GsonProvider {
     GsonProvider() {
         gson = new GsonBuilder()
                 .registerTypeAdapter(ImmutableList.class, new ImmutableListDeserializer())
+                .registerTypeAdapter(GravatarProfile.class, new GravatarProfileDeserializer())
                 .create();
     }
 
