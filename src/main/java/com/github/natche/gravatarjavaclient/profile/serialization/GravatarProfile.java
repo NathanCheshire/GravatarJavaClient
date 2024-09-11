@@ -417,7 +417,7 @@ public final class GravatarProfile {
      * @return the payments objects containing the payment data the user has displayed on their account
      */
     public Optional<GravatarProfilePayments> getPayments() {
-        return Optional.of(payments);
+        return Optional.ofNullable(payments);
     }
 
     /**
@@ -426,7 +426,7 @@ public final class GravatarProfile {
      * @return the contact info object containing the contact information the user has displayed on their account
      */
     public Optional<GravatarProfileContactInfo> getContactInfo() {
-        return Optional.of(contactInfo);
+        return Optional.ofNullable(contactInfo);
     }
 
     /**
