@@ -109,11 +109,16 @@ class GravatarProfileContactInfoTest {
             "5150", "143",
             "443", "mgk", "hollyWoodMethod", "doNotEvenTryItKid"
         )
+        val differingLastParameter = GravatarProfileContactInfo(
+            "5150", "143",
+            "443", "mgk", "hollyWoodMethod", "doNotEvenTryItKids"
+        )
 
         assertEquals(contactInfo, contactInfo)
         assertEquals(contactInfo, equal)
         assertNotEquals(contactInfo, notEqual)
         assertNotEquals(contactInfo, Object())
+        assertNotEquals(notEqual, differingLastParameter)
     }
 
     /**
