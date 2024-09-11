@@ -363,7 +363,7 @@ public final class GravatarProfile {
      * @return the languages the user has selected on their profile
      */
     public ImmutableList<GravatarProfileLanguage> getLanguages() {
-        return languages == null ? ImmutableList.of() : languages;
+        return languages;
     }
 
     /**
@@ -399,7 +399,7 @@ public final class GravatarProfile {
      * @return the links the user has displayed on their profile
      */
     public ImmutableList<GravatarProfileUrl> getLinks() {
-        return links == null ? ImmutableList.of() : links;
+        return links;
     }
 
     /**
@@ -408,7 +408,7 @@ public final class GravatarProfile {
      * @return the interests the user has displayed on their profile
      */
     public ImmutableList<GravatarProfileInterest> getInterests() {
-        return interests == null ? ImmutableList.of() : interests;
+        return interests;
     }
 
     /**
@@ -435,7 +435,7 @@ public final class GravatarProfile {
      * @return the gallery images the user has displayed on their account
      */
     public ImmutableList<GravatarProfileGalleryImage> getGallery() {
-        return gallery == null ? ImmutableList.of() : gallery;
+        return gallery;
     }
 
     /**

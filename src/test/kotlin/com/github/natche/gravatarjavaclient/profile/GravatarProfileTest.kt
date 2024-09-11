@@ -252,10 +252,37 @@ class GravatarProfileTest {
             null, null, emptyList(), 20,
             "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
         )
+        val filled = GravatarProfile(
+            "hash123", "Test User", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "Test User's avatar", "New York",
+            "A test user", "Software Developer", "Test Company",
+            ImmutableList.of(
+                GravatarProfileVerifiedAccount(
+                    "type", "label", "icon", "url"
+                )
+            ),
+            "test yoo-zer", "they/them", "America/New_York",
+            ImmutableList.of(GravatarProfileLanguage("en", "English", false, 0)),
+            "Test", "User", false,
+            ImmutableList.of(GravatarProfileUrl("label", "url")),
+            ImmutableList.of(GravatarProfileInterest(0, "React")),
+            GravatarProfilePayments(
+                ImmutableList.of(
+                    GravatarProfileUrl("label", "url")
+                ), ImmutableList.of(GravatarCryptoWalletAddress("label", "address"))
+            ),
+            GravatarProfileContactInfo(
+                "homePhone", "workPhone",
+                "cellPhone", "email", "contactForm", "calendar"
+            ),
+            ImmutableList.of(GravatarProfileGalleryImage("url", "alt")),
+            0, "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
 
         assertEquals(1145132939, one.hashCode())
         assertEquals(1145132939, equal.hashCode())
         assertEquals(1145152159, notEqual.hashCode())
+        assertEquals(-1232376980, filled.hashCode())
         assertEquals(one.hashCode(), equal.hashCode())
         assertNotEquals(one.hashCode(), notEqual.hashCode())
     }
