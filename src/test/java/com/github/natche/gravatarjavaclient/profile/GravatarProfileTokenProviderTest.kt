@@ -7,11 +7,7 @@ import java.nio.charset.StandardCharsets
 /**
  * Tests for [GravatarProfileTokenProvider]s.
  */
-class GravatarProfileTokenProviderTest
-/**
- * Creates a new instance for testing purposes.
- */
-internal constructor() {
+class GravatarProfileTokenProviderTest internal constructor() {
     /**
      * Tests for creation.
      */
@@ -55,8 +51,10 @@ internal constructor() {
         val provider = GravatarProfileTokenProvider({ bytes }, "source")
         val nonEqualProvider = GravatarProfileTokenProvider({ ByteArray(0) }, "another source")
         Assertions.assertEquals("GravatarProfileTokenProvider{source=\"source\"}", provider.toString())
-        Assertions.assertEquals("GravatarProfileTokenProvider{source=\"another source\"}",
-            nonEqualProvider.toString())
+        Assertions.assertEquals(
+            "GravatarProfileTokenProvider{source=\"another source\"}",
+            nonEqualProvider.toString()
+        )
     }
 
     /**
