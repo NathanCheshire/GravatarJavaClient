@@ -217,7 +217,27 @@ class GravatarProfileTest {
      */
     @Test
     fun testEquals() {
-
+        val base = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val equal = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        assertEquals(base, base)
+        assertEquals(base, equal)
+        assertNotEquals(base, Object())
     }
 
     /**
