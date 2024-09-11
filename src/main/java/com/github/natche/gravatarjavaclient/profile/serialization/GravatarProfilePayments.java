@@ -3,7 +3,8 @@ package com.github.natche.gravatarjavaclient.profile.serialization;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.annotations.SerializedName;
-import java.util.List;
+
+import java.util.Collection;
 
 /**
  * Represents a user's payment options in a Gravatar profile.
@@ -28,8 +29,8 @@ public final class GravatarProfilePayments {
      * @param cryptoWallets the list of cryptocurrency wallet addresses
      * @throws NullPointerException if links or cryptoWallets is null
      */
-    public GravatarProfilePayments(List<GravatarProfileUrl> links,
-                                   List<GravatarCryptoWalletAddress> cryptoWallets) {
+    public GravatarProfilePayments(Collection<GravatarProfileUrl> links,
+                                   Collection<GravatarCryptoWalletAddress> cryptoWallets) {
         Preconditions.checkNotNull(links);
         Preconditions.checkNotNull(cryptoWallets);
 
