@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName;
  */
 @SuppressWarnings("ClassCanBeRecord") /* GSON needs this */
 public final class GravatarProfileLanguage {
-
     /**
      * The language code (e.g., "en" for English).
      */
@@ -41,6 +40,7 @@ public final class GravatarProfileLanguage {
      * @param isPrimary whether this is the primary language
      * @param order     the order of the language in the profile
      * @throws NullPointerException if any string is null
+     * @throws IllegalArgumentException if name or code is empty
      */
     public GravatarProfileLanguage(String code,
                                    String name,
@@ -48,6 +48,8 @@ public final class GravatarProfileLanguage {
                                    int order) {
         Preconditions.checkNotNull(code);
         Preconditions.checkNotNull(name);
+        Preconditions.checkArgument(!name.trim().isEmpty());
+        Preconditions.checkArgument(!code.trim().isEmpty());
 
         this.code = code;
         this.name = name;
