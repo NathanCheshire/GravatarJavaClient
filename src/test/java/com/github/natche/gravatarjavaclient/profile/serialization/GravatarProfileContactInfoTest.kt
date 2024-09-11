@@ -119,6 +119,36 @@ class GravatarProfileContactInfoTest {
         assertNotEquals(contactInfo, notEqual)
         assertNotEquals(contactInfo, Object())
         assertNotEquals(notEqual, differingLastParameter)
+
+        val workPhoneOne = GravatarProfileContactInfo("-", "-", "-",
+            "-", "-", "-")
+        val workPhoneTwo = GravatarProfileContactInfo("-", "x", "-",
+            "-", "-", "-")
+        assertNotEquals(workPhoneOne, workPhoneTwo)
+
+        val cellPhoneOne = GravatarProfileContactInfo("-", "-", "-",
+            "-", "-", "-")
+        val cellPhoneTwo = GravatarProfileContactInfo("-", "-", "x",
+            "-", "-", "-")
+        assertNotEquals(cellPhoneOne, cellPhoneTwo)
+
+        val emailOne = GravatarProfileContactInfo("-", "-", "-",
+            "-", "-", "-")
+        val emailTwo = GravatarProfileContactInfo("-", "-", "-",
+            "x", "-", "-")
+        assertNotEquals(emailOne, emailTwo)
+
+        val contactFormOne = GravatarProfileContactInfo("-", "-", "-",
+            "-", "-", "-")
+        val contactFormTwo = GravatarProfileContactInfo("-", "-", "-",
+            "-", "x", "-")
+        assertNotEquals(contactFormOne, contactFormTwo)
+
+        val calendarOne = GravatarProfileContactInfo("-", "-", "-",
+            "-", "-", "-")
+        val calendarTwo = GravatarProfileContactInfo("-", "-", "-",
+            "-", "-", "x")
+        assertNotEquals(calendarOne, calendarTwo)
     }
 
     /**
