@@ -1,7 +1,7 @@
 package com.github.natche.gravatarjavaclient.utils
 
 import com.github.natche.gravatarjavaclient.TestingImageUrls
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.lang.reflect.InvocationTargetException
 
@@ -20,10 +20,10 @@ internal class ValidationUtilsTest {
             constructor.isAccessible = true
             constructor.newInstance()
         } catch (e: Exception) {
-            Assertions.assertTrue(e is InvocationTargetException)
+            assertTrue(e is InvocationTargetException)
             val target = (e as InvocationTargetException).targetException
-            Assertions.assertTrue(target is AssertionError)
-            Assertions.assertEquals("Cannot create instances of ValidationUtils", target.message)
+            assertTrue(target is AssertionError)
+            assertEquals("Cannot create instances of ValidationUtils", target.message)
         }
     }
 
@@ -32,16 +32,16 @@ internal class ValidationUtilsTest {
      */
     @Test
     fun testIsValidEmailAddress() {
-        Assertions.assertThrows(NullPointerException::class.java) { ValidationUtils.isValidEmailAddress(null) }
-        Assertions.assertThrows(IllegalArgumentException::class.java) { ValidationUtils.isValidEmailAddress("") }
-        Assertions.assertFalse(ValidationUtils.isValidEmailAddress("a"))
-        Assertions.assertFalse(ValidationUtils.isValidEmailAddress("email"))
-        Assertions.assertFalse(ValidationUtils.isValidEmailAddress("something@"))
-        Assertions.assertFalse(ValidationUtils.isValidEmailAddress("@"))
-        Assertions.assertFalse(ValidationUtils.isValidEmailAddress("@gmail.com"))
-        Assertions.assertFalse(ValidationUtils.isValidEmailAddress("gmail.com"))
-        Assertions.assertFalse(ValidationUtils.isValidEmailAddress("invalid at gmail.com"))
-        Assertions.assertTrue(ValidationUtils.isValidEmailAddress("valid@domain.com"))
+        assertThrows(NullPointerException::class.java) { ValidationUtils.isValidEmailAddress(null) }
+        assertThrows(IllegalArgumentException::class.java) { ValidationUtils.isValidEmailAddress("") }
+        assertFalse(ValidationUtils.isValidEmailAddress("a"))
+        assertFalse(ValidationUtils.isValidEmailAddress("email"))
+        assertFalse(ValidationUtils.isValidEmailAddress("something@"))
+        assertFalse(ValidationUtils.isValidEmailAddress("@"))
+        assertFalse(ValidationUtils.isValidEmailAddress("@gmail.com"))
+        assertFalse(ValidationUtils.isValidEmailAddress("gmail.com"))
+        assertFalse(ValidationUtils.isValidEmailAddress("invalid at gmail.com"))
+        assertTrue(ValidationUtils.isValidEmailAddress("valid@domain.com"))
     }
 
     /**
@@ -49,13 +49,13 @@ internal class ValidationUtilsTest {
      */
     @Test
     fun testIsValidDefaultUrl() {
-        Assertions.assertThrows(NullPointerException::class.java) { ValidationUtils.isValidDefaultUrl(null) }
-        Assertions.assertThrows(IllegalArgumentException::class.java) { ValidationUtils.isValidDefaultUrl("") }
-        Assertions.assertFalse(ValidationUtils.isValidDefaultUrl("email"))
-        Assertions.assertFalse(ValidationUtils.isValidDefaultUrl("url"))
-        Assertions.assertFalse(ValidationUtils.isValidDefaultUrl("https://www.google.com"))
-        Assertions.assertFalse(ValidationUtils.isValidDefaultUrl("https://www.youtube.com"))
-        Assertions.assertFalse(ValidationUtils.isValidDefaultUrl("https://www.dailymotion.com/video/some-id"))
-        Assertions.assertTrue(ValidationUtils.isValidDefaultUrl(TestingImageUrls.foreignImageUrl))
+        assertThrows(NullPointerException::class.java) { ValidationUtils.isValidDefaultUrl(null) }
+        assertThrows(IllegalArgumentException::class.java) { ValidationUtils.isValidDefaultUrl("") }
+        assertFalse(ValidationUtils.isValidDefaultUrl("email"))
+        assertFalse(ValidationUtils.isValidDefaultUrl("url"))
+        assertFalse(ValidationUtils.isValidDefaultUrl("https://www.google.com"))
+        assertFalse(ValidationUtils.isValidDefaultUrl("https://www.youtube.com"))
+        assertFalse(ValidationUtils.isValidDefaultUrl("https://www.dailymotion.com/video/some-id"))
+        assertTrue(ValidationUtils.isValidDefaultUrl(TestingImageUrls.foreignImageUrl))
     }
 }

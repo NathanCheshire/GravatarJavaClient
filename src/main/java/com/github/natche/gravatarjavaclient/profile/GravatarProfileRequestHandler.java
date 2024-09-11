@@ -4,7 +4,9 @@ import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientExcepti
 import com.github.natche.gravatarjavaclient.profile.gson.GsonProvider;
 import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfile;
 import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfileRequestResult;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.google.gson.JsonObject;
 
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
@@ -76,8 +78,13 @@ public enum GravatarProfileRequestHandler {
      * @param bearerToken the authentication token to use; if not provided, only certain fields will be returned
      * @param nameOrHash  the name or SHA256 hash to use
      * @return a profile object
+     * @throws NullPointerException     if the provided name or hash is null
+     * @throws IllegalArgumentException if the provided name or hash is empty
      */
     GravatarProfile getProfile(byte[] bearerToken, String nameOrHash) {
+        Preconditions.checkNotNull(nameOrHash);
+        Preconditions.checkArgument(!nameOrHash.trim().isEmpty());
+
         Instant requestTime = Instant.now();
         AtomicBoolean failed = new AtomicBoolean(true);
 
@@ -109,12 +116,7 @@ public enum GravatarProfileRequestHandler {
                     String chunkSizeLine = in.readLine();
                     if (chunkSizeLine.isEmpty()) break;
 
-                    int chunkSize;
-                    try {
-                        chunkSize = Integer.parseInt(chunkSizeLine.trim(), HEX_BASE);
-                    } catch (NumberFormatException e) {
-                        throw new GravatarJavaClientException(e);
-                    }
+                    int chunkSize = Integer.parseInt(chunkSizeLine.trim(), HEX_BASE);
 
                     // End of chunks
                     if (chunkSize == 0) break;
@@ -132,8 +134,14 @@ public enum GravatarProfileRequestHandler {
                     in.readLine(); // trailing CRLF after chunk
                 }
 
-                GravatarProfile ret =
-                        GsonProvider.INSTANCE.get().fromJson(responseBody.toString(), GravatarProfile.class);
+                String response = responseBody.toString();
+                if (response.contains("error")) {
+                    JsonObject responseObject = GsonProvider.INSTANCE.get()
+                            .fromJson(responseBody.toString(), JsonObject.class);
+                    throw new RuntimeException("API error: " + responseObject.get("error").getAsString());
+                }
+
+                GravatarProfile ret = GsonProvider.INSTANCE.get().fromJson(response, GravatarProfile.class);
                 failed.set(false);
                 return ret;
             }
