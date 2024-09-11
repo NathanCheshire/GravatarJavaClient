@@ -19,7 +19,7 @@ public final class GravatarProfilePayments {
      * The list of cryptocurrency wallet addresses.
      */
     @SerializedName("crypto_wallets")
-    private final ImmutableList<CryptoWalletAddress> cryptoWallets;
+    private final ImmutableList<GravatarCryptoWalletAddress> cryptoWallets;
 
     /**
      * Constructs a new GravatarProfilePayments.
@@ -29,7 +29,7 @@ public final class GravatarProfilePayments {
      * @throws NullPointerException if links or cryptoWallets is null
      */
     public GravatarProfilePayments(List<GravatarProfileUrl> links,
-                                   List<CryptoWalletAddress> cryptoWallets) {
+                                   List<GravatarCryptoWalletAddress> cryptoWallets) {
         Preconditions.checkNotNull(links);
         Preconditions.checkNotNull(cryptoWallets);
 
@@ -51,7 +51,7 @@ public final class GravatarProfilePayments {
      *
      * @return the list of cryptocurrency wallet addresses
      */
-    public ImmutableList<CryptoWalletAddress> getCryptoWallets() {
+    public ImmutableList<GravatarCryptoWalletAddress> getCryptoWallets() {
         return cryptoWallets;
     }
 

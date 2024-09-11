@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Represents a cryptocurrency wallet address in a Gravatar user's profile.
  */
 @SuppressWarnings("ClassCanBeRecord") /* GSON needs this */
-public final class CryptoWalletAddress {
+public final class GravatarCryptoWalletAddress {
     /**
      * The label for the cryptocurrency (e.g., ETH, BTC).
      */
@@ -27,10 +27,12 @@ public final class CryptoWalletAddress {
      * @param address the cryptocurrency wallet address
      * @throws NullPointerException if label or address is null
      */
-    public CryptoWalletAddress(String label,
-                               String address) {
+    public GravatarCryptoWalletAddress(String label,
+                                       String address) {
         Preconditions.checkNotNull(label);
         Preconditions.checkNotNull(address);
+        Preconditions.checkArgument(!label.trim().isEmpty());
+        Preconditions.checkArgument(!address.trim().isEmpty());
 
         this.label = label;
         this.address = address;
@@ -63,7 +65,7 @@ public final class CryptoWalletAddress {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CryptoWalletAddress other)) return false;
+        if (!(o instanceof GravatarCryptoWalletAddress other)) return false;
         return label.equals(other.label)
                 && address.equals(other.address);
     }
