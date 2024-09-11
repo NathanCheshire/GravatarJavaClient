@@ -71,7 +71,6 @@ public class GravatarProfileDeserializer implements JsonDeserializer<GravatarPro
         );
 
         int numberVerifiedAccounts = jsonObject.has("number_verified_accounts")
-                && !jsonObject.get("number_verified_accounts").isJsonNull()
                 ? jsonObject.get("number_verified_accounts").getAsInt() : 0;
 
         return new GravatarProfile(
