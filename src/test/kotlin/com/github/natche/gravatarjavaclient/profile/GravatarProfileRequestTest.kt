@@ -74,6 +74,9 @@ internal constructor() {
      */
     @Test
     fun testGetProfile() {
+        val startingAuthSize = GravatarProfileRequestHandler.INSTANCE.authenticatedRequestResults.size
+        val startingUnAuthSize = GravatarProfileRequestHandler.INSTANCE.unauthenticatedRequestResults.size
+
         val authenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
             .setTokenSupplier(TokenSupplier.tokenSupplier)
         val unauthenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
@@ -87,8 +90,14 @@ internal constructor() {
         assertTrue(unauthenticatedProfile.links.isEmpty())
         assertTrue(unauthenticatedProfile.lastProfileEdit.isEmpty)
         assertTrue(unauthenticatedProfile.registrationDate.isEmpty)
-        assertEquals(2, GravatarProfileRequestHandler.INSTANCE.authenticatedRequestResults.size)
-        assertEquals(2, GravatarProfileRequestHandler.INSTANCE.unauthenticatedRequestResults.size)
+        assertEquals(
+            startingAuthSize + 2,
+            GravatarProfileRequestHandler.INSTANCE.authenticatedRequestResults.size
+        )
+        assertEquals(
+            startingUnAuthSize + 2,
+            GravatarProfileRequestHandler.INSTANCE.unauthenticatedRequestResults.size
+        )
     }
 
     /**
