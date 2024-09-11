@@ -8,6 +8,7 @@ import java.time.Instant;
 /**
  * Represents metadata of a Gravatar profile API request.
  */
+@SuppressWarnings("ClassCanBeRecord") /* GSON needs this */
 @Immutable
 public final class GravatarProfileRequestResult {
     /**
@@ -83,7 +84,7 @@ public final class GravatarProfileRequestResult {
     @Override
     public int hashCode() {
         int ret = requestInstant.hashCode();
-        ret = 31 * ret + Boolean.hashCode(succeeded);
+        ret = 31 * ret + (succeeded ? 1 : 0);
         return ret;
     }
 

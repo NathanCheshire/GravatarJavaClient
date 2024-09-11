@@ -32,8 +32,8 @@ public final class GravatarProfileUrl {
     public GravatarProfileUrl(String label, String url) {
         Preconditions.checkNotNull(label);
         Preconditions.checkNotNull(url);
-        Preconditions.checkArgument(!label.isEmpty());
-        Preconditions.checkArgument(!url.isEmpty());
+        Preconditions.checkArgument(!label.trim().isEmpty());
+        Preconditions.checkArgument(!url.trim().isEmpty());
 
         this.label = label;
         this.url = url;
