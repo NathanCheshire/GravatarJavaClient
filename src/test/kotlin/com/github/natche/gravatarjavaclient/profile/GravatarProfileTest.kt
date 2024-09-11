@@ -235,9 +235,270 @@ class GravatarProfileTest {
             null, null, emptyList(), 0,
             "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
         )
+        val differentHash = GravatarProfile(
+            "hash1", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentDisplayName = GravatarProfile(
+            "hash", "l", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentProfileUrl = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testusers",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentAvatarUrl = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash1234", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentAltText = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "altoids", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentLocation = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "Penn",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentDescription = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "description", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentJobTitle = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "job title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentCompany = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "companies", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentVerified = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", ImmutableList.of(
+                GravatarProfileVerifiedAccount("", "", "", "")
+            ),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentPronunciation = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pros", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentPronouns = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "me", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentTimezone = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "time", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentLanguages = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", ImmutableList.of(
+                GravatarProfileLanguage("en", "English", false, 0)
+            ),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentFirst = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "l", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentLast = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "f", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentOrganization = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", true, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentLink = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, ImmutableList.of(
+                GravatarProfileUrl("label", "url")
+            ), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentInterests = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), ImmutableList.of(
+                GravatarProfileInterest(0, "React")
+            ),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentPayments = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            GravatarProfilePayments(ImmutableList.of(), ImmutableList.of()),
+            null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentContactInfo = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, GravatarProfileContactInfo("", "", "",
+                "", "", ""), emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentGallery = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, ImmutableList.of(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentVerifiedAccounts = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 5,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentLastProfileEdit = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2023-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val differentRegistrationDate = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2024-09-11T19:46:13Z"
+        )
+
         assertEquals(base, base)
         assertEquals(base, equal)
         assertNotEquals(base, Object())
+        assertNotEquals(base, differentHash)
+        assertNotEquals(base, differentDisplayName)
+        assertNotEquals(base, differentProfileUrl)
+        assertNotEquals(base, differentAvatarUrl)
+        assertNotEquals(base, differentAltText)
+        assertNotEquals(base, differentLocation)
+        assertNotEquals(base, differentDescription)
+        assertNotEquals(base, differentJobTitle)
+        assertNotEquals(base, differentCompany)
+        assertNotEquals(base, differentVerified)
+        assertNotEquals(base, differentPronunciation)
+        assertNotEquals(base, differentPronouns)
+        assertNotEquals(base, differentTimezone)
+        assertNotEquals(base, differentLanguages)
+        assertNotEquals(base, differentFirst)
+        assertNotEquals(base, differentLast)
+        assertNotEquals(base, differentOrganization)
+        assertNotEquals(base, differentLink)
+        assertNotEquals(base, differentInterests)
+        assertNotEquals(base, differentPayments)
+        assertNotEquals(base, differentContactInfo)
+        assertNotEquals(base, differentGallery)
+        assertNotEquals(base, differentVerifiedAccounts)
+        assertNotEquals(base, differentLastProfileEdit)
+        assertNotEquals(base, differentRegistrationDate)
     }
 
     /**
