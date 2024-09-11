@@ -568,5 +568,25 @@ class GravatarProfileTest {
         assertEquals(-1232376980, filled.hashCode())
         assertEquals(one.hashCode(), equal.hashCode())
         assertNotEquals(one.hashCode(), notEqual.hashCode())
+
+        val notOrg = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", false, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        val org = GravatarProfile(
+            "hash", "name", "https://gravatar.com/testuser",
+            "https://gravatar.com/avatar/hash123", "alt", "New York",
+            "desc", "title", "company", emptyList(),
+            "pro", "pron", "tmz", emptyList(),
+            "f", "l", true, emptyList(), emptyList(),
+            null, null, emptyList(), 0,
+            "2024-09-11T19:46:13Z", "2023-09-11T19:46:13Z"
+        )
+        assertNotEquals(org.hashCode(), notOrg.hashCode())
     }
 }

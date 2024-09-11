@@ -107,7 +107,7 @@ public enum GravatarProfileRequestHandler {
                 // Read the chunked body
                 while (true) {
                     String chunkSizeLine = in.readLine();
-                    if (chunkSizeLine == null || chunkSizeLine.isEmpty()) break;
+                    if (chunkSizeLine.isEmpty()) break;
 
                     int chunkSize;
                     try {
