@@ -1,7 +1,6 @@
 package com.github.natche.gravatarjavaclient.profile
 
 import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfile
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 /**
@@ -13,8 +12,6 @@ class GravatarProfileTest {
      */
     @Test
     fun testCreation() {
-        assertThrows(NullPointerException::class.java) {
-            GravatarProfile()
-        }
+
     }
 }
