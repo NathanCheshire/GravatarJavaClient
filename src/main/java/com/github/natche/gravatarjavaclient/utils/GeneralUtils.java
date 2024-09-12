@@ -203,4 +203,16 @@ public final class GeneralUtils {
         BigInteger number = new BigInteger(1, digest);
         return number.toString(HEX_BASE);
     }
+
+    /**
+     * Skips any headers in the provided stream.
+     *
+     * @param stream the stream
+     * @throws NullPointerException if the provided stream is null
+     * @throws IOException if an IO exception occurs
+     */
+    public static void skipHeaders(BufferedReader stream) throws IOException {
+        String line;
+        while ((line = stream.readLine()) != null) if (line.isEmpty()) break;
+    }
 }

@@ -11,7 +11,6 @@ import com.google.gson.JsonObject;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.github.natche.gravatarjavaclient.utils.GeneralUtils.HEX_BASE;
+import static com.github.natche.gravatarjavaclient.utils.GeneralUtils.skipHeaders;
 
 /**
  * The Gravatar Profile request handler for requesting profile API requests.
@@ -162,11 +162,6 @@ public enum GravatarProfileRequestHandler {
             if (bearerToken == null) UNAUTHENTICATED_REQUESTS.add(result);
             else AUTHENTICATED_REQUESTS.add(result);
         }
-    }
-
-    private void skipHeaders(BufferedReader br) throws IOException {
-        String line;
-        while ((line = br.readLine()) != null) if (line.isEmpty()) break;
     }
 
     /**
