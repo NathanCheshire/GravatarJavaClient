@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Objects;
 
@@ -22,7 +23,7 @@ import java.util.Objects;
  * the resource to a {@link java.io.File} or a {@link java.awt.image.BufferedImage}.
  * See <a href="https://docs.gravatar.com/api/avatars/images/">Avatar image request API Documentation</a>.
  */
-public class GravatarAvatarRequest {
+public final class GravatarAvatarRequest {
     /**
      * The range a {@link GravatarUrlParameter#SIZE} parameter must fall within.
      */
@@ -357,7 +358,37 @@ public class GravatarAvatarRequest {
      */
     public ImageIcon getImageIcon() {
         try {
-            return new ImageIcon(new URL(getRequestUrl()));
+            URL url = new URL(getRequestUrl());
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setInstanceFollowRedirects(false);
+            System.out.println(url);
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_MOVED_PERM
+                    || responseCode == HttpURLConnection.HTTP_MOVED_TEMP) {
+                String redirectUrl = connection.getHeaderField("Location");
+                if (redirectUrl == null) {
+                    throw new GravatarJavaClientException("Redirect with no location header");
+                }
+                url = new URL(redirectUrl);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                responseCode = connection.getResponseCode();
+            }
+
+            // If we still have a valid response (e.g., 200 OK)
+            if (responseCode != HttpURLConnection.HTTP_OK) {
+                throw new GravatarJavaClientException("Failed to load image, response code: " + responseCode);
+            }
+
+            // Attempt to read the image into a BufferedImage
+            BufferedImage bufferedImage = ImageIO.read(connection.getInputStream());
+            if (bufferedImage == null) {
+                throw new GravatarJavaClientException("Failed to load image from URL: " + url);
+            }
+
+            // Create and return the ImageIcon using the valid BufferedImage
+            return new ImageIcon(bufferedImage);
         } catch (IOException e) {
             throw new GravatarJavaClientException(e);
         }

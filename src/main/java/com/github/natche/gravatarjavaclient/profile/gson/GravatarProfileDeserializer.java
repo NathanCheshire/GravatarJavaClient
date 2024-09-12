@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * A deserializer for deserializing a {@link GravatarProfile} from a JSON element.
  */
-public class GravatarProfileDeserializer implements JsonDeserializer<GravatarProfile> {
+public final class GravatarProfileDeserializer implements JsonDeserializer<GravatarProfile> {
     @Override
     public GravatarProfile deserialize(JsonElement json,
                                        Type typeOfT,

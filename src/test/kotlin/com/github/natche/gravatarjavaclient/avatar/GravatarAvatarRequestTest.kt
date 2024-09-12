@@ -6,29 +6,20 @@ import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientExcepti
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.Mockito
-import org.mockito.Spy
 import org.mockito.junit.jupiter.MockitoExtension
 import java.io.File
 
 /**
  * Tests for [GravatarAvatarRequest]s.
  */
-@Suppress("SpellCheckingInspection") /* Hashes */
+@Suppress("SpellCheckingInspection")
+/* Hashes */
 @ExtendWith(MockitoExtension::class)
 class GravatarAvatarRequestTest
 /**
  * Creates a new instance of this for testing purposes.
  */
 internal constructor() {
-    /**
-     * A GravatarAvatarRequest, spied on by Mockito, used to ensure a [GravatarJavaClientException] is
-     * thrown when the [GravatarAvatarRequest.getImageIcon] or [GravatarAvatarRequest.getBufferedImage]
-     * fails to retrieve the image.
-     */
-    @Spy
-    private val spiedRequest = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
-
     /**
      * Tests for creation from an email address.
      */
@@ -360,13 +351,14 @@ internal constructor() {
     fun testGetImageIcon() {
         val fromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
             .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-            .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
-            .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
             .setProtocol(GravatarProtocol.HTTP)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
+        assertDoesNotThrow { fromEmail.imageIcon }
+        assertNotNull(fromEmail.imageIcon)
+
         val fromHash = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
             .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
             .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
@@ -375,12 +367,19 @@ internal constructor() {
             .setProtocol(GravatarProtocol.HTTPS)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
-        assertDoesNotThrow { fromEmail.imageIcon }
-        assertNotNull(fromEmail.imageIcon)
         assertDoesNotThrow { fromHash.imageIcon }
         assertNotNull(fromHash.imageIcon)
-        Mockito.doReturn("invalid://url").`when`(spiedRequest).requestUrl
-        assertThrows(GravatarJavaClientException::class.java) { spiedRequest.imageIcon }
+
+        val invalid = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
+            .setDefaultImageType(GravatarDefaultImageType._404)
+            .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
+            .setRating(GravatarRating.R)
+            .setSize(225)
+            .setProtocol(GravatarProtocol.HTTPS)
+            .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
+            .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
+
+        assertThrows(GravatarJavaClientException::class.java) { invalid.imageIcon }
     }
 
     /**
@@ -389,6 +388,16 @@ internal constructor() {
     @Test
     fun testGetBufferedImage() {
         val fromHash = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
+            .setDefaultImageType(GravatarDefaultImageType._404)
+            .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
+            .setRating(GravatarRating.R)
+            .setSize(1776)
+            .setProtocol(GravatarProtocol.HTTPS)
+            .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
+            .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
+        assertThrows(GravatarJavaClientException::class.java) { fromHash.bufferedImage }
+
+        val valid = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
             .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
             .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
             .setRating(GravatarRating.R)
@@ -396,10 +405,8 @@ internal constructor() {
             .setProtocol(GravatarProtocol.HTTPS)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
-        assertDoesNotThrow { fromHash.bufferedImage }
-        assertNotNull(fromHash.bufferedImage)
-        Mockito.doReturn("invalid://url").`when`(spiedRequest).requestUrl
-        assertThrows(GravatarJavaClientException::class.java) { spiedRequest.bufferedImage }
+        assertDoesNotThrow { valid.bufferedImage }
+        assertNotNull { valid.bufferedImage }
     }
 
     /**
