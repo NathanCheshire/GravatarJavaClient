@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
@@ -117,32 +118,30 @@ public enum GravatarProfileRequestHandler {
                 outputStream.write(encode(RETURN_NEWLINE + RETURN_NEWLINE));
                 outputStream.flush();
 
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                String line;
-                StringBuilder responseBody = new StringBuilder();
-                while ((line = in.readLine()) != null) if (line.isEmpty()) break;
+                BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                skipHeaders(br);
 
                 // Read the chunked body
+                StringBuilder responseBody = new StringBuilder();
                 while (true) {
-                    String chunkSizeLine = in.readLine();
+                    String chunkSizeLine = br.readLine();
                     if (chunkSizeLine.isEmpty()) break;
 
                     int chunkSize = Integer.parseInt(chunkSizeLine.trim(), HEX_BASE);
-
                     // End of chunks
                     if (chunkSize == 0) break;
                     char[] chunk = new char[chunkSize];
                     int totalBytesRead = 0;
 
                     while (totalBytesRead < chunkSize) {
-                        int bytesRead = in.read(chunk, totalBytesRead, chunkSize - totalBytesRead);
+                        int bytesRead = br.read(chunk, totalBytesRead, chunkSize - totalBytesRead);
                         // End of stream
                         if (bytesRead == -1) break;
                         totalBytesRead += bytesRead;
                     }
 
                     responseBody.append(chunk, 0, totalBytesRead);
-                    in.readLine(); // trailing CRLF after chunk
+                    br.readLine(); // trailing CRLF after chunk
                 }
 
                 String response = responseBody.toString();
@@ -163,6 +162,11 @@ public enum GravatarProfileRequestHandler {
             if (bearerToken == null) UNAUTHENTICATED_REQUESTS.add(result);
             else AUTHENTICATED_REQUESTS.add(result);
         }
+    }
+
+    private void skipHeaders(BufferedReader br) throws IOException {
+        String line;
+        while ((line = br.readLine()) != null) if (line.isEmpty()) break;
     }
 
     /**
