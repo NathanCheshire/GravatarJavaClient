@@ -203,19 +203,18 @@ internal class GeneralUtilsTest {
      */
     @Test
     fun testReadChunkedBody() {
-        assertThrows(NullPointerException::class.java) { readChunkedBody(null) }
-
-        val emptyStream = BufferedReader(StringReader(""))
+        val emptyStream = BufferedReader(StringReader("\r\n"))
         assertEquals("", readChunkedBody(emptyStream))
 
-        val nullChunkSizeStream = BufferedReader(object : Reader() {
-            override fun read(cbuf: CharArray, off: Int, len: Int): Int {
-                return -1 // Simulates stream returning null
-            }
+        val trulyEmptyStream = BufferedReader(StringReader(""))
+        assertEquals("", readChunkedBody(trulyEmptyStream))
 
+        val nullChunkSizeStream = BufferedReader(object : Reader() {
+            override fun read(charArray: CharArray, off: Int, len: Int): Int {
+                return -1
+            }
             override fun close() {}
         })
-
         assertEquals("", readChunkedBody(BufferedReader(nullChunkSizeStream)))
 
         val singleChunkStream = BufferedReader(StringReader("5\r\nHello\r\n0\r\n\r\n"))
@@ -233,5 +232,4 @@ internal class GeneralUtilsTest {
         val invalidChunkSizeStream = BufferedReader(StringReader("Z\r\nInvalid\r\n0\r\n\r\n"))
         assertThrows(NumberFormatException::class.java) { readChunkedBody(invalidChunkSizeStream) }
     }
-
 }

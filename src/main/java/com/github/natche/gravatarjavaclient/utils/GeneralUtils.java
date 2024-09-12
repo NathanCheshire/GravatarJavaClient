@@ -252,5 +252,4 @@ public final class GeneralUtils {
 
         return responseBody.toString();
     }
-
 }
