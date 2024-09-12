@@ -1,12 +1,9 @@
 package com.github.natche.gravatarjavaclient.utils
 
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.jupiter.api.assertThrows
 
 /**
  * Tests for the [Hasher].
@@ -33,10 +30,14 @@ class HasherTest {
         val invalid = Hasher.fromAlgorithm("alg")
         val valid = Hasher.SHA256_HASHER
 
-        assertEquals("c96c6d5be8d08a12e7b5cdc1b207fa6b2430974c86803d8891675e76fd992c20",
-            valid.hash("input"))
-        assertEquals("833d2f04e21b4f8ad071e0bf984823755b456c65d3e0dcbabc92b30b47f90216",
-            valid.hash("other input"))
+        assertEquals(
+            "c96c6d5be8d08a12e7b5cdc1b207fa6b2430974c86803d8891675e76fd992c20",
+            valid.hash("input")
+        )
+        assertEquals(
+            "833d2f04e21b4f8ad071e0bf984823755b456c65d3e0dcbabc92b30b47f90216",
+            valid.hash("other input")
+        )
 
         assertThrows(GravatarJavaClientException::class.java) { invalid.hash("input") }
         assertThrows(GravatarJavaClientException::class.java) { invalid.hash("other input") }

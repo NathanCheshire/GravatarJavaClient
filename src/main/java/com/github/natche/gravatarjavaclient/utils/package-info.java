@@ -1,4 +1,4 @@
 /**
- * Utility classes used by the GravatarJavaClient API.
+ * Utility classes used by GravatarJavaClient.
  */
 package com.github.natche.gravatarjavaclient.utils;

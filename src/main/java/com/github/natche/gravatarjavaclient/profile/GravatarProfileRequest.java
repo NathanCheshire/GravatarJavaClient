@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * A request for obtaining a Profile from the Gravatar API.
+ * A class for requesting a Profile from the Gravatar Profile API.
  * Both authenticated and unauthenticated requests are supported by this API.
  */
 public final class GravatarProfileRequest {

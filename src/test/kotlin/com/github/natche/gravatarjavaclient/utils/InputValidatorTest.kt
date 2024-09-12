@@ -1,6 +1,6 @@
 package com.github.natche.gravatarjavaclient.utils
 
-import com.github.natche.gravatarjavaclient.TestingImageUrls
+import com.github.natche.gravatarjavaclient.ImagesForTests
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -22,7 +22,7 @@ internal class InputValidatorTest {
     }
 
     /**
-     *
+     * Tests for the is valid email address method.
      */
     @Test
     fun testIsValidEmailAddress() {
@@ -32,14 +32,14 @@ internal class InputValidatorTest {
     }
 
     /**
-     *
+     * Tests for the is valid default URL method.
      */
     @Test
     fun testIsValidDefaultUrl() {
         assertFalse(InputValidator.from("https://google.com").isValidImageUrl)
         assertFalse(InputValidator.from("https://google.com/image.png").isValidImageUrl)
-        assertTrue(InputValidator.from(TestingImageUrls.foreignImageUrl).isValidImageUrl)
-        assertTrue(InputValidator.from(TestingImageUrls.anotherForeignImageUrl).isValidImageUrl)
+        assertTrue(InputValidator.from(ImagesForTests.foreignImageUrl).isValidImageUrl)
+        assertTrue(InputValidator.from(ImagesForTests.anotherForeignImageUrl).isValidImageUrl)
     }
 
     /**

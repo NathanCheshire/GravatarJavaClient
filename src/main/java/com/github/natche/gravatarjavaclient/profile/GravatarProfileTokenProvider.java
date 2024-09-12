@@ -5,7 +5,7 @@ import com.google.common.base.Preconditions;
 import java.util.function.Supplier;
 
 /**
- * An authentication token provider for Gravatar API requests.
+ * An authentication token provider for Gravatar Profile requests.
  */
 public final class GravatarProfileTokenProvider {
     private final Supplier<byte[]> tokenProvider;

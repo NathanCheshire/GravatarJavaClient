@@ -19,7 +19,7 @@ class GravatarProfileRequestHandlerTest {
             GravatarProfileRequestHandler.INSTANCE.getProfile(ByteArray(0), "hash")
         }
 
-        assertEquals("API error: Profile not found", exception.message)
+        assertEquals("Gravatar API error: Profile not found", exception.message)
     }
 
     /**

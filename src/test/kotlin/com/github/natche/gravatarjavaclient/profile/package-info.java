@@ -1,4 +1,4 @@
 /**
- * Tests for the Gravatar Profile API classes.
+ * Tests for Gravatar Profile classes.
  */
 package com.github.natche.gravatarjavaclient.profile;

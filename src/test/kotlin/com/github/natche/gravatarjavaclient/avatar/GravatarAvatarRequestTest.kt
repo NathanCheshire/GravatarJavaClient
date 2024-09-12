@@ -1,6 +1,6 @@
 package com.github.natche.gravatarjavaclient.avatar
 
-import com.github.natche.gravatarjavaclient.TestingImageUrls
+import com.github.natche.gravatarjavaclient.ImagesForTests
 import com.github.natche.gravatarjavaclient.enums.*
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException
 import org.junit.jupiter.api.Assertions.*
@@ -78,8 +78,8 @@ internal constructor() {
         assertThrows(IllegalArgumentException::class.java) {
             request.defaultImageUrl = "https://not.valid.url.com"
         }
-        assertDoesNotThrow { request.defaultImageUrl = TestingImageUrls.foreignImageUrl }
-        assertEquals(TestingImageUrls.foreignImageUrl, request.defaultImageUrl)
+        assertDoesNotThrow { request.defaultImageUrl = ImagesForTests.foreignImageUrl }
+        assertEquals(ImagesForTests.foreignImageUrl, request.defaultImageUrl)
 
         // Full URL parameters
         assertThrows(NullPointerException::class.java)
@@ -161,7 +161,7 @@ internal constructor() {
     fun testGetRequestUrl() {
         val fromEmailUrl = GravatarAvatarRequest.fromEmail("my.email@email.com")
             .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-            .setDefaultImageUrl(TestingImageUrls.foreignImageUrl)
+            .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
@@ -205,7 +205,7 @@ internal constructor() {
     fun testHashCode() {
         val fromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
             .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-            .setDefaultImageUrl(TestingImageUrls.foreignImageUrl)
+            .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
@@ -214,7 +214,7 @@ internal constructor() {
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
         val equalToFromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
             .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-            .setDefaultImageUrl(TestingImageUrls.foreignImageUrl)
+            .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
@@ -240,7 +240,7 @@ internal constructor() {
     fun testEquals() {
         val fromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
             .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-            .setDefaultImageUrl(TestingImageUrls.foreignImageUrl)
+            .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
@@ -249,7 +249,7 @@ internal constructor() {
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
         val equalToFromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
             .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-            .setDefaultImageUrl(TestingImageUrls.foreignImageUrl)
+            .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
@@ -307,8 +307,8 @@ internal constructor() {
         assertNotEquals(notFullParams, fullParams)
         val foreignImage = GravatarAvatarRequest.fromHash("one")
         val otherForeignImage = GravatarAvatarRequest.fromHash("one")
-        foreignImage.defaultImageUrl = TestingImageUrls.foreignImageUrl
-        otherForeignImage.defaultImageUrl = TestingImageUrls.anotherForeignImageUrl
+        foreignImage.defaultImageUrl = ImagesForTests.foreignImageUrl
+        otherForeignImage.defaultImageUrl = ImagesForTests.anotherForeignImageUrl
         assertNotEquals(foreignImage, otherForeignImage)
         val gRating = GravatarAvatarRequest.fromHash("one")
         val pgRating = GravatarAvatarRequest.fromHash("one")
@@ -324,7 +324,7 @@ internal constructor() {
     fun testToString() {
         val fromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
             .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-            .setDefaultImageUrl(TestingImageUrls.foreignImageUrl)
+            .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
@@ -360,7 +360,7 @@ internal constructor() {
     fun testGetImageIcon() {
         val fromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
             .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-            .setDefaultImageUrl(TestingImageUrls.foreignImageUrl)
+            .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)

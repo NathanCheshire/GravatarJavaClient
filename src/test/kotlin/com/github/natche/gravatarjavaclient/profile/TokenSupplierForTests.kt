@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets
 /**
  * A token supplier for grabbing the Profile API key from the system environment.
  */
-class TokenSupplier private constructor() {
+class TokenSupplierForTests private constructor() {
     /**
      * Suppress default constructor
      */

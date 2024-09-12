@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * The Gravatar Profile request handler for requesting profiles from the Gravatar API.
+ * The Gravatar Profile request handler for requesting profiles from the Gravatar Profile API.
  */
 public enum GravatarProfileRequestHandler {
     /**
@@ -124,7 +124,7 @@ public enum GravatarProfileRequestHandler {
                 String response = ResourceReader.from(br).skipHeaders().readChunkedBody();
                 if (response.contains("error")) {
                     JsonObject responseObject = GsonProvider.INSTANCE.get().fromJson(response, JsonObject.class);
-                    throw new RuntimeException("API error: " + responseObject.get("error").getAsString());
+                    throw new RuntimeException("Gravatar API error: " + responseObject.get("error").getAsString());
                 }
 
                 GravatarProfile ret = GsonProvider.INSTANCE.get().fromJson(response, GravatarProfile.class);

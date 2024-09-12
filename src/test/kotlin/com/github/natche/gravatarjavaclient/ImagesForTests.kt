@@ -1,9 +1,9 @@
 package com.github.natche.gravatarjavaclient
 
 /**
- * Constants related to testing.
+ * Images used for tests requiring valid foreign images.
  */
-class TestingImageUrls private constructor() {
+class ImagesForTests private constructor() {
     /**
      * Suppress default constructor.
      */

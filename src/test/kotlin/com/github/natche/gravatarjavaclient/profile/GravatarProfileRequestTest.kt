@@ -34,11 +34,16 @@ internal constructor() {
      */
     @Test
     fun testFromEmail() {
-        assertThrows(NullPointerException::class.java) { GravatarProfileRequest.fromEmail(null) }
-        assertThrows(IllegalArgumentException::class.java) { GravatarProfileRequest.fromEmail("") }
-        assertThrows(IllegalArgumentException::class.java) { GravatarProfileRequest.fromEmail("   ") }
-        assertThrows(IllegalArgumentException::class.java) { GravatarProfileRequest.fromEmail("email.address") }
-        assertThrows(IllegalArgumentException::class.java) { GravatarProfileRequest.fromEmail("email.address@gmail") }
+        assertThrows(NullPointerException::class.java)
+        { GravatarProfileRequest.fromEmail(null) }
+        assertThrows(IllegalArgumentException::class.java)
+        { GravatarProfileRequest.fromEmail("") }
+        assertThrows(IllegalArgumentException::class.java)
+        { GravatarProfileRequest.fromEmail("   ") }
+        assertThrows(IllegalArgumentException::class.java)
+        { GravatarProfileRequest.fromEmail("email.address") }
+        assertThrows(IllegalArgumentException::class.java)
+        { GravatarProfileRequest.fromEmail("email.address@gmail") }
         assertDoesNotThrow { GravatarProfileRequest.fromEmail("email.address@gmail.com") }
     }
 
@@ -51,7 +56,7 @@ internal constructor() {
             NullPointerException::class.java
         ) { GravatarProfileRequest.fromHashOrId("hash").setTokenSupplier(null) }
         assertDoesNotThrow {
-            GravatarProfileRequest.fromHashOrId("hash").setTokenSupplier(TokenSupplier.tokenSupplier)
+            GravatarProfileRequest.fromHashOrId("hash").setTokenSupplier(TokenSupplierForTests.tokenSupplier)
         }
     }
 
@@ -78,7 +83,7 @@ internal constructor() {
         val startingUnAuthSize = GravatarProfileRequestHandler.INSTANCE.unauthenticatedRequestResults.size
 
         val authenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
-            .setTokenSupplier(TokenSupplier.tokenSupplier)
+            .setTokenSupplier(TokenSupplierForTests.tokenSupplier)
         val unauthenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
         assertDoesNotThrow { authenticatedRequest.profile }
         assertDoesNotThrow { unauthenticatedRequest.profile }
@@ -109,7 +114,7 @@ internal constructor() {
         outputDirectory.mkdir()
 
         val authenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
-            .setTokenSupplier(TokenSupplier.tokenSupplier)
+            .setTokenSupplier(TokenSupplierForTests.tokenSupplier)
         assertThrows(NullPointerException::class.java) { authenticatedRequest.writeToFile(null, null) }
         assertThrows(NullPointerException::class.java) { authenticatedRequest.writeToFile(null) }
         assertThrows(NullPointerException::class.java) { authenticatedRequest.writeToFile(Gson(), null) }
@@ -159,7 +164,7 @@ internal constructor() {
     @Test
     fun testToString() {
         val authenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
-            .setTokenSupplier(TokenSupplier.tokenSupplier)
+            .setTokenSupplier(TokenSupplierForTests.tokenSupplier)
         val unauthenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
         assertEquals(
             "GravatarProfileRequest{hash=\"nathanvcheshire\","
@@ -178,9 +183,9 @@ internal constructor() {
     @Test
     fun testHashCode() {
         val authenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
-            .setTokenSupplier(TokenSupplier.tokenSupplier)
+            .setTokenSupplier(TokenSupplierForTests.tokenSupplier)
         val equal = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
-            .setTokenSupplier(TokenSupplier.tokenSupplier)
+            .setTokenSupplier(TokenSupplierForTests.tokenSupplier)
         val unauthenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
         assertEquals(equal.hashCode(), authenticatedRequest.hashCode())
         assertNotEquals(authenticatedRequest.hashCode(), unauthenticatedRequest.hashCode())
@@ -192,9 +197,9 @@ internal constructor() {
     @Test
     fun testEquals() {
         val authenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
-            .setTokenSupplier(TokenSupplier.tokenSupplier)
+            .setTokenSupplier(TokenSupplierForTests.tokenSupplier)
         val equal = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
-            .setTokenSupplier(TokenSupplier.tokenSupplier)
+            .setTokenSupplier(TokenSupplierForTests.tokenSupplier)
         val notEqual = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
         val notEqualToNotEqual = GravatarProfileRequest.fromHashOrId("NathanCheshire")
         assertEquals(authenticatedRequest, authenticatedRequest)
