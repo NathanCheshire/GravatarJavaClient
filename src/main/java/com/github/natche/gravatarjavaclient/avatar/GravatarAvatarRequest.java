@@ -2,7 +2,6 @@ package com.github.natche.gravatarjavaclient.avatar;
 
 import com.github.natche.gravatarjavaclient.enums.*;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
-import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
 import com.github.natche.gravatarjavaclient.utils.Hasher;
 import com.github.natche.gravatarjavaclient.utils.InputValidator;
 import com.google.common.base.Preconditions;

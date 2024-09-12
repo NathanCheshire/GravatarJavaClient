@@ -1,7 +1,7 @@
 package com.github.natche.gravatarjavaclient.avatar;
 
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
-import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
+import com.github.natche.gravatarjavaclient.utils.ResourceReader;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 
@@ -47,7 +47,7 @@ enum GravatarAvatarRequestImageSaver {
         Preconditions.checkArgument(!file.isDirectory());
         Preconditions.checkNotNull(format);
         Preconditions.checkArgument(SUPPORTED_IMAGE_FORMATS.contains(format.toLowerCase()));
-        Preconditions.checkArgument(GeneralUtils.isValidFilename(file.getName()));
+        Preconditions.checkArgument(ResourceReader.isValidFilename(file.getName()));
 
         try {
             if (!ImageIO.write(image, format.toLowerCase(), file)) throw new IOException("Failed");

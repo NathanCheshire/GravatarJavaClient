@@ -3,7 +3,7 @@ package com.github.natche.gravatarjavaclient.profile;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.github.natche.gravatarjavaclient.profile.gson.GsonProvider;
 import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfile;
-import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
+import com.github.natche.gravatarjavaclient.utils.ResourceReader;
 import com.github.natche.gravatarjavaclient.utils.Hasher;
 import com.github.natche.gravatarjavaclient.utils.InputValidator;
 import com.google.common.base.Preconditions;
@@ -128,7 +128,7 @@ public final class GravatarProfileRequest {
         Preconditions.checkNotNull(file);
         Preconditions.checkArgument(!file.isDirectory());
         Preconditions.checkArgument(file.exists());
-        Preconditions.checkArgument(GeneralUtils.isValidFilename(file.getName()));
+        Preconditions.checkArgument(ResourceReader.isValidFilename(file.getName()));
 
         try (FileWriter writer = new FileWriter(file)) {
             serializer.toJson(getProfile(), writer);

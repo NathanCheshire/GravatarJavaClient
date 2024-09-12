@@ -4,6 +4,7 @@ import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientExcepti
 import com.github.natche.gravatarjavaclient.profile.gson.GsonProvider;
 import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfile;
 import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfileRequestResult;
+import com.github.natche.gravatarjavaclient.utils.ResourceReader;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
@@ -18,8 +19,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static com.github.natche.gravatarjavaclient.utils.GeneralUtils.*;
 
 /**
  * The Gravatar Profile request handler for requesting profile API requests.
@@ -118,8 +117,7 @@ public enum GravatarProfileRequestHandler {
                 outputStream.flush();
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                skipHeaders(br);
-                String response = readChunkedBody(br);
+                String response = ResourceReader.from(br).skipHeaders().readChunkedBody();
                 if (response.contains("error")) {
                     JsonObject responseObject = GsonProvider.INSTANCE.get().fromJson(response, JsonObject.class);
                     throw new RuntimeException("API error: " + responseObject.get("error").getAsString());
