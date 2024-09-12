@@ -40,15 +40,15 @@ BufferedImage bufferedImage=GravatarAvatarRequest.fromEmail("your.email@email.co
         .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
         .getBufferedImage();
 
-        // Get an image icon
-        ImageIcon imageIcon=GravatarAvatarRequest.fromEmail("your.email@email.com")
+// Get an image icon
+ImageIcon imageIcon=GravatarAvatarRequest.fromEmail("your.email@email.com")
         .setSize(800)
         .setRating(GravatarRating.R)
         .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
         .getImageIcon();
 
-        // Save to a file
-        boolean wasSaved=GravatarAvatarRequest.fromEmail("your.email@email.com")
+// Save to a file
+boolean wasSaved=GravatarAvatarRequest.fromEmail("your.email@email.com")
         .setSize(800)
         .setRating(GravatarRating.R)
         .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
@@ -62,14 +62,14 @@ For requesting Profiles:
 GravatarProfile profile=GravatarProfileRequest.fromEmail("your.email@email.com")
         .getProfile();
 
-        // Save to a file
-        boolean wasSaved=GravatarProfileRequest.fromEmail("your.email@email.com")
+// Save to a file
+boolean wasSaved=GravatarProfileRequest.fromEmail("your.email@email.com")
         .writeToFile(new File("MyProfile.json"));
 
-        // Get an authenticated profile
-        GravatarProfileTokenProvider provider=new GravatarProfileTokenProvider(
+// Get an authenticated profile
+GravatarProfileTokenProvider provider=new GravatarProfileTokenProvider(
         ()->new byte[]{0x12,0x34,0x56,0x78},"primaryAuthenticator");
-        GravatarProfile profileWithAuthenticatedFields=GravatarProfileRequest.fromEmail("your.email@email.com")
+GravatarProfile profileWithAuthenticatedFields=GravatarProfileRequest.fromEmail("your.email@email.com")
         .setTokenSupplier(provider)
         .getProfile();
 ```
