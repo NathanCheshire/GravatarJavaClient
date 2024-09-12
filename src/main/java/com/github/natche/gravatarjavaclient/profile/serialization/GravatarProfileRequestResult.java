@@ -6,13 +6,13 @@ import com.google.errorprone.annotations.Immutable;
 import java.time.Instant;
 
 /**
- * Represents metadata of a Gravatar profile API request.
+ * Represents metadata of a Gravatar profile request.
  */
 @SuppressWarnings("ClassCanBeRecord") /* GSON needs this */
 @Immutable
 public final class GravatarProfileRequestResult {
     /**
-     * The instant when the request was made.
+     * The instant the request was made at.
      */
     private final Instant requestInstant;
 
@@ -36,7 +36,7 @@ public final class GravatarProfileRequestResult {
     }
 
     /**
-     * Returns the instant when the request was made.
+     * Returns the instant the request was made at.
      *
      * @return the instant of the request
      */

@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Represents a gallery image in a Gravatar user's profile.
+ * Represents a gallery image on a Gravatar user's profile.
  */
 @SuppressWarnings("ClassCanBeRecord") /* GSON needs this */
 public final class GravatarProfileGalleryImage {

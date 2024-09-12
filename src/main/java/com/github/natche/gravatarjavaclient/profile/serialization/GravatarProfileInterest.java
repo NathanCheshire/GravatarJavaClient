@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Represents an interest or hobby in a Gravatar user's profile.
+ * Represents an interest or hobby on a Gravatar user's profile.
  */
 @SuppressWarnings("ClassCanBeRecord") /* Needed by GSON */
 public final class GravatarProfileInterest {

@@ -105,7 +105,7 @@ public final class GravatarProfile {
     private final String lastName;
 
     /**
-     * Whether this account is marked as an organization account;
+     * Whether this account is marked as an organization account.
      */
     @SerializedName("is_organization")
     private final boolean isOrganization;
@@ -126,7 +126,7 @@ public final class GravatarProfile {
     private final GravatarProfilePayments payments;
 
     /**
-     * The contact info object containing the contact information the user has displayed on their account
+     * The contact info object containing the contact information the user has displayed on their account.
      */
     @SerializedName("contact_info")
     private final GravatarProfileContactInfo contactInfo;

@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Represents a cryptocurrency wallet address in a Gravatar user's profile.
+ * Represents a cryptocurrency wallet address on a Gravatar user's profile.
  */
 @SuppressWarnings("ClassCanBeRecord") /* GSON needs this */
 public final class GravatarCryptoWalletAddress {

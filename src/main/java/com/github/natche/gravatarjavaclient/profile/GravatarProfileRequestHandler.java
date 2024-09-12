@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * The Gravatar Profile request handler for requesting profile API requests.
+ * The Gravatar Profile request handler for requesting profiles from the Gravatar API.
  */
 public enum GravatarProfileRequestHandler {
     /**
@@ -49,7 +49,10 @@ public enum GravatarProfileRequestHandler {
      */
     private static final String API_VERSION = "3";
 
-    private static final String RETURN_NEWLINE = "\r\n";
+    /**
+     * A character return and line feed string.
+     */
+    private static final String CRLF = "\r\n";
 
     /**
      * The result of all authenticated requests during this JVM runtime.
@@ -80,7 +83,7 @@ public enum GravatarProfileRequestHandler {
     }
 
     /**
-     * Reads and returns a serialized object from the Gravatar profiles API endpoint.
+     * Reads and returns a serialized object from the Gravatar Profile API.
      *
      * @param bearerToken the authentication token to use; if not provided, only certain fields will be returned
      * @param nameOrHash  the name or SHA256 hash to use
@@ -104,16 +107,17 @@ public enum GravatarProfileRequestHandler {
 
                 String httpRequest = "GET /v" + API_VERSION
                         + "/profiles/" + nameOrHash + " "
-                        + "HTTP/1.1" + RETURN_NEWLINE
+                        + "HTTP/1.1" + CRLF
                         + "Host: " + API_HOST
-                        + RETURN_NEWLINE;
+                        + CRLF;
 
                 outputStream.write(encode(httpRequest));
                 if (bearerToken != null) {
                     outputStream.write(encode(("Authorization: Bearer ")));
                     outputStream.write(bearerToken);
                 }
-                outputStream.write(encode(RETURN_NEWLINE + RETURN_NEWLINE));
+                outputStream.write(encode(CRLF + CRLF));
+                requestTime = Instant.now();
                 outputStream.flush();
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -137,7 +141,7 @@ public enum GravatarProfileRequestHandler {
     }
 
     /**
-     * Encodes the provided string using the internal char set.
+     * Encodes the provided string using the internal character set.
      *
      * @param string the string to encode
      * @return the encoded string

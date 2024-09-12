@@ -9,8 +9,8 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 
 /**
- * A collection deserialized for use by {@link com.google.gson.Gson}
- * to deserialize an object into an {@link com.google.common.collect.ImmutableList}.
+ * A collection deserializer for use by {@link com.google.gson.Gson}
+ * to deserialize a collection object into an {@link com.google.common.collect.ImmutableList}.
  *
  * @param <E> the entity type
  */

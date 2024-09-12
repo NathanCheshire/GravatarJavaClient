@@ -8,6 +8,9 @@ import com.google.gson.*;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/**
+ * A deserializer for deserializing a {@link GravatarProfile} from a JSON element.
+ */
 public class GravatarProfileDeserializer implements JsonDeserializer<GravatarProfile> {
     @Override
     public GravatarProfile deserialize(JsonElement json,
@@ -85,31 +88,29 @@ public class GravatarProfileDeserializer implements JsonDeserializer<GravatarPro
     }
 
     /**
-     * Helper method to retrieve an optional string from a JsonObject.
+     * Returns an optional String from a JsonObject.
      */
     private String getOptionalString(JsonObject jsonObject, String memberName) {
         return jsonObject.has(memberName) ? jsonObject.get(memberName).getAsString() : null;
     }
 
     /**
-     * Helper method to retrieve an optional list from a JsonObject.
+     * Returns an optional list from a JsonObject. If the list is not present,
+     * an empty list is returned instead of null. See Effective Java item 43.
      */
-    private <T> List<T> getOptionalList(JsonObject jsonObject,
-                                        String memberName,
-                                        JsonDeserializationContext context,
-                                        Type type) {
+    private <T> List<T> getOptionalList(JsonObject jsonObject, String memberName,
+                                        JsonDeserializationContext context, Type type) {
         return jsonObject.has(memberName)
                 ? context.deserialize(jsonObject.get(memberName), type) : ImmutableList.of();
     }
 
     /**
-     * Helper method to retrieve an optional object from a JsonObject.
+     * Returns an optional object from a jsonObject.
      */
-    private <T> T getOptionalObject(JsonObject jsonObject,
-                                    String memberName,
-                                    JsonDeserializationContext context,
-                                    Class<T> classOfT) {
-        return jsonObject.has(memberName) ? context.deserialize(jsonObject.get(memberName), classOfT) : null;
+    private <T> T getOptionalObject(JsonObject jsonObject, String memberName,
+                                    JsonDeserializationContext context, Class<T> classOfT) {
+        return jsonObject.has(memberName)
+                ? context.deserialize(jsonObject.get(memberName), classOfT) : null;
     }
 }
 

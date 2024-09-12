@@ -5,10 +5,14 @@ import com.google.common.base.Preconditions;
 import java.util.function.Supplier;
 
 /**
- * An authentication token provider for Gravatar Profile API calls.
+ * An authentication token provider for Gravatar API requests.
  */
 public final class GravatarProfileTokenProvider {
     private final Supplier<byte[]> tokenProvider;
+
+    /**
+     * The source/key, this is used for hash and equal comparisons.
+     */
     private final String source;
 
     /**
@@ -28,6 +32,11 @@ public final class GravatarProfileTokenProvider {
         this.source = source;
     }
 
+    /**
+     * Returns the token.
+     *
+     * @return the token
+     */
     public byte[] getToken() {
         return tokenProvider.get();
     }

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Represents a user's payment options in a Gravatar profile.
+ * Represents a user's payment options on a Gravatar profile.
  */
 public final class GravatarProfilePayments {
     /**

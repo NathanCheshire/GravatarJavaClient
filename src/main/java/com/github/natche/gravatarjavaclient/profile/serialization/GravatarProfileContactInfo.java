@@ -4,8 +4,8 @@ import com.google.common.base.Preconditions;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Represents a user's public contact information in a Gravatar profile.
- * This information is provided only in authenticated API requests.
+ * Represents a user's public contact information on a Gravatar profile.
+ * This information is provided only in authenticated requests.
  */
 @SuppressWarnings("ClassCanBeRecord") /* GSON needs this */
 public final class GravatarProfileContactInfo {

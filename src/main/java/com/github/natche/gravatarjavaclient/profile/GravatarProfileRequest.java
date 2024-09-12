@@ -16,12 +16,12 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * A request for obtaining a Gravatar Profile from the API.
- * Both authenticated and unauthenticated requests are supported by this class.
+ * A request for obtaining a Profile from the Gravatar API.
+ * Both authenticated and unauthenticated requests are supported by this API.
  */
 public final class GravatarProfileRequest {
     /**
-     * The authorization token supplier
+     * The authorization token supplier.
      */
     private GravatarProfileTokenProvider tokenSupplier;
 
@@ -55,7 +55,7 @@ public final class GravatarProfileRequest {
      * @param email the email address
      * @return a new GravatarProfileRequest
      * @throws NullPointerException     if the provided email is null
-     * @throws IllegalArgumentException if the provided email is empty or not a valid address
+     * @throws IllegalArgumentException if the provided email is empty or not a valid email
      */
     public static GravatarProfileRequest fromEmail(String email) {
         Preconditions.checkNotNull(email);
@@ -66,8 +66,10 @@ public final class GravatarProfileRequest {
     }
 
     /**
-     * Sets the API token to use when requesting this profile from the Gravatar API.
-     * If not provided, only certain fields will be returned.
+     * Sets the API token provider to use when requesting this profile from the Gravatar API.
+     * If not provided, only certain fields will be returned. A supplier is used instead of
+     * a String to allow for the avoidance of tokens appearing in String pool due to how strings
+     * work in the JVM.
      *
      * @param tokenSupplier a supplier for returning a token
      * @return this request builder
@@ -114,7 +116,8 @@ public final class GravatarProfileRequest {
 
     /**
      * Writes the profile object obtained from this request to the provided file using the
-     * provided GSON object as the serializer.
+     * provided GSON object as the serializer. The provided file must have a valid name.
+     * See {@link ResourceReader#isValidFilename(String)} for more details.
      *
      * @param serializer the GSON object to serialize the profile
      * @param file       the file to write the object to
@@ -139,9 +142,9 @@ public final class GravatarProfileRequest {
     }
 
     /**
-     * Returns a hashcode representation of this object.
+     * Returns a hashcode of this object.
      *
-     * @return a hashcode representation of this object
+     * @return a hashcode of this object
      */
     @Override
     public int hashCode() {

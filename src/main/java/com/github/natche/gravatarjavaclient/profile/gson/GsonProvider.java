@@ -6,8 +6,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
- * A singleton for providing a {@link Gson} instance for serialization/deserialization
- * with custom registered type adapters.
+ * A singleton for providing a common shared {@link Gson} instance
+ * for serialization/deserialization with custom registered type adapters needed for this API.
  */
 public enum GsonProvider {
     /**

@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Represents a language in a Gravatar user's profile.
+ * Represents a language on a Gravatar user's profile.
  */
 @SuppressWarnings("ClassCanBeRecord") /* GSON needs this */
 public final class GravatarProfileLanguage {
