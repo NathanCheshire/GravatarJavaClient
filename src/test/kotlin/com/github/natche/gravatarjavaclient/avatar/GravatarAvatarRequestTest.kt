@@ -14,6 +14,7 @@ import java.io.File
 /**
  * Tests for [GravatarAvatarRequest]s.
  */
+@Suppress("SpellCheckingInspection") /* Hashes */
 @ExtendWith(MockitoExtension::class)
 class GravatarAvatarRequestTest
 /**
@@ -67,7 +68,7 @@ internal constructor() {
     fun testAccessorsAndMutators() {
         // Hash
         val request = GravatarAvatarRequest.fromEmail("valid.email@email.com")
-        assertEquals("1f60940c52efc3c031b29d6e87a01ed9", request.hash)
+        assertEquals("4dfc17ce9e02fc266f013a59852803fbb47b65b07b0b53b439b99c73c110082", request.hash)
 
         // Default image URL
         assertThrows(NullPointerException::class.java) { request.defaultImageUrl = null }
@@ -169,7 +170,8 @@ internal constructor() {
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
             .requestUrl
         assertEquals(
-            "http://www.gravatar.com/avatar/80c44e7f3f5082023ede351d396844f5.jpg"
+            "http://www.gravatar.com/avatar/ce6e17fa8835c88134a6cc27cb05def"
+                    + "d8d1c424fa98f531b7bb4f5b177a2452.jpg"
                     + "?s=2000&r=x&d=https://picsum.photos/seed/gravatar-java-client/200/300&f=y", fromEmailUrl
         )
         val fromHashUrl = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
@@ -338,8 +340,8 @@ internal constructor() {
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
         assertEquals(
-            "GravatarAvatarRequest{hash=\"80c44e7f3f5082023ede351d396844f5\", size=2000,"
-                    + " rating=X, forceDefaultImage=Force, defaultImageType=null, protocol=HTTP,"
+            "GravatarAvatarRequest{hash=\"ce6e17fa8835c88134a6cc27cb05defd8d1c424fa98f531b7bb4f5b177a2452\", "
+                    + "size=2000, rating=X, forceDefaultImage=Force, defaultImageType=null, protocol=HTTP,"
                     + " useFullUrlParameters=False,"
                     + " defaultImageUrl=\"https://picsum.photos/seed/gravatar-java-client/200/300\", }",
             fromEmail.toString()

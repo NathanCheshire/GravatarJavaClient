@@ -99,7 +99,7 @@ public class GravatarAvatarRequest {
         Preconditions.checkArgument(!email.trim().isEmpty());
         Preconditions.checkArgument(InputValidator.from(email).isValidEmailAddress());
 
-        String hash = GeneralUtils.emailAddressToGravatarHash(email);
+        String hash = GeneralUtils.hashEmailAddress(email);
         return new GravatarAvatarRequest(hash);
     }
 

@@ -46,6 +46,8 @@ class GravatarAvatarRequestImageSaverTest {
             NullPointerException::class.java
         ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(mockImage, null, null) }
         val mockFile = Mockito.mock(File::class.java)
+        Mockito.`when`(mockFile.name).thenReturn("validName.png")
+
         assertThrows(
             NullPointerException::class.java
         ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(mockImage, mockFile, null) }
@@ -55,5 +57,8 @@ class GravatarAvatarRequestImageSaverTest {
         assertThrows(
             GravatarJavaClientException::class.java
         ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(mockImage, mockFile, "") }
+        assertThrows(
+            java.lang.IllegalArgumentException::class.java
+        ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(mockImage, File("invalid<>.png"), "") }
     }
 }

@@ -49,54 +49,23 @@ internal class GeneralUtilsTest {
     }
 
     /**
-     * Tests for the email address to gravatar hash method.
-     */
-    @Test
-    @Suppress("SpellCheckingInspection")
-    fun testEmailAddressToGravatarHash() {
-        assertThrows(NullPointerException::class.java)
-        { GeneralUtils.emailAddressToGravatarHash(null) }
-        assertThrows(IllegalArgumentException::class.java)
-        { GeneralUtils.emailAddressToGravatarHash("") }
-        assertThrows(IllegalArgumentException::class.java)
-        { GeneralUtils.emailAddressToGravatarHash("asdf") }
-        assertThrows(IllegalArgumentException::class.java)
-        { GeneralUtils.emailAddressToGravatarHash("invalid") }
-        assertThrows(IllegalArgumentException::class.java)
-        { GeneralUtils.emailAddressToGravatarHash("invalid@asdf") }
-        assertDoesNotThrow { GeneralUtils.emailAddressToGravatarHash("valid@domain.com") }
-        assertEquals(
-            "2bf1b7a19bcad06a8e894d7373a4cfc7",
-            GeneralUtils.emailAddressToGravatarHash("nathan.vincent.2.718@gmail.com")
-        )
-        assertEquals(
-            "21bce028aab22e8c9ec03d66305a50dc",
-            GeneralUtils.emailAddressToGravatarHash("nathan.cheshire.ctr@nrlssc.navy.mil")
-        )
-        assertEquals(
-            "e11e6bd8201d3bd6f22c4b206a863a2c",
-            GeneralUtils.emailAddressToGravatarHash("ncheshire@camgian.com")
-        )
-    }
-
-    /**
      * Test for the email address to profiles API hash.
      */
     @Test
     @Suppress("SpellCheckingInspection")
     fun testEmailAddressToProfilesApiHash() {
         assertThrows(NullPointerException::class.java)
-        { GeneralUtils.emailAddressToProfilesApiHash(null) }
+        { GeneralUtils.hashEmailAddress(null) }
         assertThrows(IllegalArgumentException::class.java)
-        { GeneralUtils.emailAddressToProfilesApiHash("") }
+        { GeneralUtils.hashEmailAddress("") }
         assertThrows(IllegalArgumentException::class.java)
-        { GeneralUtils.emailAddressToProfilesApiHash("   ") }
+        { GeneralUtils.hashEmailAddress("   ") }
         assertThrows(IllegalArgumentException::class.java)
-        { GeneralUtils.emailAddressToProfilesApiHash("invalid.email") }
-        assertDoesNotThrow { GeneralUtils.emailAddressToProfilesApiHash("valid@domain.com") }
+        { GeneralUtils.hashEmailAddress("invalid.email") }
+        assertDoesNotThrow { GeneralUtils.hashEmailAddress("valid@domain.com") }
         assertEquals(
             "8e50ba67083844f6c70829f2ad5e29eb6fff55123f2b34ee63ae9eb9adccb4b4",
-            GeneralUtils.emailAddressToProfilesApiHash("valid.email@gmail.com")
+            GeneralUtils.hashEmailAddress("valid.email@gmail.com")
         )
     }
 

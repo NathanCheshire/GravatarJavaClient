@@ -119,17 +119,24 @@ internal constructor() {
         assertThrows(
             IllegalArgumentException::class.java
         ) { authenticatedRequest.writeToFile(Gson(), File("non_existent_file.json")) }
+        assertThrows(
+            IllegalArgumentException::class.java
+        ) { authenticatedRequest.writeToFile(Gson(), File("bad_file_name<>.json")) }
+
         val tempFile = File(outputDirectory, "test.json")
         tempFile.createNewFile()
         Thread.sleep(100)
         assertTrue(authenticatedRequest.writeToFile(tempFile))
         assertTrue(tempFile.exists())
         assertTrue(tempFile.length() > 0)
+
         val mockFile = Mockito.mock(File::class.java)
         Mockito.`when`(mockFile.isDirectory).thenReturn(false)
         Mockito.`when`(mockFile.absolutePath).thenReturn(tempFile.absolutePath)
         Mockito.`when`(mockFile.exists()).thenReturn(true)
+        Mockito.`when`(mockFile.name).thenReturn("name.json")
         Mockito.doThrow(IOException("Test exception")).`when`(mockFile).canonicalFile
+
         assertThrows(GravatarJavaClientException::class.java) { authenticatedRequest.writeToFile(mockFile) }
         val customSerializer = Gson()
         assertTrue(authenticatedRequest.writeToFile(customSerializer, tempFile))

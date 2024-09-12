@@ -61,7 +61,7 @@ public final class GravatarProfileRequest {
         Preconditions.checkArgument(!email.trim().isEmpty());
         Preconditions.checkArgument(InputValidator.from(email).isValidEmailAddress());
 
-        return new GravatarProfileRequest(GeneralUtils.emailAddressToProfilesApiHash(email));
+        return new GravatarProfileRequest(GeneralUtils.hashEmailAddress(email));
     }
 
     /**
@@ -119,7 +119,7 @@ public final class GravatarProfileRequest {
      * @param file       the file to write the object to
      * @return whether the write operation was successful
      * @throws NullPointerException     if the provided file or serializer is null
-     * @throws IllegalArgumentException if the provided file is a directory or does not exist
+     * @throws IllegalArgumentException if the provided file is a directory, does not exist, or has an invalid name
      */
     @CanIgnoreReturnValue
     public boolean writeToFile(Gson serializer, File file) {
@@ -127,6 +127,7 @@ public final class GravatarProfileRequest {
         Preconditions.checkNotNull(file);
         Preconditions.checkArgument(!file.isDirectory());
         Preconditions.checkArgument(file.exists());
+        Preconditions.checkArgument(GeneralUtils.isValidFilename(file.getName()));
 
         try (FileWriter writer = new FileWriter(file)) {
             serializer.toJson(getProfile(), writer);
