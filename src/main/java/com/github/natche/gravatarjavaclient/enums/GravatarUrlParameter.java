@@ -17,7 +17,8 @@ public enum GravatarUrlParameter {
     DEFAULT_IMAGE_URL("d", "default"),
 
     /**
-     * Whether to force the default URL regardless of whether the user email hash is valid.
+     * Whether to force the default URL regardless of the validity of
+     * the user account hash. See {@link GravatarForceDefaultImage}.
      */
     FORCE_DEFAULT("f", "forcedefault"),
 
@@ -53,13 +54,8 @@ public enum GravatarUrlParameter {
      */
     private final String fullUrlParameter;
 
-    /**
-     * Constructs a new GravatarUrlParameter.
-     *
-     * @param urlParameter     the short URL parameter
-     * @param fullUrlParameter the full URL parameter
-     */
-    GravatarUrlParameter(String urlParameter, String fullUrlParameter) {
+    GravatarUrlParameter(String urlParameter,
+                         String fullUrlParameter) {
         this.shortUrlParameter = urlParameter;
         this.fullUrlParameter = fullUrlParameter;
     }
@@ -99,6 +95,7 @@ public enum GravatarUrlParameter {
         Preconditions.checkNotNull(useFullUrlParameter);
 
         String prefix = firstParameter ? initialUrlParameterPrefix : nonInitialUrlParameterPrefix;
-        return prefix + (useFullUrlParameter.bool() ? fullUrlParameter : shortUrlParameter) + "=" + value;
+        return prefix + (useFullUrlParameter.shouldUseFullParams()
+                ? fullUrlParameter : shortUrlParameter) + "=" + value;
     }
 }

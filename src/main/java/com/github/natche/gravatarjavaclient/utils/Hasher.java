@@ -16,9 +16,10 @@ import java.util.Arrays;
  */
 public final class Hasher {
     /**
-     * The SHA256 algorithm.
+     * The common shared Sha256 hasher.
      */
-    private static final String SHA_256 = "SHA-256";
+    public static final Hasher SHA256_HASHER = Hasher.fromAlgorithm("SHA-256");
+
     private static final int HEX_BASE = 16;
 
     /**
@@ -29,15 +30,6 @@ public final class Hasher {
     private Hasher(String algorithm) {
 
         this.algorithm = algorithm;
-    }
-
-    /**
-     * Returns a new Hasher instance using the SHA256 algorithm.
-     *
-     * @return a new Hasher instance using the SHA256 algorithm
-     */
-    public static Hasher fromSha256() {
-        return new Hasher(SHA_256);
     }
 
     /**

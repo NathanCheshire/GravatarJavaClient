@@ -45,7 +45,7 @@ public final class InputValidator {
     }
 
     /**
-     * Returns whether the encapsulated email input is a valid email address.
+     * Returns whether the encapsulated input is a valid email address.
      * Note, this does not check for existence, merely proper syntactical structure.
      *
      * @return whether the encapsulated input is a valid email address

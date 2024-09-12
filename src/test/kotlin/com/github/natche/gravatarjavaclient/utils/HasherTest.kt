@@ -21,7 +21,6 @@ class HasherTest {
         assertThrows(IllegalArgumentException::class.java) { Hasher.fromAlgorithm("") }
         assertThrows(IllegalArgumentException::class.java) { Hasher.fromAlgorithm("  ") }
 
-        assertDoesNotThrow { Hasher.fromSha256() }
         assertDoesNotThrow { Hasher.fromAlgorithm("algorithm") }
     }
 
@@ -32,7 +31,7 @@ class HasherTest {
     @Suppress("SpellCheckingInspection") /* Hashes */
     fun testHash() {
         val invalid = Hasher.fromAlgorithm("alg")
-        val valid = Hasher.fromSha256()
+        val valid = Hasher.SHA256_HASHER
 
         assertEquals("c96c6d5be8d08a12e7b5cdc1b207fa6b2430974c86803d8891675e76fd992c20",
             valid.hash("input"))

@@ -31,9 +31,6 @@ public enum GravatarRating {
      */
     X;
 
-    /**
-     * Constructs a new GravatarRating.
-     */
     GravatarRating() {}
 
     /**

@@ -62,7 +62,7 @@ public final class GravatarProfileRequest {
         Preconditions.checkArgument(!email.trim().isEmpty());
         Preconditions.checkArgument(InputValidator.from(email).isValidEmailAddress());
 
-        return new GravatarProfileRequest(Hasher.fromSha256().hash(email));
+        return new GravatarProfileRequest(Hasher.SHA256_HASHER.hash(email));
     }
 
     /**

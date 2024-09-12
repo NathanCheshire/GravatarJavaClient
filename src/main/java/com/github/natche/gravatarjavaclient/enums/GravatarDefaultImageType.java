@@ -1,9 +1,8 @@
 package com.github.natche.gravatarjavaclient.enums;
 
 /**
- * The default image types supported by Gravatar for the image API.
- * These themes are generated per-user based off of the
- * MD5 hash of the user's email address.
+ * The default image types supported by Gravatar for the Avatar API.
+ * These themes are generated per-user based off of the hash of an account's email address.
  */
 public enum GravatarDefaultImageType {
     /**
@@ -63,11 +62,6 @@ public enum GravatarDefaultImageType {
      */
     private final String urlParameterValue;
 
-    /**
-     * Constructs a new GravatarDefaultImageType.
-     *
-     * @param urlParameterValue the URL parameter for this default image type
-     */
     GravatarDefaultImageType(String urlParameterValue) {
         this.urlParameterValue = urlParameterValue;
     }

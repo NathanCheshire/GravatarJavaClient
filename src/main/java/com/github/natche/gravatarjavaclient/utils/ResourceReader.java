@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 /**
- * A class for reading resources such as files or URLs as data, images, etc.
+ * A class for reading resources given a {@link BufferedReader}.
  */
 public final class ResourceReader {
     /**
@@ -18,7 +18,7 @@ public final class ResourceReader {
     );
 
     /**
-     * The path to the resource such as a file path or a URL.
+     * The reader for a resource.
      */
     private final BufferedReader resourceReader;
 
@@ -61,8 +61,8 @@ public final class ResourceReader {
     /**
      * Skips any headers of the encapsulated reader.
      *
-     * @throws IOException          if an IO exception occurs
      * @return this reader
+     * @throws IOException if an IO exception occurs
      */
     public ResourceReader skipHeaders() throws IOException {
         String line;

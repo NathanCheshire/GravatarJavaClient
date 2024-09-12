@@ -22,6 +22,7 @@ enum GravatarAvatarRequestImageSaver {
 
     /**
      * The image formats the current system supports saving to via {@link ImageIO}.
+     * See {@link ImageIO#getWriterFormatNames()}.
      */
     private final ImmutableList<String> SUPPORTED_IMAGE_FORMATS = ImmutableList.copyOf(
             Arrays.stream(ImageIO.getWriterFormatNames())
@@ -31,7 +32,7 @@ enum GravatarAvatarRequestImageSaver {
     );
 
     /**
-     * Saves the image to the given file in the specified format.
+     * Saves the image to the provided file in the specified format.
      *
      * @param file   The file to save the image to
      * @param format The format in which to save the image (must be a valid format)

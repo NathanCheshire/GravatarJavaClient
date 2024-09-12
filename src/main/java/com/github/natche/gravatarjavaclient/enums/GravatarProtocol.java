@@ -7,17 +7,17 @@ public enum GravatarProtocol {
     /**
      * The hypertext transfer protocol.
      */
-    HTTP("http://www.gravatar.com/avatar/"),
+    HTTP("http"),
 
     /**
      * The hypertext transfer protocol secure.
      */
-    HTTPS("https://www.gravatar.com/avatar/");
+    HTTPS("https");
 
     private final String baseUrl;
 
-    GravatarProtocol(String baseUrl) {
-        this.baseUrl = baseUrl;
+    GravatarProtocol(String protocol) {
+        this.baseUrl = protocol + "://www.gravatar.com/avatar/";
     }
 
     /**

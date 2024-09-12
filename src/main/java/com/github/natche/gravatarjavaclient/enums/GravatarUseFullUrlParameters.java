@@ -7,7 +7,7 @@ public enum GravatarUseFullUrlParameters {
     True,
     False;
 
-    boolean bool() {
+    boolean shouldUseFullParams() {
         return this == True;
     }
 }

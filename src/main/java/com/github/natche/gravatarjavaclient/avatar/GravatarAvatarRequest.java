@@ -18,9 +18,9 @@ import java.net.URL;
 import java.util.Objects;
 
 /**
- * A class for building a Gravatar Image request, requesting the resource, and saving
- * to a {@link java.io.File} or a {@link java.awt.image.BufferedImage}.
- * <a href="https://docs.gravatar.com/api/avatars/images/">Image Request API Documentation</a>.
+ * A class for building a Gravatar Avatar request, requesting the resource, and saving
+ * the resource to a {@link java.io.File} or a {@link java.awt.image.BufferedImage}.
+ * See <a href="https://docs.gravatar.com/api/avatars/images/">Avatar image request API Documentation</a>.
  */
 public class GravatarAvatarRequest {
     /**
@@ -29,7 +29,7 @@ public class GravatarAvatarRequest {
     private static final Range<Integer> IMAGE_SIZE_RANGE = Range.closed(1, 2048);
 
     /**
-     * The default length for an image request.
+     * The default length for an Avatar request.
      */
     private static final int DEFAULT_IMAGE_LENGTH = 80;
 
@@ -69,7 +69,7 @@ public class GravatarAvatarRequest {
     private GravatarProtocol protocol = GravatarProtocol.HTTPS;
 
     /**
-     * Whether the full URL parameter names should be used in the request as opposed to the short versions.
+     * Whether to use full URL parameter names in the request as opposed to short versions.
      */
     private GravatarUseFullUrlParameters useFullUrlParameters = GravatarUseFullUrlParameters.False;
 
@@ -81,7 +81,7 @@ public class GravatarAvatarRequest {
     /**
      * Constructs a new GravatarAvatarRequest from the provided hash.
      *
-     * @param hash the MD5 hash pointing to an Avatar
+     * @param hash the hash pointing to an Avatar
      */
     private GravatarAvatarRequest(String hash) {
         this.hash = hash;
@@ -90,7 +90,7 @@ public class GravatarAvatarRequest {
     /**
      * Constructs and returns a new GravatarAvatarRequest.
      *
-     * @param email the  email for this Gravatar Avatar request
+     * @param email the email for this Gravatar Avatar request
      * @throws NullPointerException     if the email is null
      * @throws IllegalArgumentException if the email is empty or not a valid email address
      */
@@ -99,14 +99,14 @@ public class GravatarAvatarRequest {
         Preconditions.checkArgument(!email.trim().isEmpty());
         Preconditions.checkArgument(InputValidator.from(email).isValidEmailAddress());
 
-        String hash = Hasher.fromSha256().hash(email);
+        String hash = Hasher.SHA256_HASHER.hash(email);
         return new GravatarAvatarRequest(hash);
     }
 
     /**
      * Constructs and returns a new GravatarAvatarRequest.
      *
-     * @param hash the  hash for this Gravatar Avatar request
+     * @param hash the hash for this Gravatar Avatar request
      * @throws NullPointerException     if the hash is null
      * @throws IllegalArgumentException if the hash is empty
      */
@@ -128,7 +128,7 @@ public class GravatarAvatarRequest {
 
     /**
      * Sets the default image URL.
-     * Note, this resets {@link #defaultImageType} to {@code null} if this method is invoked.
+     * Note, {@link #defaultImageType} is set to {@code null} if this method is invoked.
      * <p>
      * Conditions which must be met for the Gravatar API endpoint to return a default image:
      * <ul>
@@ -148,7 +148,7 @@ public class GravatarAvatarRequest {
     @CanIgnoreReturnValue
     public GravatarAvatarRequest setDefaultImageUrl(String defaultImageUrl) {
         Preconditions.checkNotNull(defaultImageUrl);
-        Preconditions.checkArgument(!defaultImageUrl.isEmpty());
+        Preconditions.checkArgument(!defaultImageUrl.trim().isEmpty());
         Preconditions.checkArgument(InputValidator.from(defaultImageUrl).isValidImageUrl());
 
         this.defaultImageUrl = defaultImageUrl;
@@ -309,7 +309,7 @@ public class GravatarAvatarRequest {
      *
      * @param imageLength the image length the image of this request should return
      * @return this builder
-     * @throws IllegalArgumentException if the provided image length is not in the range [1, 2048].
+     * @throws IllegalArgumentException if the provided image length is not in the range {@link #IMAGE_SIZE_RANGE}
      */
     public GravatarAvatarRequest setSize(int imageLength) {
         Preconditions.checkArgument(IMAGE_SIZE_RANGE.contains(imageLength));
@@ -318,9 +318,9 @@ public class GravatarAvatarRequest {
     }
 
     /**
-     * Returns the image length the image of this request should return.
+     * Returns the length of the image this request should return.
      *
-     * @return the image length the image of this request should return
+     * @return the length of the image this request should return
      */
     public int getSize() {
         return this.size;
@@ -384,9 +384,9 @@ public class GravatarAvatarRequest {
     }
 
     /**
-     * Returns a string representation of this GravatarAvatarRequest.
+     * Returns a string representation of this.
      *
-     * @return a string representation of this GravatarAvatarRequest
+     * @return a string representation of this
      */
     @Override
     public String toString() {
