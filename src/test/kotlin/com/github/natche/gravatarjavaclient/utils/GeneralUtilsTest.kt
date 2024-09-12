@@ -70,47 +70,6 @@ internal class GeneralUtilsTest {
     }
 
     /**
-     * Tests for the hash input method.
-     */
-    @Test
-    @Suppress("SpellCheckingInspection")
-    fun testHashInput() {
-        assertThrows(NullPointerException::class.java)
-        { GeneralUtils.hashInput(null, null) }
-        assertThrows(NullPointerException::class.java)
-        { GeneralUtils.hashInput("", null) }
-        assertThrows(IllegalArgumentException::class.java)
-        { GeneralUtils.hashInput("", "") }
-        assertThrows(
-            GravatarJavaClientException::class.java
-        ) { GeneralUtils.hashInput("", "asdf") }
-        assertEquals(
-            "d41d8cd98f00b204e9800998ecf8427e",
-            GeneralUtils.hashInput("", "MD5")
-        )
-        assertEquals(
-            "da39a3ee5e6b4b0d3255bfef95601890afd80709",
-            GeneralUtils.hashInput("", "SHA1")
-        )
-        assertEquals(
-            "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            GeneralUtils.hashInput("", "SHA256")
-        )
-        assertEquals(
-            "2bf1b7a19bcad06a8e894d7373a4cfc7",
-            GeneralUtils.hashInput("nathan.vincent.2.718@gmail.com", "MD5")
-        )
-        assertEquals(
-            "f84099a5bbef987de2f69b2caf96536d2c76fbf0",
-            GeneralUtils.hashInput("nathan.vincent.2.718@gmail.com", "SHA1")
-        )
-        assertEquals(
-            "c83512d02db256cc5afb78376147ea0f2ea02e6a4e3399b980dea3bef9fc6168",
-            GeneralUtils.hashInput("nathan.vincent.2.718@gmail.com", "SHA256")
-        )
-    }
-
-    /**
      * Tests for the read url method.
      */
     @Test

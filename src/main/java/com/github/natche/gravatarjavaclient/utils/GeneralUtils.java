@@ -146,32 +146,14 @@ public final class GeneralUtils {
         Preconditions.checkArgument(!emailAddress.isEmpty());
         Preconditions.checkArgument(InputValidator.from(emailAddress).isValidEmailAddress());
 
-        return hashInput(emailAddress.trim().toLowerCase(), HASHING_ALGORITHM);
-    }
-
-    /**
-     * Hashes the provided input using the provided algorithm.
-     *
-     * @param input            the input to hash
-     * @param hashingAlgorithm the hashing algorithm to use
-     * @return the hash for the provided input and hashing algorithm
-     * @throws NullPointerException        if the provided input or algorithm is null
-     * @throws IllegalArgumentException    if the provided algorithm is empty
-     * @throws GravatarJavaClientException if the provided hashing algorithm does not exist
-     */
-    static String hashInput(String input, String hashingAlgorithm) {
-        Preconditions.checkNotNull(input);
-        Preconditions.checkNotNull(hashingAlgorithm);
-        Preconditions.checkArgument(!hashingAlgorithm.isEmpty());
-
         MessageDigest messageDigest;
         try {
-            messageDigest = MessageDigest.getInstance(hashingAlgorithm);
+            messageDigest = MessageDigest.getInstance(HASHING_ALGORITHM);
         } catch (NoSuchAlgorithmException e) {
             throw new GravatarJavaClientException(e.getMessage());
         }
 
-        CharBuffer charBuffer = CharBuffer.wrap(input.trim().toLowerCase().toCharArray());
+        CharBuffer charBuffer = CharBuffer.wrap(emailAddress.trim().toLowerCase().toCharArray());
         ByteBuffer byteBuffer = StandardCharsets.UTF_8.encode(charBuffer);
 
         byte[] bytes = Arrays.copyOfRange(byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());
