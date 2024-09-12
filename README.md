@@ -30,7 +30,55 @@ library also follows [Effective Java](https://www.amazon.com/Effective-Java-Josh
 The `GravatarAvatarRequest` handles all needs related to the `avatar` API whilst the `GravatarProfileRequest` handles
 all needs related to the `profile` request.
 
-todo section on builder and methods for each
+For requesting Avatar images:
+
+```java
+// Get a buffered image
+BufferedImage bufferedImage=GravatarAvatarRequest.fromEmail("your.email@email.com")
+        .setSize(800)
+        .setRating(GravatarRating.R)
+        .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+        .getBufferedImage();
+
+        // Get an image icon
+        ImageIcon imageIcon=GravatarAvatarRequest.fromEmail("your.email@email.com")
+        .setSize(800)
+        .setRating(GravatarRating.R)
+        .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+        .getImageIcon();
+
+        // Save to a file
+        boolean wasSaved=GravatarAvatarRequest.fromEmail("your.email@email.com")
+        .setSize(800)
+        .setRating(GravatarRating.R)
+        .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+        .saveTo(new File("output.png"),"png");
+```
+
+For requesting Profiles:
+
+```java
+// Get a profile
+GravatarProfile profile=GravatarProfileRequest.fromEmail("your.email@email.com")
+        .getProfile();
+
+        // Save to a file
+        boolean wasSaved=GravatarProfileRequest.fromEmail("your.email@email.com")
+        .writeToFile(new File("MyProfile.json"));
+
+        // Get an authenticated profile
+        GravatarProfileTokenProvider provider=new GravatarProfileTokenProvider(
+        ()->new byte[]{0x12,0x34,0x56,0x78},"primaryAuthenticator");
+        GravatarProfile profileWithAuthenticatedFields=GravatarProfileRequest.fromEmail("your.email@email.com")
+        .setTokenSupplier(provider)
+        .getProfile();
+```
+
+Because `GravatarProfileRequest` accepts a `GravatarProfileTokenProvider` instead of a literal string, you as the
+developer have the ability to prevent token strings from appearing in the string pool if you deem it to be worth
+the effort. Instead of simply returning a string from the provider, the provider returns a byte array which allows
+you to grab your token using a method that does not create a string and pass it along to the `GravatarProfileRequest`
+to use. The implementation of the `GravatarProfileRequest` class ensures that the token is never converted to a string.
 
 ## Contributing
 
