@@ -2,7 +2,7 @@ package com.github.natche.gravatarjavaclient.avatar
 
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException
 import com.google.common.collect.ImmutableList
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -38,21 +38,21 @@ class GravatarAvatarRequestImageSaverTest {
      */
     @Test
     fun testSaveTo() {
-        Assertions.assertThrows(
+        assertThrows(
             NullPointerException::class.java
         ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(null, null, null) }
         val mockImage = Mockito.mock(BufferedImage::class.java)
-        Assertions.assertThrows(
+        assertThrows(
             NullPointerException::class.java
         ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(mockImage, null, null) }
         val mockFile = Mockito.mock(File::class.java)
-        Assertions.assertThrows(
+        assertThrows(
             NullPointerException::class.java
         ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(mockImage, mockFile, null) }
-        Assertions.assertThrows(
+        assertThrows(
             IllegalArgumentException::class.java
         ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(mockImage, File("."), null) }
-        Assertions.assertThrows(
+        assertThrows(
             GravatarJavaClientException::class.java
         ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(mockImage, mockFile, "") }
     }

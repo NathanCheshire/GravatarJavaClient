@@ -4,7 +4,6 @@ import com.github.natche.gravatarjavaclient.TestingImageUrls
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException
 import com.github.natche.gravatarjavaclient.utils.GeneralUtils.readChunkedBody
 import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import java.awt.image.BufferedImage
 import java.io.BufferedReader
@@ -65,8 +64,7 @@ internal class GeneralUtilsTest {
         { GeneralUtils.emailAddressToGravatarHash("invalid") }
         assertThrows(IllegalArgumentException::class.java)
         { GeneralUtils.emailAddressToGravatarHash("invalid@asdf") }
-        assertDoesNotThrow<String>
-        { GeneralUtils.emailAddressToGravatarHash("valid@domain.com") }
+        assertDoesNotThrow { GeneralUtils.emailAddressToGravatarHash("valid@domain.com") }
         assertEquals(
             "2bf1b7a19bcad06a8e894d7373a4cfc7",
             GeneralUtils.emailAddressToGravatarHash("nathan.vincent.2.718@gmail.com")
@@ -95,8 +93,7 @@ internal class GeneralUtilsTest {
         { GeneralUtils.emailAddressToProfilesApiHash("   ") }
         assertThrows(IllegalArgumentException::class.java)
         { GeneralUtils.emailAddressToProfilesApiHash("invalid.email") }
-        assertDoesNotThrow<String>
-        { GeneralUtils.emailAddressToProfilesApiHash("valid@domain.com") }
+        assertDoesNotThrow { GeneralUtils.emailAddressToProfilesApiHash("valid@domain.com") }
         assertEquals(
             "8e50ba67083844f6c70829f2ad5e29eb6fff55123f2b34ee63ae9eb9adccb4b4",
             GeneralUtils.emailAddressToProfilesApiHash("valid.email@gmail.com")
@@ -155,8 +152,7 @@ internal class GeneralUtilsTest {
         { GeneralUtils.readUrl("") }
         assertThrows(GravatarJavaClientException::class.java)
         { GeneralUtils.readUrl("invalid url") }
-        assertDoesNotThrow<String>
-        { GeneralUtils.readUrl("https://www.google.com") }
+        assertDoesNotThrow { GeneralUtils.readUrl("https://www.google.com") }
     }
 
     /**
@@ -166,13 +162,13 @@ internal class GeneralUtilsTest {
     fun testIsValidFilename() {
         assertThrows(NullPointerException::class.java) { GeneralUtils.isValidFilename(null) }
         assertThrows(IllegalArgumentException::class.java) { GeneralUtils.isValidFilename("") }
-        assertDoesNotThrow<Boolean> { GeneralUtils.isValidFilename("filename") }
+        assertDoesNotThrow { GeneralUtils.isValidFilename("filename") }
         assertTrue(GeneralUtils.isValidFilename("filename"))
         assertTrue(GeneralUtils.isValidFilename("my_filename_123456789"))
         assertTrue(GeneralUtils.isValidFilename("my_filename_123456789.txt"))
         assertTrue(GeneralUtils.isValidFilename("my_filename_123456789...txt"))
         assertFalse(GeneralUtils.isValidFilename("$%^&*()"))
-        assertFalse(GeneralUtils.isValidFilename("<>:/"))
+        assertFalse(GeneralUtils.isValidFilename("1>:/"))
     }
 
     /**
@@ -213,6 +209,7 @@ internal class GeneralUtilsTest {
             override fun read(charArray: CharArray, off: Int, len: Int): Int {
                 return -1
             }
+
             override fun close() {}
         })
         assertEquals("", readChunkedBody(BufferedReader(nullChunkSizeStream)))

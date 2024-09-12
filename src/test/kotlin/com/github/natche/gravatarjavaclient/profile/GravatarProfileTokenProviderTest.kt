@@ -1,6 +1,6 @@
 package com.github.natche.gravatarjavaclient.profile
 
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.nio.charset.StandardCharsets
 
@@ -13,19 +13,19 @@ class GravatarProfileTokenProviderTest internal constructor() {
      */
     @Test
     fun testCreation() {
-        Assertions.assertThrows(
+        assertThrows(
             NullPointerException::class.java
         ) { GravatarProfileTokenProvider(null, null) }
-        Assertions.assertThrows(
+        assertThrows(
             NullPointerException::class.java
         ) { GravatarProfileTokenProvider({ ByteArray(0) }, null) }
-        Assertions.assertThrows(
+        assertThrows(
             IllegalArgumentException::class.java
         ) { GravatarProfileTokenProvider({ ByteArray(0) }, "") }
-        Assertions.assertThrows(
+        assertThrows(
             IllegalArgumentException::class.java
         ) { GravatarProfileTokenProvider({ ByteArray(0) }, "    ") }
-        Assertions.assertDoesNotThrow<GravatarProfileTokenProvider> {
+        assertDoesNotThrow {
             GravatarProfileTokenProvider(
                 { ByteArray(0) }, "source"
             )
@@ -39,7 +39,7 @@ class GravatarProfileTokenProviderTest internal constructor() {
     fun testGetToken() {
         val bytes = "PostMalone".toByteArray(StandardCharsets.US_ASCII)
         val provider = GravatarProfileTokenProvider({ bytes }, "source")
-        Assertions.assertEquals(bytes, provider.token)
+        assertEquals(bytes, provider.token)
     }
 
     /**
@@ -50,8 +50,8 @@ class GravatarProfileTokenProviderTest internal constructor() {
         val bytes = "PostMalone".toByteArray(StandardCharsets.US_ASCII)
         val provider = GravatarProfileTokenProvider({ bytes }, "source")
         val nonEqualProvider = GravatarProfileTokenProvider({ ByteArray(0) }, "another source")
-        Assertions.assertEquals("GravatarProfileTokenProvider{source=\"source\"}", provider.toString())
-        Assertions.assertEquals(
+        assertEquals("GravatarProfileTokenProvider{source=\"source\"}", provider.toString())
+        assertEquals(
             "GravatarProfileTokenProvider{source=\"another source\"}",
             nonEqualProvider.toString()
         )
@@ -66,10 +66,10 @@ class GravatarProfileTokenProviderTest internal constructor() {
         val provider = GravatarProfileTokenProvider({ bytes }, "source")
         val equalProvider = GravatarProfileTokenProvider({ bytes }, "source")
         val nonEqualProvider = GravatarProfileTokenProvider({ ByteArray(0) }, "another source")
-        Assertions.assertEquals(provider, provider)
-        Assertions.assertEquals(provider, equalProvider)
-        Assertions.assertNotEquals(provider, nonEqualProvider)
-        Assertions.assertNotEquals(provider, Any())
+        assertEquals(provider, provider)
+        assertEquals(provider, equalProvider)
+        assertNotEquals(provider, nonEqualProvider)
+        assertNotEquals(provider, Any())
     }
 
     /**
@@ -81,9 +81,9 @@ class GravatarProfileTokenProviderTest internal constructor() {
         val provider = GravatarProfileTokenProvider({ bytes }, "source")
         val equalProvider = GravatarProfileTokenProvider({ bytes }, "source")
         val nonEqualProvider = GravatarProfileTokenProvider({ ByteArray(0) }, "another source")
-        Assertions.assertEquals(-896505829, provider.hashCode())
-        Assertions.assertEquals(-896505829, equalProvider.hashCode())
-        Assertions.assertEquals(1165062104, nonEqualProvider.hashCode())
-        Assertions.assertNotEquals(equalProvider.hashCode(), nonEqualProvider.hashCode())
+        assertEquals(-896505829, provider.hashCode())
+        assertEquals(-896505829, equalProvider.hashCode())
+        assertEquals(1165062104, nonEqualProvider.hashCode())
+        assertNotEquals(equalProvider.hashCode(), nonEqualProvider.hashCode())
     }
 }

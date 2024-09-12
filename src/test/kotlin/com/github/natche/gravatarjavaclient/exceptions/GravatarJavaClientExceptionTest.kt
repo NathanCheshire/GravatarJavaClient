@@ -14,8 +14,8 @@ internal class GravatarJavaClientExceptionTest {
      */
     @Test
     fun testCreation() {
-        assertDoesNotThrow<GravatarJavaClientException> { GravatarJavaClientException("Exception") }
-        assertDoesNotThrow<GravatarJavaClientException> { GravatarJavaClientException(Exception("Exception")) }
+        assertDoesNotThrow { GravatarJavaClientException("Exception") }
+        assertDoesNotThrow { GravatarJavaClientException(Exception("Exception")) }
         assertThrows(GravatarJavaClientException::class.java) { throw GravatarJavaClientException("Exception") }
         assertThrows(GravatarJavaClientException::class.java) {
             throw GravatarJavaClientException(

@@ -28,8 +28,7 @@ class GravatarCryptoWalletAddressTest internal constructor() {
         assertThrows(
             IllegalArgumentException::class.java
         ) { GravatarCryptoWalletAddress("label", "  ") }
-        assertDoesNotThrow<GravatarCryptoWalletAddress>
-        { GravatarCryptoWalletAddress("label", "address") }
+        assertDoesNotThrow { GravatarCryptoWalletAddress("label", "address") }
     }
 
     /**

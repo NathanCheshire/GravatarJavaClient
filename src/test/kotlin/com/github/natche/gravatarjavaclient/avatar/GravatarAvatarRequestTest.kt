@@ -3,15 +3,13 @@ package com.github.natche.gravatarjavaclient.avatar
 import com.github.natche.gravatarjavaclient.TestingImageUrls
 import com.github.natche.gravatarjavaclient.enums.*
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mockito
 import org.mockito.Spy
 import org.mockito.junit.jupiter.MockitoExtension
-import java.awt.image.BufferedImage
 import java.io.File
-import javax.swing.ImageIcon
 
 /**
  * Tests for [GravatarAvatarRequest]s.
@@ -35,18 +33,17 @@ internal constructor() {
      */
     @Test
     fun testCreationFromEmail() {
-        Assertions.assertThrows(NullPointerException::class.java)
+        assertThrows(NullPointerException::class.java)
         { GravatarAvatarRequest.fromEmail(null) }
-        Assertions.assertThrows(IllegalArgumentException::class.java)
+        assertThrows(IllegalArgumentException::class.java)
         { GravatarAvatarRequest.fromEmail("") }
-        Assertions.assertThrows(IllegalArgumentException::class.java)
+        assertThrows(IllegalArgumentException::class.java)
         { GravatarAvatarRequest.fromEmail("    ") }
-        Assertions.assertThrows(IllegalArgumentException::class.java)
+        assertThrows(IllegalArgumentException::class.java)
         { GravatarAvatarRequest.fromEmail("invalid.email") }
-        Assertions.assertThrows(IllegalArgumentException::class.java)
+        assertThrows(IllegalArgumentException::class.java)
         { GravatarAvatarRequest.fromEmail("invalid.email@email") }
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { GravatarAvatarRequest.fromEmail("valid.email@email.com") }
+        assertDoesNotThrow { GravatarAvatarRequest.fromEmail("valid.email@email.com") }
     }
 
     /**
@@ -54,13 +51,13 @@ internal constructor() {
      */
     @Test
     fun testCreationFromHash() {
-        Assertions.assertThrows(NullPointerException::class.java)
+        assertThrows(NullPointerException::class.java)
         { GravatarAvatarRequest.fromHash(null) }
-        Assertions.assertThrows(IllegalArgumentException::class.java)
+        assertThrows(IllegalArgumentException::class.java)
         { GravatarAvatarRequest.fromHash("") }
-        Assertions.assertThrows(IllegalArgumentException::class.java)
+        assertThrows(IllegalArgumentException::class.java)
         { GravatarAvatarRequest.fromHash("    ") }
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest> { GravatarAvatarRequest.fromHash("some hash") }
+        assertDoesNotThrow { GravatarAvatarRequest.fromHash("some hash") }
     }
 
     /**
@@ -70,110 +67,90 @@ internal constructor() {
     fun testAccessorsAndMutators() {
         // Hash
         val request = GravatarAvatarRequest.fromEmail("valid.email@email.com")
-        Assertions.assertEquals("1f60940c52efc3c031b29d6e87a01ed9", request.hash)
+        assertEquals("1f60940c52efc3c031b29d6e87a01ed9", request.hash)
 
         // Default image URL
-        Assertions.assertThrows(NullPointerException::class.java) { request.defaultImageUrl = null }
-        Assertions.assertThrows(IllegalArgumentException::class.java) { request.defaultImageUrl = "" }
-        Assertions.assertThrows(IllegalArgumentException::class.java) { request.defaultImageUrl = "   " }
-        Assertions.assertThrows(IllegalArgumentException::class.java) { request.defaultImageUrl = "invalid.url" }
-        Assertions.assertThrows(IllegalArgumentException::class.java) {
+        assertThrows(NullPointerException::class.java) { request.defaultImageUrl = null }
+        assertThrows(IllegalArgumentException::class.java) { request.defaultImageUrl = "" }
+        assertThrows(IllegalArgumentException::class.java) { request.defaultImageUrl = "   " }
+        assertThrows(IllegalArgumentException::class.java) { request.defaultImageUrl = "invalid.url" }
+        assertThrows(IllegalArgumentException::class.java) {
             request.defaultImageUrl = "https://not.valid.url.com"
         }
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setDefaultImageUrl(TestingImageUrls.foreignImageUrl) }
-        Assertions.assertEquals(TestingImageUrls.foreignImageUrl, request.defaultImageUrl)
+        assertDoesNotThrow { request.defaultImageUrl = TestingImageUrls.foreignImageUrl }
+        assertEquals(TestingImageUrls.foreignImageUrl, request.defaultImageUrl)
 
         // Full URL parameters
-        Assertions.assertThrows(NullPointerException::class.java)
+        assertThrows(NullPointerException::class.java)
         { request.useFullUrlParameters = null }
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest> {
-            request.setUseFullUrlParameters(
-                GravatarUseFullUrlParameters.False
-            )
+        assertDoesNotThrow {
+            request.useFullUrlParameters = GravatarUseFullUrlParameters.False
         }
-        Assertions.assertEquals(GravatarUseFullUrlParameters.False, request.useFullUrlParameters)
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest> {
-            request.setUseFullUrlParameters(
-                GravatarUseFullUrlParameters.True
-            )
-        }
-        Assertions.assertEquals(GravatarUseFullUrlParameters.True, request.useFullUrlParameters)
+        assertEquals(GravatarUseFullUrlParameters.False, request.useFullUrlParameters)
+        assertDoesNotThrow { request.useFullUrlParameters = GravatarUseFullUrlParameters.True }
+        assertEquals(GravatarUseFullUrlParameters.True, request.useFullUrlParameters)
 
         // Protocol
-        Assertions.assertThrows(NullPointerException::class.java)
+        assertThrows(NullPointerException::class.java)
         { request.protocol = null }
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest> { request.setProtocol(GravatarProtocol.HTTP) }
-        Assertions.assertEquals(GravatarProtocol.HTTP, request.protocol)
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setProtocol(GravatarProtocol.HTTPS) }
-        Assertions.assertEquals(GravatarProtocol.HTTPS, request.protocol)
+        assertDoesNotThrow { request.protocol = GravatarProtocol.HTTP }
+        assertEquals(GravatarProtocol.HTTP, request.protocol)
+        assertDoesNotThrow { request.protocol = GravatarProtocol.HTTPS }
+        assertEquals(GravatarProtocol.HTTPS, request.protocol)
 
         // Default image type
-        Assertions.assertThrows(NullPointerException::class.java) { request.defaultImageType = null }
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setDefaultImageType(GravatarDefaultImageType._404) }
-        Assertions.assertEquals(GravatarDefaultImageType._404, request.defaultImageType)
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setDefaultImageType(GravatarDefaultImageType.BLANK) }
-        Assertions.assertEquals(GravatarDefaultImageType.BLANK, request.defaultImageType)
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setDefaultImageType(GravatarDefaultImageType.IDENT_ICON) }
-        Assertions.assertEquals(GravatarDefaultImageType.IDENT_ICON, request.defaultImageType)
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setDefaultImageType(GravatarDefaultImageType.MONSTER_ID) }
-        Assertions.assertEquals(GravatarDefaultImageType.MONSTER_ID, request.defaultImageType)
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setDefaultImageType(GravatarDefaultImageType.MYSTERY_PERSON) }
-        Assertions.assertEquals(GravatarDefaultImageType.MYSTERY_PERSON, request.defaultImageType)
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setDefaultImageType(GravatarDefaultImageType.RETRO) }
-        Assertions.assertEquals(GravatarDefaultImageType.RETRO, request.defaultImageType)
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setDefaultImageType(GravatarDefaultImageType.ROBO_HASH) }
-        Assertions.assertEquals(GravatarDefaultImageType.ROBO_HASH, request.defaultImageType)
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setDefaultImageType(GravatarDefaultImageType.WAVATAR) }
-        Assertions.assertEquals(GravatarDefaultImageType.WAVATAR, request.defaultImageType)
+        assertThrows(NullPointerException::class.java) { request.defaultImageType = null }
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType._404 }
+        assertEquals(GravatarDefaultImageType._404, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.BLANK }
+        assertEquals(GravatarDefaultImageType.BLANK, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.IDENT_ICON }
+        assertEquals(GravatarDefaultImageType.IDENT_ICON, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.MONSTER_ID }
+        assertEquals(GravatarDefaultImageType.MONSTER_ID, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.MYSTERY_PERSON }
+        assertEquals(GravatarDefaultImageType.MYSTERY_PERSON, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.RETRO }
+        assertEquals(GravatarDefaultImageType.RETRO, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.ROBO_HASH }
+        assertEquals(GravatarDefaultImageType.ROBO_HASH, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.WAVATAR }
+        assertEquals(GravatarDefaultImageType.WAVATAR, request.defaultImageType)
 
         // Force default image
-        Assertions.assertThrows(NullPointerException::class.java) { request.setForceDefaultImage(null) }
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setForceDefaultImage(GravatarForceDefaultImage.Force) }
-        Assertions.assertEquals(GravatarForceDefaultImage.Force, request.shouldForceDefaultImage())
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setForceDefaultImage(GravatarForceDefaultImage.DoNotForce) }
-        Assertions.assertEquals(GravatarForceDefaultImage.DoNotForce, request.shouldForceDefaultImage())
+        assertThrows(NullPointerException::class.java) { request.setForceDefaultImage(null) }
+        assertDoesNotThrow { request.setForceDefaultImage(GravatarForceDefaultImage.Force) }
+        assertEquals(GravatarForceDefaultImage.Force, request.shouldForceDefaultImage())
+        assertDoesNotThrow { request.setForceDefaultImage(GravatarForceDefaultImage.DoNotForce) }
+        assertEquals(GravatarForceDefaultImage.DoNotForce, request.shouldForceDefaultImage())
 
         // Rating
-        Assertions.assertThrows(NullPointerException::class.java) { request.rating = null }
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest> { request.setRating(GravatarRating.G) }
-        Assertions.assertEquals(GravatarRating.G, request.rating)
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest> { request.setRating(GravatarRating.PG) }
-        Assertions.assertEquals(GravatarRating.PG, request.rating)
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest> { request.setRating(GravatarRating.R) }
-        Assertions.assertEquals(GravatarRating.R, request.rating)
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest> { request.setRating(GravatarRating.X) }
-        Assertions.assertEquals(GravatarRating.X, request.rating)
+        assertThrows(NullPointerException::class.java) { request.rating = null }
+        assertDoesNotThrow { request.rating = GravatarRating.G }
+        assertEquals(GravatarRating.G, request.rating)
+        assertDoesNotThrow { request.rating = GravatarRating.PG }
+        assertEquals(GravatarRating.PG, request.rating)
+        assertDoesNotThrow { request.rating = GravatarRating.R }
+        assertEquals(GravatarRating.R, request.rating)
+        assertDoesNotThrow { request.rating = GravatarRating.X }
+        assertEquals(GravatarRating.X, request.rating)
 
         // Append JPG suffix
-        Assertions.assertThrows(NullPointerException::class.java) { request.shouldAppendJpgSuffix = null }
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True) }
-        Assertions.assertEquals(GravatarUseJpgSuffix.True, request.shouldAppendJpgSuffix)
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest>
-        { request.setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False) }
-        Assertions.assertEquals(GravatarUseJpgSuffix.False, request.shouldAppendJpgSuffix)
+        assertThrows(NullPointerException::class.java) { request.shouldAppendJpgSuffix = null }
+        assertDoesNotThrow { request.shouldAppendJpgSuffix = GravatarUseJpgSuffix.True }
+        assertEquals(GravatarUseJpgSuffix.True, request.shouldAppendJpgSuffix)
+        assertDoesNotThrow { request.shouldAppendJpgSuffix = GravatarUseJpgSuffix.False }
+        assertEquals(GravatarUseJpgSuffix.False, request.shouldAppendJpgSuffix)
 
         // Size
-        Assertions.assertThrows(IllegalArgumentException::class.java) { request.size = -10 }
-        Assertions.assertThrows(IllegalArgumentException::class.java) { request.size = 0 }
-        Assertions.assertThrows(IllegalArgumentException::class.java) { request.size = 2049 }
-        Assertions.assertThrows(IllegalArgumentException::class.java) { request.size = 2080 }
-        Assertions.assertThrows(IllegalArgumentException::class.java) { request.size = 4000 }
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest> { request.setSize(1) }
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest> { request.setSize(200) }
-        Assertions.assertDoesNotThrow<GravatarAvatarRequest> { request.setSize(2048) }
+        assertThrows(IllegalArgumentException::class.java) { request.size = -10 }
+        assertThrows(IllegalArgumentException::class.java) { request.size = 0 }
+        assertThrows(IllegalArgumentException::class.java) { request.size = 2049 }
+        assertThrows(IllegalArgumentException::class.java) { request.size = 2080 }
+        assertThrows(IllegalArgumentException::class.java) { request.size = 4000 }
+        assertDoesNotThrow { request.size = 1 }
+        assertDoesNotThrow { request.size = 200 }
+        assertDoesNotThrow { request.size = 2048 }
     }
 
     /**
@@ -191,7 +168,7 @@ internal constructor() {
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
             .requestUrl
-        Assertions.assertEquals(
+        assertEquals(
             "http://www.gravatar.com/avatar/80c44e7f3f5082023ede351d396844f5.jpg"
                     + "?s=2000&r=x&d=https://picsum.photos/seed/gravatar-java-client/200/300&f=y", fromEmailUrl
         )
@@ -204,7 +181,7 @@ internal constructor() {
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
             .requestUrl
-        Assertions.assertEquals(
+        assertEquals(
             "https://www.gravatar.com/avatar/80c44e7f3f5082023ede351d396844f5"
                     + "?size=1776&rating=r&default=wavatar", fromHashUrl
         )
@@ -216,7 +193,7 @@ internal constructor() {
             .setProtocol(GravatarProtocol.HTTP)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
-        Assertions.assertThrows(GravatarJavaClientException::class.java) { invalidDefaultUrl.requestUrl }
+        assertThrows(GravatarJavaClientException::class.java) { invalidDefaultUrl.requestUrl }
     }
 
     /**
@@ -250,8 +227,8 @@ internal constructor() {
             .setProtocol(GravatarProtocol.HTTPS)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
-        Assertions.assertEquals(fromEmail.hashCode(), equalToFromEmail.hashCode())
-        Assertions.assertNotEquals(fromEmail.hashCode(), fromHash.hashCode())
+        assertEquals(fromEmail.hashCode(), equalToFromEmail.hashCode())
+        assertNotEquals(fromEmail.hashCode(), fromHash.hashCode())
     }
 
     /**
@@ -285,57 +262,57 @@ internal constructor() {
             .setProtocol(GravatarProtocol.HTTPS)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
-        Assertions.assertEquals(fromEmail, fromEmail)
-        Assertions.assertEquals(fromEmail, equalToFromEmail)
-        Assertions.assertNotEquals(fromEmail, fromHash)
-        Assertions.assertNotEquals(fromEmail, Any())
+        assertEquals(fromEmail, fromEmail)
+        assertEquals(fromEmail, equalToFromEmail)
+        assertNotEquals(fromEmail, fromHash)
+        assertNotEquals(fromEmail, Any())
 
         // Tests for Codecov to report 100%
         val hashOne = GravatarAvatarRequest.fromHash("one")
         val hashTwo = GravatarAvatarRequest.fromHash("two")
-        Assertions.assertNotEquals(hashOne, hashTwo)
+        assertNotEquals(hashOne, hashTwo)
         val jpgSuffix = GravatarAvatarRequest.fromHash("one")
         val differentJpgSuffix = GravatarAvatarRequest.fromHash("one")
         jpgSuffix.shouldAppendJpgSuffix = GravatarUseJpgSuffix.True
         differentJpgSuffix.shouldAppendJpgSuffix = GravatarUseJpgSuffix.False
-        Assertions.assertNotEquals(jpgSuffix, differentJpgSuffix)
+        assertNotEquals(jpgSuffix, differentJpgSuffix)
         val size = GravatarAvatarRequest.fromHash("one")
         val differentSize = GravatarAvatarRequest.fromHash("one")
         size.size = 100
         differentSize.size = 101
-        Assertions.assertNotEquals(size, differentSize)
+        assertNotEquals(size, differentSize)
         differentSize.size = 100
-        Assertions.assertEquals(size, differentSize)
+        assertEquals(size, differentSize)
         val force = GravatarAvatarRequest.fromHash("one")
         val doNotForce = GravatarAvatarRequest.fromHash("one")
         force.setForceDefaultImage(GravatarForceDefaultImage.Force)
         doNotForce.setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
-        Assertions.assertNotEquals(force, doNotForce)
+        assertNotEquals(force, doNotForce)
         val roboHash = GravatarAvatarRequest.fromHash("one")
         val wavatar = GravatarAvatarRequest.fromHash("one")
         roboHash.defaultImageType = GravatarDefaultImageType.ROBO_HASH
         wavatar.defaultImageType = GravatarDefaultImageType.WAVATAR
-        Assertions.assertNotEquals(roboHash, wavatar)
+        assertNotEquals(roboHash, wavatar)
         val http = GravatarAvatarRequest.fromHash("one")
         val https = GravatarAvatarRequest.fromHash("one")
         http.protocol = GravatarProtocol.HTTP
         https.protocol = GravatarProtocol.HTTPS
-        Assertions.assertNotEquals(http, https)
+        assertNotEquals(http, https)
         val notFullParams = GravatarAvatarRequest.fromHash("one")
         val fullParams = GravatarAvatarRequest.fromHash("one")
         notFullParams.useFullUrlParameters = GravatarUseFullUrlParameters.False
         fullParams.useFullUrlParameters = GravatarUseFullUrlParameters.True
-        Assertions.assertNotEquals(notFullParams, fullParams)
+        assertNotEquals(notFullParams, fullParams)
         val foreignImage = GravatarAvatarRequest.fromHash("one")
         val otherForeignImage = GravatarAvatarRequest.fromHash("one")
         foreignImage.defaultImageUrl = TestingImageUrls.foreignImageUrl
         otherForeignImage.defaultImageUrl = TestingImageUrls.anotherForeignImageUrl
-        Assertions.assertNotEquals(foreignImage, otherForeignImage)
+        assertNotEquals(foreignImage, otherForeignImage)
         val gRating = GravatarAvatarRequest.fromHash("one")
         val pgRating = GravatarAvatarRequest.fromHash("one")
         gRating.rating = GravatarRating.G
         pgRating.rating = GravatarRating.PG
-        Assertions.assertNotEquals(gRating, pgRating)
+        assertNotEquals(gRating, pgRating)
     }
 
     /**
@@ -360,14 +337,14 @@ internal constructor() {
             .setProtocol(GravatarProtocol.HTTPS)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
-        Assertions.assertEquals(
+        assertEquals(
             "GravatarAvatarRequest{hash=\"80c44e7f3f5082023ede351d396844f5\", size=2000,"
                     + " rating=X, forceDefaultImage=Force, defaultImageType=null, protocol=HTTP,"
                     + " useFullUrlParameters=False,"
                     + " defaultImageUrl=\"https://picsum.photos/seed/gravatar-java-client/200/300\", }",
             fromEmail.toString()
         )
-        Assertions.assertEquals(
+        assertEquals(
             "GravatarAvatarRequest{hash=\"80c44e7f3f5082023ede351d396844f5\", size=1776,"
                     + " rating=R, forceDefaultImage=DoNotForce, defaultImageType=WAVATAR, protocol=HTTPS,"
                     + " useFullUrlParameters=True, defaultImageUrl=\"null\", }", fromHash.toString()
@@ -396,12 +373,12 @@ internal constructor() {
             .setProtocol(GravatarProtocol.HTTPS)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
-        Assertions.assertDoesNotThrow<ImageIcon> { fromEmail.imageIcon }
-        Assertions.assertNotNull(fromEmail.imageIcon)
-        Assertions.assertDoesNotThrow<ImageIcon> { fromHash.imageIcon }
-        Assertions.assertNotNull(fromHash.imageIcon)
+        assertDoesNotThrow { fromEmail.imageIcon }
+        assertNotNull(fromEmail.imageIcon)
+        assertDoesNotThrow { fromHash.imageIcon }
+        assertNotNull(fromHash.imageIcon)
         Mockito.doReturn("invalid://url").`when`(spiedRequest).requestUrl
-        Assertions.assertThrows(GravatarJavaClientException::class.java) { spiedRequest.imageIcon }
+        assertThrows(GravatarJavaClientException::class.java) { spiedRequest.imageIcon }
     }
 
     /**
@@ -417,10 +394,10 @@ internal constructor() {
             .setProtocol(GravatarProtocol.HTTPS)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
-        Assertions.assertDoesNotThrow<BufferedImage> { fromHash.bufferedImage }
-        Assertions.assertNotNull(fromHash.bufferedImage)
+        assertDoesNotThrow { fromHash.bufferedImage }
+        assertNotNull(fromHash.bufferedImage)
         Mockito.doReturn("invalid://url").`when`(spiedRequest).requestUrl
-        Assertions.assertThrows(GravatarJavaClientException::class.java) { spiedRequest.bufferedImage }
+        assertThrows(GravatarJavaClientException::class.java) { spiedRequest.bufferedImage }
     }
 
     /**
@@ -436,25 +413,25 @@ internal constructor() {
             .setProtocol(GravatarProtocol.HTTPS)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
-        Assertions.assertThrows(NullPointerException::class.java)
+        assertThrows(NullPointerException::class.java)
         { fromHash.saveTo(null, null) }
-        Assertions.assertThrows(IllegalArgumentException::class.java)
+        assertThrows(IllegalArgumentException::class.java)
         { fromHash.saveTo(File("."), "png") }
-        Assertions.assertThrows(NullPointerException::class.java)
+        assertThrows(NullPointerException::class.java)
         { fromHash.saveTo(File("file.png"), null) }
-        Assertions.assertThrows(IllegalArgumentException::class.java)
+        assertThrows(IllegalArgumentException::class.java)
         { fromHash.saveTo(File("file.png"), "") }
-        Assertions.assertThrows(IllegalArgumentException::class.java)
+        assertThrows(IllegalArgumentException::class.java)
         { fromHash.saveTo(File("file.png"), " ") }
         val saveToOutput = File("./save_to_output")
         saveToOutput.delete()
-        Assertions.assertFalse(saveToOutput.exists())
+        assertFalse(saveToOutput.exists())
         val created = saveToOutput.mkdir()
-        Assertions.assertTrue(created)
+        assertTrue(created)
         val saveFromHashTo = File("./save_to_output/FromHash.png")
         val saved = fromHash.saveTo(saveFromHashTo, "png")
-        Assertions.assertTrue(saved)
-        Assertions.assertTrue(saveFromHashTo.exists())
+        assertTrue(saved)
+        assertTrue(saveFromHashTo.exists())
         try {
             saveFromHashTo.delete()
             saveToOutput.delete()
@@ -462,6 +439,6 @@ internal constructor() {
         } catch (e: Exception) {
             // Swallow possible thread exception
         }
-        Assertions.assertFalse(saveToOutput.exists())
+        assertFalse(saveToOutput.exists())
     }
 }
