@@ -16,11 +16,11 @@ internal class GravatarJavaClientExceptionTest {
     fun testCreation() {
         assertDoesNotThrow { GravatarJavaClientException("Exception") }
         assertDoesNotThrow { GravatarJavaClientException(Exception("Exception")) }
-        assertThrows(GravatarJavaClientException::class.java) { throw GravatarJavaClientException("Exception") }
+        assertThrows(GravatarJavaClientException::class.java) { throw GravatarJavaClientException("deoxyribonucleic") }
         assertThrows(GravatarJavaClientException::class.java) {
             throw GravatarJavaClientException(
                 IOException(
-                    "Exception"
+                    "deoxyribonucleic"
                 )
             )
         }

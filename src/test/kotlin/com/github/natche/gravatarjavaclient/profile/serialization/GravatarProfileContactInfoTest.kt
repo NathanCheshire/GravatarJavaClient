@@ -50,7 +50,7 @@ class GravatarProfileContactInfoTest {
     }
 
     /**
-     *
+     * Tests for the accessor methods.
      */
     @Test
     fun testAccessors() {

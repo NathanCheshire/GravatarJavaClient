@@ -59,7 +59,7 @@ class GravatarProfileInterestTest {
     }
 
     /**
-     * Tests for the to equals method.
+     * Tests for the equals method.
      */
     @Test
     fun testEquals() {

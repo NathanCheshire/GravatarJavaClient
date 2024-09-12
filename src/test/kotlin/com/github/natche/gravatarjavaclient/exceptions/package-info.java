@@ -1,4 +1,4 @@
 /**
- * Tests for creation of Gravatar custom exceptions.
+ * Tests for creation of GravatarJavaClient exceptions.
  */
 package com.github.natche.gravatarjavaclient.exceptions;

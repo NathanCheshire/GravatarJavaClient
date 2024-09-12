@@ -49,7 +49,7 @@ class GravatarProfileGalleryImageTest {
     }
 
     /**
-     * Tests for the equal method.
+     * Tests for the equals method.
      */
     @Test
     fun testEquals() {
