@@ -215,4 +215,42 @@ public final class GeneralUtils {
         String line;
         while ((line = stream.readLine()) != null) if (line.isEmpty()) break;
     }
+
+    /**
+     * Reads a chunked body from the provided BufferedReader.
+     *
+     * @param reader the BufferedReader to read from
+     * @return the complete response body
+     * @throws NullPointerException if the provided reader is null
+     * @throws IOException if an IO exception occurs
+     * @throws NumberFormatException if the chunk size cannot be parsed
+     */
+    public static String readChunkedBody(BufferedReader reader) throws IOException {
+        Preconditions.checkNotNull(reader);
+
+        StringBuilder responseBody = new StringBuilder();
+
+        while (true) {
+            String chunkSizeLine = reader.readLine();
+            if (chunkSizeLine == null || chunkSizeLine.isEmpty()) break;
+
+            int chunkSize = Integer.parseInt(chunkSizeLine.trim(), HEX_BASE);
+            if (chunkSize == 0) break; // End of chunks
+
+            char[] chunk = new char[chunkSize];
+            int totalBytesRead = 0;
+
+            while (totalBytesRead < chunkSize) {
+                int bytesRead = reader.read(chunk, totalBytesRead, chunkSize - totalBytesRead);
+                if (bytesRead == -1) break; // End of stream
+                totalBytesRead += bytesRead;
+            }
+
+            responseBody.append(chunk, 0, totalBytesRead);
+            reader.readLine(); // Skip trailing CRLF after chunk
+        }
+
+        return responseBody.toString();
+    }
+
 }

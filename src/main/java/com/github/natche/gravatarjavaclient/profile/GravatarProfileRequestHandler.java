@@ -19,8 +19,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.github.natche.gravatarjavaclient.utils.GeneralUtils.HEX_BASE;
-import static com.github.natche.gravatarjavaclient.utils.GeneralUtils.skipHeaders;
+import static com.github.natche.gravatarjavaclient.utils.GeneralUtils.*;
 
 /**
  * The Gravatar Profile request handler for requesting profile API requests.
@@ -120,34 +119,9 @@ public enum GravatarProfileRequestHandler {
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 skipHeaders(br);
-
-                // Read the chunked body
-                StringBuilder responseBody = new StringBuilder();
-                while (true) {
-                    String chunkSizeLine = br.readLine();
-                    if (chunkSizeLine.isEmpty()) break;
-
-                    int chunkSize = Integer.parseInt(chunkSizeLine.trim(), HEX_BASE);
-                    // End of chunks
-                    if (chunkSize == 0) break;
-                    char[] chunk = new char[chunkSize];
-                    int totalBytesRead = 0;
-
-                    while (totalBytesRead < chunkSize) {
-                        int bytesRead = br.read(chunk, totalBytesRead, chunkSize - totalBytesRead);
-                        // End of stream
-                        if (bytesRead == -1) break;
-                        totalBytesRead += bytesRead;
-                    }
-
-                    responseBody.append(chunk, 0, totalBytesRead);
-                    br.readLine(); // trailing CRLF after chunk
-                }
-
-                String response = responseBody.toString();
+                String response = readChunkedBody(br);
                 if (response.contains("error")) {
-                    JsonObject responseObject = GsonProvider.INSTANCE.get()
-                            .fromJson(responseBody.toString(), JsonObject.class);
+                    JsonObject responseObject = GsonProvider.INSTANCE.get().fromJson(response, JsonObject.class);
                     throw new RuntimeException("API error: " + responseObject.get("error").getAsString());
                 }
 
