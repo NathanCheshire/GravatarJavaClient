@@ -34,7 +34,7 @@ public final class InputValidator {
      *
      * @param input the input
      * @return a new InputValidator instance
-     * @throws NullPointerException if the provided input is null
+     * @throws NullPointerException     if the provided input is null
      * @throws IllegalArgumentException if the provided input is empty
      */
     public static InputValidator from(String input) {
@@ -67,5 +67,40 @@ public final class InputValidator {
         } catch (Exception ignored) {
             return false;
         }
+    }
+
+    /**
+     * Returns whether the provided object equals this object.
+     *
+     * @param o the other object
+     * @return whether the provided object equals this object
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        else if (!(o instanceof InputValidator)) return false;
+
+        InputValidator other = (InputValidator) o;
+        return this.input.equals(other.input);
+    }
+
+    /**
+     * Returns a hash code of this object.
+     *
+     * @return a hash code of this object
+     */
+    @Override
+    public int hashCode() {
+        return 31 * input.hashCode();
+    }
+
+    /**
+     * Returns a string representation of this object.
+     *
+     * @return a string representation of this object
+     */
+    @Override
+    public String toString() {
+        return "InputValidator{input=\"" + input + "\"}";
     }
 }

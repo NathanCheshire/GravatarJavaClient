@@ -9,14 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigInteger;
 import java.net.URL;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 
 /**
  * General utility methods used throughout the GravatarJavaClient.
@@ -30,19 +23,9 @@ public final class GeneralUtils {
     );
 
     /**
-     * The hashing algorithm used for the Profile and Avatar APIs.
-     */
-    private static final String HASHING_ALGORITHM = "SHA-256";
-
-    /**
      * The buffer size used by a {@link BufferedReader} when reading the contents of a URL.
      */
     private static final int READ_URL_BUFFER_SIZE = 1024;
-
-    /**
-     * The radix in the hexadecimal number system.
-     */
-    private static final int HEX_BASE = 16;
 
     /**
      * Suppress default constructor.
@@ -122,52 +105,6 @@ public final class GeneralUtils {
     }
 
     /**
-     * Hashes the provided email address and returns the SHA256 hash.
-     * <p>
-     * Algorithm steps:
-     * <ul>
-     *     <li>Trim leading and trailing whitespace</li>
-     *     <li>Force all characters to be lower-case</li>
-     *     <li>MD5 hash the final string</li>
-     * </ul>
-     * <p>
-     * Note, while Google email addresses such as "email.address@gmail.com" and "emailaddress@gmail.com"
-     * are equal in Google's eyes, they result in different profiles on Gravatar's side due to the hashes
-     * being different. If using this method results in a problem as such, you will likely want to create
-     * a decorator or wrapper method to ensure periods are stripped from the username.
-     *
-     * @param emailAddress the email address
-     * @return the hashed email address
-     * @throws NullPointerException     if the provided address is null
-     * @throws IllegalArgumentException if the provided address is empty or not a valid address
-     */
-    public static String hashEmailAddress(String emailAddress) {
-        Preconditions.checkNotNull(emailAddress);
-        Preconditions.checkArgument(!emailAddress.isEmpty());
-        Preconditions.checkArgument(InputValidator.from(emailAddress).isValidEmailAddress());
-
-        return hash(emailAddress, HASHING_ALGORITHM);
-    }
-
-    static String hash(String input, String algorithm) {
-        MessageDigest messageDigest;
-        try {
-            messageDigest = MessageDigest.getInstance(algorithm);
-        } catch (NoSuchAlgorithmException e) {
-            throw new GravatarJavaClientException(e.getMessage());
-        }
-
-        CharBuffer charBuffer = CharBuffer.wrap(input.trim().toLowerCase().toCharArray());
-        ByteBuffer byteBuffer = StandardCharsets.UTF_8.encode(charBuffer);
-
-        byte[] bytes = Arrays.copyOfRange(byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());
-        byte[] digest = messageDigest.digest(bytes);
-
-        BigInteger number = new BigInteger(1, digest);
-        return number.toString(HEX_BASE);
-    }
-
-    /**
      * Skips any headers in the provided stream.
      *
      * @param stream the stream
@@ -197,7 +134,7 @@ public final class GeneralUtils {
             String chunkSizeLine = reader.readLine();
             if (chunkSizeLine == null || chunkSizeLine.isEmpty()) break;
 
-            int chunkSize = Integer.parseInt(chunkSizeLine.trim(), HEX_BASE);
+            int chunkSize = Integer.parseInt(chunkSizeLine.trim(), 16);
             if (chunkSize == 0) break; // End of chunks
 
             char[] chunk = new char[chunkSize];

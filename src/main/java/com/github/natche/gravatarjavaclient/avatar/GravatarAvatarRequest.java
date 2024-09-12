@@ -3,6 +3,7 @@ package com.github.natche.gravatarjavaclient.avatar;
 import com.github.natche.gravatarjavaclient.enums.*;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
+import com.github.natche.gravatarjavaclient.utils.Hasher;
 import com.github.natche.gravatarjavaclient.utils.InputValidator;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Range;
@@ -99,7 +100,7 @@ public class GravatarAvatarRequest {
         Preconditions.checkArgument(!email.trim().isEmpty());
         Preconditions.checkArgument(InputValidator.from(email).isValidEmailAddress());
 
-        String hash = GeneralUtils.hashEmailAddress(email);
+        String hash = Hasher.fromSha256().hash(email);
         return new GravatarAvatarRequest(hash);
     }
 

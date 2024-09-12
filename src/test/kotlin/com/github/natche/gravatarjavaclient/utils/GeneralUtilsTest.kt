@@ -3,8 +3,8 @@ package com.github.natche.gravatarjavaclient.utils
 import com.github.natche.gravatarjavaclient.TestingImageUrls
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException
 import com.github.natche.gravatarjavaclient.utils.GeneralUtils.readChunkedBody
-import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import java.awt.image.BufferedImage
 import java.io.BufferedReader
 import java.io.Reader
@@ -46,35 +46,6 @@ internal class GeneralUtilsTest {
         assertDoesNotThrow { bi.set(GeneralUtils.readBufferedImage(TestingImageUrls.foreignImageUrl)) }
         assertEquals(200, bi.get().width)
         assertEquals(300, bi.get().height)
-    }
-
-    /**
-     * Test for the email address to profiles API hash.
-     */
-    @Test
-    @Suppress("SpellCheckingInspection")
-    fun testEmailAddressToProfilesApiHash() {
-        assertThrows(NullPointerException::class.java)
-        { GeneralUtils.hashEmailAddress(null) }
-        assertThrows(IllegalArgumentException::class.java)
-        { GeneralUtils.hashEmailAddress("") }
-        assertThrows(IllegalArgumentException::class.java)
-        { GeneralUtils.hashEmailAddress("   ") }
-        assertThrows(IllegalArgumentException::class.java)
-        { GeneralUtils.hashEmailAddress("invalid.email") }
-        assertDoesNotThrow { GeneralUtils.hashEmailAddress("valid@domain.com") }
-        assertEquals(
-            "8e50ba67083844f6c70829f2ad5e29eb6fff55123f2b34ee63ae9eb9adccb4b4",
-            GeneralUtils.hashEmailAddress("valid.email@gmail.com")
-        )
-    }
-
-    /**
-     * Tests to ensure an exception is thrown if an invalid algorithm is provided.
-     */
-    @Test
-    fun testHash() {
-        assertThrows(GravatarJavaClientException::class.java) { GeneralUtils.hash("input", "alg") }
     }
 
     /**
