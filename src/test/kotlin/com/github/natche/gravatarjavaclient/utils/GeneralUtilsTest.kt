@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import java.awt.image.BufferedImage
 import java.io.BufferedReader
+import java.io.Reader
 import java.io.StringReader
 import java.lang.reflect.InvocationTargetException
 import java.util.concurrent.atomic.AtomicReference
@@ -206,6 +207,16 @@ internal class GeneralUtilsTest {
 
         val emptyStream = BufferedReader(StringReader(""))
         assertEquals("", readChunkedBody(emptyStream))
+
+        val nullChunkSizeStream = BufferedReader(object : Reader() {
+            override fun read(cbuf: CharArray, off: Int, len: Int): Int {
+                return -1 // Simulates stream returning null
+            }
+
+            override fun close() {}
+        })
+
+        assertEquals("", readChunkedBody(BufferedReader(nullChunkSizeStream)))
 
         val singleChunkStream = BufferedReader(StringReader("5\r\nHello\r\n0\r\n\r\n"))
         assertEquals("Hello", readChunkedBody(singleChunkStream))
