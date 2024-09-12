@@ -213,10 +213,14 @@ internal class GeneralUtilsTest {
         val multiChunkStream = BufferedReader(StringReader("4\r\nTest\r\n3\r\n123\r\n0\r\n\r\n"))
         assertEquals("Test123", readChunkedBody(multiChunkStream))
 
-        val chunkWithTrailingCRLF = BufferedReader(StringReader("4\r\nData\r\n0\r\n\r\n"))
-        assertEquals("Data", readChunkedBody(chunkWithTrailingCRLF))
+        val chunkWithTrailingCrlf = BufferedReader(StringReader("4\r\nData\r\n0\r\n\r\n"))
+        assertEquals("Data", readChunkedBody(chunkWithTrailingCrlf))
+
+        val endOfStreamMidChunk = BufferedReader(StringReader("5\r\nHel"))
+        assertEquals("Hel", readChunkedBody(endOfStreamMidChunk))
 
         val invalidChunkSizeStream = BufferedReader(StringReader("Z\r\nInvalid\r\n0\r\n\r\n"))
         assertThrows(NumberFormatException::class.java) { readChunkedBody(invalidChunkSizeStream) }
     }
+
 }
