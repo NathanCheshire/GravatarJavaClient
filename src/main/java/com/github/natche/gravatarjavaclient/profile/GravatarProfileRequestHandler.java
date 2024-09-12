@@ -13,6 +13,7 @@ import javax.net.ssl.SSLSocketFactory;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -30,6 +31,11 @@ public enum GravatarProfileRequestHandler {
     INSTANCE;
 
     /**
+     * The charset to encode data with.
+     */
+    private static final Charset ENCODE_CHARSET = StandardCharsets.US_ASCII;
+
+    /**
      * The port SSL/TLS uses for HTTPS.
      */
     private static final int HTTPS_PORT = 443;
@@ -43,6 +49,8 @@ public enum GravatarProfileRequestHandler {
      * The API version of the host.
      */
     private static final String API_VERSION = "3";
+
+    private static final String RETURN_NEWLINE = "\r\n";
 
     /**
      * The result of all authenticated requests during this JVM runtime.
@@ -95,15 +103,18 @@ public enum GravatarProfileRequestHandler {
                 socket.setEnabledCipherSuites(socket.getSupportedCipherSuites());
                 OutputStream outputStream = socket.getOutputStream();
 
-                String httpRequest = "GET /v" + API_VERSION + "/profiles/" + nameOrHash + " HTTP/1.1\r\n" +
-                        "Host: " + API_HOST + "\r\n";
+                String httpRequest = "GET /v" + API_VERSION
+                        + "/profiles/" + nameOrHash + " "
+                        + "HTTP/1.1" + RETURN_NEWLINE
+                        + "Host: " + API_HOST
+                        + RETURN_NEWLINE;
 
-                outputStream.write(httpRequest.getBytes(StandardCharsets.US_ASCII));
+                outputStream.write(encode(httpRequest));
                 if (bearerToken != null) {
-                    outputStream.write("Authorization: Bearer ".getBytes(StandardCharsets.US_ASCII));
+                    outputStream.write(encode(("Authorization: Bearer ")));
                     outputStream.write(bearerToken);
                 }
-                outputStream.write("\r\n\r\n".getBytes(StandardCharsets.US_ASCII));
+                outputStream.write(encode(RETURN_NEWLINE + RETURN_NEWLINE));
                 outputStream.flush();
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -152,5 +163,15 @@ public enum GravatarProfileRequestHandler {
             if (bearerToken == null) UNAUTHENTICATED_REQUESTS.add(result);
             else AUTHENTICATED_REQUESTS.add(result);
         }
+    }
+
+    /**
+     * Encodes the provided string using the internal char set.
+     *
+     * @param string the string to encode
+     * @return the encoded string
+     */
+    private byte[] encode(String string) {
+        return string.getBytes(ENCODE_CHARSET);
     }
 }
