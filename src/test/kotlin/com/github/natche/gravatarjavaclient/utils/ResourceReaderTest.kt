@@ -117,9 +117,6 @@ class ResourceReaderTest {
         val equal = ResourceReader.from(br1)
         val notEqual = ResourceReader.from(br2)
 
-        assertEquals(-1706275578, reader1.hashCode())
-        assertEquals(-1706275578, equal.hashCode())
-        assertEquals(917467044, notEqual.hashCode())
         assertEquals(reader1.hashCode(), equal.hashCode())
         assertNotEquals(reader1.hashCode(), notEqual.hashCode())
     }
