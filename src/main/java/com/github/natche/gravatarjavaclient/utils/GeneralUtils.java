@@ -146,14 +146,18 @@ public final class GeneralUtils {
         Preconditions.checkArgument(!emailAddress.isEmpty());
         Preconditions.checkArgument(InputValidator.from(emailAddress).isValidEmailAddress());
 
+        return hash(emailAddress, HASHING_ALGORITHM);
+    }
+
+    static String hash(String input, String algorithm) {
         MessageDigest messageDigest;
         try {
-            messageDigest = MessageDigest.getInstance(HASHING_ALGORITHM);
+            messageDigest = MessageDigest.getInstance(algorithm);
         } catch (NoSuchAlgorithmException e) {
             throw new GravatarJavaClientException(e.getMessage());
         }
 
-        CharBuffer charBuffer = CharBuffer.wrap(emailAddress.trim().toLowerCase().toCharArray());
+        CharBuffer charBuffer = CharBuffer.wrap(input.trim().toLowerCase().toCharArray());
         ByteBuffer byteBuffer = StandardCharsets.UTF_8.encode(charBuffer);
 
         byte[] bytes = Arrays.copyOfRange(byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());

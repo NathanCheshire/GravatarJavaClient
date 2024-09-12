@@ -70,6 +70,14 @@ internal class GeneralUtilsTest {
     }
 
     /**
+     * Tests to ensure an exception is thrown if an invalid algorithm is provided.
+     */
+    @Test
+    fun testHash() {
+        assertThrows(GravatarJavaClientException::class.java) { GeneralUtils.hash("input", "alg") }
+    }
+
+    /**
      * Tests for the read url method.
      */
     @Test
