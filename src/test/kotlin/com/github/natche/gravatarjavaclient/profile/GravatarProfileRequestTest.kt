@@ -105,47 +105,45 @@ internal constructor() {
      */
     @Test
     fun testWriteToFile() {
-        try {
-            val outputDirectory = File("./save_to_output")
-            val authenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
-                .setTokenSupplier(TokenSupplier.tokenSupplier)
-            assertThrows(NullPointerException::class.java) { authenticatedRequest.writeToFile(null, null) }
-            assertThrows(NullPointerException::class.java) { authenticatedRequest.writeToFile(null) }
-            assertThrows(NullPointerException::class.java) { authenticatedRequest.writeToFile(Gson(), null) }
-            assertThrows(
-                IllegalArgumentException::class.java
-            ) { authenticatedRequest.writeToFile(Gson(), File(".")) }
-            assertThrows(
-                IllegalArgumentException::class.java
-            ) { authenticatedRequest.writeToFile(Gson(), File("non_existent_file.json")) }
-            val tempFile = File(outputDirectory, "test.json")
-            tempFile.createNewFile()
-            Thread.sleep(100)
-            assertTrue(authenticatedRequest.writeToFile(tempFile))
-            assertTrue(tempFile.exists())
-            assertTrue(tempFile.length() > 0)
-            val mockFile = Mockito.mock(File::class.java)
-            Mockito.`when`(mockFile.isDirectory).thenReturn(false)
-            Mockito.`when`(mockFile.absolutePath).thenReturn(tempFile.absolutePath)
-            Mockito.`when`(mockFile.exists()).thenReturn(true)
-            Mockito.doThrow(IOException("Test exception")).`when`(mockFile).canonicalFile
-            assertThrows(GravatarJavaClientException::class.java) { authenticatedRequest.writeToFile(mockFile) }
-            val customSerializer = Gson()
-            assertTrue(authenticatedRequest.writeToFile(customSerializer, tempFile))
-            assertTrue(tempFile.exists())
-            assertTrue(tempFile.length() > 0)
-            authenticatedRequest.writeToFile(tempFile)
-            val fileBytes = Files.readAllBytes(tempFile.toPath())
-            assertNotNull(fileBytes)
-            assertTrue(String(fileBytes).contains("\"registration_date\":")) // Authenticated field
-            tempFile.delete()
-            Thread.sleep(50)
-            outputDirectory.delete()
-            Thread.sleep(50)
-            assertFalse(tempFile.exists())
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        val outputDirectory = File("./save_to_output")
+        outputDirectory.mkdir()
+
+        val authenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
+            .setTokenSupplier(TokenSupplier.tokenSupplier)
+        assertThrows(NullPointerException::class.java) { authenticatedRequest.writeToFile(null, null) }
+        assertThrows(NullPointerException::class.java) { authenticatedRequest.writeToFile(null) }
+        assertThrows(NullPointerException::class.java) { authenticatedRequest.writeToFile(Gson(), null) }
+        assertThrows(
+            IllegalArgumentException::class.java
+        ) { authenticatedRequest.writeToFile(Gson(), File(".")) }
+        assertThrows(
+            IllegalArgumentException::class.java
+        ) { authenticatedRequest.writeToFile(Gson(), File("non_existent_file.json")) }
+        val tempFile = File(outputDirectory, "test.json")
+        tempFile.createNewFile()
+        Thread.sleep(100)
+        assertTrue(authenticatedRequest.writeToFile(tempFile))
+        assertTrue(tempFile.exists())
+        assertTrue(tempFile.length() > 0)
+        val mockFile = Mockito.mock(File::class.java)
+        Mockito.`when`(mockFile.isDirectory).thenReturn(false)
+        Mockito.`when`(mockFile.absolutePath).thenReturn(tempFile.absolutePath)
+        Mockito.`when`(mockFile.exists()).thenReturn(true)
+        Mockito.doThrow(IOException("Test exception")).`when`(mockFile).canonicalFile
+        assertThrows(GravatarJavaClientException::class.java) { authenticatedRequest.writeToFile(mockFile) }
+        val customSerializer = Gson()
+        assertTrue(authenticatedRequest.writeToFile(customSerializer, tempFile))
+        assertTrue(tempFile.exists())
+        assertTrue(tempFile.length() > 0)
+        authenticatedRequest.writeToFile(tempFile)
+        val fileBytes = Files.readAllBytes(tempFile.toPath())
+        assertNotNull(fileBytes)
+        assertTrue(String(fileBytes).contains("\"registration_date\":")) // Authenticated field
+        tempFile.delete()
+        Thread.sleep(50)
+        outputDirectory.delete()
+        Thread.sleep(50)
+        assertFalse(tempFile.exists())
     }
 
     /**
