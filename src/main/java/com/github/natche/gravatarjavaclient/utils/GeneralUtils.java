@@ -137,7 +137,7 @@ public final class GeneralUtils {
      *     <li>Force all characters to be lower-case</li>
      *     <li>MD5 hash the final string</li>
      * </ul>
-     *
+     * <p>
      * Note, while Google email addresses such as "email.address@gmail.com" and "emailaddress@gmail.com"
      * are equal in Google's eyes, they result in different profiles on Gravatar's side due to the hashes
      * being different. If using this method results in a problem as such, you will likely want to create
@@ -151,7 +151,7 @@ public final class GeneralUtils {
     public static String emailAddressToGravatarHash(String emailAddress) {
         Preconditions.checkNotNull(emailAddress);
         Preconditions.checkArgument(!emailAddress.isEmpty());
-        Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(emailAddress));
+        Preconditions.checkArgument(InputValidator.from(emailAddress).isValidEmailAddress());
 
         return hashInput(emailAddress.trim().toLowerCase(), AVATAR_HASHING_ALGORITHM);
     }
@@ -161,13 +161,13 @@ public final class GeneralUtils {
      *
      * @param emailAddress the email address
      * @return the hashed email address
-     * @throws NullPointerException if the provided address is null
+     * @throws NullPointerException     if the provided address is null
      * @throws IllegalArgumentException if the provided address is empty or not a valid address
      */
     public static String emailAddressToProfilesApiHash(String emailAddress) {
         Preconditions.checkNotNull(emailAddress);
         Preconditions.checkArgument(!emailAddress.isEmpty());
-        Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(emailAddress));
+        Preconditions.checkArgument(InputValidator.from(emailAddress).isValidEmailAddress());
 
         return hashInput(emailAddress.trim().toLowerCase(), PROFILES_HASHING_ALGORITHM);
     }
@@ -178,8 +178,8 @@ public final class GeneralUtils {
      * @param input            the input to hash
      * @param hashingAlgorithm the hashing algorithm to use
      * @return the hash for the provided input and hashing algorithm
-     * @throws NullPointerException     if the provided input or algorithm is null
-     * @throws IllegalArgumentException if the provided algorithm is empty
+     * @throws NullPointerException        if the provided input or algorithm is null
+     * @throws IllegalArgumentException    if the provided algorithm is empty
      * @throws GravatarJavaClientException if the provided hashing algorithm does not exist
      */
     static String hashInput(String input, String hashingAlgorithm) {
@@ -209,7 +209,7 @@ public final class GeneralUtils {
      *
      * @param stream the stream
      * @throws NullPointerException if the provided stream is null
-     * @throws IOException if an IO exception occurs
+     * @throws IOException          if an IO exception occurs
      */
     public static void skipHeaders(BufferedReader stream) throws IOException {
         String line;
@@ -221,8 +221,8 @@ public final class GeneralUtils {
      *
      * @param reader the BufferedReader to read from
      * @return the complete response body
-     * @throws NullPointerException if the provided reader is null
-     * @throws IOException if an IO exception occurs
+     * @throws NullPointerException  if the provided reader is null
+     * @throws IOException           if an IO exception occurs
      * @throws NumberFormatException if the chunk size cannot be parsed
      */
     public static String readChunkedBody(BufferedReader reader) throws IOException {

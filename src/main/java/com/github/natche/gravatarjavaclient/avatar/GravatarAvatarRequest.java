@@ -3,7 +3,7 @@ package com.github.natche.gravatarjavaclient.avatar;
 import com.github.natche.gravatarjavaclient.enums.*;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
-import com.github.natche.gravatarjavaclient.utils.ValidationUtils;
+import com.github.natche.gravatarjavaclient.utils.InputValidator;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Range;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
@@ -97,7 +97,7 @@ public class GravatarAvatarRequest {
     public static GravatarAvatarRequest fromEmail(String email) {
         Preconditions.checkNotNull(email);
         Preconditions.checkArgument(!email.trim().isEmpty());
-        Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(email));
+        Preconditions.checkArgument(InputValidator.from(email).isValidEmailAddress());
 
         String hash = GeneralUtils.emailAddressToGravatarHash(email);
         return new GravatarAvatarRequest(hash);
@@ -149,7 +149,7 @@ public class GravatarAvatarRequest {
     public GravatarAvatarRequest setDefaultImageUrl(String defaultImageUrl) {
         Preconditions.checkNotNull(defaultImageUrl);
         Preconditions.checkArgument(!defaultImageUrl.isEmpty());
-        Preconditions.checkArgument(ValidationUtils.isValidDefaultUrl(defaultImageUrl));
+        Preconditions.checkArgument(InputValidator.from(defaultImageUrl).isValidImageUrl());
 
         this.defaultImageUrl = defaultImageUrl;
         this.defaultImageType = null;

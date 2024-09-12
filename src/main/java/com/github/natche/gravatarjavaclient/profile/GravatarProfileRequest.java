@@ -4,7 +4,7 @@ import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientExcepti
 import com.github.natche.gravatarjavaclient.profile.gson.GsonProvider;
 import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfile;
 import com.github.natche.gravatarjavaclient.utils.GeneralUtils;
-import com.github.natche.gravatarjavaclient.utils.ValidationUtils;
+import com.github.natche.gravatarjavaclient.utils.InputValidator;
 import com.google.common.base.Preconditions;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.gson.Gson;
@@ -59,7 +59,7 @@ public final class GravatarProfileRequest {
     public static GravatarProfileRequest fromEmail(String email) {
         Preconditions.checkNotNull(email);
         Preconditions.checkArgument(!email.trim().isEmpty());
-        Preconditions.checkArgument(ValidationUtils.isValidEmailAddress(email));
+        Preconditions.checkArgument(InputValidator.from(email).isValidEmailAddress());
 
         return new GravatarProfileRequest(GeneralUtils.emailAddressToProfilesApiHash(email));
     }
