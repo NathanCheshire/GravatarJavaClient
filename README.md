@@ -28,26 +28,26 @@ releases section for the most recent version.
 This library features support for the comprehensive Gravatar API, that of both `avatar` and `profile` requests. This
 library also follows [Effective Java](https://www.amazon.com/Effective-Java-Joshua-Bloch/dp/0134685997) principles.
 The `GravatarAvatarRequest` handles all needs related to the `avatar` API whilst the `GravatarProfileRequest` handles
-all needs related to the `profile` request.
+all needs related to the `profile` API.
 
-For requesting Avatar images:
+For requesting Avatars (images):
 
 ```java
-// Get a buffered image
+// Get a BufferedImage
 BufferedImage bufferedImage = GravatarAvatarRequest.fromEmail("your.email@email.com")
         .setSize(800)
         .setRating(GravatarRating.R)
         .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
         .getBufferedImage();
 
-// Get an image icon
+// Get an ImageIcon
 ImageIcon imageIcon = GravatarAvatarRequest.fromEmail("your.email@email.com")
         .setSize(800)
         .setRating(GravatarRating.R)
         .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
         .getImageIcon();
 
-// Save to a file
+// Save to a local File
 boolean wasSaved = GravatarAvatarRequest.fromEmail("your.email@email.com")
         .setSize(800)
         .setRating(GravatarRating.R)
