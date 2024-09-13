@@ -20,6 +20,15 @@ Jitpack recommends it be placed at the end of the repositories scope.
 Then add the following to your dependencies:
 `implementation 'com.github.nathancheshire:gravatarjavaclient:2.0.2'`.
 
+# Jitpack
+
+These links are mostly for me but if you would like to view the official Jitpack build log or artifacts list, these
+are the following links:
+
+Artifacts: https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.2/
+
+Build log: https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.2/build.log
+
 ## API Support
 
 This library features support for the comprehensive Gravatar API, that of both `avatar` and `profile` requests. This
