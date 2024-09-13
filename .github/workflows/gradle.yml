@@ -24,11 +24,11 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
-      - name: Generate code cov with jacoco
+      - name: Generate code coverage with jacoco
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: jacocoTestReport
-      - name: Upload coverage reports to Codecov
+      - name: Upload code coverage reports to Codecov
         uses: codecov/codecov-action@v3
         with:
           file: ./build/reports/jacoco/test/xml/index.xml
