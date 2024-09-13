@@ -18,7 +18,7 @@ Jitpack recommends it be placed at the end of the repositories scope.
 `maven { url 'https://jitpack.io' }`
 
 Then add the following to your dependencies:
-`implementation 'com.github.nathancheshire:gravatarjavaclient:2.0.1'`.
+`implementation 'com.github.nathancheshire:gravatarjavaclient:2.0.2'`.
 
 ## API Support
 
