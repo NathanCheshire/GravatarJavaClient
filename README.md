@@ -12,16 +12,13 @@ This library is a Java wrapper for the Gravatar image and profile API.
 
 ## Using with Gradle
 
-Make sure you have the following line in your `repositories` scope within your `build.gradle` (or `build.gradle.kts`).
-Jitpack recommends it be placed at the end of the repositories section.
+Add the following line in your `repositories` scope within your `build.gradle` (or `build.gradle.kts`).
+Jitpack recommends it be placed at the end of the repositories scope.
 
 `maven { url 'https://jitpack.io' }`
 
 Then add the following to your dependencies:
-`implementation 'com.github.nathancheshire:gravatarjavaclient:COMMIT_HASH_OR_RELEASE'`.
-
-The `COMMIT_HASH_OR_RELEASE` may be whatever commit hash or release you want to use; `v1.0.0` for example. Checkout the
-releases section for the most recent version.
+`implementation 'com.github.nathancheshire:gravatarjavaclient:v2.0.0'`.
 
 ## API Support
 
