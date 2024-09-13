@@ -58,15 +58,15 @@ boolean wasSaved = GravatarAvatarRequest.fromEmail("your.email@email.com")
 For requesting Profiles:
 
 ```java
-// Get a profile
+// Get a GravatarProfile
 GravatarProfile profile = GravatarProfileRequest.fromEmail("your.email@email.com")
         .getProfile();
 
-// Save to a file
+// Save to a local File
 boolean wasSaved = GravatarProfileRequest.fromEmail("your.email@email.com")
         .writeToFile(new File("MyProfile.json"));
 
-// Get a profile with authenticated fields present
+// Get a GravatarProfile with authenticated fields present
 GravatarProfileTokenProvider provider = new GravatarProfileTokenProvider(
         () -> new byte[]{0x12,0x34,0x56,0x78},"primaryAuthenticator");
 GravatarProfile profileWithAuthenticatedFields = GravatarProfileRequest.fromEmail("your.email@email.com")
