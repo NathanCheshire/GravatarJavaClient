@@ -39,38 +39,33 @@ all needs related to the `profile` API.
 For requesting Avatars (images):
 
 ```java
-// Get a BufferedImage
-BufferedImage bufferedImage = GravatarAvatarRequest.fromEmail("your.email@email.com")
+// Create the request
+GravatarAvatarRequest request = GravatarAvatarRequest.fromEmail("your.email@email.com")
         .setSize(800)
         .setRating(GravatarRating.R)
-        .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-        .getBufferedImage();
+        .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH);
+  
+// Get a BufferedImage
+BufferedImage bufferedImage = request.getBufferedImage();
 
 // Get an ImageIcon
-ImageIcon imageIcon = GravatarAvatarRequest.fromEmail("your.email@email.com")
-        .setSize(800)
-        .setRating(GravatarRating.R)
-        .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-        .getImageIcon();
+ImageIcon imageIcon = request.getImageIcon();
 
 // Save to a local File
-boolean wasSaved = GravatarAvatarRequest.fromEmail("your.email@email.com")
-        .setSize(800)
-        .setRating(GravatarRating.R)
-        .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-        .saveTo(new File("output.png"),"png");
+boolean wasSaved = request.saveTo(new File("output.png"),"png");
 ```
 
 For requesting Profiles:
 
 ```java
-// Get a GravatarProfile
-GravatarProfile profile = GravatarProfileRequest.fromEmail("your.email@email.com")
-        .getProfile();
+// Create the request
+GravatarProfileRequest request = GravatarProfileRequest.fromEmail("your.email@email.com");
+
+// Get the profile
+GravatarProfile profile = request.getProfile();
 
 // Save to a local File
-boolean wasSaved = GravatarProfileRequest.fromEmail("your.email@email.com")
-        .writeToFile(new File("MyProfile.json"));
+boolean wasSaved = request.writeToFile(new File("MyProfile.json"));
 
 // Get a GravatarProfile with authenticated fields present
 GravatarProfileTokenProvider provider = new GravatarProfileTokenProvider(
