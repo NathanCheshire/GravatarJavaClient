@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * The Gravatar Profile request handler for requesting profiles from the Gravatar Profile API.
  */
-public enum GravatarProfileRequestHandler {
+enum GravatarProfileRequestHandler {
     /**
      * The Gravatar Profile request handler.
      */

@@ -18,16 +18,16 @@ Jitpack recommends it be placed at the end of the repositories scope.
 `maven { url 'https://jitpack.io' }`
 
 Then add the following to your dependencies:
-`implementation 'com.github.nathancheshire:gravatarjavaclient:2.0.2'`.
+`implementation 'com.github.nathancheshire:gravatarjavaclient:2.0.3'`.
 
 # Jitpack
 
 These links are mostly for me but if you would like to view the official Jitpack build log or artifacts list, these
 are the following links:
 
-Artifacts: https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.2/
+Artifacts: https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.3/
 
-Build log: https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.2/build.log
+Build log: https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.3/build.log
 
 ## API Support
 
