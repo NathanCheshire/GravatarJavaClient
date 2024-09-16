@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.junit.jupiter.MockitoExtension
 import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
+import java.util.*
 
 /**
  * Tests for [GravatarAvatarRequest]s.
@@ -410,6 +413,78 @@ internal constructor() {
     }
 
     /**
+     * Tests for the save as jpg method.
+     */
+    @Test
+    fun testSaveAsJpg() {
+        val fromHash = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
+            .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
+            .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
+            .setRating(GravatarRating.R)
+            .setSize(1776)
+            .setProtocol(GravatarProtocol.HTTPS)
+            .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
+            .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
+        assertThrows(NullPointerException::class.java) { fromHash.saveAsJpg(null) }
+        assertThrows(java.lang.IllegalArgumentException::class.java) { fromHash.saveAsJpg(File(".")) }
+
+        val saveToOutput = File("./save_to_output")
+        saveToOutput.delete()
+        assertFalse(saveToOutput.exists())
+        val created = saveToOutput.mkdir()
+        assertTrue(created)
+        val saveFromHashTo = File("./save_to_output/FromHash.jpg")
+        val saved = fromHash.saveAsJpg(saveFromHashTo)
+        assertTrue(saved)
+        assertTrue(saveFromHashTo.exists())
+        assertTrue(isValidJpg(saveFromHashTo))
+        try {
+            saveFromHashTo.delete()
+            saveToOutput.delete()
+            Thread.sleep(500)
+        } catch (e: Exception) {
+            // Swallow possible thread exception
+        }
+        assertFalse(saveToOutput.exists())
+    }
+
+    /**
+     * Tests for the save as png method.
+     */
+    @Test
+    fun testSaveAsPng() {
+        val fromHash = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
+            .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
+            .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
+            .setRating(GravatarRating.R)
+            .setSize(1776)
+            .setProtocol(GravatarProtocol.HTTPS)
+            .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
+            .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
+        assertThrows(NullPointerException::class.java) { fromHash.saveAsPng(null) }
+        assertThrows(java.lang.IllegalArgumentException::class.java) { fromHash.saveAsPng(File(".")) }
+
+        val saveToOutput = File("./save_to_output")
+        saveToOutput.delete()
+        assertFalse(saveToOutput.exists())
+        val created = saveToOutput.mkdir()
+        assertTrue(created)
+        val saveFromHashTo = File("./save_to_output/FromHash.png")
+        val saved = fromHash.saveAsPng(saveFromHashTo)
+        assertTrue(saved)
+        assertTrue(saveFromHashTo.exists())
+        assertTrue(isValidPng(saveFromHashTo))
+        try {
+            saveFromHashTo.delete()
+            saveToOutput.delete()
+            Thread.sleep(500)
+        } catch (e: Exception) {
+            // Swallow possible thread exception
+        }
+        assertFalse(saveToOutput.exists())
+    }
+
+    /**
      * Tests for the save to method.
      */
     @Test
@@ -449,5 +524,60 @@ internal constructor() {
             // Swallow possible thread exception
         }
         assertFalse(saveToOutput.exists())
+    }
+
+    /**
+     * Internal funtion to validate a file for being a PNG.
+     */
+    private fun isValidPng(file: File): Boolean {
+        if (!file.exists() || !file.isFile) return false
+
+        return try {
+            FileInputStream(file).use { inputStream ->
+                val header = ByteArray(8)
+                val bytesRead = inputStream.read(header)
+                @Suppress("ReplaceJavaStaticMethodWithKotlinAnalog") /* not valid here */
+                if (bytesRead != 8) return false
+                else return Arrays.equals(header, pngSignature)
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    /**
+     * Internal funtion to validate a file for being a JPG.
+     */
+    private fun isValidJpg(file: File): Boolean {
+        if (!file.exists() || !file.isFile) return false
+
+        return try {
+            FileInputStream(file).use { inputStream ->
+                val header = ByteArray(4)
+                val bytesRead = inputStream.read(header)
+                if (bytesRead != 4) false
+                else jpegSignatures.any {
+                    @Suppress("ReplaceJavaStaticMethodWithKotlinAnalog") /* not valid here */
+                    Arrays.equals(it, header)
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    companion object {
+        private val jpegSignatures = listOf(
+            byteArrayOf(0xFF.toByte(), 0xD8.toByte(), 0xFF.toByte(), 0xE0.toByte()),
+            byteArrayOf(0xFF.toByte(), 0xD8.toByte(), 0xFF.toByte(), 0xE1.toByte()),
+            byteArrayOf(0xFF.toByte(), 0xD8.toByte(), 0xFF.toByte(), 0xEE.toByte())
+        )
+
+        private val pngSignature = byteArrayOf(
+            0x89.toByte(), 0x50.toByte(), 0x4E.toByte(), 0x47.toByte(),
+            0x0D.toByte(), 0x0A.toByte(), 0x1A.toByte(), 0x0A.toByte()
+        )
     }
 }

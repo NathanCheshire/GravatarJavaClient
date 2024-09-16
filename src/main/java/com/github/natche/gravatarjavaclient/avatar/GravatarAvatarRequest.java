@@ -378,7 +378,41 @@ public final class GravatarAvatarRequest {
     }
 
     /**
+     * Saves an image obtained from the URL constructed from this to the provided file as a png.
+     *
+     * @param saveTo the file to save the image to
+     * @return whether the save operation was successful
+     * @throws NullPointerException     if the provided file is null
+     * @throws IllegalArgumentException if the provided file is a directory
+     */
+    @CheckReturnValue
+    public boolean saveAsPng(File saveTo) {
+        Preconditions.checkNotNull(saveTo);
+        Preconditions.checkArgument(!saveTo.isDirectory());
+
+        return saveTo(saveTo, "png");
+    }
+
+    /**
+     * Saves an image obtained from the URL constructed from this to the provided file as a jpg.
+     *
+     * @param saveTo the file to save the image to
+     * @return whether the save operation was successful
+     * @throws NullPointerException     if the provided file is null
+     * @throws IllegalArgumentException if the provided file is a directory
+     */
+    @CheckReturnValue
+    public boolean saveAsJpg(File saveTo) {
+        Preconditions.checkNotNull(saveTo);
+        Preconditions.checkArgument(!saveTo.isDirectory());
+
+        return saveTo(saveTo, "jpg");
+    }
+
+    /**
      * Saves an image obtained from the URL constructed from this to the provided file.
+     * Note, while the file could be named "Image.png", if "jpg" is provided as the format,
+     * the image will be a jpg yet named "Image.png".
      *
      * @param saveTo the file to save the image to
      * @param format the format to use; see {@link ImageIO#getWriterFormatNames()}
