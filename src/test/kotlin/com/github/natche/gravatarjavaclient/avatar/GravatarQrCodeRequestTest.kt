@@ -165,10 +165,12 @@ class GravatarQrCodeRequestTest {
     fun testEquals() {
         val one = GravatarQrCodeRequest.fromHash("hash")
         val equal = GravatarQrCodeRequest.fromHash("hash")
+        val differentHash = GravatarQrCodeRequest.fromHash("other-hash")
 
         assertEquals(one, one)
         assertEquals(one, equal)
         assertNotEquals(one, Object())
+        assertNotEquals(equal, differentHash)
 
         assertNotEquals(one, equal.setSize(100))
 
