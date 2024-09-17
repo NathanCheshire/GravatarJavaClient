@@ -312,6 +312,7 @@ public final class GravatarAvatarRequest {
      * @return this builder
      * @throws IllegalArgumentException if the provided image length is not in the range {@link #IMAGE_SIZE_RANGE}
      */
+    @CanIgnoreReturnValue
     public GravatarAvatarRequest setSize(int imageLength) {
         Preconditions.checkArgument(IMAGE_SIZE_RANGE.contains(imageLength));
         this.size = imageLength;
