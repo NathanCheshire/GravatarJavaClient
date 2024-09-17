@@ -3,7 +3,7 @@ package com.github.natche.gravatarjavaclient.enums;
 import com.google.common.base.Preconditions;
 
 /**
- * A URL parameter for a Gravatar request.
+ * A URL parameter for a Gravatar Avatar request.
  */
 public enum GravatarUrlParameter {
     /**
@@ -37,12 +37,12 @@ public enum GravatarUrlParameter {
      * The character prefix for the initial URL parameter directly following the path.
      * Sometimes called the query string separator.
      */
-    private static final String initialUrlParameterPrefix = "?";
+    private static final String INITIAL_URL_PARAMETER_PREFIX = "?";
 
     /**
      * The character prefix for any additional URL parameters following the initial URL parameter.
      */
-    private static final String nonInitialUrlParameterPrefix = "&";
+    private static final String NON_INITIAL_URL_PARAMETER_PREFIX = "&";
 
     /**
      * The short URL parameter for this Gravatar URL parameter.
@@ -94,7 +94,7 @@ public enum GravatarUrlParameter {
         Preconditions.checkNotNull(value);
         Preconditions.checkNotNull(useFullUrlParameter);
 
-        String prefix = firstParameter ? initialUrlParameterPrefix : nonInitialUrlParameterPrefix;
+        String prefix = firstParameter ? INITIAL_URL_PARAMETER_PREFIX : NON_INITIAL_URL_PARAMETER_PREFIX;
         return prefix + (useFullUrlParameter.shouldUseFullParams()
                 ? fullUrlParameter : shortUrlParameter) + "=" + value;
     }

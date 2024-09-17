@@ -24,7 +24,7 @@ class GravatarProfileGalleryImageTest {
     }
 
     /**
-     * Tests for accessors
+     * Tests for the accessor methods.
      */
     @Test
     fun testAccessors() {

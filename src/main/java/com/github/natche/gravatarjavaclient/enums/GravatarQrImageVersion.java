@@ -2,6 +2,7 @@ package com.github.natche.gravatarjavaclient.enums;
 
 /**
  * The QR code version of the image returned.
+ * These are specific to the Gravatar API.
  */
 public enum GravatarQrImageVersion {
     /**

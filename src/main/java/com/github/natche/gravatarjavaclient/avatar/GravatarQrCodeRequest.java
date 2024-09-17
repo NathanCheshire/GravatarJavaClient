@@ -20,6 +20,11 @@ import java.net.URL;
  */
 public final class GravatarQrCodeRequest {
     /**
+     * The base URL for requesting data from the
+     */
+    private static final String baseUrl = "https://gravatar.com/";
+
+    /**
      * The range of acceptable lengths for a QR code image returned by Gravatar.
      */
     private static final Range<Integer> IMAGE_LENGTH_RANGE = Range.closed(80, 1024);
@@ -44,11 +49,6 @@ public final class GravatarQrCodeRequest {
      */
     private GravatarQrImageVersion version = GravatarQrImageVersion.BLANK;
 
-    /**
-     * Constructs a new GravatarQrCodeRequest from the provided hash.
-     *
-     * @param hash the hash pointing to an Avatar
-     */
     private GravatarQrCodeRequest(String hash) {
         this.hash = hash;
     }
@@ -93,7 +93,7 @@ public final class GravatarQrCodeRequest {
     }
 
     /**
-     * Sets the image length the image of this request should return.
+     * Sets the length of the image this request should return.
      *
      * @param imageLength the length of the image this request should return
      * @return this builder
@@ -168,7 +168,6 @@ public final class GravatarQrCodeRequest {
      * @return the URL for requesting the QR code based on the current state of this
      */
     public String getRequestUrl() {
-        String baseUrl = "https://gravatar.com/";
         return baseUrl + hash + ".qr"
                 + imageType.getAsUrlParameter(true)
                 + version.getAsUrlParameter(false)

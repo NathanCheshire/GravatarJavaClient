@@ -2,6 +2,7 @@ package com.github.natche.gravatarjavaclient.enums;
 
 /**
  * The valid types of QR images returned by the Gravatar API.
+ * Types, within the scope of Gravatar, are indicative of the image in the center of the QR code.
  */
 public enum GravatarQrImageType {
     /**

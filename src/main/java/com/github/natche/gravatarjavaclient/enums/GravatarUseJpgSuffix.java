@@ -1,7 +1,7 @@
 package com.github.natche.gravatarjavaclient.enums;
 
 /**
- * Whether a Gravatar Avatar requests should append ".jpg" to the hash.
+ * Whether a Gravatar Avatar request should append ".jpg" to the hash.
  */
 public enum GravatarUseJpgSuffix {
     True,

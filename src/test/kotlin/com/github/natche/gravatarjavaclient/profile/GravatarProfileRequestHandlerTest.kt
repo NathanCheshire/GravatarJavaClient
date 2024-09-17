@@ -1,7 +1,6 @@
 package com.github.natche.gravatarjavaclient.profile
 
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException
-import com.google.common.base.Preconditions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
@@ -23,7 +22,7 @@ class GravatarProfileRequestHandlerTest {
     }
 
     /**
-     * Tests for the [Preconditions] on the getProfile method.
+     * Tests for the preconditions on the getProfile method.
      */
     @Test
     fun testPreconditions() {

@@ -8,6 +8,9 @@ import java.util.function.Supplier;
  * An authentication token provider for Gravatar Profile requests.
  */
 public final class GravatarProfileTokenProvider {
+    /**
+     * The supplier for producing an API token as a byte array.
+     */
     private final Supplier<byte[]> tokenProvider;
 
     /**
@@ -18,7 +21,7 @@ public final class GravatarProfileTokenProvider {
     /**
      * Constructs a new token provider.
      *
-     * @param tokenProvider the encapsulated provider
+     * @param tokenProvider the supplier for producing an API token as a byte array
      * @param source the source/key, this is used for hash and equals comparisons
      * @throws NullPointerException if any parameter is null
      * @throws IllegalArgumentException if source is empty

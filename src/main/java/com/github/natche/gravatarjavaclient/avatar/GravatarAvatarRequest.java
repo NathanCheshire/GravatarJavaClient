@@ -79,11 +79,6 @@ public final class GravatarAvatarRequest {
      */
     private String defaultImageUrl = null;
 
-    /**
-     * Constructs a new GravatarAvatarRequest from the provided hash.
-     *
-     * @param hash the hash pointing to an Avatar
-     */
     private GravatarAvatarRequest(String hash) {
         this.hash = hash;
     }
@@ -215,6 +210,7 @@ public final class GravatarAvatarRequest {
 
     /**
      * Sets the default image type this request will use.
+     * Note {@link #defaultImageUrl} is set to null if this method is invoked.
      *
      * @param imageType the default image type this request will use
      * @return this builder
@@ -224,6 +220,7 @@ public final class GravatarAvatarRequest {
     public GravatarAvatarRequest setDefaultImageType(GravatarDefaultImageType imageType) {
         Preconditions.checkNotNull(imageType);
         this.defaultImageType = imageType;
+        this.defaultImageUrl = null;
         return this;
     }
 
@@ -306,9 +303,9 @@ public final class GravatarAvatarRequest {
     }
 
     /**
-     * Sets the image length the image of this request should return.
+     * Sets the length of the image this request should return.
      *
-     * @param imageLength the image length the image of this request should return
+     * @param imageLength the length of the image this request should return
      * @return this builder
      * @throws IllegalArgumentException if the provided image length is not in the range {@link #IMAGE_SIZE_RANGE}
      */

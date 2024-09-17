@@ -6,7 +6,7 @@ import java.io.IOException
 import java.util.*
 
 /**
- * Images used for tests requiring valid foreign images.
+ * Functions and constants used for tests involving images.
  */
 class ImagesForTests private constructor() {
     /**
@@ -31,7 +31,7 @@ class ImagesForTests private constructor() {
         )
 
         /**
-         * Internal function to validate a file for being a PNG.
+         * Function to validate a file for being a PNG.
          */
         fun isValidPng(file: File): Boolean {
             if (!file.exists() || !file.isFile) return false
@@ -51,7 +51,7 @@ class ImagesForTests private constructor() {
         }
 
         /**
-         * Internal function to validate a file for being a JPG.
+         * Function to validate a file for being a JPG.
          */
         fun isValidJpg(file: File): Boolean {
             if (!file.exists() || !file.isFile) return false

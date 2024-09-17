@@ -8,7 +8,7 @@ import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientExcepti
 import com.google.common.base.Preconditions;
 
 /**
- * A handler for constructing the Avatar request URL.
+ * A handler for constructing A Gravatar Avatar request URL.
  */
 enum GravatarAvatarRequestHandler {
     /**

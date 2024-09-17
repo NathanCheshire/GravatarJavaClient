@@ -16,7 +16,7 @@ import java.util.Arrays;
  */
 public final class Hasher {
     /**
-     * The common shared Sha256 hasher.
+     * A shared hasher instance using the SHA256 algorithm.
      */
     public static final Hasher SHA256_HASHER = Hasher.fromAlgorithm("SHA-256");
 
@@ -28,7 +28,6 @@ public final class Hasher {
     private final String algorithm;
 
     private Hasher(String algorithm) {
-
         this.algorithm = algorithm;
     }
 

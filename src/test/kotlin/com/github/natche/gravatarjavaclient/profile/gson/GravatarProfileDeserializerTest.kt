@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test
  */
 class GravatarProfileDeserializerTest {
     /**
-     * Tests for deserialization of the is_organization field being not present,
-     * present and false, and present and true.
+     * Tests for deserialization of the is_organization field being
+     * not present, present but false, and present but true.
      */
     @Test
     fun testDeserializationOfIsOrganization() {

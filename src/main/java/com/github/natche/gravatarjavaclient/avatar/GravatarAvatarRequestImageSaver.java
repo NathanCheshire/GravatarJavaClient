@@ -16,7 +16,7 @@ import java.util.Arrays;
  */
 enum GravatarAvatarRequestImageSaver {
     /**
-     * The Gravatar Avatar request image saver instance.
+     * The Gravatar Avatar request image saver singleton instance.
      */
     INSTANCE;
 

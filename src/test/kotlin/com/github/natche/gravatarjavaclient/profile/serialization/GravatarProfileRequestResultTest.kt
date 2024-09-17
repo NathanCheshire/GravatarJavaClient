@@ -48,7 +48,7 @@ class GravatarProfileRequestResultTest {
         val differentInstant = GravatarProfileRequestResult(Instant.now(), true)
 
         try {
-            Thread.sleep(500);
+            Thread.sleep(500)
         } catch (e: Exception) {
             // Swallow
         }

@@ -48,8 +48,7 @@ internal class InputValidatorTest {
     @Test
     fun testToString() {
         assertEquals("InputValidator{input=\"me\"}", InputValidator.from("me").toString())
-        assertEquals(
-            "InputValidator{input=\"other input\"}",
+        assertEquals("InputValidator{input=\"other input\"}",
             InputValidator.from("other input").toString()
         )
     }

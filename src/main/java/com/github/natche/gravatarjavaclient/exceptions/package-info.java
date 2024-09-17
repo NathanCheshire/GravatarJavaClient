@@ -1,4 +1,4 @@
 /**
- * Exceptions thrown by methods of the GravatarJavaClient API.
+ * Exceptions thrown throughout the GravatarJavaClient API.
  */
 package com.github.natche.gravatarjavaclient.exceptions;
