@@ -37,7 +37,7 @@ public final class Hasher {
      *
      * @param algorithm the algorithm
      * @return a new Hasher instance using the provided algorithm
-     * @throws NullPointerException if the provided algorithm is null
+     * @throws NullPointerException     if the provided algorithm is null
      * @throws IllegalArgumentException if the provided algorithm is empty
      */
     public static Hasher fromAlgorithm(String algorithm) {

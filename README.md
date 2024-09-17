@@ -18,16 +18,16 @@ Jitpack recommends it be placed at the end of the repositories scope.
 `maven { url 'https://jitpack.io' }`
 
 Then add the following to your dependencies:
-`implementation 'com.github.nathancheshire:gravatarjavaclient:2.0.3'`.
+`implementation 'com.github.nathancheshire:gravatarjavaclient:2.0.4'`.
 
 # Jitpack
 
 These links are mostly for me but if you would like to view the official Jitpack build log or artifacts list, these
 are the following links:
 
-Artifacts: https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.3/
+Artifacts: https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.4/
 
-Build log: https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.3/build.log
+Build log: https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.4/build.log
 
 ## API Support
 
@@ -73,6 +73,22 @@ GravatarProfileTokenProvider provider = new GravatarProfileTokenProvider(
 GravatarProfile profileWithAuthenticatedFields = GravatarProfileRequest.fromEmail("your.email@email.com")
         .setTokenSupplier(provider)
         .getProfile();
+```
+
+For generating QR codes:
+
+```java
+// Create the request
+GravatarQrCodeRequest request = GravatarQrCodeRequest.fromEmail("your.email@email.com")
+        .setSize(800)
+        .setImageType(GravatarQrImageType.USER)
+        .setVersion(GravatarQrImageVersion.THREE);
+
+// Get a BufferedImage
+BufferedImage image = request.getBufferedImage();
+
+// Save to a local file (API returns a PNG image)
+boolean wasSaved = request.saveTo(new File("path/to/your/file.png"));
 ```
 
 Because `GravatarProfileRequest` accepts a `GravatarProfileTokenProvider` instead of a literal string, you as the
