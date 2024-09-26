@@ -4,7 +4,7 @@
 
 ## Intro
 
-This library is a Java wrapper for the Gravatar image and profile API.
+This library is a Java/JVM wrapper for the Gravatar Avatar and Profile APIs.
 
 ## Using with Gradle
 
