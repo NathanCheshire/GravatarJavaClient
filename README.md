@@ -1,9 +1,5 @@
 # GravatarJavaClient
 
-![description](https://user-images.githubusercontent.com/60986919/219560104-58f321f8-4a7e-4d3a-9c73-884507442c36.png)
-
-![author](https://user-images.githubusercontent.com/60986919/219560101-6fd7400d-4e24-49b9-9b3a-82247e777d81.png)
-
 [![codecov](https://codecov.io/gh/NathanCheshire/GravatarJavaClient/branch/main/graph/badge.svg?token=T0DQD31N7S)](https://codecov.io/gh/NathanCheshire/GravatarJavaClient)
 
 ## Intro
