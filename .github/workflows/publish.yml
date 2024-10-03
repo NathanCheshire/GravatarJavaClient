@@ -1,0 +1,36 @@
+name: Release to Maven Central
+
+on:
+  push:
+    tags:
+      - 'v*'  # Triggers on push of a tag starting with "v"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      secrets: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Import GPG private key
+        run: |
+          echo "${{ secrets.SIGNING_KEY }}" | gpg --import --batch --yes
+        shell: bash
+
+      - name: Build and Publish
+        run: ./gradlew clean publish --no-daemon -i
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
