@@ -5,7 +5,7 @@ on:
     types: [created]
   push:
     tags:
-      - 'gravatar-java-client-v*'
+      - 'v*'
 
 jobs:
   publish:
@@ -13,6 +13,9 @@ jobs:
 
     permissions:
       contents: read
+
+    env:
+      GRAVATAR_JAVA_CLIENT_API_KEY: ${{ secrets.GRAVATAR_JAVA_CLIENT_API_KEY }}
 
     steps:
       - name: Checkout repo
