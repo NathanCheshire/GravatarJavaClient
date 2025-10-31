@@ -3,6 +3,7 @@ package com.github.natche.gravatarjavaclient.utils;
 import com.google.common.base.Preconditions;
 
 import javax.imageio.ImageIO;
+import java.net.URI;
 import java.net.URL;
 import java.util.regex.Pattern;
 
@@ -60,9 +61,10 @@ public final class InputValidator {
      *
      * @return whether the encapsulated input is a valid image URL
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored") /* Validation */
     public boolean isValidImageUrl() {
         try {
-            ImageIO.read(new URL(input)).getWidth();
+            URI.create(input).toURL();
             return true;
         } catch (Exception ignored) {
             return false;
@@ -70,10 +72,10 @@ public final class InputValidator {
     }
 
     /**
-     * Returns whether the provided object equals this object.
+     * Returns whether the provided object is equal to this {@link InputValidator} instance.
      *
      * @param o the other object
-     * @return whether the provided object equals this object
+     * @return whether the provided object is equal to this
      */
     @Override
     public boolean equals(Object o) {

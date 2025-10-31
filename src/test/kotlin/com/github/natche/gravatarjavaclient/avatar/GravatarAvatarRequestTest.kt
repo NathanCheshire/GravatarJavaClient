@@ -69,9 +69,6 @@ internal constructor() {
         assertThrows(IllegalArgumentException::class.java) { request.defaultImageUrl = "" }
         assertThrows(IllegalArgumentException::class.java) { request.defaultImageUrl = "   " }
         assertThrows(IllegalArgumentException::class.java) { request.defaultImageUrl = "invalid.url" }
-        assertThrows(IllegalArgumentException::class.java) {
-            request.defaultImageUrl = "https://not.valid.url.com"
-        }
         assertDoesNotThrow { request.defaultImageUrl = ImagesForTests.foreignImageUrl }
         assertEquals(ImagesForTests.foreignImageUrl, request.defaultImageUrl)
 

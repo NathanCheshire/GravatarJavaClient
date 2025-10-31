@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 
 /**
  * A request for a user's profile QR code from Gravatar.
@@ -22,7 +22,7 @@ public final class GravatarQrCodeRequest {
     /**
      * The base URL for requesting data from the
      */
-    private static final String baseUrl = "https://gravatar.com/";
+    private static final String BASE_URL = "https://gravatar.com/";
 
     /**
      * The range of acceptable lengths for a QR code image returned by Gravatar.
@@ -168,7 +168,7 @@ public final class GravatarQrCodeRequest {
      * @return the URL for requesting the QR code based on the current state of this
      */
     public String getRequestUrl() {
-        return baseUrl + hash + ".qr"
+        return BASE_URL + hash + ".qr"
                 + imageType.getAsUrlParameter(true)
                 + version.getAsUrlParameter(false)
                 + "&size=" + this.size;
@@ -182,7 +182,8 @@ public final class GravatarQrCodeRequest {
      */
     public BufferedImage getBufferedImage() {
         try {
-            return ImageIO.read(new URL(getRequestUrl()));
+            String url = getRequestUrl();
+            return ImageIO.read(URI.create(url).toURL());
         } catch (IOException e) {
             throw new GravatarJavaClientException(e);
         }

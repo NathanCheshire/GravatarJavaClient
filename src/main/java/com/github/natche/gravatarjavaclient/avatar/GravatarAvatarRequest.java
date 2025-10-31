@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.Objects;
 
@@ -335,14 +336,16 @@ public final class GravatarAvatarRequest {
     }
 
     /**
-     * Reads and returns a {@link BufferedImage} using the URL constructed from the current state of this.
+     * Reads from the URL constructed from the current state of this request using
+     * {@link #getRequestUrl()}. The content is encoded into a new {@link BufferedImage} and returned.
      *
-     * @return a {@link BufferedImage} representing an Avatar
+     * @return a new {@link BufferedImage}
      * @throws GravatarJavaClientException if an exception occurs reading from the URL
      */
     public BufferedImage getBufferedImage() {
         try {
-            return ImageIO.read(new URL(getRequestUrl()));
+            String requestUrl = getRequestUrl();
+            return ImageIO.read(URI.create(requestUrl).toURL());
         } catch (IOException e) {
             throw new GravatarJavaClientException(e);
         }
@@ -356,14 +359,17 @@ public final class GravatarAvatarRequest {
      */
     public ImageIcon getImageIcon() {
         try {
-            URL url = new URL(getRequestUrl());
+            String requestUrl = getRequestUrl();
+            URL url = URI.create(requestUrl).toURL();
+            // ToDo we should extract and encapsulate HTTP/fetching logic to some handler
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setInstanceFollowRedirects(false);
 
             int responseCode = connection.getResponseCode();
+            // ToDo: what about other response codes?
             if (responseCode == HttpURLConnection.HTTP_MOVED_PERM) {
                 String redirectUrl = connection.getHeaderField("Location");
-                url = new URL(redirectUrl);
+                url = URI.create(redirectUrl).toURL();
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
             }

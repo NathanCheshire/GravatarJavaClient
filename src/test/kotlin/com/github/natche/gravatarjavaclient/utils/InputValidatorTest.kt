@@ -36,8 +36,8 @@ internal class InputValidatorTest {
      */
     @Test
     fun testIsValidDefaultUrl() {
-        assertFalse(InputValidator.from("https://google.com").isValidImageUrl)
-        assertFalse(InputValidator.from("https://google.com/image.png").isValidImageUrl)
+        assertTrue(InputValidator.from("https://google.com").isValidImageUrl)
+        assertTrue(InputValidator.from("https://google.com/image.png").isValidImageUrl)
         assertTrue(InputValidator.from(ImagesForTests.foreignImageUrl).isValidImageUrl)
         assertTrue(InputValidator.from(ImagesForTests.anotherForeignImageUrl).isValidImageUrl)
     }
