@@ -15,5 +15,5 @@ jobs:
       - uses: streetsidesoftware/cspell-action@v6
         with:
           files: "**/*.{java,kt,md}"
-          incremental_files_only: false
+          incremental_files_only: true
           config: "./cspell.json"
