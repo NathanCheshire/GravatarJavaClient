@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'io.github.gradle-nexus.publish-plugin' version '1.2.0'
     id 'jacoco'
     id 'org.jetbrains.kotlin.jvm' version '2.0.0'
     id 'maven-publish'
@@ -110,15 +109,4 @@ signing {
 
     useInMemoryPgpKeys(signingKey, signingPassword)
     sign publishing.publications.mavenJava
-}
-
-nexusPublishing {
-    repositories {
-        sonatype {
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/"))
-            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-            username.set(System.getenv("CENTRAL_USERNAME"))
-            password.set(System.getenv("CENTRAL_PASSWORD"))
-        }
-    }
 }
