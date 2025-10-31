@@ -3,6 +3,9 @@ name: release-and-publish
 on:
   release:
     types: [created]
+  push:
+    tags:
+      - 'gravatar-java-client-v*'
 
 jobs:
   publish:
