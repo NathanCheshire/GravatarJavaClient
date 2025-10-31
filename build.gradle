@@ -47,12 +47,12 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
 jacocoTestReport {
     reports {
         xml.required = true
-        xml.outputLocation.set(file("$buildDir/reports/jacoco/test/xml/index.xml"))
         html.required = false
     }
 }

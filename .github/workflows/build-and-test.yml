@@ -33,7 +33,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Build and Test
-        run: ./gradlew build jacocoTestReport --no-daemon
+        run: ./gradlew build --no-daemon
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
