@@ -168,7 +168,7 @@ internal constructor() {
         val unauthenticatedRequest = GravatarProfileRequest.fromHashOrId("nathanvcheshire")
         assertEquals(
             "GravatarProfileRequest{hash=\"nathanvcheshire\","
-                    + " tokenSupplier=GravatarProfileTokenProvider{source=\"TokenSupplier class\"}}",
+                    + " tokenSupplier=GravatarProfileTokenProvider{source=\"TokenSupplierForTests tokenSupplier\"}}",
             authenticatedRequest.toString()
         )
         assertEquals(

@@ -105,6 +105,7 @@ enum GravatarProfileRequestHandler {
                 socket.setEnabledCipherSuites(socket.getSupportedCipherSuites());
                 OutputStream outputStream = socket.getOutputStream();
 
+                // ToDo: this should probably be a more standard pattern
                 String httpRequest = "GET /v" + API_VERSION
                         + "/profiles/" + nameOrHash + " "
                         + "HTTP/1.1" + CRLF
