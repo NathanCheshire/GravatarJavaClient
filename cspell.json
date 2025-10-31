@@ -21,6 +21,8 @@
     "/forcedefault/gi",
     "/wavatar/gi",
     "/monsterid/gi",
-    "/hashcode/gi"
+    "/hashcode/gi",
+    "/gson/gi",
+    "/getenv/gi"
   ]
 }
