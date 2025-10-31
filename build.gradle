@@ -4,6 +4,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.0.0'
     id 'maven-publish'
     id 'signing'
+    id 'io.github.gradle-nexus.publish-plugin' version '1.2.0'
 }
 
 java {
@@ -101,18 +102,6 @@ publishing {
             }
         }
     }
-
-    repositories {
-        maven {
-            name = 'Central'
-            url = uri('https://central.sonatype.com/api/v1/publisher/upload')
-
-            credentials {
-                username = findProperty('centralUsername') ?: System.getenv('CENTRAL_USERNAME')
-                password = findProperty('centralPassword') ?: System.getenv('CENTRAL_PASSWORD')
-            }
-        }
-    }
 }
 
 signing {
@@ -121,4 +110,15 @@ signing {
 
     useInMemoryPgpKeys(signingKey, signingPassword)
     sign publishing.publications.mavenJava
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+            username.set(System.getenv("CENTRAL_USERNAME"))
+            password.set(System.getenv("CENTRAL_PASSWORD"))
+        }
+    }
 }
