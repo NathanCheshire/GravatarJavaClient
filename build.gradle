@@ -67,3 +67,60 @@ compileTestKotlin {
         jvmTarget = "17"
     }
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            pom {
+                name = 'GravatarJavaClient'
+                description = 'A Java/JVM wrapper for the Gravatar Avatar and Profile APIs'
+                url = 'https://github.com/NathanCheshire/GravatarJavaClient'
+
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'nathancheshire'
+                        name = 'Nathan Cheshire'
+                        email = 'nathan.vincent.2.718@gmail.com'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git://github.com/nathancheshire/GravatarJavaClient.git'
+                    developerConnection = 'scm:git:ssh://git@github.com:nathancheshire/GravatarJavaClient.git'
+                    url = 'https://github.com/nathancheshire/GravatarJavaClient'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'OSSRH'
+            def releasesRepoUrl = uri('https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/')
+            def snapshotsRepoUrl = uri('https://s01.oss.sonatype.org/content/repositories/snapshots/')
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            credentials {
+                username = findProperty('ossrhUsername') ?: System.getenv('OSSRH_USERNAME')
+                password = findProperty('ossrhPassword') ?: System.getenv('OSSRH_PASSWORD')
+            }
+        }
+    }
+}
+
+signing {
+    def signingKey = System.getenv('GPG_PRIVATE_KEY')
+    def signingPassword = System.getenv('GPG_PASSPHRASE')
+
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications.mavenJava
+}
