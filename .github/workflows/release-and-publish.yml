@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish:
+  release-and-publish:
     runs-on: ubuntu-latest
 
     permissions:

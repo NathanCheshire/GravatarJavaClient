@@ -96,7 +96,7 @@ publishing {
 
                 scm {
                     connection = 'scm:git:git://github.com/nathancheshire/GravatarJavaClient.git'
-                    developerConnection = 'scm:git:ssh://git@github.com:nathancheshire/GravatarJavaClient.git'
+                    developerConnection = 'scm:git:ssh://git@github.com/nathancheshire/GravatarJavaClient.git'
                     url = 'https://github.com/nathancheshire/GravatarJavaClient'
                 }
             }
