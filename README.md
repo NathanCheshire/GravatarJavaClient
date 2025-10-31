@@ -2,11 +2,19 @@
 
 [![codecov](https://codecov.io/gh/NathanCheshire/GravatarJavaClient/branch/main/graph/badge.svg?token=T0DQD31N7S)](https://codecov.io/gh/NathanCheshire/GravatarJavaClient)
 
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.nathancheshire/GravatarJavaClient)](https://central.sonatype.com/artifact/io.github.nathancheshire/GravatarJavaClient)
+
 ## Intro
 
 This library is a Java/JVM wrapper for the Gravatar Avatar and Profile APIs.
 
-## Using with Gradle
+### Gradle
+
+```groovy
+implementation 'io.github.nathancheshire:GravatarJavaClient:2.0.5'
+```
+
+### Jitpack
 
 Add the following line in your `repositories` scope within your `build.gradle` (or `build.gradle.kts`).
 Jitpack recommends it be placed at the end of the repositories scope.
