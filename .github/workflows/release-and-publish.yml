@@ -34,6 +34,9 @@ jobs:
       - name: Build and Test
         run: ./gradlew build --no-daemon
 
+      - name: Verify GPG secret format
+        run: echo "${{ secrets.GPG_PRIVATE_KEY }}" | head -n 3
+
       - name: Publish to Maven Central
         run: ./gradlew publish --no-daemon
         env:
