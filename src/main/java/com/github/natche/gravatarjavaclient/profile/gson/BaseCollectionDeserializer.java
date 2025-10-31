@@ -10,7 +10,7 @@ import java.util.Collection;
 
 /**
  * A collection deserializer for use by {@link com.google.gson.Gson}
- * to deserialize a collection object into an {@link com.google.common.collect.ImmutableList}.
+ * to deserialize a collection token into an {@link com.google.common.collect.ImmutableList}.
  *
  * @param <E> the entity type
  */
