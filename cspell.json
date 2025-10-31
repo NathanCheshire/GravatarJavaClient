@@ -11,5 +11,5 @@
   ],
   "dictionaries": ["en", "@cspell/dict-lorem-ipsum", "hebrew"],
   "words": [],
-  "ignoreRegExpList": ["/temurin/gi"]
+  "ignoreRegExpList": ["/gravatarjavaclient/gi", "/natche/gi", "/robo/gi",  "/jitpack/gi", "/nathancheshire/gi"]
 }
