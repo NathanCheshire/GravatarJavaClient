@@ -1,0 +1,19 @@
+name: spelling/check
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: streetsidesoftware/cspell-action@v6
+        with:
+          files: "**/*.{ts,tsx,js,jsx,py,md,tf,dart,mjml}"
+          incremental_files_only: true
+          config: "./cspell.json"
