@@ -77,12 +77,23 @@ public final class GravatarProfileDeserializer implements JsonDeserializer<Grava
                 ? jsonObject.get("number_verified_accounts").getAsInt() : 0;
 
         return new GravatarProfile(
-                hash, displayName, profileUrl, avatarUrl,
-                avatarAltText, location, description, jobTitle,
-                company, verifiedAccounts, pronunciation, pronouns,
-                timezone, languages, firstName, lastName,
-                isOrganization, links, interests, payments,
-                contactInfo, gallery, numberVerifiedAccounts, lastProfileEdit,
+                hash,
+                displayName,
+                profileUrl, avatarUrl, avatarAltText,
+                location,
+                description,
+                jobTitle, company,
+                verifiedAccounts,
+                pronunciation, pronouns,
+                timezone,
+                languages,
+                firstName, lastName,
+                isOrganization,
+                links, interests, payments,
+                contactInfo,
+                gallery,
+                numberVerifiedAccounts,
+                lastProfileEdit,
                 registrationDate
         );
     }

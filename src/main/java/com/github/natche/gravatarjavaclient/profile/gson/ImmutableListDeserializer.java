@@ -9,6 +9,12 @@ import java.util.Collection;
  * a Collection into an {@link ImmutableList} from Guava.
  */
 public final class ImmutableListDeserializer extends BaseCollectionDeserializer<ImmutableList<?>> {
+    /**
+     * Deserializes a collection into an {@link ImmutableList}.
+     *
+     * @param collection the collection to deserialize.
+     * @return a new ImmutableList containing the elements of the provided collection
+     */
     @Override
     protected ImmutableList<?> buildFrom(Collection<?> collection) {
         return ImmutableList.copyOf(collection);
