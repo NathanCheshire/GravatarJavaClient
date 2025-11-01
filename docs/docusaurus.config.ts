@@ -11,9 +11,11 @@ const config: Config = {
     v4: true,
   },
 
-  url: "https://your-docusaurus-site.example.com",
+  url: "https://nathancheshire.github.io",
   baseUrl: "/GravatarJavaClient/",
+  organizationName: "nathancheshire",
   projectName: "GravatarJavaClient",
+  trailingSlash: false,
   onBrokenLinks: "throw",
   i18n: {
     defaultLocale: "en",
