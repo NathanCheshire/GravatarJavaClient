@@ -131,4 +131,8 @@ signing {
 
     useInMemoryPgpKeys(signingKey, signingPassword)
     sign publishing.publications.mavenJava
+
+    setRequired {
+        !project.hasProperty("jitpack")
+    }
 }
