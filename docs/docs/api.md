@@ -59,7 +59,7 @@ GravatarProfile profileWithAuthenticatedFields = GravatarProfileRequest.fromEmai
 
 ## QR codes
 
-You can genearte a QR code for your Gravatar profile using a `GravatarQrCodeRequest`:
+You can generate a QR code for your Gravatar profile using a `GravatarQrCodeRequest`:
 
 ```java
 // Define a re-usable request
@@ -73,4 +73,4 @@ File fileToSaveTo = new File("/path/to/your/qr_code_file.png")
 boolean wasSaved = request.saveTo(fileToSaveTo);
 ```
 
-Note, the Gravatar API returns a PNG for QR codes, presumably for lossless compression, which is why the GravatarJavaClient API does not allow for an encoding paramter in the way `GravatarAvatarRequest` does for the `saveTo` method.
+Note, the Gravatar API returns a PNG for QR codes, presumably for lossless compression, which is why the GravatarJavaClient API does not allow for an encoding parameter in the way `GravatarAvatarRequest` does for the `saveTo` method.
