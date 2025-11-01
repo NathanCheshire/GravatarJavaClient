@@ -4,9 +4,9 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.nathancheshire/GravatarJavaClient)](https://central.sonatype.com/artifact/io.github.nathancheshire/GravatarJavaClient)
 
-## Intro
+## Introduction
 
-This library is a Java/JVM wrapper for the Gravatar Avatar and Profile APIs.
+A JVM client for Gravatar Avatar and Profile APIs
 
 ### Gradle
 

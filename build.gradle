@@ -76,7 +76,7 @@ publishing {
 
             pom {
                 name = 'GravatarJavaClient'
-                description = 'A Java/JVM wrapper for the Gravatar Avatar and Profile APIs'
+                description = 'A JVM client for Gravatar Avatar and Profile APIs'
                 url = 'https://github.com/NathanCheshire/GravatarJavaClient'
 
                 licenses {
