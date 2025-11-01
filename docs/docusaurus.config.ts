@@ -29,10 +29,25 @@ const config: Config = {
         docs: {
           sidebarPath: "./sidebars.ts",
         },
+        blog: false,
         theme: {
           customCss: "./src/css/custom.css",
         },
       } satisfies Preset.Options,
+    ],
+  ],
+
+  plugins: [
+    [
+      "@docusaurus/plugin-client-redirects",
+      {
+        redirects: [
+          {
+            from: "/",
+            to: "/docs/intro",
+          },
+        ],
+      },
     ],
   ],
 
