@@ -9,29 +9,29 @@ public enum GravatarUrlParameter {
     /**
      * The size of the image to be returned by a Gravatar request.
      */
-    SIZE("s", "size"),
+    Size("size"),
 
     /**
      * The URL of the default image to return in the case a user email hash is invalid or results in no valid images.
      */
-    DEFAULT_IMAGE_URL("d", "default"),
+    DefaultImageUrl("default"),
 
     /**
      * Whether to force the default URL regardless of the validity of
      * the user account hash. See {@link GravatarForceDefaultImage}.
      */
-    FORCE_DEFAULT("f", "forcedefault"),
+    ForceDefault("forcedefault"),
 
     /**
      * The {@link GravatarDefaultImageType} type. Used to return a random custom
      * avatar if a user's email hash cannot be located.
      */
-    DEFAULT_IMAGE_TYPE("d", "default"),
+    DefaultImageType("default"),
 
     /**
      * The {@link GravatarRating} for a Gravatar request.
      */
-    RATING("r", "rating");
+    Rating("rating");
 
     /**
      * The character prefix for the initial URL parameter directly following the path.
@@ -54,9 +54,8 @@ public enum GravatarUrlParameter {
      */
     private final String fullUrlParameter;
 
-    GravatarUrlParameter(String urlParameter,
-                         String fullUrlParameter) {
-        this.shortUrlParameter = urlParameter;
+    GravatarUrlParameter(String fullUrlParameter) {
+        this.shortUrlParameter = fullUrlParameter.substring(0, 1);
         this.fullUrlParameter = fullUrlParameter;
     }
 
@@ -68,10 +67,11 @@ public enum GravatarUrlParameter {
      * @param useFullUrlParameter whether to use the full URL parameter
      * @param <T>                 the type of value
      * @return the string for this URL parameter and value
-     * @throws NullPointerException if the provided value is null
+     * @throws NullPointerException if any provided parameter is null
      */
     public <T> String constructUrlParameterWithValue(T value, GravatarUseFullUrlParameters useFullUrlParameter) {
         Preconditions.checkNotNull(value);
+        Preconditions.checkNotNull(useFullUrlParameter);
 
         return constructUrlParameterWithValue(value, false, useFullUrlParameter);
     }
@@ -86,7 +86,7 @@ public enum GravatarUrlParameter {
      * @param firstParameter      whether this URL parameter is the first after the query
      * @param useFullUrlParameter whether to use the full URL parameter
      * @return the string for this URL parameter and value
-     * @throws NullPointerException if the provided value is null
+     * @throws NullPointerException if any provided parameter is null
      */
     public <T> String constructUrlParameterWithValue(T value,
                                                      boolean firstParameter,

@@ -1,9 +1,10 @@
 package com.github.natche.gravatarjavaclient.enums;
 
 /**
- * The default image types supported by Gravatar for the Avatar API.
- * These themes are generated per-user based off of the hash of an account's email address.
+ * The default image types supported by Gravatar for their Avatar API.
+ * These themes are generated per-user based off of the provided hash.
  */
+@SuppressWarnings("SpellCheckingInspection")
 public enum GravatarDefaultImageType {
     /**
      * The 404 image type.
@@ -17,45 +18,43 @@ public enum GravatarDefaultImageType {
      * A simple, cartoon-style silhouetted outline of a person.
      * Note: this does not vary by email hash.
      */
-    MYSTERY_PERSON("mp"),
+    MysteryPerson("mp"),
 
     /**
      * The ident icon image type.
-     * A geometric pattern based on an email hash; this is what GitHub uses for default user avatars.
+     * A geometric pattern based on an email hash; this is what GitHub uses for their default user avatars.
      */
-    IDENT_ICON("identicon"),
+    IdentIcon("identicon"),
 
     /**
-     * The monster id image type.
+     * The monster ID image type.
      * A generated "monster" with different colors, faces, and features.
      */
-    MONSTER_ID("monsterid"),
+    MonsterId("monsterid"),
 
     /**
      * The wavatar image type.
      * Generated faces with differing features and backgrounds.
      */
-    WAVATAR("wavatar"),
+    Wavatar("wavatar"),
 
     /**
      * The retro image type.
      * An awesome generated, 8-bit arcade-style pixelated faces.
      */
-    RETRO("retro"),
+    Retro("retro"),
 
     /**
      * The RoboHash image type.
      * A generated robot with different colors, faces, and features.
      * This is what the GitLens plugin for vscode uses.
-     * See <a href="https://github.com/nathancheshire/jrobohash">JRoboHash</a> for a RoboHash JVM wrapper library.
      */
-    ROBO_HASH("robohash"),
+    RoboHash("robohash"),
 
     /**
-     * The blank image type.
-     * A blank PNG image, how boring.
+     * The blank image type, returns a blank PNG.
      */
-    BLANK("blank");
+    Blank("blank");
 
     /**
      * The URL parameter value for this {@link GravatarDefaultImageType}.

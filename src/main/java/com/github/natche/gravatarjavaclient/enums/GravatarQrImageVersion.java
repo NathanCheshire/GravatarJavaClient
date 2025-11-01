@@ -8,17 +8,17 @@ public enum GravatarQrImageVersion {
     /**
      * A standard QR code.
      */
-    BLANK("blank"),
+    Blank("blank"),
 
     /**
-     * The same as {@link #BLANK}.
+     * The same as {@link #Blank}.
      */
-    ONE("1"),
+    One("1"),
 
     /**
      * Modern "small dots" QR code.
      */
-    THREE("3");
+    Three("3");
 
     private final String urlParameter;
 
@@ -29,11 +29,11 @@ public enum GravatarQrImageVersion {
     /**
      * Returns the URL parameter for this image version.
      *
-     * @param isFirstUrlParameter whether this is the first url parameter
+     * @param isFirst whether this is the first url parameter
      * @return the URL parameter for this image version
      */
-    public String getAsUrlParameter(boolean isFirstUrlParameter) {
-        String firstChar = isFirstUrlParameter ? "?" : "&";
+    public String getAsUrlParameter(boolean isFirst) {
+        String firstChar = isFirst ? "?" : "&";
         return firstChar + "version=" + this.urlParameter;
     }
 }

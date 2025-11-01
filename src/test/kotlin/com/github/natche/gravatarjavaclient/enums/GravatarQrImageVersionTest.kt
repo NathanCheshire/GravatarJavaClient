@@ -12,13 +12,13 @@ class GravatarQrImageVersionTest {
      */
     @Test
     fun testGetAsUrlParameter() {
-        assertEquals("?version=blank", GravatarQrImageVersion.BLANK.getAsUrlParameter(true))
-        assertEquals("&version=blank", GravatarQrImageVersion.BLANK.getAsUrlParameter(false))
+        assertEquals("?version=blank", GravatarQrImageVersion.Blank.getAsUrlParameter(true))
+        assertEquals("&version=blank", GravatarQrImageVersion.Blank.getAsUrlParameter(false))
 
-        assertEquals("?version=1", GravatarQrImageVersion.ONE.getAsUrlParameter(true))
-        assertEquals("&version=1", GravatarQrImageVersion.ONE.getAsUrlParameter(false))
+        assertEquals("?version=1", GravatarQrImageVersion.One.getAsUrlParameter(true))
+        assertEquals("&version=1", GravatarQrImageVersion.One.getAsUrlParameter(false))
 
-        assertEquals("?version=3", GravatarQrImageVersion.THREE.getAsUrlParameter(true))
-        assertEquals("&version=3", GravatarQrImageVersion.THREE.getAsUrlParameter(false))
+        assertEquals("?version=3", GravatarQrImageVersion.Three.getAsUrlParameter(true))
+        assertEquals("&version=3", GravatarQrImageVersion.Three.getAsUrlParameter(false))
     }
 }

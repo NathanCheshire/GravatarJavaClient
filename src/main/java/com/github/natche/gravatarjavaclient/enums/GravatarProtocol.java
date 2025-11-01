@@ -7,13 +7,16 @@ public enum GravatarProtocol {
     /**
      * The hypertext transfer protocol.
      */
-    HTTP("http"),
+    Http("http"),
 
     /**
      * The hypertext transfer protocol secure.
      */
-    HTTPS("https");
+    Https("https");
 
+    /**
+     * The base URL for hitting the Gravatar Avatar API using this protocol.
+     */
     private final String baseUrl;
 
     GravatarProtocol(String protocol) {

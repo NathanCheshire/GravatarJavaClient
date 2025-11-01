@@ -17,7 +17,7 @@ enum GravatarAvatarRequestHandler {
     INSTANCE;
 
     /**
-     * The string to accompany {@link GravatarUrlParameter#FORCE_DEFAULT} to indicate the default URL
+     * The string to accompany {@link GravatarUrlParameter#ForceDefault} to indicate the default URL
      * should be used regardless of the validity of the Gravatar account.
      */
     private static final String FORCE_DEFAULT_URL_TRUE_STRING = "y";
@@ -41,11 +41,11 @@ enum GravatarAvatarRequestHandler {
         urlBuilder.append(gravatarAvatarRequest.getShouldAppendJpgSuffix().getSuffix());
 
         String size = String.valueOf(gravatarAvatarRequest.getSize());
-        String sizeParameter = GravatarUrlParameter.SIZE.constructUrlParameterWithValue(
+        String sizeParameter = GravatarUrlParameter.Size.constructUrlParameterWithValue(
                 size, true, fullParams);
         urlBuilder.append(sizeParameter);
 
-        String ratingsParameter = GravatarUrlParameter.RATING.constructUrlParameterWithValue(
+        String ratingsParameter = GravatarUrlParameter.Rating.constructUrlParameterWithValue(
                 gravatarAvatarRequest.getRating().getUrlParameter(), fullParams);
         urlBuilder.append(ratingsParameter);
 
@@ -53,11 +53,11 @@ enum GravatarAvatarRequestHandler {
         String defaultImageUrl = gravatarAvatarRequest.getDefaultImageUrl();
 
         if (defaultImageType != null) {
-            String defaultImageTypeQueryString = GravatarUrlParameter.DEFAULT_IMAGE_TYPE
+            String defaultImageTypeQueryString = GravatarUrlParameter.DefaultImageType
                     .constructUrlParameterWithValue(defaultImageType.getUrlParameterValue(), fullParams);
             urlBuilder.append(defaultImageTypeQueryString);
         } else {
-            String defaultImageUrlQueryString = GravatarUrlParameter.DEFAULT_IMAGE_URL
+            String defaultImageUrlQueryString = GravatarUrlParameter.DefaultImageUrl
                     .constructUrlParameterWithValue(defaultImageUrl, fullParams);
             urlBuilder.append(defaultImageUrlQueryString);
         }
@@ -70,7 +70,7 @@ enum GravatarAvatarRequestHandler {
             throw new GravatarJavaClientException("Must provide default URL if forcing default");
         }
 
-        String forceDefaultImageQueryString = GravatarUrlParameter.FORCE_DEFAULT
+        String forceDefaultImageQueryString = GravatarUrlParameter.ForceDefault
                 .constructUrlParameterWithValue(FORCE_DEFAULT_URL_TRUE_STRING, fullParams);
         urlBuilder.append(forceDefaultImageQueryString);
 

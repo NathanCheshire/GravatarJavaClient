@@ -85,29 +85,29 @@ internal constructor() {
         // Protocol
         assertThrows(NullPointerException::class.java)
         { request.protocol = null }
-        assertDoesNotThrow { request.protocol = GravatarProtocol.HTTP }
-        assertEquals(GravatarProtocol.HTTP, request.protocol)
-        assertDoesNotThrow { request.protocol = GravatarProtocol.HTTPS }
-        assertEquals(GravatarProtocol.HTTPS, request.protocol)
+        assertDoesNotThrow { request.protocol = GravatarProtocol.Http }
+        assertEquals(GravatarProtocol.Http, request.protocol)
+        assertDoesNotThrow { request.protocol = GravatarProtocol.Https }
+        assertEquals(GravatarProtocol.Https, request.protocol)
 
         // Default image type
         assertThrows(NullPointerException::class.java) { request.defaultImageType = null }
         assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType._404 }
         assertEquals(GravatarDefaultImageType._404, request.defaultImageType)
-        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.BLANK }
-        assertEquals(GravatarDefaultImageType.BLANK, request.defaultImageType)
-        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.IDENT_ICON }
-        assertEquals(GravatarDefaultImageType.IDENT_ICON, request.defaultImageType)
-        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.MONSTER_ID }
-        assertEquals(GravatarDefaultImageType.MONSTER_ID, request.defaultImageType)
-        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.MYSTERY_PERSON }
-        assertEquals(GravatarDefaultImageType.MYSTERY_PERSON, request.defaultImageType)
-        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.RETRO }
-        assertEquals(GravatarDefaultImageType.RETRO, request.defaultImageType)
-        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.ROBO_HASH }
-        assertEquals(GravatarDefaultImageType.ROBO_HASH, request.defaultImageType)
-        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.WAVATAR }
-        assertEquals(GravatarDefaultImageType.WAVATAR, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.Blank }
+        assertEquals(GravatarDefaultImageType.Blank, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.IdentIcon }
+        assertEquals(GravatarDefaultImageType.IdentIcon, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.MonsterId }
+        assertEquals(GravatarDefaultImageType.MonsterId, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.MysteryPerson }
+        assertEquals(GravatarDefaultImageType.MysteryPerson, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.Retro }
+        assertEquals(GravatarDefaultImageType.Retro, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.RoboHash }
+        assertEquals(GravatarDefaultImageType.RoboHash, request.defaultImageType)
+        assertDoesNotThrow { request.defaultImageType = GravatarDefaultImageType.Wavatar }
+        assertEquals(GravatarDefaultImageType.Wavatar, request.defaultImageType)
 
         // Force default image
         assertThrows(NullPointerException::class.java) { request.setForceDefaultImage(null) }
@@ -120,8 +120,8 @@ internal constructor() {
         assertThrows(NullPointerException::class.java) { request.rating = null }
         assertDoesNotThrow { request.rating = GravatarRating.G }
         assertEquals(GravatarRating.G, request.rating)
-        assertDoesNotThrow { request.rating = GravatarRating.PG }
-        assertEquals(GravatarRating.PG, request.rating)
+        assertDoesNotThrow { request.rating = GravatarRating.Pg }
+        assertEquals(GravatarRating.Pg, request.rating)
         assertDoesNotThrow { request.rating = GravatarRating.R }
         assertEquals(GravatarRating.R, request.rating)
         assertDoesNotThrow { request.rating = GravatarRating.X }
@@ -151,12 +151,12 @@ internal constructor() {
     @Test
     fun testGetRequestUrl() {
         val fromEmailUrl = GravatarAvatarRequest.fromEmail("my.email@email.com")
-            .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+            .setDefaultImageType(GravatarDefaultImageType.RoboHash)
             .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
-            .setProtocol(GravatarProtocol.HTTP)
+            .setProtocol(GravatarProtocol.Http)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
             .requestUrl
@@ -166,11 +166,11 @@ internal constructor() {
                     + "?s=2000&r=x&d=https://picsum.photos/seed/gravatar-java-client/200/300&f=y", fromEmailUrl
         )
         val fromHashUrl = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
-            .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
+            .setDefaultImageType(GravatarDefaultImageType.Wavatar)
             .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
             .setRating(GravatarRating.R)
             .setSize(1776)
-            .setProtocol(GravatarProtocol.HTTPS)
+            .setProtocol(GravatarProtocol.Https)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
             .requestUrl
@@ -179,11 +179,11 @@ internal constructor() {
                     + "?size=1776&rating=r&default=wavatar", fromHashUrl
         )
         val invalidDefaultUrl = GravatarAvatarRequest.fromEmail("my.email@email.com")
-            .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+            .setDefaultImageType(GravatarDefaultImageType.RoboHash)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
-            .setProtocol(GravatarProtocol.HTTP)
+            .setProtocol(GravatarProtocol.Http)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
         assertThrows(GravatarJavaClientException::class.java) { invalidDefaultUrl.requestUrl }
@@ -195,29 +195,29 @@ internal constructor() {
     @Test
     fun testHashCode() {
         val fromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
-            .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+            .setDefaultImageType(GravatarDefaultImageType.RoboHash)
             .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
-            .setProtocol(GravatarProtocol.HTTP)
+            .setProtocol(GravatarProtocol.Http)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
         val equalToFromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
-            .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+            .setDefaultImageType(GravatarDefaultImageType.RoboHash)
             .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
-            .setProtocol(GravatarProtocol.HTTP)
+            .setProtocol(GravatarProtocol.Http)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
         val fromHash = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
-            .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
+            .setDefaultImageType(GravatarDefaultImageType.Wavatar)
             .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
             .setRating(GravatarRating.R)
             .setSize(1776)
-            .setProtocol(GravatarProtocol.HTTPS)
+            .setProtocol(GravatarProtocol.Https)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
         assertEquals(fromEmail.hashCode(), equalToFromEmail.hashCode())
@@ -230,29 +230,29 @@ internal constructor() {
     @Test
     fun testEquals() {
         val fromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
-            .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+            .setDefaultImageType(GravatarDefaultImageType.RoboHash)
             .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
-            .setProtocol(GravatarProtocol.HTTP)
+            .setProtocol(GravatarProtocol.Http)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
         val equalToFromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
-            .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+            .setDefaultImageType(GravatarDefaultImageType.RoboHash)
             .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
-            .setProtocol(GravatarProtocol.HTTP)
+            .setProtocol(GravatarProtocol.Http)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
         val fromHash = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
-            .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
+            .setDefaultImageType(GravatarDefaultImageType.Wavatar)
             .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
             .setRating(GravatarRating.R)
             .setSize(1776)
-            .setProtocol(GravatarProtocol.HTTPS)
+            .setProtocol(GravatarProtocol.Https)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
         assertEquals(fromEmail, fromEmail)
@@ -283,13 +283,13 @@ internal constructor() {
         assertNotEquals(force, doNotForce)
         val roboHash = GravatarAvatarRequest.fromHash("one")
         val wavatar = GravatarAvatarRequest.fromHash("one")
-        roboHash.defaultImageType = GravatarDefaultImageType.ROBO_HASH
-        wavatar.defaultImageType = GravatarDefaultImageType.WAVATAR
+        roboHash.defaultImageType = GravatarDefaultImageType.RoboHash
+        wavatar.defaultImageType = GravatarDefaultImageType.Wavatar
         assertNotEquals(roboHash, wavatar)
         val http = GravatarAvatarRequest.fromHash("one")
         val https = GravatarAvatarRequest.fromHash("one")
-        http.protocol = GravatarProtocol.HTTP
-        https.protocol = GravatarProtocol.HTTPS
+        http.protocol = GravatarProtocol.Http
+        https.protocol = GravatarProtocol.Https
         assertNotEquals(http, https)
         val notFullParams = GravatarAvatarRequest.fromHash("one")
         val fullParams = GravatarAvatarRequest.fromHash("one")
@@ -304,7 +304,7 @@ internal constructor() {
         val gRating = GravatarAvatarRequest.fromHash("one")
         val pgRating = GravatarAvatarRequest.fromHash("one")
         gRating.rating = GravatarRating.G
-        pgRating.rating = GravatarRating.PG
+        pgRating.rating = GravatarRating.Pg
         assertNotEquals(gRating, pgRating)
     }
 
@@ -314,20 +314,20 @@ internal constructor() {
     @Test
     fun testToString() {
         val fromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
-            .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
+            .setDefaultImageType(GravatarDefaultImageType.RoboHash)
             .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
             .setRating(GravatarRating.X)
             .setSize(2000)
-            .setProtocol(GravatarProtocol.HTTP)
+            .setProtocol(GravatarProtocol.Http)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
         val fromHash = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
-            .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
+            .setDefaultImageType(GravatarDefaultImageType.Wavatar)
             .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
             .setRating(GravatarRating.R)
             .setSize(1776)
-            .setProtocol(GravatarProtocol.HTTPS)
+            .setProtocol(GravatarProtocol.Https)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
         assertEquals(
@@ -354,17 +354,17 @@ internal constructor() {
             .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
             .setRating(GravatarRating.R)
             .setSize(1776)
-            .setProtocol(GravatarProtocol.HTTPS)
+            .setProtocol(GravatarProtocol.Https)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
         assertThrows(GravatarJavaClientException::class.java) { fromHash.bufferedImage }
 
         val valid = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
-            .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
+            .setDefaultImageType(GravatarDefaultImageType.Wavatar)
             .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
             .setRating(GravatarRating.R)
             .setSize(1776)
-            .setProtocol(GravatarProtocol.HTTPS)
+            .setProtocol(GravatarProtocol.Https)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
         assertDoesNotThrow { valid.bufferedImage }
@@ -377,11 +377,11 @@ internal constructor() {
     @Test
     fun testSaveAsJpg() {
         val fromHash = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
-            .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
+            .setDefaultImageType(GravatarDefaultImageType.Wavatar)
             .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
             .setRating(GravatarRating.R)
             .setSize(1776)
-            .setProtocol(GravatarProtocol.HTTPS)
+            .setProtocol(GravatarProtocol.Https)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
         assertThrows(NullPointerException::class.java) { fromHash.saveAsJpg(null) }
@@ -413,11 +413,11 @@ internal constructor() {
     @Test
     fun testSaveAsPng() {
         val fromHash = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
-            .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
+            .setDefaultImageType(GravatarDefaultImageType.Wavatar)
             .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
             .setRating(GravatarRating.R)
             .setSize(1776)
-            .setProtocol(GravatarProtocol.HTTPS)
+            .setProtocol(GravatarProtocol.Https)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
         assertThrows(NullPointerException::class.java) { fromHash.saveAsPng(null) }
@@ -449,11 +449,11 @@ internal constructor() {
     @Test
     fun testSaveTo() {
         val fromHash = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
-            .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
+            .setDefaultImageType(GravatarDefaultImageType.Wavatar)
             .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
             .setRating(GravatarRating.R)
             .setSize(1776)
-            .setProtocol(GravatarProtocol.HTTPS)
+            .setProtocol(GravatarProtocol.Https)
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
         assertThrows(NullPointerException::class.java)

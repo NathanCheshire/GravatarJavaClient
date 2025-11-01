@@ -23,7 +23,7 @@ import java.util.Objects;
  */
 public final class GravatarAvatarRequest {
     /**
-     * The range a {@link GravatarUrlParameter#SIZE} parameter must fall within.
+     * The range a {@link GravatarUrlParameter#Size} parameter must fall within.
      */
     private static final Range<Integer> IMAGE_SIZE_RANGE = Range.closed(1, 2048);
 
@@ -53,7 +53,7 @@ public final class GravatarAvatarRequest {
      * Images rated above this rating will not be returned. Instead, the "default" image will be returned
      * as set by {@link #setDefaultImageType(GravatarDefaultImageType)} or {@link #setDefaultImageUrl(String)}.
      */
-    private GravatarRating rating = GravatarRating.PG;
+    private GravatarRating rating = GravatarRating.Pg;
 
     /**
      * Whether to force the default image to be returned for this request.
@@ -63,12 +63,12 @@ public final class GravatarAvatarRequest {
     /**
      * The default image type.
      */
-    private GravatarDefaultImageType defaultImageType = GravatarDefaultImageType.IDENT_ICON;
+    private GravatarDefaultImageType defaultImageType = GravatarDefaultImageType.IdentIcon;
 
     /**
      * The application layer protocol to use when fetching the image from the URL.
      */
-    private GravatarProtocol protocol = GravatarProtocol.HTTPS;
+    private GravatarProtocol protocol = GravatarProtocol.Https;
 
     /**
      * Whether to use full URL parameter names in the request as opposed to short versions.

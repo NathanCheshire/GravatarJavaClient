@@ -52,22 +52,22 @@ class GravatarQrCodeRequestTest {
         assertEquals(1024, request.size)
 
         assertThrows(NullPointerException::class.java) { request.version = null }
-        assertDoesNotThrow { request.version = GravatarQrImageVersion.ONE }
-        assertEquals(GravatarQrImageVersion.ONE, request.version)
-        assertDoesNotThrow { request.version = GravatarQrImageVersion.BLANK }
-        assertEquals(GravatarQrImageVersion.BLANK, request.version)
-        assertDoesNotThrow { request.version = GravatarQrImageVersion.THREE }
-        assertEquals(GravatarQrImageVersion.THREE, request.version)
+        assertDoesNotThrow { request.version = GravatarQrImageVersion.One }
+        assertEquals(GravatarQrImageVersion.One, request.version)
+        assertDoesNotThrow { request.version = GravatarQrImageVersion.Blank }
+        assertEquals(GravatarQrImageVersion.Blank, request.version)
+        assertDoesNotThrow { request.version = GravatarQrImageVersion.Three }
+        assertEquals(GravatarQrImageVersion.Three, request.version)
 
         assertThrows(NullPointerException::class.java) { request.imageType = null }
-        assertDoesNotThrow { request.imageType = GravatarQrImageType.GRAVATAR }
-        assertEquals(GravatarQrImageType.GRAVATAR, request.imageType)
-        assertDoesNotThrow { request.imageType = GravatarQrImageType.BLANK }
-        assertEquals(GravatarQrImageType.BLANK, request.imageType)
-        assertDoesNotThrow { request.imageType = GravatarQrImageType.DEFAULT }
-        assertEquals(GravatarQrImageType.DEFAULT, request.imageType)
-        assertDoesNotThrow { request.imageType = GravatarQrImageType.USER }
-        assertEquals(GravatarQrImageType.USER, request.imageType)
+        assertDoesNotThrow { request.imageType = GravatarQrImageType.Gravatar }
+        assertEquals(GravatarQrImageType.Gravatar, request.imageType)
+        assertDoesNotThrow { request.imageType = GravatarQrImageType.Blank }
+        assertEquals(GravatarQrImageType.Blank, request.imageType)
+        assertDoesNotThrow { request.imageType = GravatarQrImageType.Default }
+        assertEquals(GravatarQrImageType.Default, request.imageType)
+        assertDoesNotThrow { request.imageType = GravatarQrImageType.User }
+        assertEquals(GravatarQrImageType.User, request.imageType)
     }
 
     /**
@@ -80,8 +80,8 @@ class GravatarQrCodeRequestTest {
 
         val fromEmail = GravatarQrCodeRequest.fromEmail("valid.email@email.com")
             .setSize(1000)
-            .setImageType(GravatarQrImageType.GRAVATAR)
-            .setVersion(GravatarQrImageVersion.THREE)
+            .setImageType(GravatarQrImageType.Gravatar)
+            .setVersion(GravatarQrImageVersion.Three)
         assertEquals(
             "https://gravatar.com/4dfc17ce9e02fc266f013a59852803fbb47b65b07b0b53b439b99c73c110082"
                     + ".qr?type=gravatar&version=3&size=1000", fromEmail.requestUrl
@@ -151,7 +151,7 @@ class GravatarQrCodeRequestTest {
     fun testToString() {
         val one = GravatarQrCodeRequest.fromHash("hash")
             .setSize(800)
-            .setVersion(GravatarQrImageVersion.THREE)
+            .setVersion(GravatarQrImageVersion.Three)
         assertEquals(
             "GravatarQrCodeRequest{hash=\"hash\", size=800,"
                     + " imageType=DEFAULT, version=THREE}", one.toString()
@@ -175,9 +175,9 @@ class GravatarQrCodeRequestTest {
         assertNotEquals(one, equal.setSize(100))
 
         equal.size = 80
-        assertNotEquals(one, equal.setVersion(GravatarQrImageVersion.THREE))
+        assertNotEquals(one, equal.setVersion(GravatarQrImageVersion.Three))
 
-        equal.version = GravatarQrImageVersion.BLANK
-        assertNotEquals(one, equal.setImageType(GravatarQrImageType.GRAVATAR))
+        equal.version = GravatarQrImageVersion.Blank
+        assertNotEquals(one, equal.setImageType(GravatarQrImageType.Gravatar))
     }
 }

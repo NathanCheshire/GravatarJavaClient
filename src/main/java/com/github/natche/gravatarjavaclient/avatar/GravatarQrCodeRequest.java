@@ -42,12 +42,12 @@ public final class GravatarQrCodeRequest {
     /**
      * The QR image type for this request.
      */
-    private GravatarQrImageType imageType = GravatarQrImageType.DEFAULT;
+    private GravatarQrImageType imageType = GravatarQrImageType.Default;
 
     /**
      * The QR code version for this request.
      */
-    private GravatarQrImageVersion version = GravatarQrImageVersion.BLANK;
+    private GravatarQrImageVersion version = GravatarQrImageVersion.Blank;
 
     private GravatarQrCodeRequest(String hash) {
         this.hash = hash;

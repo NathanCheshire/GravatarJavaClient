@@ -1,7 +1,7 @@
 package com.github.natche.gravatarjavaclient.enums;
 
 /**
- * Valid ratings for a Gravatar Avatar image.
+ * Ratings for a Gravatar Avatar image.
  * Gravatar allows users to self-rate their images so that they can indicate if an image is appropriate
  * for a given audience. By default, only {@link #G} rated images are displayed unless a user has explicitly
  * chosen they would like to view higher rated images.
@@ -17,7 +17,7 @@ public enum GravatarRating {
      * The PG rating for a Gravatar user image.
      * May contain rude gestures, provocatively dressed individuals, the lesser swear words, or mild violence.
      */
-    PG,
+    Pg,
 
     /**
      * The R rating for a Gravatar user image.
@@ -30,8 +30,6 @@ public enum GravatarRating {
      * May contain hardcore sexual imagery or extremely disturbing violence.
      */
     X;
-
-    GravatarRating() {}
 
     /**
      * Returns the URL parameter for this {@link GravatarRating}.

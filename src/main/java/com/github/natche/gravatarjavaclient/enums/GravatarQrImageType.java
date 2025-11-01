@@ -1,38 +1,39 @@
 package com.github.natche.gravatarjavaclient.enums;
 
 /**
- * The valid types of QR images returned by the Gravatar API.
+ * The types of QR images returned by the Gravatar API.
  * Types, within the scope of Gravatar, are indicative of the image in the center of the QR code.
  */
 public enum GravatarQrImageType {
     /**
-     * No logo or avatar.
+     * No logo or avatar in the center.
      */
-    BLANK,
+    Blank,
 
     /**
-     * Same as {@link #BLANK}.
+     * Same as {@link #Blank}.
      */
-    DEFAULT,
+    Default,
 
     /**
-     * The user's avatar.
+     * The user's avatar in the center.
      */
-    USER,
+    User,
 
     /**
-     * The Gravatar logo.
+     * The Gravatar logo in the center.
      */
-    GRAVATAR;
+    Gravatar;
 
     /**
      * Returns the URL parameter for this image type.
      *
-     * @param isFirstUrlParameter whether this is the first url parameter
+     * @param isFirst whether this is the first url parameter
      * @return the URL parameter for this image type
      */
-    public String getAsUrlParameter(boolean isFirstUrlParameter) {
-        String firstChar = isFirstUrlParameter ? "?" : "&";
+    public String getAsUrlParameter(boolean isFirst) {
+        // TODO: consolidate ? and & to some kind of URL encoding enum or something
+        String firstChar = isFirst ? "?" : "&";
         return firstChar + "type=" + this.toString().toLowerCase();
     }
 }
