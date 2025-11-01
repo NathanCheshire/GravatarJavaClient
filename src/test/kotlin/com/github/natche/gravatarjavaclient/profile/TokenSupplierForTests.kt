@@ -1,9 +1,7 @@
 package com.github.natche.gravatarjavaclient.profile
 
-import java.nio.charset.StandardCharsets
-
 /**
- * A token supplier for providing tests with an instance of a [GravatarProfileTokenProvider].
+ * A token supplier for providing tests with an Gravatar API token..
  */
 class TokenSupplierForTests private constructor() {
     /**
@@ -20,12 +18,8 @@ class TokenSupplierForTests private constructor() {
         private const val GRAVATAR_API_KEY_ENV_VAR = "GRAVATAR_JAVA_CLIENT_API_KEY"
 
         /**
-         * Returns the token supplier to grab the API key from the system environment.
-         *
-         * @return the token supplier to grab the API key from the system environment.
+         * The Gravatar API key used for testing.
          */
-        val tokenSupplier = GravatarProfileTokenProvider(
-            { System.getenv(GRAVATAR_API_KEY_ENV_VAR).toByteArray(StandardCharsets.US_ASCII) }, "TokenSupplierForTests tokenSupplier"
-        )
+        val TOKEN: String = System.getenv(GRAVATAR_API_KEY_ENV_VAR)
     }
 }

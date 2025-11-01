@@ -3,17 +3,15 @@ package com.github.natche.gravatarjavaclient.profile;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.github.natche.gravatarjavaclient.profile.gson.GsonProvider;
 import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfile;
-import com.github.natche.gravatarjavaclient.utils.ResourceReader;
 import com.github.natche.gravatarjavaclient.utils.Hasher;
 import com.github.natche.gravatarjavaclient.utils.InputValidator;
+import com.github.natche.gravatarjavaclient.utils.ResourceReader;
 import com.google.common.base.Preconditions;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * A class for requesting a Profile from the Gravatar Profile API.
@@ -21,32 +19,37 @@ import java.util.Objects;
  */
 public final class GravatarProfileRequest {
     /**
-     * The authorization token supplier.
+     * The number of characters to reveal of the token when the {@link #toString()} method is invoked.
      */
-    private GravatarProfileTokenProvider tokenSupplier;
+    private static final int TOKEN_SUBSTRING_LENGTH = 5;
 
     /**
      * The SHA256 hash or profile ID.
      */
     private final String hashOrId;
 
+    /**
+     * The token used for obtaining authenticated fields in the response.
+     */
+    private String token;
+
     private GravatarProfileRequest(String hashOrId) {
         this.hashOrId = hashOrId;
     }
 
     /**
-     * Constructs a new GravatarProfileRequest from the provided hash or ID such as "nathanvcheshire".
+     * Constructs a new GravatarProfileRequest from the provided ID.
      *
-     * @param hashOrId the hash or ID
+     * @param id the ID to use in the request
      * @return a new GravatarProfileRequest
-     * @throws NullPointerException     if the provided hash/ID is null
-     * @throws IllegalArgumentException if the provided hash/ID is empty
+     * @throws NullPointerException     if the provided ID is null
+     * @throws IllegalArgumentException if the provided ID is empty
      */
-    public static GravatarProfileRequest fromHashOrId(String hashOrId) {
-        Preconditions.checkNotNull(hashOrId);
-        Preconditions.checkArgument(!hashOrId.trim().isEmpty());
+    public static GravatarProfileRequest from(String id) {
+        Preconditions.checkNotNull(id);
+        Preconditions.checkArgument(!id.trim().isEmpty());
 
-        return new GravatarProfileRequest(hashOrId);
+        return new GravatarProfileRequest(id);
     }
 
     /**
@@ -62,21 +65,21 @@ public final class GravatarProfileRequest {
         Preconditions.checkArgument(!email.trim().isEmpty());
         Preconditions.checkArgument(InputValidator.from(email).isValidEmailAddress());
 
-        return new GravatarProfileRequest(Hasher.SHA256_HASHER.hash(email));
+        return new GravatarProfileRequest(Hasher.SHA256.hash(email));
     }
 
     /**
-     * Sets the API token provider to use when requesting this profile from the Gravatar API.
-     * If not provided, only certain fields will be returned. A supplier is used instead of
-     * a String to allow for the avoidance of tokens appearing in String pool due to how strings
-     * work in the JVM.
+     * Sets the token this request will use when requesting information from the Gravatar API.
+     * When a valid token is provided, fields requiring authentication will be provided in the response.
      *
-     * @param tokenSupplier a supplier for returning a token
-     * @return this request builder
+     * @param token the token
+     * @return this request
      */
-    public GravatarProfileRequest setTokenSupplier(GravatarProfileTokenProvider tokenSupplier) {
-        Preconditions.checkNotNull(tokenSupplier);
-        this.tokenSupplier = tokenSupplier;
+    public GravatarProfileRequest setToken(String token) {
+        Preconditions.checkNotNull(token);
+        Preconditions.checkArgument(!token.trim().isEmpty());
+
+        this.token = token;
         return this;
     }
 
@@ -97,7 +100,6 @@ public final class GravatarProfileRequest {
      * @throws GravatarJavaClientException if an exception occurs when fetching the profile
      */
     public GravatarProfile getProfile() {
-        byte[] token = tokenSupplier == null ? null : tokenSupplier.getToken();
         return GravatarProfileRequestHandler.INSTANCE.getProfile(token, hashOrId);
     }
 
@@ -149,7 +151,7 @@ public final class GravatarProfileRequest {
     @Override
     public int hashCode() {
         int ret = hashOrId.hashCode();
-        if (tokenSupplier != null) ret = 31 * ret + Arrays.hashCode(tokenSupplier.getToken());
+        if (token != null) ret = 31 * ret + token.hashCode();
         return ret;
     }
 
@@ -166,7 +168,7 @@ public final class GravatarProfileRequest {
 
         GravatarProfileRequest other = (GravatarProfileRequest) o;
         return hashOrId.equals(other.hashOrId)
-                && Objects.equals(tokenSupplier, other.tokenSupplier);
+                && token.equals(other.token);
     }
 
     /**
@@ -175,9 +177,13 @@ public final class GravatarProfileRequest {
      * @return a string representation of this object
      */
     public String toString() {
+        String sub = token != null && token.length() > TOKEN_SUBSTRING_LENGTH
+                ? token.substring(0, TOKEN_SUBSTRING_LENGTH) + "..."
+                : token;
+
         return "GravatarProfileRequest{"
                 + "hash=\"" + hashOrId + "\", "
-                + "tokenSupplier=" + tokenSupplier
+                + "token=" + sub
                 + "}";
     }
 }

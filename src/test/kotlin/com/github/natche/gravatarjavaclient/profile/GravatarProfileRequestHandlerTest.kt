@@ -15,22 +15,22 @@ class GravatarProfileRequestHandlerTest {
     @Test
     fun testInvalidHashReturnsErrorMessage() {
         val exception = assertThrows(GravatarJavaClientException::class.java) {
-            GravatarProfileRequestHandler.INSTANCE.getProfile(ByteArray(0), "hash")
+            GravatarProfileRequestHandler.INSTANCE.getProfile("", "hash")
         }
 
         assertEquals("Gravatar API error: Profile not found", exception.message)
     }
 
     /**
-     * Tests for the preconditions on the getProfile method.
+     * Tests the Precondition validations of the getProfile method.
      */
     @Test
-    fun testPreconditions() {
+    fun testGetProfileThrowsForInvalidParameters() {
         assertThrows(NullPointerException::class.java)
-        { GravatarProfileRequestHandler.INSTANCE.getProfile(ByteArray(0), null) }
+        { GravatarProfileRequestHandler.INSTANCE.getProfile("", null) }
         assertThrows(IllegalArgumentException::class.java)
-        { GravatarProfileRequestHandler.INSTANCE.getProfile(ByteArray(0), "") }
+        { GravatarProfileRequestHandler.INSTANCE.getProfile("", "") }
         assertThrows(IllegalArgumentException::class.java)
-        { GravatarProfileRequestHandler.INSTANCE.getProfile(ByteArray(0), "  ") }
+        { GravatarProfileRequestHandler.INSTANCE.getProfile("", "  ") }
     }
 }

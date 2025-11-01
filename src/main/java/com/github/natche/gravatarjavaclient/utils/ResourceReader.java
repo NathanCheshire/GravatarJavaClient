@@ -18,6 +18,11 @@ public final class ResourceReader {
     );
 
     /**
+     * The Radix to use when parsing an integer.
+     */
+    private static final int PARSE_INT_RADIX = 16;
+
+    /**
      * The reader for a resource.
      */
     private final BufferedReader resourceReader;
@@ -84,29 +89,36 @@ public final class ResourceReader {
             String chunkSizeLine = this.resourceReader.readLine();
             if (chunkSizeLine == null || chunkSizeLine.isEmpty()) break;
 
-            int chunkSize = Integer.parseInt(chunkSizeLine.trim(), 16);
-            if (chunkSize == 0) break; // End of chunks
+            int chunkSize = Integer.parseInt(chunkSizeLine.trim(), PARSE_INT_RADIX);
+            if (chunkSize == 0) {
+                // End of chunks
+                break;
+            }
 
             char[] chunk = new char[chunkSize];
             int totalBytesRead = 0;
 
             while (totalBytesRead < chunkSize) {
                 int bytesRead = this.resourceReader.read(chunk, totalBytesRead, chunkSize - totalBytesRead);
-                if (bytesRead == -1) break; // End of stream
+                if (bytesRead == -1) {
+                    // End of stream
+                    break;
+                }
                 totalBytesRead += bytesRead;
             }
 
             responseBody.append(chunk, 0, totalBytesRead);
-            this.resourceReader.readLine(); // Skip trailing CRLF after chunk
+            // Skip trailing CRLF after chunk
+            this.resourceReader.readLine();
         }
 
         return responseBody.toString();
     }
 
     /**
-     * Returns a hashcode representation of this object.
+     * Returns a hashcode representation of this reader.
      *
-     * @return a hashcode representation of this object
+     * @return a hashcode representation of this reader
      */
     @Override
     public int hashCode() {
@@ -114,9 +126,9 @@ public final class ResourceReader {
     }
 
     /**
-     * Returns a string representation of this object.
+     * Returns a string representation of this reader.
      *
-     * @return a string representation of this object
+     * @return a string representation of this reader
      */
     @Override
     public String toString() {
@@ -124,10 +136,10 @@ public final class ResourceReader {
     }
 
     /**
-     * Returns whether the provided object is equal to this.
+     * Returns whether the provided object is equal to this reader.
      *
      * @param o the other object
-     * @return whether the provided object is equal to this
+     * @return whether the provided object is equal to this reader
      */
     @Override
     public boolean equals(Object o) {

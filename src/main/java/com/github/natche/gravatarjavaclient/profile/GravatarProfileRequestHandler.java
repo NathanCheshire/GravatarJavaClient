@@ -3,10 +3,8 @@ package com.github.natche.gravatarjavaclient.profile;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.github.natche.gravatarjavaclient.profile.gson.GsonProvider;
 import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfile;
-import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfileRequestResult;
 import com.github.natche.gravatarjavaclient.utils.ResourceReader;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
 
 import javax.net.ssl.SSLSocket;
@@ -16,12 +14,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * The Gravatar Profile request handler for requesting profiles from the Gravatar Profile API.
+ * A singleton for interfacing with the Gravatar Profile REST API.
  */
 enum GravatarProfileRequestHandler {
     /**
@@ -55,48 +51,45 @@ enum GravatarProfileRequestHandler {
     private static final String CRLF = "\r\n";
 
     /**
-     * The result of all authenticated requests during this JVM runtime.
+     * The count of authenticated requests this handler has sent.
      */
-    private final ArrayList<GravatarProfileRequestResult> AUTHENTICATED_REQUESTS = new ArrayList<>();
+    private final AtomicInteger authenticatedRequestCount = new AtomicInteger();
 
     /**
-     * The result of all unauthenticated requests during this JVM runtime.
+     * The count of unauthenticated requests this handler has sent.
      */
-    private final ArrayList<GravatarProfileRequestResult> UNAUTHENTICATED_REQUESTS = new ArrayList<>();
+    private final AtomicInteger unauthenticatedRequestCount = new AtomicInteger();
 
     /**
-     * Returns the result of all authenticated requests during this JVM runtime.
+     * Returns the number of authenticated requests this handler has sent.
      *
-     * @return the result of all authenticated requests during this JVM runtime
+     * @return the number of authenticated requests this handler has sent
      */
-    public ImmutableList<GravatarProfileRequestResult> getAuthenticatedRequestResults() {
-        return ImmutableList.copyOf(AUTHENTICATED_REQUESTS);
+    public int getAuthenticatedRequestCount() {
+        return authenticatedRequestCount.get();
     }
 
     /**
-     * Returns the result of all unauthenticated requests during this JVM runtime.
+     * Returns the number of unauthenticated requests this handler has sent.
      *
-     * @return the result of all unauthenticated requests during this JVM runtime
+     * @return the number of unauthenticated requests this handler has sent
      */
-    public ImmutableList<GravatarProfileRequestResult> getUnauthenticatedRequestResults() {
-        return ImmutableList.copyOf(UNAUTHENTICATED_REQUESTS);
+    public int getUnauthenticatedRequestCount() {
+        return unauthenticatedRequestCount.get();
     }
 
     /**
      * Reads and returns a serialized object from the Gravatar Profile API.
      *
-     * @param bearerToken the authentication token to use; if not provided, only certain fields will be returned
-     * @param nameOrHash  the name or SHA256 hash to use
+     * @param token      the authentication token to use; if not provided, only certain fields will be returned
+     * @param nameOrHash the name or SHA256 hash to use
      * @return a profile object
      * @throws NullPointerException     if the provided name or hash is null
      * @throws IllegalArgumentException if the provided name or hash is empty
      */
-    GravatarProfile getProfile(byte[] bearerToken, String nameOrHash) {
+    GravatarProfile getProfile(String token, String nameOrHash) {
         Preconditions.checkNotNull(nameOrHash);
         Preconditions.checkArgument(!nameOrHash.trim().isEmpty());
-
-        Instant requestTime = Instant.now();
-        AtomicBoolean failed = new AtomicBoolean(true);
 
         try {
             SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
@@ -113,12 +106,10 @@ enum GravatarProfileRequestHandler {
                         + CRLF;
 
                 outputStream.write(encode(httpRequest));
-                if (bearerToken != null) {
-                    outputStream.write(encode(("Authorization: Bearer ")));
-                    outputStream.write(bearerToken);
+                if (token != null) {
+                    outputStream.write(encode(("Authorization: Bearer " + token)));
                 }
                 outputStream.write(encode(CRLF + CRLF));
-                requestTime = Instant.now();
                 outputStream.flush();
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -128,16 +119,13 @@ enum GravatarProfileRequestHandler {
                     throw new RuntimeException("Gravatar API error: " + responseObject.get("error").getAsString());
                 }
 
-                GravatarProfile ret = GsonProvider.INSTANCE.get().fromJson(response, GravatarProfile.class);
-                failed.set(false);
-                return ret;
+                return GsonProvider.INSTANCE.get().fromJson(response, GravatarProfile.class);
             }
         } catch (Exception e) {
             throw new GravatarJavaClientException(e);
         } finally {
-            GravatarProfileRequestResult result = new GravatarProfileRequestResult(requestTime, !failed.get());
-            if (bearerToken == null) UNAUTHENTICATED_REQUESTS.add(result);
-            else AUTHENTICATED_REQUESTS.add(result);
+            if (token == null) unauthenticatedRequestCount.incrementAndGet();
+            else authenticatedRequestCount.incrementAndGet();
         }
     }
 

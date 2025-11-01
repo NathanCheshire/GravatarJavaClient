@@ -65,7 +65,7 @@ public final class GravatarQrCodeRequest {
         Preconditions.checkArgument(!email.trim().isEmpty());
         Preconditions.checkArgument(InputValidator.from(email).isValidEmailAddress());
 
-        String hash = Hasher.SHA256_HASHER.hash(email);
+        String hash = Hasher.SHA256.hash(email);
         return new GravatarQrCodeRequest(hash);
     }
 

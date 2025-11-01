@@ -22,7 +22,7 @@ import java.util.Objects;
 /**
  * A class for building a Gravatar Avatar request, requesting the resource, and saving
  * the resource to a {@link java.io.File} or a {@link java.awt.image.BufferedImage}.
- * See <a href="https://docs.gravatar.com/api/avatars/images/">Avatar image request API Documentation</a>.
+ * Read the official Avatar image request API docs <a href="https://docs.gravatar.com/api/avatars/images/">here</a>.
  */
 public final class GravatarAvatarRequest {
     /**
@@ -31,32 +31,35 @@ public final class GravatarAvatarRequest {
     private static final Range<Integer> IMAGE_SIZE_RANGE = Range.closed(1, 2048);
 
     /**
-     * The default length for an Avatar request.
+     * The default image length for a request.
      */
     private static final int DEFAULT_IMAGE_LENGTH = 80;
 
     /**
-     * The hash computed from the user email for this builder.
+     * The hash either computed from a provided email address or provided
+     * to the {@link #fromHash(String)} factory method.
      */
     private final String hash;
 
     /**
-     * Whether the JPG suffix should be appended to the {@link #hash} when constructing the Avatar request URL.
+     * Whether the JPG suffix should be appended to the {@link #hash} when constructing the request URL.
      */
     private GravatarUseJpgSuffix shouldAppendJpgSuffix = GravatarUseJpgSuffix.False;
 
     /**
-     * The size for the image returned by this builder.
+     * The size for the image returned by this request.
      */
     private int size = DEFAULT_IMAGE_LENGTH;
 
     /**
      * The maximum rating allowable for this Avatar request.
+     * Images rated above this rating will not be returned. Instead, the "default" image will be returned
+     * as set by {@link #setDefaultImageType(GravatarDefaultImageType)} or {@link #setDefaultImageUrl(String)}.
      */
     private GravatarRating rating = GravatarRating.PG;
 
     /**
-     * Whether to force the default image to be returned for this Avatar request.
+     * Whether to force the default image to be returned for this request.
      */
     private GravatarForceDefaultImage forceDefaultImage = GravatarForceDefaultImage.DoNotForce;
 
@@ -66,7 +69,7 @@ public final class GravatarAvatarRequest {
     private GravatarDefaultImageType defaultImageType = GravatarDefaultImageType.IDENT_ICON;
 
     /**
-     * The image protocol.
+     * The application layer protocol to use when fetching the image from the URL.
      */
     private GravatarProtocol protocol = GravatarProtocol.HTTPS;
 
@@ -76,10 +79,15 @@ public final class GravatarAvatarRequest {
     private GravatarUseFullUrlParameters useFullUrlParameters = GravatarUseFullUrlParameters.False;
 
     /**
-     * The default image URL to use in the event an Avatar cannot be found.
+     * The default image URL. This is used as a fallback and if the rating is above the set rating.
      */
     private String defaultImageUrl = null;
 
+    /**
+     * Constructs a new GravatarAvatarRequest from the provided hash.
+     *
+     * @param hash the hash, computed from a valid email address
+     */
     private GravatarAvatarRequest(String hash) {
         this.hash = hash;
     }
@@ -87,25 +95,25 @@ public final class GravatarAvatarRequest {
     /**
      * Constructs and returns a new GravatarAvatarRequest.
      *
-     * @param email the email for this Gravatar Avatar request
-     * @throws NullPointerException     if the email is null
-     * @throws IllegalArgumentException if the email is empty or not a valid email address
+     * @param email the email for this request
+     * @throws NullPointerException     if the provided email is null
+     * @throws IllegalArgumentException if the provided email is empty or not a valid email address
      */
     public static GravatarAvatarRequest fromEmail(String email) {
         Preconditions.checkNotNull(email);
         Preconditions.checkArgument(!email.trim().isEmpty());
         Preconditions.checkArgument(InputValidator.from(email).isValidEmailAddress());
 
-        String hash = Hasher.SHA256_HASHER.hash(email);
+        String hash = Hasher.SHA256.hash(email);
         return new GravatarAvatarRequest(hash);
     }
 
     /**
      * Constructs and returns a new GravatarAvatarRequest.
      *
-     * @param hash the hash for this Gravatar Avatar request
-     * @throws NullPointerException     if the hash is null
-     * @throws IllegalArgumentException if the hash is empty
+     * @param hash the hash for this request
+     * @throws NullPointerException     if the provided hash is null
+     * @throws IllegalArgumentException if the provided hash is empty
      */
     public static GravatarAvatarRequest fromHash(String hash) {
         Preconditions.checkNotNull(hash);
@@ -211,7 +219,7 @@ public final class GravatarAvatarRequest {
 
     /**
      * Sets the default image type this request will use.
-     * Note {@link #defaultImageUrl} is set to null if this method is invoked.
+     * Note {@link #defaultImageUrl} is set to {@code null} after setting the internal state of this request to the provided type.
      *
      * @param imageType the default image type this request will use
      * @return this builder
@@ -259,6 +267,7 @@ public final class GravatarAvatarRequest {
 
     /**
      * Sets the rating this request will use.
+     * If the resulting image's rating is above this rating, the default image will be used.
      *
      * @param rating the rating this request will use
      * @return this builder
@@ -436,9 +445,9 @@ public final class GravatarAvatarRequest {
     }
 
     /**
-     * Returns a string representation of this.
+     * Returns a string representation of this request.
      *
-     * @return a string representation of this
+     * @return a string representation of this request
      */
     @Override
     public String toString() {
@@ -455,9 +464,9 @@ public final class GravatarAvatarRequest {
     }
 
     /**
-     * Returns a hashcode for this object.
+     * Returns a hashcode for this request.
      *
-     * @return a hashcode for this object
+     * @return a hashcode for this request
      */
     @Override
     public int hashCode() {
@@ -474,10 +483,10 @@ public final class GravatarAvatarRequest {
     }
 
     /**
-     * Returns whether the provided object is equal to this.
+     * Returns whether the provided object is equal to this request.
      *
      * @param o the other object
-     * @return whether the provided object is equal to this
+     * @return whether the provided object is equal to this request
      */
     @Override
     public boolean equals(Object o) {
