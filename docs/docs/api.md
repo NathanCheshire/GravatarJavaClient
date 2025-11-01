@@ -36,7 +36,7 @@ When requesting profiles, there are two modes:
 
 **unauthenticated** requests will not return certain fields whilst **authenticated** requests will return all available fields.
 
-Authenticated requests require a `GravatarProfileTokenProvider` object to be injected when building the `GravatarProfileRequest` object.
+Authenticated requests require a valid API token to be provided which will be used in the authentication HTTP header.
 
 ```java
 // Define a re-suable request
@@ -50,10 +50,8 @@ File profileJsonFile = new File("/path/to/profile.json")
 boolean wasSaved = request.writeToFile(profileJsonFile);
 
 // Get a GravatarProfile with authenticated fields present
-GravatarProfileTokenProvider provider = new GravatarProfileTokenProvider(
-        () -> new byte[]{0x12,0x34,0x56,0x78},"primaryAuthenticator");
 GravatarProfile profileWithAuthenticatedFields = GravatarProfileRequest.fromEmail("your.email@email.com")
-        .setTokenSupplier(provider)
+        .setToken("myApiToken")
         .getProfile();
 ```
 
