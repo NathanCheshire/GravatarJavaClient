@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage
 import java.io.File
 
 /**
- * Tests for the [GravatarAvatarRequestImageSaver].
+ * Tests for the [GravatarRequestImageSaver].
  */
 class GravatarAvatarRequestImageSaverTest {
     /**
@@ -20,14 +20,14 @@ class GravatarAvatarRequestImageSaverTest {
     @BeforeEach
     fun injectBlankFormat() {
         try {
-            val formatsField = GravatarAvatarRequestImageSaver::class.java
+            val formatsField = GravatarRequestImageSaver::class.java
                 .getDeclaredField("SUPPORTED_IMAGE_FORMATS")
             formatsField.isAccessible = true
             @Suppress("UNCHECKED_CAST")
-            val originalList = formatsField[GravatarAvatarRequestImageSaver.INSTANCE] as ImmutableList<String>
+            val originalList = formatsField[GravatarRequestImageSaver.INSTANCE] as ImmutableList<String>
             val mutableList: MutableList<String> = ArrayList(originalList)
             mutableList.add("")
-            formatsField[GravatarAvatarRequestImageSaver.INSTANCE] = ImmutableList.copyOf(mutableList)
+            formatsField[GravatarRequestImageSaver.INSTANCE] = ImmutableList.copyOf(mutableList)
         } catch (e: Exception) {
             // Swallow
         }
@@ -38,7 +38,7 @@ class GravatarAvatarRequestImageSaverTest {
      */
     @Test
     fun testGetSavedCount() {
-        assertEquals(0, GravatarAvatarRequestImageSaver.INSTANCE.savedCount)
+        assertEquals(0, GravatarRequestImageSaver.INSTANCE.savedCount)
     }
 
     /**
@@ -48,25 +48,25 @@ class GravatarAvatarRequestImageSaverTest {
     fun testSaveTo() {
         assertThrows(
             NullPointerException::class.java
-        ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(null, null, null) }
+        ) { GravatarRequestImageSaver.INSTANCE.saveTo(null, null, null) }
         val mockImage = Mockito.mock(BufferedImage::class.java)
         assertThrows(
             NullPointerException::class.java
-        ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(mockImage, null, null) }
+        ) { GravatarRequestImageSaver.INSTANCE.saveTo(mockImage, null, null) }
         val mockFile = Mockito.mock(File::class.java)
         Mockito.`when`(mockFile.name).thenReturn("validName.png")
 
         assertThrows(
             NullPointerException::class.java
-        ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(mockImage, mockFile, null) }
+        ) { GravatarRequestImageSaver.INSTANCE.saveTo(mockImage, mockFile, null) }
         assertThrows(
             IllegalArgumentException::class.java
-        ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(mockImage, File("."), null) }
+        ) { GravatarRequestImageSaver.INSTANCE.saveTo(mockImage, File("."), null) }
         assertThrows(
             GravatarJavaClientException::class.java
-        ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(mockImage, mockFile, "") }
+        ) { GravatarRequestImageSaver.INSTANCE.saveTo(mockImage, mockFile, "") }
         assertThrows(
             java.lang.IllegalArgumentException::class.java
-        ) { GravatarAvatarRequestImageSaver.INSTANCE.saveTo(mockImage, File("invalid<>.png"), "") }
+        ) { GravatarRequestImageSaver.INSTANCE.saveTo(mockImage, File("invalid<>.png"), "") }
     }
 }

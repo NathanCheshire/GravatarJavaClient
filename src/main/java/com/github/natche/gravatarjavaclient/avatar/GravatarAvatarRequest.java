@@ -408,7 +408,7 @@ public final class GravatarAvatarRequest {
         Preconditions.checkArgument(!format.trim().isEmpty());
         Preconditions.checkArgument(!saveTo.isDirectory());
 
-        return GravatarAvatarRequestImageSaver.INSTANCE.saveTo(getBufferedImage(), saveTo, format);
+        return GravatarRequestImageSaver.INSTANCE.saveTo(getBufferedImage(), saveTo, format);
     }
 
     /**

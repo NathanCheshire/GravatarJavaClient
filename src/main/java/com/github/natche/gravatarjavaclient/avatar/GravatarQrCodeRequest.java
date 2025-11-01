@@ -204,7 +204,7 @@ public final class GravatarQrCodeRequest {
         Preconditions.checkArgument(!saveTo.isDirectory());
         Preconditions.checkArgument(!saveTo.exists());
 
-        return GravatarAvatarRequestImageSaver.INSTANCE.saveTo(getBufferedImage(), saveTo, "png");
+        return GravatarRequestImageSaver.INSTANCE.saveTo(getBufferedImage(), saveTo, "png");
     }
 
     /**

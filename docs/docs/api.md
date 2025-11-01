@@ -30,8 +30,10 @@ boolean wasSaved = request.saveTo(profileFile, "png");
 You can also check how many images have been saved to the local file system during the current JVM session:
 
 ```java
-int count = GravatarAvatarRequestImageSaver.INSTANCE.getSavedCount();
+int count = GravatarRequestImageSaver.INSTANCE.getSavedCount();
 ```
+
+Note, the `GravatarRequestImageSaver` is shared by `GravatarAvatarRequest` and `GravatarQrCodeRequest` and could technically be invoked by anything to save images. As such, the returned count should not be trusted as a reliable source of truth.
 
 ## Profiles
 
@@ -89,5 +91,7 @@ Note, the Gravatar API returns a PNG for QR codes, presumably for lossless compr
 You can also check how many QR codes have been saved to the local file system during the current JVM session:
 
 ```java
-int count = GravatarAvatarRequestImageSaver.INSTANCE.getSavedCount();
+int count = GravatarRequestImageSaver.INSTANCE.getSavedCount();
 ```
+
+Note, the `GravatarRequestImageSaver` is shared by `GravatarAvatarRequest` and `GravatarQrCodeRequest` and could technically be invoked by anything to save images. As such, the returned count should not be trusted as a reliable source of truth.

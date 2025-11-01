@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * A singleton responsible for saving images to the local file system.
  */
-enum GravatarAvatarRequestImageSaver {
+enum GravatarRequestImageSaver {
     /**
      * The singleton instance.
      */
