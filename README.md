@@ -1,5 +1,7 @@
 # GravatarJavaClient
 
+Read the docs and more [here](https://nathancheshire.github.io/GravatarJavaClient/)
+
 [![codecov](https://codecov.io/gh/NathanCheshire/GravatarJavaClient/branch/main/graph/badge.svg?token=T0DQD31N7S)](https://codecov.io/gh/NathanCheshire/GravatarJavaClient)
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.nathancheshire/GravatarJavaClient)](https://central.sonatype.com/artifact/io.github.nathancheshire/GravatarJavaClient)
