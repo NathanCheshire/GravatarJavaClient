@@ -27,6 +27,12 @@ File profileFile = new File("/path/to/your/avatar.png", ".png");
 boolean wasSaved = request.saveTo(profileFile, "png");
 ```
 
+You can also check how many images have been saved to the local file system during the current JVM session:
+
+```java
+int count = GravatarAvatarRequestImageSaver.INSTANCE.getSavedCount();
+```
+
 ## Profiles
 
 When requesting profiles, there are two modes:
@@ -55,6 +61,13 @@ GravatarProfile profileWithAuthenticatedFields = GravatarProfileRequest.fromEmai
         .getProfile();
 ```
 
+You can also see how many unauthenticated and authenticated requests have been sent during the current JVM session:
+
+```java
+const unauthenticatedCount = GravatarProfileRequestHandler.INSTANCE.getUnauthenticatedRequestCount();
+const authenticatedCount = GravatarProfileRequestHandler.INSTANCE.getAuthenticatedRequestCount();
+```
+
 ## QR codes
 
 You can generate a QR code for your Gravatar profile using a `GravatarQrCodeRequest`:
@@ -66,9 +79,15 @@ GravatarQrCodeRequest request = GravatarQrCodeRequest.fromEmail("your.email@emai
         .setImageType(GravatarQrImageType.USER)
         .setVersion(GravatarQrImageVersion.THREE);
 
-// Save the QR code PNG to a file
+// Save the QR code to a file
 File fileToSaveTo = new File("/path/to/your/qr_code_file.png")
 boolean wasSaved = request.saveTo(fileToSaveTo);
 ```
 
 Note, the Gravatar API returns a PNG for QR codes, presumably for lossless compression, which is why the GravatarJavaClient API does not allow for an encoding parameter in the way `GravatarAvatarRequest` does for the `saveTo` method.
+
+You can also check how many QR codes have been saved to the local file system during the current JVM session:
+
+```java
+int count = GravatarAvatarRequestImageSaver.INSTANCE.getSavedCount();
+```
