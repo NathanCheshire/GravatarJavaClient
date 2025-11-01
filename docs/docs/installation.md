@@ -9,13 +9,13 @@ sidebar_position: 2
 Add the following to your **build.gradle** file:
 
 ```groovy
-implementation 'io.github.nathancheshire:GravatarJavaClient:2.0.5'
+implementation 'io.github.nathancheshire:GravatarJavaClient:2.1.0'
 ```
 
 Or if you're using the Kotlin DSL, add the following to your **build.gradle.kts** file:
 
 ```kotlin
-implementation("io.github.nathancheshire:GravatarJavaClient:2.0.5")
+implementation("io.github.nathancheshire:GravatarJavaClient:2.1.0")
 ```
 
 ## Maven central
@@ -25,7 +25,7 @@ Add the following dependency to your **pom.xml**:
 ```xml
 io.github.nathancheshire
 GravatarJavaClient
-2.0.5
+2.1.0
 ```
 
 ### Jitpack
@@ -41,11 +41,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.nathancheshire:gravatarjavaclient:2.0.5'
+    implementation 'com.github.nathancheshire:gravatarjavaclient:2.1.0'
 }
 ```
 
 If you would like to view the official Jitpack build log or artifacts list:
 
-- [Artifacts](https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.5/)
-- [Build log](https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.5/build.log)
+- [Artifacts](https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.1.0/)
+- [Build log](https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.1.0/build.log)
