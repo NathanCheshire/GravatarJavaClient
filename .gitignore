@@ -2,6 +2,8 @@
 bin/
 out/
 *.iml
+*.ipr
+*.iws
 *.git
 .gradle/*
 build/
