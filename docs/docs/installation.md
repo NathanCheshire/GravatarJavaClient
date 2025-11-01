@@ -4,6 +4,8 @@ sidebar_position: 2
 
 # Installation
 
+You can use GravatarJavaClient with the standard build systems.
+
 ## Gradle
 
 Add the following to your **build.gradle** file:
@@ -12,20 +14,22 @@ Add the following to your **build.gradle** file:
 implementation 'io.github.nathancheshire:GravatarJavaClient:2.1.0'
 ```
 
-Or if you're using the Kotlin DSL, add the following to your **build.gradle.kts** file:
+Or if you're using Kotlin DSL, add the following to your **build.gradle.kts** file:
 
 ```kotlin
 implementation("io.github.nathancheshire:GravatarJavaClient:2.1.0")
 ```
 
-## Maven central
+## Maven
 
 Add the following dependency to your **pom.xml**:
 
 ```xml
-io.github.nathancheshire
-GravatarJavaClient
-2.1.0
+<dependency>
+    <groupId>io.github.nathancheshire</groupId>
+    <artifactId>GravatarJavaClient</artifactId>
+    <version>2.1.0</version>
+</dependency>
 ```
 
 ### Jitpack
