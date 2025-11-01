@@ -28,9 +28,9 @@ public final class GravatarAvatarRequest {
     private static final Range<Integer> IMAGE_SIZE_RANGE = Range.closed(1, 2048);
 
     /**
-     * The default image length for a request.
+     * The default image size for a request.
      */
-    private static final int DEFAULT_IMAGE_LENGTH = 80;
+    private static final int DEFAULT_IMAGE_SIZE = 80;
 
     /**
      * The hash either computed from a provided email address or provided
@@ -46,7 +46,7 @@ public final class GravatarAvatarRequest {
     /**
      * The size for the image returned by this request.
      */
-    private int size = DEFAULT_IMAGE_LENGTH;
+    private int size = DEFAULT_IMAGE_SIZE;
 
     /**
      * The maximum rating allowable for this Avatar request.
@@ -310,23 +310,23 @@ public final class GravatarAvatarRequest {
     }
 
     /**
-     * Sets the length of the image this request should return.
+     * Sets the size of the image this request should return.
      *
-     * @param imageLength the length of the image this request should return
+     * @param imageSize the size of the image this request should return
      * @return this builder
-     * @throws IllegalArgumentException if the provided image length is not in the range {@link #IMAGE_SIZE_RANGE}
+     * @throws IllegalArgumentException if the provided image size is not in the range {@link #IMAGE_SIZE_RANGE}
      */
     @CanIgnoreReturnValue
-    public GravatarAvatarRequest setSize(int imageLength) {
-        Preconditions.checkArgument(IMAGE_SIZE_RANGE.contains(imageLength));
-        this.size = imageLength;
+    public GravatarAvatarRequest setSize(int imageSize) {
+        Preconditions.checkArgument(IMAGE_SIZE_RANGE.contains(imageSize));
+        this.size = imageSize;
         return this;
     }
 
     /**
-     * Returns the length of the image this request should return.
+     * Returns the size of the image this request should return.
      *
-     * @return the length of the image this request should return
+     * @return the size of the image this request should return
      */
     public int getSize() {
         return this.size;

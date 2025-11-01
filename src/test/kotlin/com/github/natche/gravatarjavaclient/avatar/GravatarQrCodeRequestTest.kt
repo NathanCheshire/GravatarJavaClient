@@ -154,7 +154,7 @@ class GravatarQrCodeRequestTest {
             .setVersion(GravatarQrImageVersion.Three)
         assertEquals(
             "GravatarQrCodeRequest{hash=\"hash\", size=800,"
-                    + " imageType=DEFAULT, version=THREE}", one.toString()
+                    + " imageType=Default, version=Three}", one.toString()
         )
     }
 

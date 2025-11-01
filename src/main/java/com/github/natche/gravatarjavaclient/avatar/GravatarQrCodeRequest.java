@@ -30,7 +30,7 @@ public final class GravatarQrCodeRequest {
     private static final Range<Integer> IMAGE_LENGTH_RANGE = Range.closed(80, 1024);
 
     /**
-     * The hash computed from the user email for this builder.
+     * The hash for this request.
      */
     private final String hash;
 
@@ -72,7 +72,7 @@ public final class GravatarQrCodeRequest {
     /**
      * Constructs and returns a new GravatarQrCodeRequest.
      *
-     * @param hash the hash for this Gravatar QR code request obtained by SHA256 hashing a valid email address
+     * @param hash the hash for this Gravatar QR code request
      * @throws NullPointerException     if the hash is null
      * @throws IllegalArgumentException if the hash is empty
      */
@@ -163,9 +163,9 @@ public final class GravatarQrCodeRequest {
     }
 
     /**
-     * Returns the URL for requesting the QR code based on the current state of this.
+     * Returns the URL for requesting the QR code based on the current state of this request.
      *
-     * @return the URL for requesting the QR code based on the current state of this
+     * @return the URL for requesting the QR code based on the current state of this request
      */
     public String getRequestUrl() {
         return BASE_URL + hash + ".qr"
@@ -175,7 +175,7 @@ public final class GravatarQrCodeRequest {
     }
 
     /**
-     * Reads and returns a {@link BufferedImage} using the URL constructed from the current state of this.
+     * Reads and returns a {@link BufferedImage} using the URL constructed from the current state of this request.
      *
      * @return a {@link BufferedImage} representing a QR code
      * @throws GravatarJavaClientException if an exception occurs reading from the URL
@@ -208,9 +208,9 @@ public final class GravatarQrCodeRequest {
     }
 
     /**
-     * Returns a hashcode of this object.
+     * Returns a hashcode of this request.
      *
-     * @return a hashcode of this object
+     * @return a hashcode of this request
      */
     @Override
     public int hashCode() {
@@ -222,9 +222,9 @@ public final class GravatarQrCodeRequest {
     }
 
     /**
-     * Returns a string representation of this object.
+     * Returns a string representation of this request.
      *
-     * @return a string representation of this object
+     * @return a string representation of this request
      */
     @Override
     public String toString() {
@@ -238,10 +238,10 @@ public final class GravatarQrCodeRequest {
     }
 
     /**
-     * Returns whether the provided object equals this.
+     * Returns whether the provided object equals this request.
      *
      * @param o the other object
-     * @return whether the provided object equals this
+     * @return whether the provided object equals this request
      */
     @Override
     public boolean equals(Object o) {

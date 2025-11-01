@@ -8,11 +8,11 @@ import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientExcepti
 import com.google.common.base.Preconditions;
 
 /**
- * A handler for constructing A Gravatar Avatar request URL.
+ * A singleton for constructing request URLs from {@link GravatarAvatarRequest}s.
  */
 enum GravatarAvatarRequestHandler {
     /**
-     * The Gravatar Avatar request handler singleton instance.
+     * The singleton instance.
      */
     INSTANCE;
 
@@ -23,34 +23,34 @@ enum GravatarAvatarRequestHandler {
     private static final String FORCE_DEFAULT_URL_TRUE_STRING = "y";
 
     /**
-     * Builds the provided Gravatar Avatar request into a URL representing the state of the builder.
+     * Transforms the provided request into a URL representing the state of it.
      *
-     * @param gravatarAvatarRequest the request to construct the URL from
-     * @return the built URL
+     * @param request the request to construct the URL from
+     * @return the constructed URL
      * @throws NullPointerException        if the provided request is null
      * @throws GravatarJavaClientException if force default image is enabled yet no default image URL is provided
      */
-    String buildUrl(GravatarAvatarRequest gravatarAvatarRequest) {
-        Preconditions.checkNotNull(gravatarAvatarRequest);
+    String buildUrl(GravatarAvatarRequest request) {
+        Preconditions.checkNotNull(request);
 
-        GravatarUseFullUrlParameters fullParams = gravatarAvatarRequest.getUseFullUrlParameters();
+        GravatarUseFullUrlParameters fullParams = request.getUseFullUrlParameters();
 
         StringBuilder urlBuilder =
-                new StringBuilder(gravatarAvatarRequest.getProtocol().getAvatarRequestBaseurl());
-        urlBuilder.append(gravatarAvatarRequest.getHash());
-        urlBuilder.append(gravatarAvatarRequest.getShouldAppendJpgSuffix().getSuffix());
+                new StringBuilder(request.getProtocol().getAvatarRequestBaseurl());
+        urlBuilder.append(request.getHash());
+        urlBuilder.append(request.getShouldAppendJpgSuffix().getSuffix());
 
-        String size = String.valueOf(gravatarAvatarRequest.getSize());
+        String size = String.valueOf(request.getSize());
         String sizeParameter = GravatarUrlParameter.Size.constructUrlParameterWithValue(
                 size, true, fullParams);
         urlBuilder.append(sizeParameter);
 
         String ratingsParameter = GravatarUrlParameter.Rating.constructUrlParameterWithValue(
-                gravatarAvatarRequest.getRating().getUrlParameter(), fullParams);
+                request.getRating().getUrlParameter(), fullParams);
         urlBuilder.append(ratingsParameter);
 
-        GravatarDefaultImageType defaultImageType = gravatarAvatarRequest.getDefaultImageType();
-        String defaultImageUrl = gravatarAvatarRequest.getDefaultImageUrl();
+        GravatarDefaultImageType defaultImageType = request.getDefaultImageType();
+        String defaultImageUrl = request.getDefaultImageUrl();
 
         if (defaultImageType != null) {
             String defaultImageTypeQueryString = GravatarUrlParameter.DefaultImageType
@@ -62,12 +62,12 @@ enum GravatarAvatarRequestHandler {
             urlBuilder.append(defaultImageUrlQueryString);
         }
 
-        if (gravatarAvatarRequest.shouldForceDefaultImage() == GravatarForceDefaultImage.DoNotForce) {
+        if (request.shouldForceDefaultImage() == GravatarForceDefaultImage.DoNotForce) {
             return urlBuilder.toString();
         }
 
         if (defaultImageUrl == null) {
-            throw new GravatarJavaClientException("Must provide default URL if forcing default");
+            throw new GravatarJavaClientException("You must provide a default image URL if forcing default");
         }
 
         String forceDefaultImageQueryString = GravatarUrlParameter.ForceDefault

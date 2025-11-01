@@ -332,14 +332,14 @@ internal constructor() {
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
         assertEquals(
             "GravatarAvatarRequest{hash=\"ce6e17fa8835c88134a6cc27cb05defd8d1c424fa98f531b7bb4f5b177a2452\", "
-                    + "size=2000, rating=X, forceDefaultImage=Force, defaultImageType=null, protocol=HTTP,"
+                    + "size=2000, rating=X, forceDefaultImage=Force, defaultImageType=null, protocol=Http,"
                     + " useFullUrlParameters=False,"
                     + " defaultImageUrl=\"https://picsum.photos/seed/gravatar-java-client/200/300\", }",
             fromEmail.toString()
         )
         assertEquals(
             "GravatarAvatarRequest{hash=\"80c44e7f3f5082023ede351d396844f5\", size=1776,"
-                    + " rating=R, forceDefaultImage=DoNotForce, defaultImageType=WAVATAR, protocol=HTTPS,"
+                    + " rating=R, forceDefaultImage=DoNotForce, defaultImageType=Wavatar, protocol=Https,"
                     + " useFullUrlParameters=True, defaultImageUrl=\"null\", }", fromHash.toString()
         )
     }

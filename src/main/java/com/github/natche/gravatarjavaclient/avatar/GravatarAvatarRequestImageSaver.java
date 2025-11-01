@@ -12,11 +12,11 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * The singleton responsible for saving images to the local file system.
+ * A singleton responsible for saving images to the local file system.
  */
 enum GravatarAvatarRequestImageSaver {
     /**
-     * The Gravatar Avatar request image saver singleton instance.
+     * The singleton instance.
      */
     INSTANCE;
 
@@ -32,7 +32,7 @@ enum GravatarAvatarRequestImageSaver {
     );
 
     /**
-     * Saves the image to the provided file in the specified format.
+     * Saves the image to the provided file encoded using the specified format.
      *
      * @param file   The file to save the image to
      * @param format The format in which to save the image (must be a valid format)
@@ -54,7 +54,7 @@ enum GravatarAvatarRequestImageSaver {
             if (!ImageIO.write(image, format.toLowerCase(), file)) throw new IOException("Failed");
             return true;
         } catch (IOException e) {
-            throw new GravatarJavaClientException("Failed to write image to file system");
+            throw new GravatarJavaClientException("Failed to write the image to the file system");
         }
     }
 }
