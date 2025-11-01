@@ -44,7 +44,7 @@ const config: Config = {
       title: "GravatarJavaClient",
       logo: {
         alt: "GravatarJavaClient Logo",
-        src: "img/logo.svg",
+        src: "img/logo.png",
       },
       items: [
         {
