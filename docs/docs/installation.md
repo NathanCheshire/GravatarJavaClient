@@ -12,7 +12,7 @@ Add the following to your **build.gradle** file:
 implementation 'io.github.nathancheshire:GravatarJavaClient:2.0.5'
 ```
 
-Or if you're using the Kotlin DSL, add the following to your **build.gradle.kts**:
+Or if you're using the Kotlin DSL, add the following to your **build.gradle.kts** file:
 
 ```kotlin
 implementation("io.github.nathancheshire:GravatarJavaClient:2.0.5")

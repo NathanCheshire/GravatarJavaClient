@@ -10,13 +10,10 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 import java.util.Objects;
 
 /**
@@ -361,37 +358,7 @@ public final class GravatarAvatarRequest {
     }
 
     /**
-     * Reads and returns an {@link ImageIcon} using the URL constructed from the current state of this.
-     *
-     * @return an {@link ImageIcon} representing an Avatar
-     * @throws GravatarJavaClientException if an exception occurs reading from the URL
-     */
-    public ImageIcon getImageIcon() {
-        try {
-            String requestUrl = getRequestUrl();
-            URL url = URI.create(requestUrl).toURL();
-            // ToDo we should extract and encapsulate HTTP/fetching logic to some handler
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setInstanceFollowRedirects(false);
-
-            int responseCode = connection.getResponseCode();
-            // ToDo: what about other response codes?
-            if (responseCode == HttpURLConnection.HTTP_MOVED_PERM) {
-                String redirectUrl = connection.getHeaderField("Location");
-                url = URI.create(redirectUrl).toURL();
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-            }
-
-            BufferedImage bufferedImage = ImageIO.read(connection.getInputStream());
-            return new ImageIcon(bufferedImage);
-        } catch (IOException e) {
-            throw new GravatarJavaClientException(e);
-        }
-    }
-
-    /**
-     * Saves an image obtained from the URL constructed from this to the provided file as a png.
+     * Saves the image obtained from the URL constructed from this to the provided file as a png.
      *
      * @param saveTo the file to save the image to
      * @return whether the save operation was successful
@@ -407,7 +374,7 @@ public final class GravatarAvatarRequest {
     }
 
     /**
-     * Saves an image obtained from the URL constructed from this to the provided file as a jpg.
+     * Saves the image obtained from the URL constructed from this to the provided file as a jpg.
      *
      * @param saveTo the file to save the image to
      * @return whether the save operation was successful
@@ -423,9 +390,9 @@ public final class GravatarAvatarRequest {
     }
 
     /**
-     * Saves an image obtained from the URL constructed from this to the provided file.
+     * Saves the image obtained from the URL constructed from this to the provided file.
      * Note, while the file could be named "Image.png", if "jpg" is provided as the format,
-     * the image will be a jpg yet named "Image.png".
+     * the image will be of jpg format yet still named your provided name of "Image.png".
      *
      * @param saveTo the file to save the image to
      * @param format the format to use; see {@link ImageIO#getWriterFormatNames()}

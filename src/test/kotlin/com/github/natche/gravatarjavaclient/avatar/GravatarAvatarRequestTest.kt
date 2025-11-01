@@ -345,44 +345,6 @@ internal constructor() {
     }
 
     /**
-     * Tests for the get image icon method.
-     */
-    @Test
-    fun testGetImageIcon() {
-        val fromEmail = GravatarAvatarRequest.fromEmail("my.email@email.com")
-            .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH)
-            .setRating(GravatarRating.X)
-            .setSize(2000)
-            .setProtocol(GravatarProtocol.HTTP)
-            .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
-            .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
-        assertDoesNotThrow { fromEmail.imageIcon }
-        assertNotNull(fromEmail.imageIcon)
-
-        val fromHash = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
-            .setDefaultImageType(GravatarDefaultImageType.WAVATAR)
-            .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
-            .setRating(GravatarRating.R)
-            .setSize(1776)
-            .setProtocol(GravatarProtocol.HTTPS)
-            .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
-            .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
-        assertDoesNotThrow { fromHash.imageIcon }
-        assertNotNull(fromHash.imageIcon)
-
-        val invalid = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
-            .setDefaultImageType(GravatarDefaultImageType._404)
-            .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
-            .setRating(GravatarRating.R)
-            .setSize(225)
-            .setProtocol(GravatarProtocol.HTTPS)
-            .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.False)
-            .setUseFullUrlParameters(GravatarUseFullUrlParameters.True)
-
-        assertThrows(GravatarJavaClientException::class.java) { invalid.imageIcon }
-    }
-
-    /**
      * Tests for the get buffered image method.
      */
     @Test
