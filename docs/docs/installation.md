@@ -44,3 +44,8 @@ dependencies {
     implementation 'com.github.nathancheshire:gravatarjavaclient:2.0.5'
 }
 ```
+
+If you would like to view the official Jitpack build log or artifacts list:
+
+- [Artifacts](https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.5/)
+- [Build log](https://jitpack.io/com/github/nathancheshire/gravatarjavaclient/2.0.5/build.log)

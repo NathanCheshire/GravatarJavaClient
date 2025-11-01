@@ -67,8 +67,9 @@ const config: Config = {
       copyright: `Copyright © 2023 - 2025 GravatarJavaClient. Docs built with Docusaurus.`,
     },
     prism: {
-      theme: prismThemes.oneLight,
-      darkTheme: prismThemes.dracula,
+      theme: prismThemes.github,
+      darkTheme: prismThemes.github,
+      additionalLanguages: ["java", "gradle"],
     },
   } satisfies Preset.ThemeConfig,
 };
