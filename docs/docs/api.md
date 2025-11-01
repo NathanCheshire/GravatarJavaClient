@@ -14,7 +14,7 @@ all needs related to the `profile` API.
 The standard Gravatar API for getting an avatar:
 
 ```java
-// Define a re-usable request
+// Define a reusable request
 GravatarAvatarRequest request = GravatarAvatarRequest.fromEmail("your.email@email.com")
         .setSize(800)
         .setRating(GravatarRating.R)
@@ -39,7 +39,7 @@ When requesting profiles, there are two modes:
 Authenticated requests require a valid API token to be provided which will be used in the authentication HTTP header.
 
 ```java
-// Define a re-suable request
+// Define a reusable request
 GravatarProfileRequest request = GravatarProfileRequest.fromEmail("your.email@email.com");
 
 // Get the profile
@@ -60,7 +60,7 @@ GravatarProfile profileWithAuthenticatedFields = GravatarProfileRequest.fromEmai
 You can generate a QR code for your Gravatar profile using a `GravatarQrCodeRequest`:
 
 ```java
-// Define a re-usable request
+// Define a reusable request
 GravatarQrCodeRequest request = GravatarQrCodeRequest.fromEmail("your.email@email.com")
         .setSize(800)
         .setImageType(GravatarQrImageType.USER)
