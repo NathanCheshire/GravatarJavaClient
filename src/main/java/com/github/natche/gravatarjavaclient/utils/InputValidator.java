@@ -1,6 +1,6 @@
 package com.github.natche.gravatarjavaclient.utils;
 
-import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 
 import javax.imageio.ImageIO;
 import java.net.URI;
@@ -22,47 +22,38 @@ public final class InputValidator {
             + "x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)])");
 
     /**
-     * The encapsulated input.
+     * The invalid filename characters for Windows and Unix based systems.
      */
-    private final String input;
-
-    private InputValidator(String input) {
-        this.input = input;
-    }
+    private static final ImmutableList<Character> INVALID_FILENAME_CHARS = ImmutableList.of(
+            '<', '>', ':', '\\', '|', '?', '*', '/', '\'', '"', '\u0000'
+    );
 
     /**
-     * Constructs a new input validator from the provided input.
-     *
-     * @param input the input
-     * @return a new InputValidator instance
-     * @throws NullPointerException     if the provided input is null
-     * @throws IllegalArgumentException if the provided input is empty
-     */
-    public static InputValidator from(String input) {
-        Preconditions.checkNotNull(input);
-        Preconditions.checkArgument(!input.trim().isEmpty());
-
-        return new InputValidator(input);
-    }
-
-    /**
-     * Returns whether the encapsulated input is a valid email address.
+     * Returns whether the provided input is a valid email address.
      * Note, this does not check for existence, merely proper syntactical structure.
      *
+     * @param input the input
      * @return whether the encapsulated input is a valid email address
      */
-    public boolean isValidEmailAddress() {
+    public static boolean isValidEmailAddress(String input) {
+        if (input == null) return false;
+        if (input.trim().isEmpty()) return false;
+
         return EMAIL_ADDRESS_REGEX_PATTERN.matcher(input).matches();
     }
 
     /**
-     * Returns whether the encapsulated input is a valid image URL.
+     * Returns whether the provided input is a valid image URL.
      * See {@link ImageIO#read(URL)} for more information.
      *
+     * @param input the input
      * @return whether the encapsulated input is a valid image URL
      */
     @SuppressWarnings("ResultOfMethodCallIgnored") /* Validation */
-    public boolean isValidImageUrl() {
+    public static boolean isValidImageUrl(String input) {
+        if (input == null) return false;
+        if (input.trim().isEmpty()) return false;
+
         try {
             URI.create(input).toURL();
             return true;
@@ -72,37 +63,21 @@ public final class InputValidator {
     }
 
     /**
-     * Returns whether the provided object is equal to this {@link InputValidator} instance.
+     * Returns whether the provided input is a valid filename for this operating system.
      *
-     * @param o the other object
-     * @return whether the provided object is equal to this
+     * @param input the input to use as a filename
+     * @return whether the provided filename is valid for this operating system
+     * @throws NullPointerException     if the provided filename is null
+     * @throws IllegalArgumentException if the provided filename is empty
      */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        else if (!(o instanceof InputValidator)) return false;
+    public static boolean isValidFilename(String input) {
+        if (input == null) return false;
+        if (input.trim().isEmpty()) return false;
 
-        InputValidator other = (InputValidator) o;
-        return this.input.equals(other.input);
-    }
+        for (char c : input.toCharArray()) {
+            if (INVALID_FILENAME_CHARS.contains(c)) return false;
+        }
 
-    /**
-     * Returns a hash code of this object.
-     *
-     * @return a hash code of this object
-     */
-    @Override
-    public int hashCode() {
-        return 31 * input.hashCode();
-    }
-
-    /**
-     * Returns a string representation of this object.
-     *
-     * @return a string representation of this object
-     */
-    @Override
-    public String toString() {
-        return "InputValidator{input=\"" + input + "\"}";
+        return true;
     }
 }

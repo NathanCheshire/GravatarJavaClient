@@ -12,8 +12,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 /**
- * A class used for hashing inputs using certain algorithms.
+ * A singleton for hashing inputs.
  */
+@SuppressWarnings("SpellCheckingInspection")
 public enum Hasher {
     /**
      * The SHA256 hasher.
@@ -38,6 +39,7 @@ public enum Hasher {
      * @param input the input to hash
      * @return the hashed input
      * @throws NullPointerException if the provided input is null
+     * @throws GravatarJavaClientException if a {@link MessageDigest} instance cannot be obtained
      */
     public String hash(String input) {
         Preconditions.checkNotNull(input);

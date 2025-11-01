@@ -7,6 +7,8 @@ import com.github.natche.gravatarjavaclient.enums.GravatarUseFullUrlParameters;
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
 import com.google.common.base.Preconditions;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * A singleton for constructing request URLs from {@link GravatarAvatarRequest}s.
  */
@@ -17,10 +19,24 @@ enum GravatarAvatarRequestHandler {
     INSTANCE;
 
     /**
+     * The number of URLs this handler has built.
+     */
+    private final AtomicInteger builtUrlCount = new AtomicInteger(0);
+
+    /**
      * The string to accompany {@link GravatarUrlParameter#ForceDefault} to indicate the default URL
      * should be used regardless of the validity of the Gravatar account.
      */
     private static final String FORCE_DEFAULT_URL_TRUE_STRING = "y";
+
+    /**
+     * Returns the number of URLs this handler has built.
+     *
+     * @return the number of URLs this handler has built
+     */
+    public int getBuiltUrlCount() {
+        return builtUrlCount.get();
+    }
 
     /**
      * Transforms the provided request into a URL representing the state of it.
@@ -63,6 +79,7 @@ enum GravatarAvatarRequestHandler {
         }
 
         if (request.shouldForceDefaultImage() == GravatarForceDefaultImage.DoNotForce) {
+            builtUrlCount.incrementAndGet();
             return urlBuilder.toString();
         }
 
@@ -74,6 +91,7 @@ enum GravatarAvatarRequestHandler {
                 .constructUrlParameterWithValue(FORCE_DEFAULT_URL_TRUE_STRING, fullParams);
         urlBuilder.append(forceDefaultImageQueryString);
 
+        builtUrlCount.incrementAndGet();
         return urlBuilder.toString();
     }
 }

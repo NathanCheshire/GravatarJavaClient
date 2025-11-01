@@ -99,7 +99,7 @@ public final class GravatarAvatarRequest {
     public static GravatarAvatarRequest fromEmail(String email) {
         Preconditions.checkNotNull(email);
         Preconditions.checkArgument(!email.trim().isEmpty());
-        Preconditions.checkArgument(InputValidator.from(email).isValidEmailAddress());
+        Preconditions.checkArgument(InputValidator.isValidEmailAddress(email));
 
         String hash = Hasher.SHA256.hash(email);
         return new GravatarAvatarRequest(hash);
@@ -151,7 +151,7 @@ public final class GravatarAvatarRequest {
     public GravatarAvatarRequest setDefaultImageUrl(String defaultImageUrl) {
         Preconditions.checkNotNull(defaultImageUrl);
         Preconditions.checkArgument(!defaultImageUrl.trim().isEmpty());
-        Preconditions.checkArgument(InputValidator.from(defaultImageUrl).isValidImageUrl());
+        Preconditions.checkArgument(InputValidator.isValidImageUrl(defaultImageUrl));
 
         this.defaultImageUrl = defaultImageUrl;
         this.defaultImageType = null;

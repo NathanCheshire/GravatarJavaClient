@@ -1,7 +1,7 @@
 package com.github.natche.gravatarjavaclient.avatar;
 
 import com.github.natche.gravatarjavaclient.exceptions.GravatarJavaClientException;
-import com.github.natche.gravatarjavaclient.utils.ResourceReader;
+import com.github.natche.gravatarjavaclient.utils.InputValidator;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 
@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * A singleton responsible for saving images to the local file system.
@@ -21,6 +22,11 @@ enum GravatarAvatarRequestImageSaver {
     INSTANCE;
 
     /**
+     * The number of files this saver has saved.
+     */
+    private final AtomicInteger savedCount = new AtomicInteger(0);
+
+    /**
      * The image formats the current system supports saving to via {@link ImageIO}.
      * See {@link ImageIO#getWriterFormatNames()}.
      */
@@ -30,6 +36,15 @@ enum GravatarAvatarRequestImageSaver {
                     .distinct()
                     .toList()
     );
+
+    /**
+     * Returns the number of files which have been saved during this runtime.
+     *
+     * @return the number of files which have been saved during this runtime
+     */
+    public int getSavedCount() {
+        return savedCount.get();
+    }
 
     /**
      * Saves the image to the provided file encoded using the specified format.
@@ -48,10 +63,11 @@ enum GravatarAvatarRequestImageSaver {
         Preconditions.checkArgument(!file.isDirectory());
         Preconditions.checkNotNull(format);
         Preconditions.checkArgument(SUPPORTED_IMAGE_FORMATS.contains(format.toLowerCase()));
-        Preconditions.checkArgument(ResourceReader.isValidFilename(file.getName()));
+        Preconditions.checkArgument(InputValidator.isValidFilename(file.getName()));
 
         try {
             if (!ImageIO.write(image, format.toLowerCase(), file)) throw new IOException("Failed");
+            savedCount.incrementAndGet();
             return true;
         } catch (IOException e) {
             throw new GravatarJavaClientException("Failed to write the image to the file system");

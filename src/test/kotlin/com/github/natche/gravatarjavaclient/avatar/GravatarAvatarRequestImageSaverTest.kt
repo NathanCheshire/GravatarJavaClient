@@ -34,6 +34,14 @@ class GravatarAvatarRequestImageSaverTest {
     }
 
     /**
+     * Tests for the getSavedCount method.
+     */
+    @Test
+    fun testGetSavedCount() {
+        assertEquals(0, GravatarAvatarRequestImageSaver.INSTANCE.savedCount)
+    }
+
+    /**
      * Tests for the save to method.
      */
     @Test

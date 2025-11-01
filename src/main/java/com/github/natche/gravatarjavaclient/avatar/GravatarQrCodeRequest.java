@@ -63,7 +63,7 @@ public final class GravatarQrCodeRequest {
     public static GravatarQrCodeRequest fromEmail(String email) {
         Preconditions.checkNotNull(email);
         Preconditions.checkArgument(!email.trim().isEmpty());
-        Preconditions.checkArgument(InputValidator.from(email).isValidEmailAddress());
+        Preconditions.checkArgument(InputValidator.isValidEmailAddress(email));
 
         String hash = Hasher.SHA256.hash(email);
         return new GravatarQrCodeRequest(hash);

@@ -9,26 +9,17 @@ import org.junit.jupiter.api.Test
  */
 internal class InputValidatorTest {
     /**
-     * Tests for creation.
-     */
-    @Test
-    fun testCreation() {
-        assertThrows(NullPointerException::class.java) { InputValidator.from(null) }
-        assertThrows(IllegalArgumentException::class.java) { InputValidator.from("") }
-        assertThrows(IllegalArgumentException::class.java) { InputValidator.from("  ") }
-
-        assertDoesNotThrow { InputValidator.from("invalid.email.address") }
-        assertDoesNotThrow { InputValidator.from("https://bad-image-url.png") }
-    }
-
-    /**
      * Tests for the is valid email address method.
      */
     @Test
     fun testIsValidEmailAddress() {
-        assertFalse(InputValidator.from("invalid.email.address").isValidEmailAddress)
-        assertTrue(InputValidator.from("nate.cheshire@me.com").isValidEmailAddress)
-        assertTrue(InputValidator.from("lady.gaga@proton.me").isValidEmailAddress)
+        assertFalse(InputValidator.isValidEmailAddress(null))
+        assertFalse(InputValidator.isValidEmailAddress(""))
+        assertFalse(InputValidator.isValidEmailAddress("    "))
+
+        assertFalse(InputValidator.isValidEmailAddress("invalid.email.address"))
+        assertTrue(InputValidator.isValidEmailAddress("nate.cheshire@me.com"))
+        assertTrue(InputValidator.isValidEmailAddress("lady.gaga@proton.me"))
     }
 
     /**
@@ -36,51 +27,30 @@ internal class InputValidatorTest {
      */
     @Test
     fun testIsValidDefaultUrl() {
-        assertTrue(InputValidator.from("https://google.com").isValidImageUrl)
-        assertTrue(InputValidator.from("https://google.com/image.png").isValidImageUrl)
-        assertTrue(InputValidator.from(ImagesForTests.foreignImageUrl).isValidImageUrl)
-        assertTrue(InputValidator.from(ImagesForTests.anotherForeignImageUrl).isValidImageUrl)
+        assertFalse(InputValidator.isValidImageUrl(null))
+        assertFalse(InputValidator.isValidImageUrl(""))
+        assertFalse(InputValidator.isValidImageUrl("    "))
+
+        assertTrue(InputValidator.isValidImageUrl("https://google.com"))
+        assertTrue(InputValidator.isValidImageUrl("https://google.com/image.png"))
+        assertTrue(InputValidator.isValidImageUrl(ImagesForTests.foreignImageUrl))
+        assertTrue(InputValidator.isValidImageUrl(ImagesForTests.anotherForeignImageUrl))
     }
 
     /**
-     * Tests for the to string method.
+     * Test for the is valid filename method.
      */
     @Test
-    fun testToString() {
-        assertEquals("InputValidator{input=\"me\"}", InputValidator.from("me").toString())
-        assertEquals("InputValidator{input=\"other input\"}",
-            InputValidator.from("other input").toString()
-        )
-    }
+    fun testIsValidFilename() {
+        assertFalse(InputValidator.isValidFilename(null))
+        assertFalse(InputValidator.isValidFilename(""))
+        assertFalse(InputValidator.isValidFilename("    "))
 
-    /**
-     * Tests for the hash code method.
-     */
-    @Test
-    fun testHashCode() {
-        val first = InputValidator.from("input")
-        val equal = InputValidator.from("input")
-        val notEqual = InputValidator.from("other input")
-
-        assertEquals(-1183866506, first.hashCode())
-        assertEquals(-1183866506, equal.hashCode())
-        assertEquals(586840198, notEqual.hashCode())
-        assertEquals(first.hashCode(), equal.hashCode())
-        assertNotEquals(first.hashCode(), notEqual.hashCode())
-    }
-
-    /**
-     * Tests for the equals method.
-     */
-    @Test
-    fun testEquals() {
-        val first = InputValidator.from("input")
-        val equal = InputValidator.from("input")
-        val notEqual = InputValidator.from("other input")
-
-        assertEquals(first, first)
-        assertEquals(first, equal)
-        assertNotEquals(first, notEqual)
-        assertNotEquals(first, Object())
+        assertTrue(InputValidator.isValidFilename("filename"))
+        assertTrue(InputValidator.isValidFilename("my_filename_123456789"))
+        assertTrue(InputValidator.isValidFilename("my_filename_123456789.txt"))
+        assertTrue(InputValidator.isValidFilename("my_filename_123456789...txt"))
+        assertFalse(InputValidator.isValidFilename("$%^&*()"))
+        assertFalse(InputValidator.isValidFilename("1>:/"))
     }
 }

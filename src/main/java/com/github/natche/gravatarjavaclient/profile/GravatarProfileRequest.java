@@ -5,7 +5,6 @@ import com.github.natche.gravatarjavaclient.profile.gson.GsonProvider;
 import com.github.natche.gravatarjavaclient.profile.serialization.GravatarProfile;
 import com.github.natche.gravatarjavaclient.utils.Hasher;
 import com.github.natche.gravatarjavaclient.utils.InputValidator;
-import com.github.natche.gravatarjavaclient.utils.ResourceReader;
 import com.google.common.base.Preconditions;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.gson.Gson;
@@ -63,7 +62,7 @@ public final class GravatarProfileRequest {
     public static GravatarProfileRequest fromEmail(String email) {
         Preconditions.checkNotNull(email);
         Preconditions.checkArgument(!email.trim().isEmpty());
-        Preconditions.checkArgument(InputValidator.from(email).isValidEmailAddress());
+        Preconditions.checkArgument(InputValidator.isValidEmailAddress(email));
 
         return new GravatarProfileRequest(Hasher.SHA256.hash(email));
     }
@@ -119,7 +118,6 @@ public final class GravatarProfileRequest {
     /**
      * Writes the profile object obtained from this request to the provided file using the
      * provided GSON object as the serializer. The provided file must have a valid name.
-     * See {@link ResourceReader#isValidFilename(String)} for more details.
      *
      * @param serializer the GSON object to serialize the profile
      * @param file       the file to write the object to
@@ -133,7 +131,7 @@ public final class GravatarProfileRequest {
         Preconditions.checkNotNull(file);
         Preconditions.checkArgument(!file.isDirectory());
         Preconditions.checkArgument(file.exists());
-        Preconditions.checkArgument(ResourceReader.isValidFilename(file.getName()));
+        Preconditions.checkArgument(InputValidator.isValidFilename(file.getName()));
 
         try (FileWriter writer = new FileWriter(file)) {
             serializer.toJson(getProfile(), writer);

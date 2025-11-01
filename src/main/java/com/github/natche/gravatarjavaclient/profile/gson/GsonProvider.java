@@ -7,11 +7,11 @@ import com.google.gson.GsonBuilder;
 
 /**
  * A singleton for providing a common shared {@link Gson} instance
- * for serialization/deserialization with custom registered type adapters needed for this API.
+ * for serialization/deserialization with custom registered type adapters needed by the GravatarJavaClient API.
  */
 public enum GsonProvider {
     /**
-     * The gson provider instance.
+     * The Gson provider instance.
      */
     INSTANCE;
 
@@ -28,9 +28,9 @@ public enum GsonProvider {
     }
 
     /**
-     * Returns the gson object.
+     * Returns the Gson object.
      *
-     * @return the gson object
+     * @return the Gson object
      */
     public Gson get() {
         return gson;

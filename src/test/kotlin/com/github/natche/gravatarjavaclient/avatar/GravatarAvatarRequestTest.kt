@@ -150,6 +150,8 @@ internal constructor() {
      */
     @Test
     fun testGetRequestUrl() {
+        val startingSize = GravatarAvatarRequestHandler.INSTANCE.builtUrlCount
+
         val fromEmailUrl = GravatarAvatarRequest.fromEmail("my.email@email.com")
             .setDefaultImageType(GravatarDefaultImageType.RoboHash)
             .setDefaultImageUrl(ImagesForTests.foreignImageUrl)
@@ -165,6 +167,8 @@ internal constructor() {
                     + "d8d1c424fa98f531b7bb4f5b177a2452.jpg"
                     + "?s=2000&r=x&d=https://picsum.photos/seed/gravatar-java-client/200/300&f=y", fromEmailUrl
         )
+        assertEquals(startingSize + 1, GravatarAvatarRequestHandler.INSTANCE.builtUrlCount)
+
         val fromHashUrl = GravatarAvatarRequest.fromHash("80c44e7f3f5082023ede351d396844f5")
             .setDefaultImageType(GravatarDefaultImageType.Wavatar)
             .setForceDefaultImage(GravatarForceDefaultImage.DoNotForce)
@@ -178,6 +182,8 @@ internal constructor() {
             "https://www.gravatar.com/avatar/80c44e7f3f5082023ede351d396844f5"
                     + "?size=1776&rating=r&default=wavatar", fromHashUrl
         )
+        assertEquals(startingSize + 2, GravatarAvatarRequestHandler.INSTANCE.builtUrlCount)
+
         val invalidDefaultUrl = GravatarAvatarRequest.fromEmail("my.email@email.com")
             .setDefaultImageType(GravatarDefaultImageType.RoboHash)
             .setForceDefaultImage(GravatarForceDefaultImage.Force)
@@ -187,6 +193,7 @@ internal constructor() {
             .setShouldAppendJpgSuffix(GravatarUseJpgSuffix.True)
             .setUseFullUrlParameters(GravatarUseFullUrlParameters.False)
         assertThrows(GravatarJavaClientException::class.java) { invalidDefaultUrl.requestUrl }
+        assertEquals(startingSize + 2, GravatarAvatarRequestHandler.INSTANCE.builtUrlCount)
     }
 
     /**
