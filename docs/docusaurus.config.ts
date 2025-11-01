@@ -46,6 +46,10 @@ const config: Config = {
             from: "/",
             to: "/docs/intro",
           },
+          {
+            from: "/docs",
+            to: "/docs/intro",
+          },
         ],
       },
     ],
