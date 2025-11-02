@@ -21,7 +21,7 @@ java {
 }
 
 group 'io.github.nathancheshire'
-version '1'
+version '2.1.2'
 
 repositories {
     mavenCentral()
