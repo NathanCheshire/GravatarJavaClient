@@ -138,6 +138,6 @@ signing {
     sign publishing.publications.mavenJava
 
     setRequired {
-        !project.hasProperty("jitpack")
+        System.getenv("JITPACK") == null
     }
 }
