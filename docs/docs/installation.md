@@ -11,13 +11,13 @@ You can use GravatarJavaClient with the standard build systems.
 Add the following to your **build.gradle** file:
 
 ```groovy
-implementation 'io.github.nathancheshire:GravatarJavaClient:2.1.2'
+implementation 'io.github.nathancheshire:GravatarJavaClient:2.1.3'
 ```
 
 Or if you're using Kotlin DSL, add the following to your **build.gradle.kts** file:
 
 ```kotlin
-implementation("io.github.nathancheshire:GravatarJavaClient:2.1.2")
+implementation("io.github.nathancheshire:GravatarJavaClient:2.1.3")
 ```
 
 ## Maven
@@ -28,7 +28,7 @@ Add the following dependency to your **pom.xml**:
 <dependency>
     <groupId>io.github.nathancheshire</groupId>
     <artifactId>GravatarJavaClient</artifactId>
-    <version>2.1.2</version>
+    <version>2.1.3</version>
 </dependency>
 ```
 
@@ -45,7 +45,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.nathancheshire:gravatarjavaclient:2.1.2'
+    implementation 'com.github.nathancheshire:gravatarjavaclient:2.1.3'
 }
 ```
 
