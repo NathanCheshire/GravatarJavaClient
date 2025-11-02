@@ -20,7 +20,7 @@ GravatarAvatarRequest request = GravatarAvatarRequest.fromEmail("your.email@emai
         .setRating(GravatarRating.R)
         .setDefaultImageType(GravatarDefaultImageType.ROBO_HASH);
 
-// You can get a BufferedImage
+// Get a BufferedImage of the avatar
 BufferedImage bufferedImage = request.getBufferedImage();
 
 File profileFile = new File("/path/to/your/avatar.png", ".png");
@@ -57,7 +57,7 @@ GravatarProfile profile = request.getProfile();
 File profileJsonFile = new File("/path/to/profile.json")
 boolean wasSaved = request.writeToFile(profileJsonFile);
 
-// Get a GravatarProfile with authenticated fields present
+// Get a profile with authenticated fields present
 GravatarProfile profileWithAuthenticatedFields = GravatarProfileRequest.fromEmail("your.email@email.com")
         .setToken("myApiToken")
         .getProfile();
