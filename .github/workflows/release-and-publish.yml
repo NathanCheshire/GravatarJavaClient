@@ -3,9 +3,6 @@ name: release-and-publish
 on:
   release:
     types: [created]
-  push:
-    tags:
-      - "[0-9]+.[0-9]+.[0-9]+"
   workflow_dispatch:
 
 jobs:
