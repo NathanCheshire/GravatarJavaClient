@@ -33,7 +33,7 @@ You can also check how many images have been saved to the local file system duri
 int count = GravatarRequestImageSaver.INSTANCE.getSavedCount();
 ```
 
-Note, the `GravatarRequestImageSaver` is shared by `GravatarAvatarRequest` and `GravatarQrCodeRequest` and could technically be invoked by anything to save images. As such, the returned count should not be trusted as a reliable source of truth.
+> Note, the `GravatarRequestImageSaver` is shared by `GravatarAvatarRequest` and `GravatarQrCodeRequest` and could technically be invoked by anything to save images. As such, the returned count should not be trusted as a reliable source of truth.
 
 ## Profiles
 
@@ -94,4 +94,4 @@ You can also check how many QR codes have been saved to the local file system du
 int count = GravatarRequestImageSaver.INSTANCE.getSavedCount();
 ```
 
-Note, the `GravatarRequestImageSaver` is shared by `GravatarAvatarRequest` and `GravatarQrCodeRequest` and could technically be invoked by anything to save images. As such, the returned count should not be trusted as a reliable source of truth.
+> Note, the `GravatarRequestImageSaver` is shared by `GravatarAvatarRequest` and `GravatarQrCodeRequest` and could technically be invoked by anything to save images. As such, the returned count should not be trusted as a reliable source of truth.

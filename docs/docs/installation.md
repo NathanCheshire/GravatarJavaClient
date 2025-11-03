@@ -32,7 +32,7 @@ Add the following dependency to your **pom.xml**:
 </dependency>
 ```
 
-### Jitpack
+## Jitpack
 
 Add the JitPack repository to your **build.gradle**:
 
