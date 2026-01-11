@@ -6,6 +6,6 @@ sidebar_position: 5
 
 Here's some additional resources you might find useful.
 
-- [Gravatar Documentation](https://en.gravatar.com/site/implement)
-- [Abstract Factory Design Pattern](https://refactoring.guru/design-patterns/abstract-factory)
-- [Builder Design pattern](https://refactoring.guru/design-patterns/builder)
+- [Gravatar documentation](https://en.gravatar.com/site/implement)
+- [Abstract factory design pattern](https://refactoring.guru/design-patterns/abstract-factory)
+- [Builder design pattern](https://refactoring.guru/design-patterns/builder)
